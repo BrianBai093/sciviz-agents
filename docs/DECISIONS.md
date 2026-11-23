@@ -295,3 +295,7 @@ Each record states the context, the options considered, the decision, and why. R
 ## D44. Retry a failed turn from the last good checkpoint
 - **Decision:** `run_turn(..., from_checkpoint=<id>)` forks the conversation from an earlier LangGraph checkpoint, so a crashed turn can be retried without the failed attempt in the agents' context. It was used once to repair the demo session (`demo/continue_demo.py`). The event log is truncated to match.
 - **Status:** Accepted.
+
+## D45. Publishing
+- **Decision:** a public GitHub repository, https://github.com/BrianBai093/sciviz-agents. The full database (173 MB) is a release asset (v1.0.0), not a repository file. The 3% sample (for a quick look), the recordings (replay mode) and the demo video stay in the repository.
+- **Status:** Accepted.

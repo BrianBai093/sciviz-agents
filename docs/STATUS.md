@@ -1,14 +1,11 @@
 # Status (handoff snapshot)
 
-_Last updated: 2026-11-23, M3 complete apart from publishing, which waits for the user's OK._
+_Last updated: 2026-11-23. M3 complete and published._
 
 ## Where we are
 - **All three milestones are done.** Reviews: `docs/reviews/M1.md`, `M2.md`, `M3.md`.
-- **Pending (user decisions):**
-  1. Push to GitHub. The repo name `sciviz-agents` is tentative (D17); public or private?
-  2. Upload `data/columbia.duckdb` (173 MB) as a release asset.
-  3. Check that CI passes on GitHub.
-  4. Where to host the video: the repo, or a link the user prefers.
+- **Published (D45):** public repo https://github.com/BrianBai093/sciviz-agents. The full database is the asset of release [v1.0.0](https://github.com/BrianBai093/sciviz-agents/releases/tag/v1.0.0); README §1 gives the download command and checksum. GitHub Actions runs lint and the unit tests on every push.
+- **Open (user decision):** where to host the video. For now it is in the repo (`demo/video/sciviz_demo.mp4`).
 - **After that:** Design Test (Option A paper-style figure for P1; `demo/slides/architecture.html` is a starting point) and Project 2.
 
 ## How to run
@@ -39,5 +36,5 @@ See README §6 and `docs/reviews/M3.md`:
 
 ## Environment notes
 - Secrets: `~/Desktop/fsu/.env` (`OPENALEX_API_KEY`); `OPENAI_API_KEY` in the shell environment. Never commit or print them.
-- Raw snapshot: `~/Desktop/fsu/data/openalex_columbia_2026-11-23/` (frozen). Processed DB: `data/columbia.duckdb` (gitignored; to be published as a release asset).
+- Raw snapshot: `~/Desktop/fsu/data/openalex_columbia_2026-11-23/` (frozen). Processed DB: `data/columbia.duckdb` (gitignored; published as the release v1.0.0 asset).
 - Full live workspaces (with LangGraph checkpoints) are in `workspaces/` (gitignored). Curated copies are in `recordings/`.

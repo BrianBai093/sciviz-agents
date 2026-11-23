@@ -1,5 +1,7 @@
 # sciviz: a multi-agent LLM system for interactive scholarly data visualization
 
+[![CI](https://github.com/BrianBai093/sciviz-agents/actions/workflows/ci.yml/badge.svg)](https://github.com/BrianBai093/sciviz-agents/actions/workflows/ci.yml)
+
 sciviz answers natural-language analytical questions about scholarly data with **interactive, linked and
 AI-modifiable visualizations**. A Lead agent plans each answer and delegates to specialist agents (Data, Analyst, Viz).
 A **verification gate enforced by the harness** decides whether a visualization can be shown. In the web app you can
@@ -35,12 +37,18 @@ Requirements: Python ≥ 3.12 with [uv](https://docs.astral.sh/uv/), Node ≥ 20
 pinned JavaScript libraries from a CDN).
 
 ```bash
+git clone https://github.com/BrianBai093/sciviz-agents && cd sciviz-agents
 uv sync
 uv run playwright install chromium        # headless browser for the verification gate
 (cd frontend && npm install && npm run build)
 ```
 
-**Data.** Download the processed database `columbia.duckdb` (173 MB) from the GitHub release into `data/`, or rebuild it:
+**Data.** Download the processed database (173 MB) from [release v1.0.0](https://github.com/BrianBai093/sciviz-agents/releases/tag/v1.0.0):
+```bash
+mkdir -p data && curl -L -o data/columbia.duckdb https://github.com/BrianBai093/sciviz-agents/releases/download/v1.0.0/columbia.duckdb
+shasum -a 256 data/columbia.duckdb   # e7e28777b365d04a5a29f613043471698151ca96c6288dfaad360db1c9f45b49
+```
+Or rebuild it:
 ```bash
 # rebuild from OpenAlex (needs a free OPENALEX_API_KEY); the published snapshot is from 2026-11-23
 python3 -I data_pipeline/fetch_openalex_snapshot.py --out ../snapshot --years 2021-2024

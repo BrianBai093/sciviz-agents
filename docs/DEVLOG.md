@@ -283,3 +283,10 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
 - 11 unit tests pass and lint is clean. CI lint now also covers `evals/` and `demo/`.
 - Ledger total: **$6.90**, plus about $1–2 untracked (D41) and about $0.10 of TTS.
 - Push to GitHub and the release asset are waiting for the user's OK.
+
+## 2026-11-23: Publishing
+
+- Pre-push scan: no secret values (from `.env` or the shell environment) and no key-like strings in the tracked tree or in git history; `.env` is untracked; the largest file is the 12.7 MB video.
+- Public repo https://github.com/BrianBai093/sciviz-agents (D45).
+- Release v1.0.0 carries `columbia.duckdb` (173 MB, SHA-256 `e7e28777…f45b49`). README §1 now has the clone and download commands, the checksum and a CI badge.
+- CI (GitHub Actions: ruff + pytest) runs on every push.
