@@ -87,7 +87,7 @@ class UsageCallback(BaseCallbackHandler):
     def on_chat_model_start(self, serialized: dict, messages: Any, *, run_id: UUID, metadata=None, **kw) -> None:
         metadata = metadata or {}
         model = metadata.get("ls_model_name") or (serialized or {}).get("kwargs", {}).get("model") or "unknown"
-        agent = metadata.get("lc_agent_name") or metadata.get("sciviz_agent") or "lead"
+        agent = metadata.get("sciviz_agent") or metadata.get("lc_agent_name") or "lead"
         self.ledger.check()
         self._runs[run_id] = (model, agent, time.time())
 

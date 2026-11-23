@@ -161,6 +161,10 @@ class Workspace:
             head += f"\nstatus: {m['status']}; version: {m.get('version')}; parent: {m.get('parent')}"
         return f"{head}\n{body}"
 
+    def load_manifest(self, aid: str) -> dict:
+        p = self.artifact_dir(aid) / "viz.json"
+        return json.loads(p.read_text()) if p.exists() else {}
+
     # ---- decisions and views ---------------------------------------------------------------
     def add_decision(self, agent: str, text: str) -> None:
         with (self.root / "decisions.jsonl").open("a", encoding="utf8") as f:

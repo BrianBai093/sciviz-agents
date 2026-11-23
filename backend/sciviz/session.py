@@ -28,6 +28,7 @@ class Session:
         self.ledger = SpendLedger()
         self.kernels = KernelPool(self.ws.root, settings.db_path)
         self.gates: dict[str, GateState] = {}
+        self.escalate_agents: set[str] = set()
         self.user_question: str = ""
         self.usage_callback = UsageCallback(self.ledger, self.id, self.events)
 

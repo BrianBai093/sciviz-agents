@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sciviz view</title>
+<style>
+  :root { color-scheme: light dark; }
+  html, body { margin: 0; padding: 0; background: var(--sv-background, #fff); color: var(--sv-text, #1d1d1b);
+               font-family: var(--sv-font, system-ui, sans-serif); font-size: 12px; }
+  #root { position: relative; overflow: hidden; }
+  /* Default selection feedback for data-bound marks (used when a module does not implement setSelection/highlight). */
+  #root .sv-dimmed { opacity: var(--sv-dim-opacity, 0.15); transition: opacity 120ms; }
+  #root .sv-selected { stroke: var(--sv-highlight, #d9480f) !important; stroke-width: 2.5px !important;
+                        outline: 2px solid var(--sv-highlight, #d9480f); outline-offset: 1px; }
+  #root .sv-highlight { stroke: var(--sv-highlight, #d9480f) !important; stroke-width: 2.5px !important; opacity: 1 !important; }
+  #sv-error { display: none; padding: 12px; color: #a32d2d; font-family: ui-monospace, monospace; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="sv-error"></div>
+<script type="module" src="./host.js"></script>
+</body>
+</html>

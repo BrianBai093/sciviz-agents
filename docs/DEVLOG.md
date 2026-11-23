@@ -53,3 +53,82 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
 **Result:** in progress. The outcome will be appended here.
 
 **Spend:** LLM $0. OpenAlex: about 300–700 list requests, roughly $0.03–0.07 of the free $1/day.
+
+---
+
+## 2026-11-23 12:35–: M1 build (data + agent core)
+
+**Scaffold**
+- `git init`; uv project (`pyproject.toml`, package `backend/sciviz`).
+- Installed versions: deepagents 0.7.41, langchain 1.5.2, langchain-openai 1.8.5, langgraph 1.2.24, openai 3.57.0, duckdb 2.0.1, playwright 1.65.2 (Chromium headless shell).
+- Commits use the user's global git identity, local only.
+
+**Day-0 spike** (`tests/spikes/spike_m1_harness.py`, cost ≈ $0.015). All four checks passed:
+- (a) GPT-6.2 Sol tool calling with a reasoning-effort setting (3.0 s);
+- (b) image input ("A red circle sits to the left of a blue square");
+- (c) a declarative sub-agent via `task`, streamed under the `tools` namespace;
+- (d) `interrupt()` in a tool, then `Command(resume=…)`.
+
+→ D6 (Deep Agents) confirmed, no fallback needed.
+
+**Snapshot.** Finished at 12:43 after 691 API calls:
+- works 55,371/55,371;
+- topics 4,516;
+- Columbia-affiliated authors 29,518 of 29,520 requested;
+- sources 9,465.
+
+**DuckDB** (`data_pipeline/build_duckdb.py`, 173 MB):
+
+| Table | Rows |
+|---|---:|
+| works | 55,371 |
+| authorships | 438,156 |
+| authorship_institutions | 619,528 |
+| institutions | 15,410 |
+| authors | 29,518 |
+| topics | 4,516 |
+| work_topics | 165,198 |
+| sources | 9,465 |
+| citations | 2,322,878 (39,134 internal) |
+| work_citations_by_year | 155,356 |
+| work_keywords | 468,258 |
+| work_funders | 120,254 |
+
+- Works per year: 14,175 / 13,636 / 13,616 / 13,944.
+- Top fields: Medicine 15,750; Social Sciences 6,439; Computer Science 3,369.
+- 26% of works have no abstract.
+- Fix along the way: topic `keywords` are objects in the current API, not strings.
+
+**Catalog**
+- `data_pipeline/build_catalog.py` profiles every column (type, nulls, distinct, range, top values or examples) and merges the profile with the hand-written `catalog/columbia_semantics.yaml`.
+- Outputs: `catalog/columbia.yaml` (read by agents) and `docs/DATA.md`.
+
+**Sample DB.** `catalog/columbia_sample.duckdb`, a 3% hash sample of works: 1,661 works, 11 MB (D30).
+
+**Harness core** (`backend/sciviz/`):
+- `config.py`: settings and the price table.
+- `datasets.py`: pluggable dataset (D23).
+- `harness/events.py`: JSONL event log with subscribers.
+- `harness/budget.py`: spend ledger with warn/hard-stop, plus a LangChain usage callback.
+- `harness/workspace.py`: artifact store with lineage, decisions, views.
+- `tools/python_exec.py`: one Jupyter kernel per agent, secrets stripped (D10, D26).
+- `tools/data_tools.py`: catalog, read-only SQL with timeout and save-as-artifact, Python, artifacts, decisions.
+- Smoke test passed: lineage `T2 <- T1` recorded, secrets not visible inside the kernel.
+
+**Visualization runtime**
+- `runtime/static/host.{html,js}` + `theme.json`: the generic interaction layer.
+  - Clicks and hovers on data-bound marks are handled by delegation.
+  - Default selection/highlight styling applies when a module does not implement it (D28).
+  - Parent ↔ iframe commands for M2.
+- `runtime/cdn.py`: pins imports to exact versions via the npm registry; disk cache for CDN responses (D21).
+- `runtime/renderer.py`: Playwright render, metrics (marks, text overlap, out-of-bounds, blank), screenshots, and the generic interaction tests (D29).
+- Fixture test `tests/fixtures/bar_module.js`: `d3` pinned to 7.9.2; all 5 interaction tests pass (hover, click-select, selection visible, highlight visible, parameter change).
+
+**Agents**
+- `prompts/{lead,data,analyst,viz}.md`.
+- `agents/critic.py`: structured verdict from screenshots, automated checks and data summary.
+- `tools/viz_tools.py`: `render_preview` and `submit_viz`, the gate with escalation.
+- `tools/discovery_tools.py`: npm search and package docs.
+- `tools/lead_tools.py`: show/params/highlight views, `ask_user`.
+- `agents/build.py`: Deep Agents assembly with a harness profile that removes `execute` and the generic sub-agent (D31).
+- `cli.py`: `sciviz ask`, `sciviz cost`.

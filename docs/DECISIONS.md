@@ -172,3 +172,47 @@ Each record states the context, the options considered, the decision, and why. R
   - OpenAlex list endpoints return only the first 100 authorships per work.
 - **Decision:** Drop these works from the dataset entirely (filter `authors_count:<101`).
 - **Why:** Their author lists are truncated, and they would add millions of edges to co-authorship networks. User's decision.
+
+---
+
+## Decisions made during M1
+
+| ID | Decision | Status |
+|---|---|---|
+| D26 | One persistent Python kernel per (session, agent) instead of per sub-task | Accepted (refines PLAN §3.2) |
+| D27 | Reasoning effort: Lead medium, Data/Analyst medium, Viz high, Critic high | Accepted (PLAN said Lead high) |
+| D28 | Host runtime handles clicks/hovers and default selection styling | Accepted |
+| D29 | Generic interaction tests in the gate | Accepted |
+| D30 | Sample DB is a 3% hash sample (11 MB) | Accepted |
+| D31 | Remove shell `execute` and the generic sub-agent; Lead's file tools are read-only | Accepted |
+| D32 | `highlight()` and `setSelection()` take items, not bare ids | Accepted (refines PLAN §4.1) |
+
+## D26. Kernel lifetime
+- **Decision:** One persistent kernel per (session, agent).
+- **Why:** Simpler, and an agent keeps its working state across calls in a session. Artifacts remain the only official handoff between agents, and every artifact records the code that produced it.
+
+## D27. Reasoning effort per role
+- **Decision:** Lead medium (PLAN said high), Data/Analyst medium, Viz high, Critic high.
+- **Why:** The Lead mostly coordinates and is called often, so medium effort saves budget. Quality-critical work (writing view code, reviewing views) keeps high effort. To be revisited if the Lead's planning quality is poor.
+
+## D28. Runtime-owned interaction handling
+- **Decision:** The host runtime turns clicks and hovers on data-bound marks into selections and details through event delegation. Modules only tag their marks. When a module does not implement `setSelection`/`highlight`, the runtime applies default CSS feedback (`sv-selected`, `sv-dimmed`, `sv-highlight`).
+- **Why:** Interactivity is guaranteed by the runtime rather than by each generated module (D9).
+
+## D29. Interaction tests
+- **Decision:** Every submitted view must pass these generic checks:
+  - hovering a mark emits a hover event;
+  - clicking emits a selection whose ids appear in the bound data;
+  - selection and highlight each change at least 0.05% of pixels;
+  - each declared parameter re-renders without errors and with a visible change.
+
+## D30. Sample DB size
+- **Decision:** A 3% hash sample (1,661 works, 11 MB) instead of "a few MB".
+- **Why:** The full topic table and the citation rows dominate the size. 11 MB is still fine for git.
+
+## D31. Tool surface
+- **Decision:** A harness profile removes the shell `execute` tool (no sandbox backend) and Deep Agents' generic `general-purpose` sub-agent, so all work goes to the specialists. The Lead's filesystem tools are restricted to `ls` and `read_file`.
+
+## D32. Item-based selection API
+- **Decision:** `highlight(items)` and `setSelection(items)` take items (`{type, id}` or `{type, key}`) rather than bare ids.
+- **Why:** Aggregated marks are identified by grouping keys, not ids.

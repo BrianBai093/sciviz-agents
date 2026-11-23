@@ -1,0 +1,15 @@
+{
+  "fontFamily": "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+  "fontSize": { "xs": 10, "sm": 11, "md": 12, "lg": 14, "xl": 18 },
+  "light": {
+    "background": "#ffffff", "surface": "#f7f7f5", "text": "#1d1d1b", "textMuted": "#6b6a66",
+    "grid": "#e6e5e0", "axis": "#a8a7a1", "accent": "#2a78d6", "highlight": "#d9480f", "dimOpacity": 0.15
+  },
+  "dark": {
+    "background": "#151515", "surface": "#1e1e1d", "text": "#f0efec", "textMuted": "#a3a29b",
+    "grid": "#2c2c2a", "axis": "#5a5955", "accent": "#5aa0ef", "highlight": "#ff8a5b", "dimOpacity": 0.2
+  },
+  "categorical": ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948", "#8c6d31", "#6b6a66"],
+  "sequential": ["#e6f1fb", "#b5d4f4", "#85b7eb", "#378add", "#185fa5", "#0c447c"],
+  "diverging": ["#185fa5", "#85b7eb", "#f0efec", "#f09595", "#a32d2d"]
+}
