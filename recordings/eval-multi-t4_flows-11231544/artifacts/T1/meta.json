@@ -1,0 +1,28 @@
+{
+  "id": "T1",
+  "kind": "table",
+  "title": "Columbia internal citations — complete directional field-pair counts",
+  "description": "2021–2024 Columbia OpenAlex snapshot, all work types. Distinct directed work-ID citation pairs with both endpoints in works; identical work-ID self-loops excluded (none); shared-author citations retained. Assign each work to the field of its primary topic, using assigned topic only if primary information is unavailable (primary flag, score descending, rank ascending, topic ID ascending); otherwise UNCLASSIFIED. Same/cross require two classified endpoints. One row per observed ordered field pair; unobserved pairs have zero citations.",
+  "producer": "data",
+  "inputs": [],
+  "code": "assert len(flows)==413 and flows.citation_count.sum()==39134\nassert not flows.duplicated(['citing_field_id','cited_field_id']).any()\nbase_desc = '2021–2024 Columbia OpenAlex snapshot, all work types. Distinct directed work-ID citation pairs with both endpoints in works; identical work-ID self-loops excluded (none); shared-author citations retained. Assign each work to the field of its primary topic, using assigned topic only if primary information is unavailable (primary flag, score descending, rank ascending, topic ID ascending); otherwise UNCLASSIFIED. Same/cross require two classified endpoints.'\npairs_id = save_table(flows,'Columbia internal citations — complete directional field-pair counts',base_desc+' One row per observed ordered field pair; unobserved pairs have zero citations.')\nall25=flows.head(25)\ncross25=flows[flows.pair_type=='cross_field'].head(25)\nprint(pairs_id)\nprint({k: round(100*n/d,4) for k,n,d in [('classified_pairs',39042,39134),('classified_works',55066,55371),('same',28778,39042),('cross',10264,39042),('all25',30307,39134),('cross25',4490,10264),('cross25_all',4490,39134)]})\nprint('within default',all25.groupby('pair_type').citation_count.agg(['size','sum']).to_dict())\nprint(sql(cte + ''' SELECT COUNT(DISTINCT field_id) FROM classified WHERE method='primary' ''').to_string(index=False))\ntry:\n import plotly\n print('plotly',plotly.__version__)\nexcept ImportError: print('no plotly')\nimport os\nprint(os.path.isdir('/mnt/data'))",
+  "created_at": 1795466745.405,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "413 rows; columns: citing_field_id, citing_field, citing_domain_id, citing_domain, cited_field_id, cited_field, cited_domain_id, cited_domain, pair_type, citation_count",
+    "text": "413 rows x 10 columns\nciting_field_id: str [27 distinct]\nciting_field: str [27 distinct]\nciting_domain_id: str [4 distinct] (3% null)\nciting_domain: str [4 distinct] (3% null)\ncited_field_id: str [27 distinct]\ncited_field: str [27 distinct]\ncited_domain_id: str [4 distinct] (0% null)\ncited_domain: str [4 distinct] (0% null)\npair_type: str [3 distinct]\ncitation_count: int64 [min 1, max 6765, mean 94.76]\nfirst rows:\nciting_field_id                 citing_field citing_domain_id     citing_domain cited_field_id                  cited_field cited_domain_id      cited_domain  pair_type  citation_count\n             27                     Medicine                4   Health Sciences             27                     Medicine               4   Health Sciences same_field            6765\n             31        Physics and Astronomy                3 Physical Sciences             31        Physics and Astronomy               3 Physical Sciences same_field            4033\n             23        Environmental Science                3 Physical Sciences             23        Environmental Science               3 Physical Sciences same_field            2418\n             17             Computer Science                3 Physical Sciences             17             Computer Science               3 Physical Sciences same_field            1990\n             19 Earth and Planetary Sciences                3 Physical Sciences             19 Earth and Planetary Sciences               3 Physical Sciences same_field            1746",
+    "rows": 413,
+    "columns": [
+      "citing_field_id",
+      "citing_field",
+      "citing_domain_id",
+      "citing_domain",
+      "cited_field_id",
+      "cited_field",
+      "cited_domain_id",
+      "cited_domain",
+      "pair_type",
+      "citation_count"
+    ]
+  }
+}

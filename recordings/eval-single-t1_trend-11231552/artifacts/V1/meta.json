@@ -1,0 +1,107 @@
+{
+  "id": "V1",
+  "kind": "viz",
+  "title": "Columbia publication output by field",
+  "description": "Annual work counts for the largest OpenAlex primary fields. Sparklines share a percent-change scale relative to 2021 (or a count scale). Select a row to focus on a field.",
+  "producer": "single",
+  "inputs": [
+    "T2",
+    "T1"
+  ],
+  "code": null,
+  "created_at": 1795467244.971,
+  "file": "module.js",
+  "source_dir": "viz/field-output",
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "stage": "automated",
+      "report": {
+        "ok": true,
+        "ready": true,
+        "error": null,
+        "errors": [],
+        "blocked_requests": [],
+        "metrics": {
+          "marks": 8,
+          "elements": 172,
+          "canvases": 0,
+          "texts": 19,
+          "text_overlap_ratio": 0,
+          "out_of_bounds_marks": 0,
+          "has_pick": false,
+          "has_update": true,
+          "has_set_selection": true,
+          "has_highlight": true
+        },
+        "blank": false,
+        "render_seconds": 0.82,
+        "screenshots": {
+          "default": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-single-t1_trend-11231552/artifacts/V1/shots/default.png",
+          "selected": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-single-t1_trend-11231552/artifacts/V1/shots/selected.png"
+        },
+        "interactions": [
+          {
+            "name": "hover_details",
+            "passed": true,
+            "detail": "hovering a mark emitted 1 hover event(s)"
+          },
+          {
+            "name": "click_select",
+            "passed": true,
+            "detail": "click selected [{'type': 'field', 'id': '27', 'label': 'Medicine'}]; ids/keys found in bound data: True"
+          },
+          {
+            "name": "selection_visible",
+            "passed": true,
+            "detail": "2.59% of pixels changed after selecting"
+          },
+          {
+            "name": "highlight_visible",
+            "passed": true,
+            "detail": "2.15% of pixels changed after highlight([27])"
+          },
+          {
+            "name": "multi_item_and_state",
+            "passed": true,
+            "detail": "selection/highlight with 3 items and module keeps no state (getState not implemented): 0 new errors"
+          },
+          {
+            "name": "param_limit",
+            "passed": true,
+            "detail": "set limit=20: 0 new errors, 3.91% pixels changed"
+          },
+          {
+            "name": "param_scale",
+            "passed": true,
+            "detail": "set scale='Work counts': 0 new errors, 0.73% pixels changed"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "critic",
+      "verdict": "pass",
+      "answers_question": 5,
+      "truthfulness": 5,
+      "readability": 4,
+      "interaction": 5,
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "Selecting a field dims the other rows enough that their counts are hard to read, making comparisons harder while a field is selected.",
+          "fix": "Keep unselected row text at a readable contrast and use the selected row's border and background to show focus."
+        },
+        {
+          "severity": "minor",
+          "problem": "The signed percentages make the color meaning inferable, but the change header and snapshot summary do not explicitly name 2024 as the endpoint.",
+          "fix": "Label both comparisons “2024 vs. 2021” and add a short note that blue indicates an increase and rust indicates a decrease over that interval."
+        }
+      ],
+      "summary": "The default view shows the fixed top eight fields ranked by combined 2021–2024 output, with full labels, exact annual counts, shared-scale sparklines, and annual totals for the entire snapshot. It makes the main contrast clear: all snapshot works fell 1.6%, while Computer Science rose 22.2% and Physics and Astronomy rose 17.8%. Hover, field-ID selection and external highlighting, and both parameter controls passed the automated checks."
+    }
+  ],
+  "summary": "visualization module (7613 chars) bound to ['T2', 'T1']"
+}

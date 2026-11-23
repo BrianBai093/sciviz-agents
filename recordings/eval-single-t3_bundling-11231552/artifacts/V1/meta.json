@@ -1,0 +1,112 @@
+{
+  "id": "V1",
+  "kind": "viz",
+  "title": "Columbia’s coauthorship network",
+  "description": "Hierarchical edge bundling among the 80 most prolific Columbia-affiliated authors in the 2021–2024 OpenAlex snapshot. Compare cross-field and within-field coauthorship, and inspect researchers and their shared works.",
+  "producer": "single",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": null,
+  "created_at": 1795467305.598,
+  "file": "module.js",
+  "source_dir": "viz/columbia-bundle",
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "stage": "automated",
+      "report": {
+        "ok": true,
+        "ready": true,
+        "error": null,
+        "errors": [],
+        "blocked_requests": [],
+        "metrics": {
+          "marks": 354,
+          "elements": 1202,
+          "canvases": 0,
+          "texts": 138,
+          "text_overlap_ratio": 0.145,
+          "out_of_bounds_marks": 0,
+          "has_pick": false,
+          "has_update": true,
+          "has_set_selection": true,
+          "has_highlight": true
+        },
+        "blank": false,
+        "render_seconds": 1.09,
+        "screenshots": {
+          "default": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-single-t3_bundling-11231552/artifacts/V1/shots/default.png",
+          "selected": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-single-t3_bundling-11231552/artifacts/V1/shots/selected.png"
+        },
+        "interactions": [
+          {
+            "name": "hover_details",
+            "passed": true,
+            "detail": "hovering a mark emitted 1 hover event(s)"
+          },
+          {
+            "name": "click_select",
+            "passed": true,
+            "detail": "click selected [{'type': 'author', 'id': 'A5026858777', 'label': 'Michal F. Lipson'}]; ids/keys found in bound data: True"
+          },
+          {
+            "name": "selection_visible",
+            "passed": true,
+            "detail": "8.94% of pixels changed after selecting"
+          },
+          {
+            "name": "highlight_visible",
+            "passed": true,
+            "detail": "9.59% of pixels changed after highlight([A5026858777])"
+          },
+          {
+            "name": "multi_item_and_state",
+            "passed": true,
+            "detail": "selection/highlight with 3 items and module keeps no state (getState not implemented): 0 new errors"
+          },
+          {
+            "name": "param_links",
+            "passed": true,
+            "detail": "set links='Cross-field only': 0 new errors, 8.01% pixels changed"
+          },
+          {
+            "name": "param_minimum",
+            "passed": true,
+            "detail": "set minimum=64: 0 new errors, 7.72% pixels changed"
+          },
+          {
+            "name": "param_bundling",
+            "passed": true,
+            "detail": "set bundling=0.25: 0 new errors, 8.77% pixels changed"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "critic",
+      "verdict": "pass",
+      "answers_question": 5,
+      "truthfulness": 5,
+      "readability": 4,
+      "interaction": 5,
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "Some researcher labels are small and steeply rotated, making individual names harder to scan around the ring.",
+          "fix": "Increase the label size where spacing permits, while keeping abbreviated names on the ring and full names in the detail panel."
+        },
+        {
+          "severity": "minor",
+          "problem": "The view does not explain that cross-field status compares the researchers’ assigned dominant fields, not the subject of their shared work.",
+          "fix": "Add a short note to the link legend explaining how cross-field pairs are classified."
+        }
+      ],
+      "summary": "The radial bundle shows all 80 researchers, including isolates, with subfield arcs nested inside numbered field arcs. Orange links stand out against gray, thicker links indicate more shared works, and the default counts match the data: 208 pairs, 94 cross-field and 114 within-field. The field index and legend fit, selection clearly highlights a researcher’s collaborations, and the hover, selection, highlight, and parameter checks all pass."
+    }
+  ],
+  "summary": "visualization module (13723 chars) bound to ['T1', 'T2']"
+}

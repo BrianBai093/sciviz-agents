@@ -1,0 +1,30 @@
+{
+  "id": "T1",
+  "kind": "table",
+  "title": "Top 80 Columbia researchers",
+  "description": "One row per author ID ranked by distinct 2021–2024 works with Columbia-scope affiliation, all work types. Assigned modal field then modal subfield within field from affiliated works’ primary topics. Partners counts linked top-80 peers.",
+  "producer": "single",
+  "inputs": [],
+  "code": "exec(In[1].replace('from tagged group by all qualify','from tagged group by 1,2,3 qualify').replace('using(author_id,field_id) group by all qualify','using(author_id,field_id) group by 1,2,3 qualify'))",
+  "created_at": 1795467188.863,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "80 rows; columns: author_id, affiliated_works, rank, name, field_id, field, subfield_id, subfield, field_works, subfield_works, classified_works, partners",
+    "text": "80 rows x 12 columns\nauthor_id: str [80 distinct]\naffiliated_works: int64 [min 71, max 259, mean 102.4]\nrank: int64 [min 1, max 80, mean 40.5]\nname: str [80 distinct]\nfield_id: str [14 distinct]\nfield: str [14 distinct]\nsubfield_id: str [35 distinct]\nsubfield: str [35 distinct]\nfield_works: int64 [min 19, max 222, mean 66.83]\nsubfield_works: int64 [min 11, max 128, mean 44.3]\nclassified_works: int64 [min 66, max 257, mean 102.2]\npartners: int64 [min 0, max 17, mean 5.2]\nfirst rows:\n  author_id  affiliated_works  rank                 name field_id                 field subfield_id                                 subfield  field_works  subfield_works  classified_works  partners\nA5057686070               259     1  Jason Dennis Wright       27              Medicine        2729                Obstetrics and Gynecology          222             107               257         5\nA5069636788               219     2    Andrea Baccarelli       23 Environmental Science        2307       Health, Toxicology and Mutagenesis           90              81               219        15\nA5080186393               205     3   Katherine M. Keyes       27              Medicine        2739 Public Health, Environmental and Occu...           92              34               205        17\nA5113514048               203     4 Mitchell S.V. Elkind       27              Medicine        2705   Cardiology and Cardiovascular Medicine          174              61               203        15\nA5061588829               181     5       Pierre Gentine       23 Environmental Science        2306              Global and Planetary Change          132              95               181         0",
+    "rows": 80,
+    "columns": [
+      "author_id",
+      "affiliated_works",
+      "rank",
+      "name",
+      "field_id",
+      "field",
+      "subfield_id",
+      "subfield",
+      "field_works",
+      "subfield_works",
+      "classified_works",
+      "partners"
+    ]
+  }
+}

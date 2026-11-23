@@ -1,0 +1,32 @@
+{
+  "id": "T4",
+  "kind": "table",
+  "title": "Columbia top 10 fields: four-year ranking and endpoint changes",
+  "description": "T1-derived; one row per field, fixed rank by 2021–2024 total; endpoint change and direction compare 2024 to 2021.",
+  "producer": "analyst",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "a=a.rename(columns={y:f'works_{y}' for y in years}); a['endpoint_direction']=np.select([a.change_2021_to_2024.gt(0),a.change_2021_to_2024.lt(0)],['rising','falling'],default='flat')\nfor df in (l,o):\n    for col in filter(lambda c:'yoy_' in c,df.columns): df[col]=df[col].astype(float)\nprint(save_table(l,'Columbia top 10 fields: annual trends','T1-derived; 40 field-year rows, fixed cohort ranked on 2021–2024 distinct works by primary-topic field. 2021 index is 100; YoY fields are null where no prior year is present.'))\nprint(save_table(a,'Columbia top 10 fields: four-year ranking and endpoint changes','T1-derived; one row per field, fixed rank by 2021–2024 total; endpoint change and direction compare 2024 to 2021.'))\nprint(save_table(o,'Columbia annual totals and top-10 share','T1 and T2; one row per year, totals and reconciliation plus fixed top-10 and other assigned counts, shares of all snapshot works and year-over-year and baseline changes.'))\npool={'institution_id':'I78577930','institution_name':'Columbia University','start_year':2021,'end_year':2024,'snapshot_work_count':int(o.snapshot_work_count.sum()),'top10_work_count':int(o.top10_work_count.sum()),'top10_share_pct':100*o.top10_work_count.sum()/o.snapshot_work_count.sum(),'fields_rising':int((a.endpoint_direction=='rising').sum()),'fields_falling':int((a.endpoint_direction=='falling').sum()),'fields_flat':int((a.endpoint_direction=='flat').sum())}\nprint(save_table(pd.DataFrame([pool]),'Columbia four-year pooled totals and top-10 direction counts','T1 and T2; pooled top-10 share is the ratio of four-year sums, not the mean of annual shares. Directions compare 2024 to 2021.'))\nprint(record_finding('Fixed top 10: ranks, exact annual counts, four-year volumes and endpoint changes; cutoff verified against rank 11.',{'fields':a.to_dict(orient='records'),'first_excluded':s.iloc[10][['rank','field_id','field_name','total_2021_2024']].to_dict()}))\nprint(record_finding('Annual totals, shares and changes; T1 reconciles to independently counted T2 totals each year.',o.astype(object).where(pd.notna(o),None).to_dict(orient='records')))\nprint(record_finding('Four-year pooled share and counts of top-10 fields by endpoint direction.',pool))\nturns=l[l.publication_year.gt(2021) & l.field_id.isin(['17','19','31','28','13','33','32','20'])][['field_id','field_name','publication_year','work_count','yoy_change','yoy_pct_change']]\nprint(record_finding('Interim movements: Computer Science jumps in 2024; Earth and Planetary Sciences declines every year; Physics, Neuroscience and Biochemistry peak in 2023; Social Sciences, Psychology and Economics rebound in 2024.',turns.to_dict(orient='records')))",
+  "created_at": 1795466777.854,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "10 rows; columns: rank, field_id, field_name, works_2021, works_2022, works_2023, works_2024, total_2021_2024, change_2021_to_2024, pct_change_2021_to_2024, endpoint_direction",
+    "text": "10 rows x 11 columns\nrank: int64 [min 1, max 10, mean 5.5]\nfield_id: str [10 distinct]\nfield_name: str [10 distinct]\nworks_2021: int64 [min 560, max 4005, mean 1117]\nworks_2022: int64 [min 538, max 3906, mean 1084]\nworks_2023: int64 [min 504, max 3914, mean 1085]\nworks_2024: int64 [min 456, max 3925, mean 1098]\ntotal_2021_2024: int64 [min 2190, max 1.575e+04, mean 4385]\nchange_2021_to_2024: int64 [min -211, max 178, mean -19.5]\npct_change_2021_to_2024: float64 [min -31.63, max 22.22, mean -1.212]\nendpoint_direction: str [2 distinct]\nfirst rows:\n rank field_id                               field_name  works_2021  works_2022  works_2023  works_2024  total_2021_2024  change_2021_to_2024  pct_change_2021_to_2024 endpoint_direction\n    1       27                                 Medicine        4005        3906        3914        3925            15750                  -80                -1.997503            falling\n    2       33                          Social Sciences        1676        1598        1557        1608             6439                  -68                -4.057279            falling\n    3       17                         Computer Science         801         803         786         979             3369                  178                22.222222             rising\n    4       13 Biochemistry, Genetics and Molecular ...         777         795         811         769             3152                   -8                -1.029601            falling\n    5       32                               Psychology         763         741         700         739             2943                  -24                -3.145478            falling",
+    "rows": 10,
+    "columns": [
+      "rank",
+      "field_id",
+      "field_name",
+      "works_2021",
+      "works_2022",
+      "works_2023",
+      "works_2024",
+      "total_2021_2024",
+      "change_2021_to_2024",
+      "pct_change_2021_to_2024",
+      "endpoint_direction"
+    ]
+  }
+}

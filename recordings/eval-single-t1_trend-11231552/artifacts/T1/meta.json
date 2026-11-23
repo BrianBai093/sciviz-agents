@@ -1,0 +1,23 @@
+{
+  "id": "T1",
+  "kind": "table",
+  "title": "Annual snapshot totals and classification coverage",
+  "description": "One row per year: all snapshot works, distinct work IDs, works without a joined primary-topic field, and label consistency.",
+  "producer": "single",
+  "inputs": [],
+  "code": "select publication_year, count(*) n, count(distinct work_id) unique_works, count(*) filter(where t.field_id is null) unclassified, count(*) filter(where t.field is distinct from w.primary_field) name_mismatch from works w left join topics t on w.primary_topic_id=t.topic_id group by 1 order by 1;",
+  "created_at": 1795467167.044,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "4 rows; columns: publication_year, n, unique_works, unclassified, name_mismatch",
+    "text": "4 rows x 5 columns\npublication_year: int64 [min 2021, max 2024, mean 2022]\nn: int64 [min 1.362e+04, max 1.418e+04, mean 1.384e+04]\nunique_works: int64 [min 1.362e+04, max 1.418e+04, mean 1.384e+04]\nunclassified: int64 [min 46, max 99, mean 76.25]\nname_mismatch: int64 [min 0, max 0, mean 0]\nfirst rows:\n publication_year     n  unique_works  unclassified  name_mismatch\n             2021 14175         14175            99              0\n             2022 13636         13636            97              0\n             2023 13616         13616            63              0\n             2024 13944         13944            46              0",
+    "rows": 4,
+    "columns": [
+      "publication_year",
+      "n",
+      "unique_works",
+      "unclassified",
+      "name_mismatch"
+    ]
+  }
+}

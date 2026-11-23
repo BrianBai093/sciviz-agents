@@ -1,0 +1,107 @@
+{
+  "id": "V1",
+  "kind": "viz",
+  "title": "Columbia’s collaboration network",
+  "description": "Circular hierarchical edge bundling across Columbia’s 80 most prolific researchers in 2021–2024. Read the outer field bands and inner subfield segments, then hover or select links and researchers. Cross-field links are emphasized; width rises with the square root of the number of shared works.",
+  "producer": "viz",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": null,
+  "created_at": 1795466971.436,
+  "file": "module.js",
+  "source_dir": "viz/columbia-bundles",
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "stage": "automated",
+      "report": {
+        "ok": true,
+        "ready": true,
+        "error": null,
+        "errors": [],
+        "blocked_requests": [],
+        "metrics": {
+          "marks": 417,
+          "elements": 1682,
+          "canvases": 0,
+          "texts": 260,
+          "text_overlap_ratio": 0.035,
+          "out_of_bounds_marks": 62,
+          "has_pick": false,
+          "has_update": true,
+          "has_set_selection": true,
+          "has_highlight": true
+        },
+        "blank": false,
+        "render_seconds": 0.88,
+        "screenshots": {
+          "default": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-multi-t3_bundling-11231544/artifacts/V1/shots/default.png",
+          "selected": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-multi-t3_bundling-11231544/artifacts/V1/shots/selected.png"
+        },
+        "interactions": [
+          {
+            "name": "hover_details",
+            "passed": true,
+            "detail": "hovering a mark emitted 1 hover event(s)"
+          },
+          {
+            "name": "click_select",
+            "passed": true,
+            "detail": "click selected [{'type': 'subfield', 'key': {'field_id': 31, 'subfield_id': 3107}, 'label': 'Atomic and Molecular Physics, and Optics'}]; ids/keys found in bound data: True"
+          },
+          {
+            "name": "selection_visible",
+            "passed": true,
+            "detail": "9.86% of pixels changed after selecting"
+          },
+          {
+            "name": "highlight_visible",
+            "passed": true,
+            "detail": "8.50% of pixels changed after highlight([{\"field_id\":31,\"subfield_id\":3107}])"
+          },
+          {
+            "name": "multi_item_and_state",
+            "passed": true,
+            "detail": "selection/highlight with 3 items and getState/setState round trip: 0 new errors"
+          },
+          {
+            "name": "param_edge_scope",
+            "passed": true,
+            "detail": "set edge_scope='Cross-field only': 0 new errors, 0.23% pixels changed"
+          },
+          {
+            "name": "param_min_shared_works",
+            "passed": true,
+            "detail": "set min_shared_works=64: 0 new errors, 0.80% pixels changed"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "critic",
+      "verdict": "pass",
+      "answers_question": 4,
+      "truthfulness": 5,
+      "readability": 4,
+      "interaction": 4,
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "Several field labels are tightly stacked at the upper left, and individual links are hard to follow in the densest bundles.",
+          "fix": "Give the upper-left labels a little more vertical spacing and bring the hovered link and its two endpoints to the foreground."
+        },
+        {
+          "severity": "minor",
+          "problem": "The supplied checks confirm subfield hover and selection, visible highlighting, and filter updates, but do not verify the exact routing control points, author and edge detail values, or node preservation after filtering.",
+          "fix": "Add targeted checks for basis-smoothed routes within a subfield, across subfields in one field, and across fields; verify author details and shared-work counts against the source tables; and assert that both filters preserve all 80 author IDs, 14 fields, 35 subfields, and 15 isolates."
+        }
+      ],
+      "summary": "The default view makes the 94 purple cross-field links stand out against the 114 muted same-field links. All 14 fields are labeled, and the selected subfield is easy to identify in both the circle and the detail panel. The legend explains link width and isolate marks, and the footer clarifies that curves follow groups rather than intermediary researchers. The ranked search panel is readable, and its intentional scrolling does not clip the network."
+    }
+  ],
+  "summary": "visualization module (23665 chars) bound to ['T1', 'T2']"
+}

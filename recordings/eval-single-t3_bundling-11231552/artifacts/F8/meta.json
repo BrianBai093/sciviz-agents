@@ -1,0 +1,15 @@
+{
+  "id": "F8",
+  "kind": "finding",
+  "title": "Top cross-field pair: Michal F. Lipson (Engineering) and Ale",
+  "description": "",
+  "producer": "single",
+  "inputs": [],
+  "code": "for text,val in [('Researchers shown',len(nodes)),('Assigned fields',nodes.field_id.nunique()),('Assigned subfields',nodes.subfield_id.nunique()),('Medicine researchers',sum(nodes.field_id=='27')),('All linked pairs',len(edges)),('Cross-field pairs',sum(edges.cross_field)),('Cross-field share of pairs, percent',round(100*edges.cross_field.mean(),1)),('Top cross-field pair: Michal F. Lipson (Engineering) and Alexander L. Gaeta (Physics and Astronomy), shared works',int(edges.loc[edges.cross_field,'shared_works'].max())),('Researchers with no linked peer among top 80',sum(nodes.partners==0))]: record_finding(text,int(val) if isinstance(val,np.integer) else val)",
+  "created_at": 1795467193.303,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"int\"}",
+    "text": "structure: {\"text\": \"str\", \"value\": \"int\"}\npreview: {\"text\": \"Top cross-field pair: Michal F. Lipson (Engineering) and Alexander L. Gaeta (Physics and Astronomy), shared works\", \"value\": 57}"
+  }
+}

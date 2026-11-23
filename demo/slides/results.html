@@ -1,0 +1,24 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;height:100%;font-family:Inter,system-ui,-apple-system,sans-serif;background:#fafaf9;color:#1c1917}
+.wrap{padding:56px 90px}
+h2{font-size:38px;margin:0 0 8px;letter-spacing:-.01em}.sub{font-size:19px;color:#57534e;margin-bottom:26px}
+table{border-collapse:collapse;font-size:19px;width:100%}th,td{padding:9px 14px;border-bottom:1px solid #e7e5e4;text-align:left}
+th{font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:#78716c}td.n{text-align:right;font-variant-numeric:tabular-nums}
+.row{display:flex;gap:40px;margin-top:30px}.card{flex:1;background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.5;color:#44403c}
+.card b{color:#1c1917}
+</style></head><body><div class="wrap">
+<h2>Evaluation: 4 tasks, multi-agent vs. single-agent</h2>
+<div class="sub">Same tools and the same verification gate in both modes; one live run per task (GPT-6.2 Sol).</div>
+<table>
+<tr><th>Task</th><th>Multi-agent</th><th class="n">Time</th><th class="n">Cost</th><th>Single agent</th><th class="n">Time</th><th class="n">Cost</th></tr>
+<tr><td>Trend by field (open-ended)</td><td>✅ 1st round</td><td class="n">267 s</td><td class="n">$0.23</td><td>✅ 1st round</td><td class="n">123 s</td><td class="n">$0.12</td></tr>
+<tr><td>Network, force-directed</td><td>✅ 1st round</td><td class="n">460 s</td><td class="n">$0.43</td><td>✅ 1st round</td><td class="n">137 s</td><td class="n">$0.12</td></tr>
+<tr><td>Network, hierarchical edge bundling</td><td>✅ 1st round</td><td class="n">324 s</td><td class="n">$0.31</td><td>✅ 1st round</td><td class="n">183 s</td><td class="n">$0.16</td></tr>
+<tr><td>Citation flows, Sankey (unseen technique)</td><td>✅ 1st round · d3-sankey</td><td class="n">289 s</td><td class="n">$0.26</td><td>✅ 1st round · d3-sankey</td><td class="n">219 s</td><td class="n">$0.22</td></tr>
+</table>
+<div class="row">
+<div class="card"><b>Both modes solved 4/4.</b> Every view passed the gate on its first submission, with similar Critic scores.</div>
+<div class="card"><b>The single agent was ~2× faster and half the cost</b> on these short, one-question tasks: delegation overhead does not pay off here.</div>
+<div class="card"><b>Context stays small per role:</b> largest prompt per call ≈ 9.6k (Lead), 11k (Data), 8k (Analyst), 21k (Viz) vs 24–33k tokens for the single agent, which grows with every step.</div>
+</div>
+</div></body></html>

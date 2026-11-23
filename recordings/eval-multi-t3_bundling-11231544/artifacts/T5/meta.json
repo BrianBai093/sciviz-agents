@@ -1,0 +1,36 @@
+{
+  "id": "T5",
+  "kind": "table",
+  "title": "Strongest cross-field author ties",
+  "description": "All author pairs tied at the maximum cross-field shared work count in T2, with T1 OpenAlex IDs and hierarchy labels.",
+  "producer": "analyst",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "s=pd.DataFrame([('all','All observed ties',len(j),int(j.shared_work_count.sum())),('within_field','Within assigned field',int(tot.loc[False,'author_ties']),int(tot.loc[False,'pair_work_incidences'])),('cross_field','Across assigned fields',len(x),int(x.shared_work_count.sum()))],columns=['scope_id','scope','author_ties','pair_work_incidences'])\ns['share_of_author_ties']=s.author_ties/len(j)\ns['share_of_pair_work_incidences']=s.pair_work_incidences/j.shared_work_count.sum()\nstrong=x.loc[x.shared_work_count.eq(x.shared_work_count.max()),['source_author_id','source_display_name','source_rank','source_field_id','source_field','source_subfield_id','source_subfield','target_author_id','target_display_name','target_rank','target_field_id','target_field','target_subfield_id','target_subfield','shared_work_count']].sort_values(['source_author_id','target_author_id'])\nprint(save_table(s,'Collaboration totals by field status','T1/T2 rollup: counts and shares across all observed ties; summed works are pair–work incidences. Scope IDs mark aggregate rows.'))\nprint(save_table(f,'Cross-field collaboration by field pair','T1/T2 rollup for all 18 observed unordered cross-field pairs, with OpenAlex field IDs, roster sizes, and competition ranks (ties receive the same rank).'))\nprint(save_table(strong,'Strongest cross-field author ties','All author pairs tied at the maximum cross-field shared work count in T2, with T1 OpenAlex IDs and hierarchy labels.'))\nprint(record_finding('Validated T1/T2 totals and cross-field shares',{'researchers':len(a),'fields':a.field_id.nunique(),'subfields':a.subfield_id.nunique(),'researchers_with_ties':len(active),'isolates':len(a)-len(active),'scope_totals':s.to_dict('records'),'observed_cross_field_pairs':len(f)}))\nlead=f[(f.author_ties_rank<=3)|(f.pair_work_incidences_rank<=3)]\nprint(record_finding('Top three field pairs on either metric; no ties for those ranks',lead.to_dict('records')))\nprint(record_finding('Unique strongest cross-field author tie; its weight as a share of the Engineering–Physics and Astronomy bundle',{'max_tie_count':len(strong),'pairs':strong.to_dict('records'),'share_of_engineering_physics_incidences':int(strong.shared_work_count.iloc[0])/int(f.loc[(f.field_1_id==22)&(f.field_2_id==31),'pair_work_incidences'].iloc[0])}))",
+  "created_at": 1795466821.716,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "1 rows; columns: source_author_id, source_display_name, source_rank, source_field_id, source_field, source_subfield_id, source_subfield, target_author_id, target_display_name, target_rank, target_field_id, target_field",
+    "text": "1 rows x 15 columns\nsource_author_id: str [1 distinct]\nsource_display_name: str [1 distinct]\nsource_rank: int64 [min 17, max 17, mean 17]\nsource_field_id: int32 [min 22, max 22, mean 22]\nsource_field: str [1 distinct]\nsource_subfield_id: int32 [min 2208, max 2208, mean 2208]\nsource_subfield: str [1 distinct]\ntarget_author_id: str [1 distinct]\ntarget_display_name: str [1 distinct]\ntarget_rank: int64 [min 65, max 65, mean 65]\ntarget_field_id: int32 [min 31, max 31, mean 31]\ntarget_field: str [1 distinct]\ntarget_subfield_id: int32 [min 3107, max 3107, mean 3107]\ntarget_subfield: str [1 distinct]\nshared_work_count: int64 [min 57, max 57, mean 57]\nfirst rows:\nsource_author_id source_display_name  source_rank  source_field_id source_field  source_subfield_id                       source_subfield target_author_id target_display_name  target_rank  target_field_id          target_field  target_subfield_id                          target_subfield  shared_work_count\n     A5026858777    Michal F. Lipson           17               22  Engineering                2208 Electrical and Electronic Engineering      A5046767752  Alexander L. Gaeta           65               31 Physics and Astronomy                3107 Atomic and Molecular Physics, and Optics                 57",
+    "rows": 1,
+    "columns": [
+      "source_author_id",
+      "source_display_name",
+      "source_rank",
+      "source_field_id",
+      "source_field",
+      "source_subfield_id",
+      "source_subfield",
+      "target_author_id",
+      "target_display_name",
+      "target_rank",
+      "target_field_id",
+      "target_field",
+      "target_subfield_id",
+      "target_subfield",
+      "shared_work_count"
+    ]
+  }
+}

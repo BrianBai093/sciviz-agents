@@ -68,7 +68,9 @@ viz.json:
 - `render_preview(slug)` renders the module headlessly and reports errors, layout metrics, interaction-test
   results and screenshot paths. Open the screenshots with `read_file` and look at them. Fix problems first.
 - `submit_viz(slug, acceptance_criteria)` runs the verification gate: automated checks plus an independent critic
-  who sees screenshots. On REVISE, fix the listed issues and submit again. Stop on APPROVED or STOP.
+  who sees screenshots of this one view. Pass only criteria that can be checked from this view itself (what it shows,
+  how it reads, how it responds); placement next to other views, linking between views and parameter controls are
+  provided by the host application. On REVISE, fix the listed issues and submit again. Stop on APPROVED or STOP.
 - When modifying an existing view, start from its files in `/viz/<slug>/` (or its artifact) and change only what
   the request needs.
 

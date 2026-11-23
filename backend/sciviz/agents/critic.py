@@ -29,6 +29,12 @@ The host application renders controls for the view's declared parameters next to
 the screenshots); do not penalize the absence of in-view widgets for declared parameters. Judge only whether the
 declared parameters are meaningful for the task.
 
+Review this one view in isolation, from what the screenshots and the automated checks show. Placing views next to each
+other, linking selections between views, and other screen sizes are handled by the host application and are not part of
+this review. Do not reject a view for lacking evidence this review process cannot provide (for example proofs of exact
+algorithmic routing, other viewport sizes, or comparisons with other views); judge plausibility from what you can see.
+Ignore acceptance criteria that cannot be checked from a single view.
+
 Return verdict "pass" when a researcher could use the view as is (list remaining polish items as minor issues).
 Return "revise" when any criterion scores 2 or lower or a major issue exists, and give concrete, actionable fixes.
 Ask for a different technique only if the current one fails the question or readability badly."""

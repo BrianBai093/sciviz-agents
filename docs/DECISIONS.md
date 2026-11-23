@@ -195,6 +195,7 @@ Each record states the context, the options considered, the decision, and why. R
 | D39 | Narrow panels render views at ≥720 px and scale down; a compared view spans the full width | Accepted |
 | D40 | Single-agent ablation mode with the same tools and gate | Accepted |
 | D41 | Process-safe ledger; cost events are the source of truth | Accepted |
+| D42 | The Critic reviews each view in isolation, against checkable criteria | Accepted |
 
 ## D26. Kernel lifetime
 - **Decision:** One persistent kernel per (session, agent).
@@ -272,4 +273,12 @@ Each record states the context, the options considered, the decision, and why. R
   - An exclusive `fcntl` file lock around every read-modify-write, with unique temp files and an atomic replace.
   - Each model call's `cost` event is written to the session's `events.jsonl` before the ledger is updated, and a damaged ledger is rebuilt from those events.
   - Ledger failures can no longer break an agent run.
+- **Status:** Accepted.
+
+## D42. Each view is reviewed in isolation, against checkable criteria
+- **Context:** In the demo session, the Viz agent passed acceptance criteria such as "side by side with V1" and "a 420×625 layout" to the gate. The Critic rejected an edge-bundling view twice (answers_question 3/5) for missing evidence of things one view's screenshots cannot show, and asked for "verification" of exact routing. The view was only approved on the next turn.
+- **Decision:**
+  - The Critic reviews one view in isolation. Cross-view placement and linking, and other viewport sizes, are the host's job.
+  - The Critic must not reject a view for evidence the gate cannot provide, and ignores criteria that cannot be checked from a single view.
+  - The Viz prompt says to pass only criteria checkable from the view itself.
 - **Status:** Accepted.

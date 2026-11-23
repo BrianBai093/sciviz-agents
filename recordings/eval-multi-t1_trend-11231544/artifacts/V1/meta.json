@@ -1,0 +1,108 @@
+{
+  "id": "V1",
+  "kind": "viz",
+  "title": "Columbia’s publication output by field, 2021–2024",
+  "description": "Aligned yearly trend lines for a fixed set of Columbia’s ten largest OpenAlex fields. Compare each field with its own 2021 baseline, or switch to a common zero-based count scale. The right columns show the endpoint counts and percent change.",
+  "producer": "viz",
+  "inputs": [
+    "T3",
+    "T4",
+    "T5"
+  ],
+  "code": null,
+  "created_at": 1795466910.204,
+  "file": "module.js",
+  "source_dir": "viz/columbia-trends",
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "stage": "automated",
+      "report": {
+        "ok": true,
+        "ready": true,
+        "error": null,
+        "errors": [],
+        "blocked_requests": [],
+        "metrics": {
+          "marks": 50,
+          "elements": 292,
+          "canvases": 0,
+          "texts": 44,
+          "text_overlap_ratio": 0,
+          "out_of_bounds_marks": 0,
+          "has_pick": false,
+          "has_update": true,
+          "has_set_selection": true,
+          "has_highlight": true
+        },
+        "blank": false,
+        "render_seconds": 0.79,
+        "screenshots": {
+          "default": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-multi-t1_trend-11231544/artifacts/V1/shots/default.png",
+          "selected": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-multi-t1_trend-11231544/artifacts/V1/shots/selected.png"
+        },
+        "interactions": [
+          {
+            "name": "hover_details",
+            "passed": true,
+            "detail": "hovering a mark emitted 1 hover event(s)"
+          },
+          {
+            "name": "click_select",
+            "passed": true,
+            "detail": "click selected [{'type': 'field', 'id': '27', 'label': 'Medicine'}]; ids/keys found in bound data: True"
+          },
+          {
+            "name": "selection_visible",
+            "passed": true,
+            "detail": "8.29% of pixels changed after selecting"
+          },
+          {
+            "name": "highlight_visible",
+            "passed": true,
+            "detail": "14.06% of pixels changed after highlight([27])"
+          },
+          {
+            "name": "multi_item_and_state",
+            "passed": true,
+            "detail": "selection/highlight with 3 items and module keeps no state (getState not implemented): 0 new errors"
+          },
+          {
+            "name": "param_mode",
+            "passed": true,
+            "detail": "set mode='Counts': 0 new errors, 6.70% pixels changed"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "critic",
+      "verdict": "pass",
+      "answers_question": 4,
+      "truthfulness": 5,
+      "readability": 4,
+      "interaction": 4,
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The source note says “defined child institutions” without identifying which institutions are included or how they were chosen.",
+          "fix": "List the included OpenAlex institution IDs or link to a methodology note that defines the Columbia institution scope."
+        },
+        {
+          "severity": "minor",
+          "problem": "In the selected screenshot, the tooltip shows Medicine’s exact annual counts but covers part of the title and the 2021 column label.",
+          "fix": "Position the tooltip beside or below the active row, keeping the title and year labels visible."
+        },
+        {
+          "severity": "minor",
+          "problem": "The mode-switch test confirms that Counts changes the rendering, but not that all rows use the same zero-based domain. Keyboard focus for annual details is advertised but not covered by the reported tests.",
+          "fix": "Add a check for the shared zero-based Counts domain and verify that keyboard focus on a year point reveals its exact value."
+        }
+      ],
+      "summary": "The aligned small multiples make all ten fields easy to compare on the shared index scale without letting Medicine’s larger volume flatten the other trends. Computer Science (+22.2%) and Earth and Planetary Sciences (−31.6%) stand out, and the subtitle distinguishes the university-wide 2024 rebound from output still being 1.6% below 2021. Exact counts and clear selection feedback make the view usable as is."
+    }
+  ],
+  "summary": "visualization module (13855 chars) bound to ['T3', 'T4', 'T5']"
+}

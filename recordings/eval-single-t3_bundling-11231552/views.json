@@ -1,0 +1,13 @@
+{
+  "views": [
+    {
+      "view_id": "view1",
+      "viz": "V1",
+      "title": "Columbia’s top 80: coauthorship across fields, 2021–2024",
+      "params": {},
+      "highlight": [],
+      "created_at": 1795467328.458633
+    }
+  ],
+  "selection": null
+}

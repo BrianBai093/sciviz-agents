@@ -1,0 +1,31 @@
+{
+  "id": "T3",
+  "kind": "table",
+  "title": "Sankey ribbons by view configuration",
+  "description": "One row per view mode, named-field count, grouped citing and cited field pair, and pre-grouping same/cross/unclassified flow class. Field rank is by endpoint totals. Smaller fields are rolled up without dropping links.",
+  "producer": "single",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "f=load('T2').copy(); f['flow']=np.where((f.source_id=='unknown')|(f.target_id=='unknown'),'unknown',np.where(f.source_id==f.target_id,'same','cross')); parts=[]\nfor mode,k in [('All citations',None),('Cross-field only','cross'),('Same-field only','same')]:\n    rows=f if k is None else f[f.flow==k]\n    score=rows.groupby('source_id').n.sum().add(rows.groupby('target_id').n.sum(),fill_value=0).drop('unknown',errors='ignore')\n    order=sorted(score.index,key=lambda x:(-score[x],x))\n    for fields in range(4,15):\n        chosen=order[:fields]; rank={id:i for i,id in enumerate(chosen+['other','unknown'])}; r=rows.copy()\n        for side in ['source','target']:\n            ok=r[side+'_id'].isin([*chosen,'unknown']); r.loc[~ok,side+'_id']='other'; r.loc[~ok,side]='Other fields'\n        v=r.groupby(['source_id','source','target_id','target','flow'],as_index=False).n.sum(); v['source_rank']=v.source_id.map(rank); v['target_rank']=v.target_id.map(rank); v['mode']=mode; v['fields']=fields\n        assert v.n.sum()==rows.n.sum()\n        parts.append(v)\nout=pd.concat(parts,ignore_index=True); print(out.shape); save_table(out,'Sankey ribbons by view configuration','One row per view mode, named-field count, grouped citing and cited field pair, and pre-grouping same/cross/unclassified flow class. Field rank is by endpoint totals. Smaller fields are rolled up without dropping links.')",
+  "created_at": 1795467285.62,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "2,428 rows; columns: source_id, source, target_id, target, flow, n, source_rank, target_rank, mode, fields",
+    "text": "2,428 rows x 10 columns\nsource_id: str [16 distinct]\nsource: str [16 distinct]\ntarget_id: str [16 distinct]\ntarget: str [16 distinct]\nflow: str [3 distinct]\nn: int64 [min 1, max 1.357e+04, mean 354.2]\nsource_rank: int64 [min 0, max 15, mean 5.551]\ntarget_rank: int64 [min 0, max 15, mean 5.378]\nmode: str [3 distinct]\nfields: int64 [min 4, max 14, mean 10.67]\nfirst rows:\nsource_id           source target_id                target  flow    n  source_rank  target_rank          mode  fields\n       17 Computer Science        17      Computer Science  same 1990            3            3 All citations       4\n       17 Computer Science        23 Environmental Science cross   13            3            2 All citations       4\n       17 Computer Science        27              Medicine cross  101            3            0 All citations       4\n       17 Computer Science        31 Physics and Astronomy cross   50            3            1 All citations       4\n       17 Computer Science     other          Other fields cross  678            3            4 All citations       4",
+    "rows": 2428,
+    "columns": [
+      "source_id",
+      "source",
+      "target_id",
+      "target",
+      "flow",
+      "n",
+      "source_rank",
+      "target_rank",
+      "mode",
+      "fields"
+    ]
+  }
+}

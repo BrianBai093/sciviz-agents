@@ -1,0 +1,24 @@
+{
+  "id": "T1",
+  "kind": "table",
+  "title": "Top 80 Columbia researchers",
+  "description": "One row per OpenAlex author ID, ranked by distinct Columbia-affiliated snapshot works (2021–2024), with unique cohort collaborators and component id.",
+  "producer": "single",
+  "inputs": [],
+  "code": "q='''WITH counts AS (SELECT author_id, count(DISTINCT work_id) works, min(author_name) fallback FROM authorships WHERE is_columbia AND author_id IS NOT NULL GROUP BY 1), ranked AS (SELECT *, row_number() OVER(ORDER BY works DESC,author_id) rank FROM counts QUALIFY rank<=80) '''\nn=sql(q+'''SELECT ranked.author_id id,coalesce(authors.name,fallback) name,rank,works FROM ranked LEFT JOIN authors USING(author_id) ORDER BY rank''')\ne=sql(q+''', byline AS (SELECT DISTINCT work_id,author_id FROM authorships JOIN ranked USING(author_id)) SELECT a.author_id source,b.author_id target,count(*) shared FROM byline a JOIN byline b USING(work_id) WHERE a.author_id<b.author_id GROUP BY 1,2 ORDER BY shared DESC,source,target''')\nimport networkx as nx\ng=nx.Graph(); g.add_nodes_from(n.id); g.add_weighted_edges_from(e.itertuples(index=False,name=None)); n['partners']=n.id.map(dict(g.degree())); comps=sorted(nx.connected_components(g),key=lambda s:(-len(s),min(s))); n['component']=n.id.map({a:i+1 for i,c in enumerate(comps) for a in c}); print(n.head(10)); print(e.head(10)); print(e.shared.describe(),len(comps),[len(c) for c in comps]); print(n[n.partners==0][['name','rank']]); print(save_table(n,'Top 80 Columbia researchers','One row per OpenAlex author ID, ranked by distinct Columbia-affiliated snapshot works (2021–2024), with unique cohort collaborators and component id.')); print(save_table(e,'Coauthorship among the top 80','One row per undirected OpenAlex author pair, weighted by distinct shared snapshot works (2021–2024), regardless of either author’s work-specific affiliation.'))",
+  "created_at": 1795467178.744,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "80 rows; columns: id, name, rank, works, partners, component",
+    "text": "80 rows x 6 columns\nid: str [80 distinct]\nname: str [80 distinct]\nrank: int64 [min 1, max 80, mean 40.5]\nworks: int64 [min 71, max 259, mean 102.4]\npartners: int64 [min 0, max 17, mean 5.2]\ncomponent: int64 [min 1, max 17, mean 2.788]\nfirst rows:\n         id                 name  rank  works  partners  component\nA5057686070  Jason Dennis Wright     1    259         5          1\nA5069636788    Andrea Baccarelli     2    219        15          1\nA5080186393   Katherine M. Keyes     3    205        17          1\nA5113514048 Mitchell S.V. Elkind     4    203        15          1\nA5061588829       Pierre Gentine     5    181         0         10",
+    "rows": 80,
+    "columns": [
+      "id",
+      "name",
+      "rank",
+      "works",
+      "partners",
+      "component"
+    ]
+  }
+}

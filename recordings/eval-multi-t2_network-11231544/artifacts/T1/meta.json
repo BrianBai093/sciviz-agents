@@ -1,0 +1,26 @@
+{
+  "id": "T1",
+  "kind": "table",
+  "title": "Columbia top 80 researchers, 2021–2024 — author nodes",
+  "description": "One row per top-80 resolved OpenAlex author ID, including isolates. Profile display name and one-based rank by descending count of distinct 2021–2024 snapshot works where the author personally lists Columbia University or one of the four covered child institutions; all work types; ties by ascending lexicographic OpenAlex author ID. Annual columns partition that same affiliated-work count by publication year.",
+  "producer": "data",
+  "inputs": [],
+  "code": "print(sql(base+'''SELECT publication_year,count(*) AS selected_work_authors,count(DISTINCT b.work_id) AS selected_works,count(*) FILTER (WHERE q.work_id IS NOT NULL) AS affiliated_work_authors FROM selected_bylines b LEFT JOIN qual q USING(work_id,publication_year,author_id) GROUP BY 1 ORDER BY 1''').to_string(index=False)); print(sql(base+'''SELECT publication_year,count(*) AS pair_works,count(DISTINCT work_id) AS collaboration_works FROM pair_works GROUP BY 1 ORDER BY 1''').to_string(index=False));print(nodes[nodes.author_id.isin(['A5057686070','A5091772334'])][['author_id','display_name','rank']].to_string(index=False))\nprint(sql(base+'''SELECT count(*) AS top_bylines_before_dedup,(SELECT count(*) FROM selected_bylines) AS top_bylines_after_dedup FROM snap JOIN authorships USING(work_id) JOIN top USING(author_id)''').to_string(index=False))\nprint(save_table(nodes,'Columbia top 80 researchers, 2021–2024 — author nodes','One row per top-80 resolved OpenAlex author ID, including isolates. Profile display name and one-based rank by descending count of distinct 2021–2024 snapshot works where the author personally lists Columbia University or one of the four covered child institutions; all work types; ties by ascending lexicographic OpenAlex author ID. Annual columns partition that same affiliated-work count by publication year.'))\nprint(save_table(links,'Columbia top 80 researchers, 2021–2024 — coauthorship edges','One row per undirected pair of top-80 OpenAlex author IDs, stored in ascending lexicographic endpoint order. Weight shared_works counts distinct 2021–2024 snapshot works with both IDs on the byline, regardless of their affiliations on that work; all work types. Annual columns partition the weight by publication year.'))",
+  "created_at": 1795466754.602,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "80 rows; columns: author_id, display_name, rank, affiliated_works, affiliated_works_2021, affiliated_works_2022, affiliated_works_2023, affiliated_works_2024",
+    "text": "80 rows x 8 columns\nauthor_id: str [80 distinct]\ndisplay_name: str [80 distinct]\nrank: int64 [min 1, max 80, mean 40.5]\naffiliated_works: int64 [min 71, max 259, mean 102.4]\naffiliated_works_2021: int64 [min 0, max 84, mean 26.59]\naffiliated_works_2022: int64 [min 7, max 75, mean 26.61]\naffiliated_works_2023: int64 [min 6, max 71, mean 26.89]\naffiliated_works_2024: int64 [min 1, max 62, mean 22.3]\nfirst rows:\n  author_id         display_name  rank  affiliated_works  affiliated_works_2021  affiliated_works_2022  affiliated_works_2023  affiliated_works_2024\nA5057686070  Jason Dennis Wright     1               259                     62                     75                     60                     62\nA5069636788    Andrea Baccarelli     2               219                     84                     66                     50                     19\nA5080186393   Katherine M. Keyes     3               205                     51                     50                     58                     46\nA5113514048 Mitchell S.V. Elkind     4               203                     66                     47                     50                     40\nA5061588829       Pierre Gentine     5               181                     40                     42                     59                     40",
+    "rows": 80,
+    "columns": [
+      "author_id",
+      "display_name",
+      "rank",
+      "affiliated_works",
+      "affiliated_works_2021",
+      "affiliated_works_2022",
+      "affiliated_works_2023",
+      "affiliated_works_2024"
+    ]
+  }
+}

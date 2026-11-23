@@ -1,0 +1,18 @@
+{
+  "id": "F1",
+  "kind": "finding",
+  "title": "Internal citation pairs and classified mix (T1)",
+  "description": "",
+  "producer": "single",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "a=load('T1').iloc[0]; f=load('T2'); x=f[(f.source_id!=f.target_id)&(f.source_id!='unknown')&(f.target_id!='unknown')]; known=int(a.same_field+a.cross_field); record_finding('Internal citation pairs and classified mix (T1)',{'total':int(a.internal_rows),'unknown':int(a.unknown_pairs),'same':int(a.same_field),'cross':int(a.cross_field),'same_pct':round(100*a.same_field/known,1),'cross_pct':round(100*a.cross_field/known,1)}); record_finding('Largest same-field and cross-field directions (T2)',pd.concat([f.head(2),x.head(4)]).to_dict('records')); s=f.groupby('source_id').n.sum().add(f.groupby('target_id').n.sum(),fill_value=0).drop('unknown').sort_values(ascending=False); print(s); print(x.head(12).to_string(index=False))",
+  "created_at": 1795467184.74,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": {\"total\": \"int\", \"unknown\": \"int\", \"same\": \"int\", \"cross\": \"int\", \"same_pct\": \"float64\", \"cross_pct\": \"float64\"}}",
+    "text": "structure: {\"text\": \"str\", \"value\": {\"total\": \"int\", \"unknown\": \"int\", \"same\": \"int\", \"cross\": \"int\", \"same_pct\": \"float64\", \"cross_pct\": \"float64\"}}\npreview: {\"text\": \"Internal citation pairs and classified mix (T1)\", \"value\": {\"total\": 39134, \"unknown\": 92, \"same\": 28778, \"cross\": 10264, \"same_pct\": 73.7, \"cross_pct\": 26.3}}"
+  }
+}

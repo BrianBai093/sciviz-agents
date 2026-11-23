@@ -1,0 +1,21 @@
+{
+  "id": "T2",
+  "kind": "table",
+  "title": "Coauthorship among the top 80",
+  "description": "One row per undirected OpenAlex author pair, weighted by distinct shared snapshot works (2021–2024), regardless of either author’s work-specific affiliation.",
+  "producer": "single",
+  "inputs": [],
+  "code": "q='''WITH counts AS (SELECT author_id, count(DISTINCT work_id) works, min(author_name) fallback FROM authorships WHERE is_columbia AND author_id IS NOT NULL GROUP BY 1), ranked AS (SELECT *, row_number() OVER(ORDER BY works DESC,author_id) rank FROM counts QUALIFY rank<=80) '''\nn=sql(q+'''SELECT ranked.author_id id,coalesce(authors.name,fallback) name,rank,works FROM ranked LEFT JOIN authors USING(author_id) ORDER BY rank''')\ne=sql(q+''', byline AS (SELECT DISTINCT work_id,author_id FROM authorships JOIN ranked USING(author_id)) SELECT a.author_id source,b.author_id target,count(*) shared FROM byline a JOIN byline b USING(work_id) WHERE a.author_id<b.author_id GROUP BY 1,2 ORDER BY shared DESC,source,target''')\nimport networkx as nx\ng=nx.Graph(); g.add_nodes_from(n.id); g.add_weighted_edges_from(e.itertuples(index=False,name=None)); n['partners']=n.id.map(dict(g.degree())); comps=sorted(nx.connected_components(g),key=lambda s:(-len(s),min(s))); n['component']=n.id.map({a:i+1 for i,c in enumerate(comps) for a in c}); print(n.head(10)); print(e.head(10)); print(e.shared.describe(),len(comps),[len(c) for c in comps]); print(n[n.partners==0][['name','rank']]); print(save_table(n,'Top 80 Columbia researchers','One row per OpenAlex author ID, ranked by distinct Columbia-affiliated snapshot works (2021–2024), with unique cohort collaborators and component id.')); print(save_table(e,'Coauthorship among the top 80','One row per undirected OpenAlex author pair, weighted by distinct shared snapshot works (2021–2024), regardless of either author’s work-specific affiliation.'))",
+  "created_at": 1795467178.745,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "208 rows; columns: source, target, shared",
+    "text": "208 rows x 3 columns\nsource: str [49 distinct]\ntarget: str [55 distinct]\nshared: int64 [min 1, max 85, mean 8.562]\nfirst rows:\n     source      target  shared\nA5057686070 A5091772334      85\nA5009639179 A5068971185      76\nA5002038978 A5057686070      75\nA5038847786 A5073128462      69\nA5065239151 A5113514048      58",
+    "rows": 208,
+    "columns": [
+      "source",
+      "target",
+      "shared"
+    ]
+  }
+}

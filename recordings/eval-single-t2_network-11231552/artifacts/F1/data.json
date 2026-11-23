@@ -1,0 +1,1 @@
+{"text": "Full network size and component sizes; top ranked author and strongest edge supported by T1 and T2", "value": {"nodes": 80, "edges": 208, "component_sizes": [57, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "top_author": {"name": "Jason Dennis Wright", "works": 259}, "strongest_edge": {"authors": ["Jason Dennis Wright", "Dawn L. Hershman"], "shared": 85}}}

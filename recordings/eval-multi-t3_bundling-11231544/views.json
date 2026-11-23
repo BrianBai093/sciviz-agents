@@ -1,0 +1,13 @@
+{
+  "views": [
+    {
+      "view_id": "view1",
+      "viz": "V1",
+      "title": "Columbia’s top 80 researchers: collaboration across fields, 2021–2024 linked by coauthorship",
+      "params": {},
+      "highlight": [],
+      "created_at": 1795467002.105189
+    }
+  ],
+  "selection": null
+}

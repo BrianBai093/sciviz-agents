@@ -1,0 +1,102 @@
+{
+  "id": "V1",
+  "kind": "viz",
+  "title": "Columbia’s most prolific researchers",
+  "description": "Force-directed coauthorship among 80 Columbia researchers, 2021–2024. Larger circles represent more Columbia-affiliated works; thicker links represent more shared works. Hover nodes and links for details.",
+  "producer": "single",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": null,
+  "created_at": 1795467264.935,
+  "file": "module.js",
+  "source_dir": "viz/columbia-coauthors",
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "stage": "automated",
+      "report": {
+        "ok": true,
+        "ready": true,
+        "error": null,
+        "errors": [],
+        "blocked_requests": [],
+        "metrics": {
+          "marks": 288,
+          "elements": 317,
+          "canvases": 0,
+          "texts": 12,
+          "text_overlap_ratio": 0,
+          "out_of_bounds_marks": 0,
+          "has_pick": false,
+          "has_update": true,
+          "has_set_selection": true,
+          "has_highlight": true
+        },
+        "blank": false,
+        "render_seconds": 0.93,
+        "screenshots": {
+          "default": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-single-t2_network-11231552/artifacts/V1/shots/default.png",
+          "selected": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-single-t2_network-11231552/artifacts/V1/shots/selected.png"
+        },
+        "interactions": [
+          {
+            "name": "hover_details",
+            "passed": true,
+            "detail": "hovering a mark emitted 1 hover event(s)"
+          },
+          {
+            "name": "click_select",
+            "passed": true,
+            "detail": "click selected [{'type': 'group', 'key': {'source': 'A5000454252', 'target': 'A5050822671'}, 'label': 'Elisa E. Konofagou & Kam W. Leong'}]; ids/keys found in bound data: True"
+          },
+          {
+            "name": "selection_visible",
+            "passed": true,
+            "detail": "3.26% of pixels changed after selecting"
+          },
+          {
+            "name": "highlight_visible",
+            "passed": true,
+            "detail": "3.27% of pixels changed after highlight([{\"source\":\"A5000454252\",\"target\":\"A5050822671\"}])"
+          },
+          {
+            "name": "multi_item_and_state",
+            "passed": true,
+            "detail": "selection/highlight with 3 items and module keeps no state (getState not implemented): 0 new errors"
+          },
+          {
+            "name": "param_minimum",
+            "passed": true,
+            "detail": "set minimum=64: 0 new errors, 1.92% pixels changed"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "critic",
+      "verdict": "pass",
+      "answers_question": 5,
+      "truthfulness": 4,
+      "readability": 4,
+      "interaction": 5,
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The legend does not explain that link weights count distinct shared snapshot works regardless of Columbia affiliation, whereas node sizes count only distinct Columbia-affiliated works.",
+          "fix": "Clarify the two counting rules in the legend or a short caption."
+        },
+        {
+          "severity": "minor",
+          "problem": "Thin links are faint and can be hard to trace through the dense center of the largest component.",
+          "fix": "Slightly increase the opacity of the weakest links while preserving the width differences and the dimming used for selection."
+        }
+      ],
+      "summary": "The default view shows all 80 researchers and 208 undirected links, with the two connected components and all 15 isolates clearly separated. The legend and panel labels fit. The tested link selection clearly highlights the collaboration and its endpoints, and the automated checks confirm that hover, selection, highlighting, and the minimum shared-works control respond."
+    }
+  ],
+  "summary": "visualization module (8149 chars) bound to ['T1', 'T2']"
+}

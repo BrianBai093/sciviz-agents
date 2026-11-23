@@ -1,0 +1,13 @@
+{
+  "views": [
+    {
+      "view_id": "view1",
+      "viz": "V1",
+      "title": "Citation flows within Columbia research: citing field → cited field",
+      "params": {},
+      "highlight": [],
+      "created_at": 1795466967.803589
+    }
+  ],
+  "selection": null
+}

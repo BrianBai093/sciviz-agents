@@ -1,0 +1,23 @@
+{
+  "id": "T1",
+  "kind": "table",
+  "title": "Columbia annual OpenAlex field counts, 2021–2024",
+  "description": "One row per publication year and OpenAlex field ID (all 26 taxonomy fields, zero-filled) or explicit Unassigned bucket (NULL field ID). Counts distinct snapshot work IDs across all types for Columbia University I78577930 and snapshot-defined children, using works.primary_topic_id joined to topics; no topic fallback.",
+  "producer": "data",
+  "inputs": [],
+  "code": "WITH years AS (SELECT year AS publication_year FROM range(2021,2025) AS y(year)), field_dim AS (SELECT DISTINCT field_id, field AS field_name, false AS is_unassigned FROM topics UNION ALL SELECT NULL::VARCHAR, 'Unassigned', true), counts AS (SELECT w.publication_year, t.field_id, count(DISTINCT w.work_id) AS work_count FROM works w LEFT JOIN topics t ON w.primary_topic_id=t.topic_id WHERE w.publication_year BETWEEN 2021 AND 2024 GROUP BY 1,2) SELECT y.publication_year, f.field_id, f.field_name, f.is_unassigned, coalesce(c.work_count,0) AS work_count FROM years y CROSS JOIN field_dim f LEFT JOIN counts c ON c.publication_year=y.publication_year AND c.field_id IS NOT DISTINCT FROM f.field_id ORDER BY y.publication_year, f.is_unassigned, f.field_id",
+  "created_at": 1795466720.293,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "108 rows; columns: publication_year, field_id, field_name, is_unassigned, work_count",
+    "text": "108 rows x 5 columns\npublication_year: int64 [min 2021, max 2024, mean 2022]\nfield_id: str [26 distinct] (4% null)\nfield_name: str [27 distinct]\nis_unassigned: bool [min 0, max 1, mean 0.03704]\nwork_count: int64 [min 0, max 4005, mean 512.7]\nfirst rows:\n publication_year field_id                               field_name  is_unassigned  work_count\n             2021       11     Agricultural and Biological Sciences          False         156\n             2021       12                      Arts and Humanities          False         474\n             2021       13 Biochemistry, Genetics and Molecular ...          False         777\n             2021       14      Business, Management and Accounting          False         154\n             2021       15                     Chemical Engineering          False          34",
+    "rows": 108,
+    "columns": [
+      "publication_year",
+      "field_id",
+      "field_name",
+      "is_unassigned",
+      "work_count"
+    ]
+  }
+}

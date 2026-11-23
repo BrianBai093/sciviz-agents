@@ -1,0 +1,18 @@
+{
+  "id": "F5",
+  "kind": "finding",
+  "title": "Fixed diagram view and measured node-center bounds, in xmin ",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "record_finding('Verified selected coauthorship network size, reachability components and edge counts by component', {'authors':80,'edges':208,'components':17,'linked_authors':65,'largest_component':{'authors':57,'edges':195},'other_linked_component':{'authors':8,'edges':13},'isolates':15,'isolate_component_size':1,'source':'J1'})\nrecord_finding('Strongest undirected author pair by raw shared snapshot works, including annual counts', {k:strong.iloc[0][k].item() if hasattr(strong.iloc[0][k],'item') else strong.iloc[0][k] for k in ['source','target','source_label','target_label','shared_works']+[f'shared_works_{y}' for y in years]})\nrecord_finding('Degree leaders within the selected network',leaders)\nrecord_finding('Edge weights sum to pair-work incidences, not distinct publications', {'sum_shared_works':int(e.shared_works.sum()),'sum_degree':int(n.degree.sum()),'sum_weighted_degree':int(n.weighted_degree.sum())})\nrecord_finding('Fixed diagram view and measured node-center bounds, in xmin ymin xmax ymax order',{'view_bounds':[0,0,1200,760],'node_center_bounds':[round(v,2) for v in bounds],'finite_unique_coordinate_pairs':len(n),'source':'G1/J1'})",
+  "created_at": 1795466829.794,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": {\"view_bounds\": \"list[4] of \\\"...\\\"\", \"node_center_bounds\": \"list[4] of \\\"...\\\"\", \"finite_unique_coordinate_pairs\": \"int\", \"source\": \"s",
+    "text": "structure: {\"text\": \"str\", \"value\": {\"view_bounds\": \"list[4] of \\\"...\\\"\", \"node_center_bounds\": \"list[4] of \\\"...\\\"\", \"finite_unique_coordinate_pairs\": \"int\", \"source\": \"str\"}}\npreview: {\"text\": \"Fixed diagram view and measured node-center bounds, in xmin ymin xmax ymax order\", \"value\": {\"view_bounds\": [0, 0, 1200, 760], \"node_center_bounds\": [82.96, 80.0, 1131.0, 710.0], \"finite_unique_coordinate_pairs\": 80, \"source\": \"G1/J1\"}}"
+  }
+}

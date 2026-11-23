@@ -1,0 +1,32 @@
+{
+  "id": "T2",
+  "kind": "table",
+  "title": "Coauthorship among the top 80",
+  "description": "One row per unordered pair of top-80 author IDs with at least one shared distinct snapshot work, regardless of pair members’ affiliation on the shared work; includes dominant-field comparison.",
+  "producer": "single",
+  "inputs": [],
+  "code": "exec(In[1].replace('from tagged group by all qualify','from tagged group by 1,2,3 qualify').replace('using(author_id,field_id) group by all qualify','using(author_id,field_id) group by 1,2,3 qualify'))",
+  "created_at": 1795467188.866,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "208 rows; columns: source, target, shared_works, source_name, source_field_id, source_field, source_subfield_id, source_subfield, target_name, target_field_id, target_field, target_subfield_id",
+    "text": "208 rows x 14 columns\nsource: str [49 distinct]\ntarget: str [55 distinct]\nshared_works: int64 [min 1, max 85, mean 8.562]\nsource_name: str [49 distinct]\nsource_field_id: str [10 distinct]\nsource_field: str [10 distinct]\nsource_subfield_id: str [23 distinct]\nsource_subfield: str [23 distinct]\ntarget_name: str [55 distinct]\ntarget_field_id: str [10 distinct]\ntarget_field: str [10 distinct]\ntarget_subfield_id: str [25 distinct]\ntarget_subfield: str [25 distinct]\ncross_field: bool [min 0, max 1, mean 0.4519]\nfirst rows:\n     source      target  shared_works         source_name source_field_id source_field source_subfield_id                          source_subfield          target_name target_field_id target_field target_subfield_id                          target_subfield  cross_field\nA5057686070 A5091772334            85 Jason Dennis Wright              27     Medicine               2729                Obstetrics and Gynecology     Dawn L. Hershman              27     Medicine               2730                                 Oncology        False\nA5009639179 A5068971185            76    Adam M. Brickman              27     Medicine               2738             Psychiatry and Mental health  Jennifer Jaie Manly              27     Medicine               2738             Psychiatry and Mental health        False\nA5002038978 A5057686070            75   Alexander Melamed              27     Medicine               2729                Obstetrics and Gynecology  Jason Dennis Wright              27     Medicine               2729                Obstetrics and Gynecology        False\nA5038847786 A5073128462            69         Sumit Mohan              27     Medicine               2739 Public Health, Environmental and Occu...      Syed Ali Husain              27     Medicine               2739 Public Health, Environmental and Occu...        False\nA5065239151 A5113514048            58      José Gutierrez              27     Medicine               2705   Cardiology and Cardiovascular Medicine Mitchell S.V. Elkind              27     Medicine               2705   Cardiology and Cardiovascular Medicine        False",
+    "rows": 208,
+    "columns": [
+      "source",
+      "target",
+      "shared_works",
+      "source_name",
+      "source_field_id",
+      "source_field",
+      "source_subfield_id",
+      "source_subfield",
+      "target_name",
+      "target_field_id",
+      "target_field",
+      "target_subfield_id",
+      "target_subfield",
+      "cross_field"
+    ]
+  }
+}

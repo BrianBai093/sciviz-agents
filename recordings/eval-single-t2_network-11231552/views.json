@@ -1,0 +1,13 @@
+{
+  "views": [
+    {
+      "view_id": "view1",
+      "viz": "V1",
+      "title": "Coauthorship among Columbia’s top 80 researchers, 2021–2024",
+      "params": {},
+      "highlight": [],
+      "created_at": 1795467281.351375
+    }
+  ],
+  "selection": null
+}

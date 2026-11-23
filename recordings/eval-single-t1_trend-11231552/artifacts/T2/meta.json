@@ -1,0 +1,28 @@
+{
+  "id": "T2",
+  "kind": "table",
+  "title": "Publication output by primary OpenAlex field, 2021–2024",
+  "description": "One row per classified field with yearly distinct work counts across all snapshot work types, four-year total, rank by total, endpoint count change and percent change relative to 2021.",
+  "producer": "single",
+  "inputs": [],
+  "code": "with raw as (select t.field_id,t.field, count(distinct w.work_id) total, count(distinct w.work_id) filter(where publication_year=2021) y2021, count(distinct w.work_id) filter(where publication_year=2022) y2022,count(distinct w.work_id) filter(where publication_year=2023) y2023,count(distinct w.work_id) filter(where publication_year=2024) y2024 from works w join topics t on w.primary_topic_id=t.topic_id group by 1,2) select row_number() over(order by total desc,field_id) field_rank, *, y2024-y2021 change, round(100.0*(y2024-y2021)/nullif(y2021,0),1) pct_change from raw order by field_rank",
+  "created_at": 1795467175.734,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "26 rows; columns: field_rank, field_id, field, total, y2021, y2022, y2023, y2024, change, pct_change",
+    "text": "26 rows x 10 columns\nfield_rank: int64 [min 1, max 26, mean 13.5]\nfield_id: str [26 distinct]\nfield: str [26 distinct]\ntotal: int64 [min 10, max 1.575e+04, mean 2118]\ny2021: int64 [min 1, max 4005, mean 541.4]\ny2022: int64 [min 3, max 3906, mean 520.7]\ny2023: int64 [min 0, max 3914, mean 521.3]\ny2024: int64 [min 6, max 3925, mean 534.5]\nchange: int64 [min -211, max 178, mean -6.846]\npct_change: float64 [min -31.6, max 500, mean 23.56]\nfirst rows:\n field_rank field_id                                    field  total  y2021  y2022  y2023  y2024  change  pct_change\n          1       27                                 Medicine  15750   4005   3906   3914   3925     -80        -2.0\n          2       33                          Social Sciences   6439   1676   1598   1557   1608     -68        -4.1\n          3       17                         Computer Science   3369    801    803    786    979     178        22.2\n          4       13 Biochemistry, Genetics and Molecular ...   3152    777    795    811    769      -8        -1.0\n          5       32                               Psychology   2943    763    741    700    739     -24        -3.1",
+    "rows": 26,
+    "columns": [
+      "field_rank",
+      "field_id",
+      "field",
+      "total",
+      "y2021",
+      "y2022",
+      "y2023",
+      "y2024",
+      "change",
+      "pct_change"
+    ]
+  }
+}

@@ -27,8 +27,8 @@ STEPS = [
     "same 80 researchers so the two views can be compared.",
     "@select Highlight this researcher's coauthors in both views.",
     "In the edge-bundling view, show only the cross-field ties.",
-    "In the force-directed view, color the researchers by field, using the same field colors as the edge-bundling "
-    "view, and keep everything else the same.",
+    "In the force-directed view, color the researchers by their field and add a field legend. Keep everything else "
+    "the same.",
 ]
 
 

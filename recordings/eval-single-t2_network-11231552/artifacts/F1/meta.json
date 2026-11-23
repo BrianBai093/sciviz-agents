@@ -1,0 +1,15 @@
+{
+  "id": "F1",
+  "kind": "finding",
+  "title": "Full network size and component sizes; top ranked author and",
+  "description": "",
+  "producer": "single",
+  "inputs": [],
+  "code": "print(n[n.partners==n.partners.max()][['name','partners']]); print(record_finding('Full network size and component sizes; top ranked author and strongest edge supported by T1 and T2',{'nodes':len(n),'edges':len(e),'component_sizes':[len(c) for c in comps],'top_author':n.iloc[0][['name','works']].to_dict(),'strongest_edge':{'authors':n.set_index('id').loc[e.iloc[0][['source','target']].tolist(),'name'].tolist(),'shared':int(e.iloc[0].shared)}}))",
+  "created_at": 1795467182.882,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": {\"nodes\": \"int\", \"edges\": \"int\", \"component_sizes\": \"list[17] of \\\"...\\\"\", \"top_author\": {\"name\": \"...\", \"works\": \"...\"}, \"strongest_ed",
+    "text": "structure: {\"text\": \"str\", \"value\": {\"nodes\": \"int\", \"edges\": \"int\", \"component_sizes\": \"list[17] of \\\"...\\\"\", \"top_author\": {\"name\": \"...\", \"works\": \"...\"}, \"strongest_edge\": {\"authors\": \"...\", \"shared\": \"...\"}}}\npreview: {\"text\": \"Full network size and component sizes; top ranked author and strongest edge supported by T1 and T2\", \"value\": {\"nodes\": 80, \"edges\": 208, \"component_sizes\": [57, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], \"top_author\": {\"name\": \"Jason Dennis Wright\", \"works\": 259}, \"strongest_edge\": {\"authors\": [\"Jason Dennis Wright\", \"Dawn L. Hershman\"], \"shared\": 85}}}"
+  }
+}

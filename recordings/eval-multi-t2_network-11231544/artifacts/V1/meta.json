@@ -1,0 +1,102 @@
+{
+  "id": "V1",
+  "kind": "viz",
+  "title": "Columbia’s top 80 | Coauthorship network",
+  "description": "Fixed force-directed layout of collaboration among Columbia’s 80 most prolific researchers in 2021–2024. Find or select a researcher to trace their direct ties. Circle area shows Columbia-affiliated works; line width shows shared works.",
+  "producer": "viz",
+  "inputs": [
+    "G1",
+    "J1"
+  ],
+  "code": null,
+  "created_at": 1795467010.791,
+  "file": "module.js",
+  "source_dir": "viz/columbia-collabs",
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "stage": "automated",
+      "report": {
+        "ok": true,
+        "ready": true,
+        "error": null,
+        "errors": [],
+        "blocked_requests": [],
+        "metrics": {
+          "marks": 288,
+          "elements": 932,
+          "canvases": 0,
+          "texts": 31,
+          "text_overlap_ratio": 0,
+          "out_of_bounds_marks": 0,
+          "has_pick": false,
+          "has_update": true,
+          "has_set_selection": true,
+          "has_highlight": true
+        },
+        "blank": false,
+        "render_seconds": 0.86,
+        "screenshots": {
+          "default": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-multi-t2_network-11231544/artifacts/V1/shots/default.png",
+          "selected": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-multi-t2_network-11231544/artifacts/V1/shots/selected.png"
+        },
+        "interactions": [
+          {
+            "name": "hover_details",
+            "passed": true,
+            "detail": "hovering a mark emitted 1 hover event(s)"
+          },
+          {
+            "name": "click_select",
+            "passed": true,
+            "detail": "click selected [{'type': 'coauthorship', 'id': 'A5018722278--A5078414342', 'label': 'Wendy K. Chung — Gordana Vunjak‐Novakovic'}]; ids/keys found in bound data: True"
+          },
+          {
+            "name": "selection_visible",
+            "passed": true,
+            "detail": "3.43% of pixels changed after selecting"
+          },
+          {
+            "name": "highlight_visible",
+            "passed": true,
+            "detail": "3.03% of pixels changed after highlight([A5018722278--A5078414342])"
+          },
+          {
+            "name": "multi_item_and_state",
+            "passed": true,
+            "detail": "selection/highlight with 3 items and getState/setState round trip: 0 new errors"
+          },
+          {
+            "name": "param_minSharedWorks",
+            "passed": true,
+            "detail": "set minSharedWorks=64: 0 new errors, 0.91% pixels changed"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "critic",
+      "verdict": "pass",
+      "answers_question": 5,
+      "truthfulness": 5,
+      "readability": 4,
+      "interaction": 4,
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "In the larger component, overlapping ties make some endpoints hard to trace at the default zoom, and the selected-edge tooltip covers part of the graph.",
+          "fix": "Keep the overview layout, but position tooltips away from the selected marks in dense areas. Use the existing header for persistent selection details."
+        },
+        {
+          "severity": "minor",
+          "problem": "The threshold test confirms a visual change but does not verify that all 80 nodes remain visible or that the tie counts update correctly. The supplied tests also do not cover researcher search or keyboard focus details.",
+          "fix": "Add checks that raising the threshold preserves all 80 nodes and updates the overall and per-component tie counts. Verify that search selects a researcher and emphasizes their direct ties, and that keyboard focus reveals the required node and edge details."
+        }
+      ],
+      "summary": "The default view shows all 80 researchers and 208 ties, with the two linked components and a separate, labeled grid of 15 isolates. The legend distinguishes affiliated-work counts from shared snapshot works, and the notes explain reachability and warn against interpreting distances between regions. The tested edge selection uses a bound dataset ID and clearly emphasizes the selected tie and its endpoints."
+    }
+  ],
+  "summary": "visualization module (19865 chars) bound to ['G1', 'J1']"
+}

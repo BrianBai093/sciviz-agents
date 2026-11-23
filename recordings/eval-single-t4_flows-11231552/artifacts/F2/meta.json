@@ -1,0 +1,18 @@
+{
+  "id": "F2",
+  "kind": "finding",
+  "title": "Largest same-field and cross-field directions (T2)",
+  "description": "",
+  "producer": "single",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "a=load('T1').iloc[0]; f=load('T2'); x=f[(f.source_id!=f.target_id)&(f.source_id!='unknown')&(f.target_id!='unknown')]; known=int(a.same_field+a.cross_field); record_finding('Internal citation pairs and classified mix (T1)',{'total':int(a.internal_rows),'unknown':int(a.unknown_pairs),'same':int(a.same_field),'cross':int(a.cross_field),'same_pct':round(100*a.same_field/known,1),'cross_pct':round(100*a.cross_field/known,1)}); record_finding('Largest same-field and cross-field directions (T2)',pd.concat([f.head(2),x.head(4)]).to_dict('records')); s=f.groupby('source_id').n.sum().add(f.groupby('target_id').n.sum(),fill_value=0).drop('unknown').sort_values(ascending=False); print(s); print(x.head(12).to_string(index=False))",
+  "created_at": 1795467184.742,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[6] of {\\\"source_id\\\": \\\"...\\\", \\\"source\\\": \\\"...\\\", \\\"target_id\\\": \\\"...\\\", \\\"target\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\"}\"}",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[6] of {\\\"source_id\\\": \\\"...\\\", \\\"source\\\": \\\"...\\\", \\\"target_id\\\": \\\"...\\\", \\\"target\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"Largest same-field and cross-field directions (T2)\", \"value\": [{\"source_id\": \"27\", \"source\": \"Medicine\", \"target_id\": \"27\", \"target\": \"Medicine\", \"n\": 6765}, {\"source_id\": \"31\", \"source\": \"Physics and Astronomy\", \"target_id\": \"31\", \"target\": \"Physics and Astronomy\", \"n\": 4033}, {\"source_id\": \"27\", \"source\": \"Medicine\", \"target_id\": \"13\", \"target\": \"Biochemistry, Genetics and Molecular Biology\", \"n\": 333}, {\"source_id\": \"13\", \"source\": \"Biochemistry, Genetics and Molecular Biology\", \"target_id\": \"27\", \"target\": \"Medicine\", \"n\": 321}, {\"source_id\": \"19\", \"source\": \"Earth and Planetary Sciences\", \"target_id\": \"23\", \"target\": \"Environmental Science\", \"n\": 306}, {\"source_id\": \"23\", \"source\": \"Environmental Science\", \"target_id\": \"19\", \"target\": \"Earth and Planetary Sciences\", \"n\": 287}]}"
+  }
+}

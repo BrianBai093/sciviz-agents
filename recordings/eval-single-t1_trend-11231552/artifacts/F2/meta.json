@@ -1,0 +1,18 @@
+{
+  "id": "F2",
+  "kind": "finding",
+  "title": "Top eight fields by total, their annual counts, and net chan",
+  "description": "",
+  "producer": "single",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "a=load('T1'); b=load('T2'); n=a.n.tolist(); f=b.head(8); print(n, f.total.sum()); record_finding('Snapshot annual totals, 2024 vs 2021, and number without a primary field [T1]', {'annual':n,'delta':n[-1]-n[0],'percent':round(100*(n[-1]/n[0]-1),1),'unclassified':int(a.unclassified.sum())}); record_finding('Top eight fields by total, their annual counts, and net changes [T2]',f.to_dict('records')); record_finding('Top-eight share of classified works [T2]', round(100*f.total.sum()/b.total.sum(),1))",
+  "created_at": 1795467184.828,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[8] of {\\\"field_rank\\\": \\\"...\\\", \\\"field_id\\\": \\\"...\\\", \\\"field\\\": \\\"...\\\", \\\"total\\\": \\\"...\\\", \\\"y2021\\\": \\\"...\\\", \\\"y2022\\\": \\\".",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[8] of {\\\"field_rank\\\": \\\"...\\\", \\\"field_id\\\": \\\"...\\\", \\\"field\\\": \\\"...\\\", \\\"total\\\": \\\"...\\\", \\\"y2021\\\": \\\"...\\\", \\\"y2022\\\": \\\"...\\\", \\\"y2023\\\": \\\"...\\\", \\\"y2024\\\": \\\"...\\\", \\\"change\\\": \\\"...\\\", \\\"pct_change\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"Top eight fields by total, their annual counts, and net changes [T2]\", \"value\": [{\"field_rank\": 1, \"field_id\": \"27\", \"field\": \"Medicine\", \"total\": 15750, \"y2021\": 4005, \"y2022\": 3906, \"y2023\": 3914, \"y2024\": 3925, \"change\": -80, \"pct_change\": -2.0}, {\"field_rank\": 2, \"field_id\": \"33\", \"field\": \"Social Sciences\", \"total\": 6439, \"y2021\": 1676, \"y2022\": 1598, \"y2023\": 1557, \"y2024\": 1608, \"change\": -68, \"pct_change\": -4.1}, {\"field_rank\": 3, \"field_id\": \"17\", \"field\": \"Computer Science\", \"total\": 3369, \"y2021\": 801, \"y2022\": 803, \"y2023\": 786, \"y2024\": 979, \"change\": 178, \"pct_change\": 22.2}, {\"field_rank\": 4, \"field_id\": \"13\", \"field\": \"Biochemistry, Genetics and Molecular Biology\", \"total\": 3152, \"y2021\": 777, \"y2022\": 795, \"y2023\": 811, \"y2024\": 769, \"change\": -8, \"pct_change\": -1.0}, {\"field_rank\": 5, \"field_id\": \"32\", \"field\": \"Psychology\", \"total\": 2943, \"y2021\": 763, \"y2022\": 741, \"y2023\": 700, \"y2024\": 739, \"change\": -24, \"pct_change\": -3.1}, {\"field_rank\": 6, \"field_id\": \"23\", \"field\": \"Environmental Science\", \"total\": 2864, \"y2021\": 769, \"y2022\": 731, \"y2023\": 683, \"y2024\": 681, \"change\": -88, \"pct_change\": -11.4}, {\"field_rank\": 7, \"field_id\": \"31\", \"field\": \"Physics and Astronomy\", \"total\": 2518, \"y2021\": 567, \"y2022\": 594, \"y2023\": 689, \"y2024\": 668, \"change\": 101, \"pct_change\": 17.8}, {\"field_rank\": 8, \"field_id\": \"28\", \"field\": \"Neuroscience\", \"total\": 2328, \"y2021\": 560, \"y2022\": 538, \"y2023\": 635, \"y2024\": 595, \"change\": 35, \"pct_change\": 6.3}]}"
+  }
+}

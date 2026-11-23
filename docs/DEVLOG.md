@@ -243,3 +243,25 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
 - Ledger rebuilt from events: $2.16.
 - **Untracked spend:** the aborted eval ran about 10 minutes with failing callbacks. Estimated $1–2 is not in the ledger.
 - The eval and the demo session were restarted.
+
+**Evaluation results** (`evals/results/summary.md`, `evals/results/{multi,single}.json`, screenshots in `evals/results/shots/`)
+
+| Mode | Solved | First-round passes | Average time | Total cost |
+|---|---|---|---:|---:|
+| Multi-agent | 4/4 | 4/4 | 335 s | $1.23 |
+| Single agent | 4/4 | 4/4 | 165 s | $0.61 |
+
+- Critic scores were similar in both modes.
+- On the Sankey task both modes discovered `d3-sankey@0.12.3`.
+- Largest prompt per call: Lead 9.6k, Data 11.4k, Analyst 8.1k, Viz 20.9k tokens, against the single agent's 23.6k average and 32.5k maximum.
+- Honest reading: on short single-question tasks a single agent with the same harness is as good, cheaper and faster. Multi-agent pays off in context isolation for long sessions, which this evaluation does not measure.
+- n = 1 run per task.
+
+**Demo session issues and fixes**
+- `demo-network` (first attempt), turn 2: the Critic rejected the edge-bundling view twice (V2, V3; answers_question 3/5). The Viz agent's acceptance criteria demanded things a single view's screenshots cannot show ("side by side with V1", a 420×625 layout), and the Critic asked for "verification" of exact routing.
+  - The Lead reported the failure honestly. In turn 3, while serving the highlight request, it fixed the view (V4 approved) and showed it.
+  - Generic fix D42: the Critic reviews each view in isolation and ignores uncheckable criteria; the Viz prompt asks only for criteria checkable from the view itself.
+- Turn 5 ("color … using the same field colors as the edge-bundling view"): the edge-bundling view had no per-field palette, so the Lead asked for clarification instead of guessing. That is sensible behaviour, but not the planned demo. The step was rephrased to stand on its own.
+- `demo-network` is set aside as `_superseded-demo-network`. `demo-network-2` was regenerated with D42.
+
+**Recordings.** `demo/package_recordings.py` copies selected sessions to `recordings/` without LangGraph checkpoints and preview renders, about 0.4–1 MB each. The 8 eval sessions are packaged.

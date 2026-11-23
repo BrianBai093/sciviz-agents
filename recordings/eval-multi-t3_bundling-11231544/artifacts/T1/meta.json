@@ -1,0 +1,35 @@
+{
+  "id": "T1",
+  "kind": "table",
+  "title": "Columbia top 80 researchers — ranked hierarchy nodes",
+  "description": "One row per selected OpenAlex author, including isolates. Rank by distinct 2021–2024 snapshot work IDs with Columbia-system affiliation on the author’s own byline, across all work types; literal author-ID tie-break. Field and then nested subfield are plurality assignments from works.primary_topic_id on qualifying works, excluding missing topics and using numeric ID tie-breaks. Counts, conditional strengths, and tie sizes describe the assignment.",
+  "producer": "data",
+  "inputs": [],
+  "code": "check=sql(base+''', inc AS (SELECT a.work_id,a.author_id,bool_or(a.is_columbia) AS affil,count(*) AS raw FROM authorships a JOIN selected USING(author_id) GROUP BY 1,2), work_sizes AS (SELECT work_id,count(*) AS n,count(*) FILTER (WHERE affil) AS m, sum(raw-1) AS duplicate_rows FROM inc GROUP BY 1) SELECT count(*) AS represented_works,sum(n) AS unique_incidences,sum(duplicate_rows) AS collapsed_rows,sum(n-m) AS non_columbia_incidences,count(*) FILTER(WHERE n>1) AS contributing_works,sum(n*(n-1)//2) AS pair_work_incidences,sum(n*(n-1)//2-m*(m-1)//2) AS pair_work_incidences_with_non_columbia_endpoint FROM work_sizes''')\nprint(check.to_string(index=False)); assert check.pair_work_incidences.iat[0]==edges.shared_work_count.sum()\nprint(nodes.loc[nodes.field_tie_size>1,['author_id','display_name','field_id','field','field_votes','field_tie_size']].to_string(index=False))\nprint(nodes[['field_strength','subfield_strength']].agg(['min','median','max']).to_string())\nnode_id=save_table(nodes,'Columbia top 80 researchers — ranked hierarchy nodes','One row per selected OpenAlex author, including isolates. Rank by distinct 2021–2024 snapshot work IDs with Columbia-system affiliation on the author’s own byline, across all work types; literal author-ID tie-break. Field and then nested subfield are plurality assignments from works.primary_topic_id on qualifying works, excluding missing topics and using numeric ID tie-breaks. Counts, conditional strengths, and tie sizes describe the assignment.')\nedge_id=save_table(edges,'Columbia top 80 researchers — weighted coauthorship edges','One row per unordered pair of selected OpenAlex authors with a shared work (source ID < target ID). Weight is the distinct count of shared 2021–2024 snapshot works, regardless of either byline’s affiliation. cross_field compares the assigned fields and is unknown if either field is unknown.')\nprint(node_id,edge_id)",
+  "created_at": 1795466759.412,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "80 rows; columns: author_id, display_name, rank, publication_count, publication_count_tie_size, field_id, field, subfield_id, subfield, topic_works, topic_coverage, field_votes",
+    "text": "80 rows x 17 columns\nauthor_id: str [80 distinct]\ndisplay_name: str [80 distinct]\nrank: int64 [min 1, max 80, mean 40.5]\npublication_count: int64 [min 71, max 259, mean 102.4]\npublication_count_tie_size: int64 [min 1, max 5, mean 2.375]\nfield_id: int32 [min 13, max 36, mean 26.18]\nfield: str [14 distinct]\nsubfield_id: int32 [min 1311, max 3605, mean 2637]\nsubfield: str [35 distinct]\ntopic_works: int64 [min 66, max 257, mean 102.2]\ntopic_coverage: float64 [min 0.9167, max 1, mean 0.9974]\nfield_votes: int64 [min 19, max 222, mean 66.83]\nfield_strength: float64 [min 0.2639, max 1, mean 0.647]\nfield_tie_size: int64 [min 1, max 2, mean 1.012]\nsubfield_votes: int64 [min 11, max 128, mean 44.3]\nsubfield_strength: float64 [min 0.2407, max 1, mean 0.6889]\nsubfield_tie_size: int64 [min 1, max 1, mean 1]\nfirst rows:\n  author_id         display_name  rank  publication_count  publication_count_tie_size  field_id                 field  subfield_id                                 subfield  topic_works  topic_coverage  field_votes  field_strength  field_tie_size  subfield_votes  subfield_strength  subfield_tie_size\nA5057686070  Jason Dennis Wright     1                259                           1        27              Medicine         2729                Obstetrics and Gynecology          257        0.992278          222        0.863813               1             107           0.481982                  1\nA5069636788    Andrea Baccarelli     2                219                           1        23 Environmental Science         2307       Health, Toxicology and Mutagenesis          219        1.000000           90        0.410959               1              81           0.900000                  1\nA5080186393   Katherine M. Keyes     3                205                           1        27              Medicine         2739 Public Health, Environmental and Occu...          205        1.000000           92        0.448780               1              34           0.369565                  1\nA5113514048 Mitchell S.V. Elkind     4                203                           1        27              Medicine         2705   Cardiology and Cardiovascular Medicine          203        1.000000          174        0.857143               1              61           0.350575                  1\nA5061588829       Pierre Gentine     5                181                           1        23 Environmental Science         2306              Global and Planetary Change          181        1.000000          132        0.729282               1              95           0.719697                  1",
+    "rows": 80,
+    "columns": [
+      "author_id",
+      "display_name",
+      "rank",
+      "publication_count",
+      "publication_count_tie_size",
+      "field_id",
+      "field",
+      "subfield_id",
+      "subfield",
+      "topic_works",
+      "topic_coverage",
+      "field_votes",
+      "field_strength",
+      "field_tie_size",
+      "subfield_votes",
+      "subfield_strength",
+      "subfield_tie_size"
+    ]
+  }
+}

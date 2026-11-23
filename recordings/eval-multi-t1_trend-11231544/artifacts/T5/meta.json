@@ -1,0 +1,39 @@
+{
+  "id": "T5",
+  "kind": "table",
+  "title": "Columbia annual totals and top-10 share",
+  "description": "T1 and T2; one row per year, totals and reconciliation plus fixed top-10 and other assigned counts, shares of all snapshot works and year-over-year and baseline changes.",
+  "producer": "analyst",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "a=a.rename(columns={y:f'works_{y}' for y in years}); a['endpoint_direction']=np.select([a.change_2021_to_2024.gt(0),a.change_2021_to_2024.lt(0)],['rising','falling'],default='flat')\nfor df in (l,o):\n    for col in filter(lambda c:'yoy_' in c,df.columns): df[col]=df[col].astype(float)\nprint(save_table(l,'Columbia top 10 fields: annual trends','T1-derived; 40 field-year rows, fixed cohort ranked on 2021–2024 distinct works by primary-topic field. 2021 index is 100; YoY fields are null where no prior year is present.'))\nprint(save_table(a,'Columbia top 10 fields: four-year ranking and endpoint changes','T1-derived; one row per field, fixed rank by 2021–2024 total; endpoint change and direction compare 2024 to 2021.'))\nprint(save_table(o,'Columbia annual totals and top-10 share','T1 and T2; one row per year, totals and reconciliation plus fixed top-10 and other assigned counts, shares of all snapshot works and year-over-year and baseline changes.'))\npool={'institution_id':'I78577930','institution_name':'Columbia University','start_year':2021,'end_year':2024,'snapshot_work_count':int(o.snapshot_work_count.sum()),'top10_work_count':int(o.top10_work_count.sum()),'top10_share_pct':100*o.top10_work_count.sum()/o.snapshot_work_count.sum(),'fields_rising':int((a.endpoint_direction=='rising').sum()),'fields_falling':int((a.endpoint_direction=='falling').sum()),'fields_flat':int((a.endpoint_direction=='flat').sum())}\nprint(save_table(pd.DataFrame([pool]),'Columbia four-year pooled totals and top-10 direction counts','T1 and T2; pooled top-10 share is the ratio of four-year sums, not the mean of annual shares. Directions compare 2024 to 2021.'))\nprint(record_finding('Fixed top 10: ranks, exact annual counts, four-year volumes and endpoint changes; cutoff verified against rank 11.',{'fields':a.to_dict(orient='records'),'first_excluded':s.iloc[10][['rank','field_id','field_name','total_2021_2024']].to_dict()}))\nprint(record_finding('Annual totals, shares and changes; T1 reconciles to independently counted T2 totals each year.',o.astype(object).where(pd.notna(o),None).to_dict(orient='records')))\nprint(record_finding('Four-year pooled share and counts of top-10 fields by endpoint direction.',pool))\nturns=l[l.publication_year.gt(2021) & l.field_id.isin(['17','19','31','28','13','33','32','20'])][['field_id','field_name','publication_year','work_count','yoy_change','yoy_pct_change']]\nprint(record_finding('Interim movements: Computer Science jumps in 2024; Earth and Planetary Sciences declines every year; Physics, Neuroscience and Biochemistry peak in 2023; Social Sciences, Psychology and Economics rebound in 2024.',turns.to_dict(orient='records')))",
+  "created_at": 1795466777.856,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "4 rows; columns: institution_id, institution_name, publication_year, snapshot_work_count, assigned_work_count, unassigned_work_count, reconciliation_difference, top10_work_count, other_assigned_work_count, top10_share_pct, snapshot_yoy_change, snapshot_yoy_pct_change",
+    "text": "4 rows x 18 columns\ninstitution_id: str [1 distinct]\ninstitution_name: str [1 distinct]\npublication_year: int64 [min 2021, max 2024, mean 2022]\nsnapshot_work_count: int64 [min 1.362e+04, max 1.418e+04, mean 1.384e+04]\nassigned_work_count: int64 [min 1.354e+04, max 1.408e+04, mean 1.377e+04]\nunassigned_work_count: int64 [min 46, max 99, mean 76.25]\nreconciliation_difference: int64 [min 0, max 0, mean 0]\ntop10_work_count: int64 [min 1.084e+04, max 1.117e+04, mean 1.096e+04]\nother_assigned_work_count: int64 [min 2694, max 2919, mean 2805]\ntop10_share_pct: float64 [min 78.74, max 79.67, mean 79.19]\nsnapshot_yoy_change: float64 [min -539, max 328, mean -77] (25% null)\nsnapshot_yoy_pct_change: float64 [min -3.802, max 2.409, mean -0.5134] (25% null)\nsnapshot_change_vs_2021: int64 [min -559, max 0, mean -332.2]\nsnapshot_pct_change_vs_2021: float64 [min -3.944, max 0, mean -2.344]\ntop10_yoy_change: float64 [min -329, max 131, mean -65] (25% null)\ntop10_yoy_pct_change: float64 [min -2.944, max 1.208, mean -0.5697] (25% null)\ntop10_change_vs_2021: int64 [min -329, max 0, mean -212.5]\ntop10_pct_change_vs_2021: float64 [min -2.944, max 0, mean -1.902]\nfirst rows:\ninstitution_id    institution_name  publication_year  snapshot_work_count  assigned_work_count  unassigned_work_count  reconciliation_difference  top10_work_count  other_assigned_work_count  top10_share_pct  snapshot_yoy_change  snapshot_yoy_pct_change  snapshot_change_vs_2021  snapshot_pct_change_vs_2021  top10_yoy_change  top10_yoy_pct_change  top10_change_vs_2021  top10_pct_change_vs_2021\n     I78577930 Columbia University              2021                14175                14076                     99                          0             11174                       2902        78.828924                  NaN                      NaN                        0                     0.000000               NaN                   NaN                     0                  0.000000\n     I78577930 Columbia University              2022                13636                13539                     97                          0             10845                       2694        79.532121               -539.0                -3.802469                     -539                    -3.802469            -329.0             -2.944335                  -329                 -2.944335\n     I78577930 Columbia University              2023                13616                13553                     63                          0             10848                       2705        79.670975                -20.0                -0.146671                     -559                    -3.943563               3.0              0.027663                  -326                 -2.917487\n     I78577930 Columbia University              2024                13944                13898                     46                          0             10979                       2919        78.736374                328.0                 2.408931                     -231                    -1.629630             131.0              1.207596                  -195                 -1.745123",
+    "rows": 4,
+    "columns": [
+      "institution_id",
+      "institution_name",
+      "publication_year",
+      "snapshot_work_count",
+      "assigned_work_count",
+      "unassigned_work_count",
+      "reconciliation_difference",
+      "top10_work_count",
+      "other_assigned_work_count",
+      "top10_share_pct",
+      "snapshot_yoy_change",
+      "snapshot_yoy_pct_change",
+      "snapshot_change_vs_2021",
+      "snapshot_pct_change_vs_2021",
+      "top10_yoy_change",
+      "top10_yoy_pct_change",
+      "top10_change_vs_2021",
+      "top10_pct_change_vs_2021"
+    ]
+  }
+}

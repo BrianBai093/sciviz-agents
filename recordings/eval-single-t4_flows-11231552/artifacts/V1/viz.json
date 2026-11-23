@@ -1,0 +1,41 @@
+{
+  "title": "Citation flows within Columbia",
+  "description": "A Sankey from the primary field of the citing work to the primary field of the cited work, for Columbia's 2021–2024 OpenAlex snapshot. Ribbon width counts directed work pairs. Smaller fields are combined, not omitted.",
+  "data": {
+    "flows": "T3",
+    "audit": "T1"
+  },
+  "params": {
+    "type": "object",
+    "properties": {
+      "mode": {
+        "type": "string",
+        "enum": [
+          "All citations",
+          "Cross-field only",
+          "Same-field only"
+        ],
+        "default": "All citations",
+        "title": "Citation flows"
+      },
+      "fields": {
+        "type": "integer",
+        "minimum": 4,
+        "maximum": 14,
+        "default": 8,
+        "title": "Named fields shown"
+      }
+    }
+  },
+  "entity_types": [
+    "field",
+    "group"
+  ],
+  "libraries": [
+    {
+      "name": "d3-sankey",
+      "version": "0.12.3",
+      "url": "https://esm.sh/d3-sankey@0.12.3"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "T2",
+  "kind": "table",
+  "title": "Columbia annual snapshot totals and field reconciliation, 2021–2024",
+  "description": "One row per publication year in the Columbia University I78577930 lineage snapshot. Independently counted distinct work IDs across all work types, assigned and unassigned totals from the annual field artifact, and the difference (snapshot minus assigned minus unassigned).",
+  "producer": "data",
+  "inputs": [
+    "T1"
+  ],
+  "code": "fields = load('T1')\nbase = sql('''SELECT publication_year, count(DISTINCT work_id) AS snapshot_work_count FROM works WHERE publication_year BETWEEN 2021 AND 2024 GROUP BY 1 ORDER BY 1''')\nassert len(fields) == 108 and not fields.duplicated(['publication_year','field_id']).any() and (fields.groupby('publication_year').size() == 27).all()\nassigned = fields.loc[~fields.is_unassigned].groupby('publication_year', as_index=False).work_count.sum().rename(columns={'work_count':'assigned_work_count'})\nunassigned = fields.loc[fields.is_unassigned,['publication_year','work_count']].rename(columns={'work_count':'unassigned_work_count'})\nannual = base.merge(assigned,on='publication_year',validate='one_to_one').merge(unassigned,on='publication_year',validate='one_to_one')\nannual['reconciliation_difference'] = annual.snapshot_work_count - annual.assigned_work_count - annual.unassigned_work_count\nassert len(annual)==4 and (annual.reconciliation_difference==0).all()\nprint(annual.to_string(index=False))\nprint(fields.loc[fields.work_count==0].to_string(index=False))\nprint(save_table(annual, 'Columbia annual snapshot totals and field reconciliation, 2021–2024', 'One row per publication year in the Columbia University I78577930 lineage snapshot. Independently counted distinct work IDs across all work types, assigned and unassigned totals from the annual field artifact, and the difference (snapshot minus assigned minus unassigned).'))",
+  "created_at": 1795466727.415,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "4 rows; columns: publication_year, snapshot_work_count, assigned_work_count, unassigned_work_count, reconciliation_difference",
+    "text": "4 rows x 5 columns\npublication_year: int64 [min 2021, max 2024, mean 2022]\nsnapshot_work_count: int64 [min 1.362e+04, max 1.418e+04, mean 1.384e+04]\nassigned_work_count: int64 [min 1.354e+04, max 1.408e+04, mean 1.377e+04]\nunassigned_work_count: int64 [min 46, max 99, mean 76.25]\nreconciliation_difference: int64 [min 0, max 0, mean 0]\nfirst rows:\n publication_year  snapshot_work_count  assigned_work_count  unassigned_work_count  reconciliation_difference\n             2021                14175                14076                     99                          0\n             2022                13636                13539                     97                          0\n             2023                13616                13553                     63                          0\n             2024                13944                13898                     46                          0",
+    "rows": 4,
+    "columns": [
+      "publication_year",
+      "snapshot_work_count",
+      "assigned_work_count",
+      "unassigned_work_count",
+      "reconciliation_difference"
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "T4",
+  "kind": "table",
+  "title": "Cross-field collaboration by field pair",
+  "description": "T1/T2 rollup for all 18 observed unordered cross-field pairs, with OpenAlex field IDs, roster sizes, and competition ranks (ties receive the same rank).",
+  "producer": "analyst",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "s=pd.DataFrame([('all','All observed ties',len(j),int(j.shared_work_count.sum())),('within_field','Within assigned field',int(tot.loc[False,'author_ties']),int(tot.loc[False,'pair_work_incidences'])),('cross_field','Across assigned fields',len(x),int(x.shared_work_count.sum()))],columns=['scope_id','scope','author_ties','pair_work_incidences'])\ns['share_of_author_ties']=s.author_ties/len(j)\ns['share_of_pair_work_incidences']=s.pair_work_incidences/j.shared_work_count.sum()\nstrong=x.loc[x.shared_work_count.eq(x.shared_work_count.max()),['source_author_id','source_display_name','source_rank','source_field_id','source_field','source_subfield_id','source_subfield','target_author_id','target_display_name','target_rank','target_field_id','target_field','target_subfield_id','target_subfield','shared_work_count']].sort_values(['source_author_id','target_author_id'])\nprint(save_table(s,'Collaboration totals by field status','T1/T2 rollup: counts and shares across all observed ties; summed works are pair–work incidences. Scope IDs mark aggregate rows.'))\nprint(save_table(f,'Cross-field collaboration by field pair','T1/T2 rollup for all 18 observed unordered cross-field pairs, with OpenAlex field IDs, roster sizes, and competition ranks (ties receive the same rank).'))\nprint(save_table(strong,'Strongest cross-field author ties','All author pairs tied at the maximum cross-field shared work count in T2, with T1 OpenAlex IDs and hierarchy labels.'))\nprint(record_finding('Validated T1/T2 totals and cross-field shares',{'researchers':len(a),'fields':a.field_id.nunique(),'subfields':a.subfield_id.nunique(),'researchers_with_ties':len(active),'isolates':len(a)-len(active),'scope_totals':s.to_dict('records'),'observed_cross_field_pairs':len(f)}))\nlead=f[(f.author_ties_rank<=3)|(f.pair_work_incidences_rank<=3)]\nprint(record_finding('Top three field pairs on either metric; no ties for those ranks',lead.to_dict('records')))\nprint(record_finding('Unique strongest cross-field author tie; its weight as a share of the Engineering–Physics and Astronomy bundle',{'max_tie_count':len(strong),'pairs':strong.to_dict('records'),'share_of_engineering_physics_incidences':int(strong.shared_work_count.iloc[0])/int(f.loc[(f.field_1_id==22)&(f.field_2_id==31),'pair_work_incidences'].iloc[0])}))",
+  "created_at": 1795466821.714,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "18 rows; columns: field_1_id, field_1, field_1_researchers, field_2_id, field_2, field_2_researchers, author_ties, author_ties_rank, pair_work_incidences, pair_work_incidences_rank",
+    "text": "18 rows x 10 columns\nfield_1_id: int32 [min 13, max 33, mean 22.28]\nfield_1: str [7 distinct]\nfield_1_researchers: int64 [min 1, max 44, mean 11]\nfield_2_id: int32 [min 23, max 36, mean 30.61]\nfield_2: str [8 distinct]\nfield_2_researchers: int64 [min 1, max 44, mean 12.22]\nauthor_ties: int64 [min 1, max 21, mean 5.222]\nauthor_ties_rank: int64 [min 1, max 14, mean 8.222]\npair_work_incidences: int64 [min 1, max 73, mean 23.17]\npair_work_incidences_rank: int64 [min 1, max 17, mean 9.278]\nfirst rows:\n field_1_id                                  field_1  field_1_researchers  field_2_id            field_2  field_2_researchers  author_ties  author_ties_rank  pair_work_incidences  pair_work_incidences_rank\n         23                    Environmental Science                    9          27           Medicine                   44           21                 1                    39                          4\n         13 Biochemistry, Genetics and Molecular ...                    3          27           Medicine                   44           16                 2                    73                          1\n         27                                 Medicine                   44          33    Social Sciences                    2           11                 3                    34                          5\n         27                                 Medicine                   44          36 Health Professions                    2           10                 4                    28                          7\n         27                                 Medicine                   44          32         Psychology                    2            5                 5                    21                          9",
+    "rows": 18,
+    "columns": [
+      "field_1_id",
+      "field_1",
+      "field_1_researchers",
+      "field_2_id",
+      "field_2",
+      "field_2_researchers",
+      "author_ties",
+      "author_ties_rank",
+      "pair_work_incidences",
+      "pair_work_incidences_rank"
+    ]
+  }
+}

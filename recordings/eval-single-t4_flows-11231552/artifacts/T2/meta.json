@@ -1,0 +1,23 @@
+{
+  "id": "T2",
+  "kind": "table",
+  "title": "Directed Columbia citation flows by primary field",
+  "description": "One row per ordered citing/cited OpenAlex primary field pair; count of distinct directed in-snapshot work pairs. Missing field is Unclassified.",
+  "producer": "single",
+  "inputs": [],
+  "code": "SELECT coalesce(ta.field_id,'unknown') source_id, coalesce(ta.field,'Unclassified') source, coalesce(tb.field_id,'unknown') target_id, coalesce(tb.field,'Unclassified') target, count(DISTINCT (c.citing_work_id,c.cited_work_id)) AS n FROM citations c JOIN works a ON a.work_id=c.citing_work_id JOIN works b ON b.work_id=c.cited_work_id LEFT JOIN topics ta ON ta.topic_id=a.primary_topic_id LEFT JOIN topics tb ON tb.topic_id=b.primary_topic_id WHERE c.cited_in_snapshot GROUP BY ALL ORDER BY n DESC, source_id, target_id",
+  "created_at": 1795467175.205,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "413 rows; columns: source_id, source, target_id, target, n",
+    "text": "413 rows x 5 columns\nsource_id: str [27 distinct]\nsource: str [27 distinct]\ntarget_id: str [27 distinct]\ntarget: str [27 distinct]\nn: int64 [min 1, max 6765, mean 94.76]\nfirst rows:\nsource_id                       source target_id                       target    n\n       27                     Medicine        27                     Medicine 6765\n       31        Physics and Astronomy        31        Physics and Astronomy 4033\n       23        Environmental Science        23        Environmental Science 2418\n       17             Computer Science        17             Computer Science 1990\n       19 Earth and Planetary Sciences        19 Earth and Planetary Sciences 1746",
+    "rows": 413,
+    "columns": [
+      "source_id",
+      "source",
+      "target_id",
+      "target",
+      "n"
+    ]
+  }
+}

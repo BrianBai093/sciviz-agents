@@ -1,0 +1,7 @@
+{
+  "title": "Columbia’s publication output by field, 2021–2024",
+  "description": "Aligned yearly trend lines for a fixed set of Columbia’s ten largest OpenAlex fields. Compare each field with its own 2021 baseline, or switch to a common zero-based count scale. The right columns show the endpoint counts and percent change.",
+  "data": {"annual": "T3", "fields": "T4", "context": "T5"},
+  "params": {"type": "object", "properties": {"mode": {"type": "string", "enum": ["Index", "Counts"], "default": "Index", "title": "Trend scale · Index (2021 = 100) or Counts"}}},
+  "entity_types": ["field", "field_year"]
+}

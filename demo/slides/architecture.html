@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;height:100%;font-family:Inter,system-ui,-apple-system,sans-serif;background:#fafaf9;color:#1c1917}
+.wrap{padding:36px 60px}
+h2{font-size:34px;margin:0 0 6px;letter-spacing:-.01em}
+.sub{font-size:18px;color:#57534e;margin-bottom:10px}
+svg text{font-family:Inter,system-ui,sans-serif}
+.t{font-size:19px;font-weight:600;fill:#1c1917}.s{font-size:14px;fill:#57534e}
+</style></head><body><div class="wrap">
+<h2>How sciviz works</h2>
+<div class="sub">A Lead agent plans dynamically and delegates to specialists with isolated contexts; every view must pass a verification gate enforced by the harness.</div>
+<svg viewBox="0 0 1500 740" width="1480" height="730" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#57534e" stroke-width="1.6"/></marker></defs>
+<g stroke-width="1.4">
+<rect x="40" y="110" width="220" height="190" rx="12" fill="#e7f0fb" stroke="#2a78d6"/>
+<rect x="40" y="420" width="220" height="200" rx="12" fill="#e7f0fb" stroke="#2a78d6"/>
+<rect x="340" y="250" width="240" height="220" rx="12" fill="#efe9fb" stroke="#7c4dcc"/>
+<rect x="660" y="70" width="230" height="140" rx="12" fill="#efe9fb" stroke="#7c4dcc"/>
+<rect x="660" y="290" width="230" height="140" rx="12" fill="#efe9fb" stroke="#7c4dcc"/>
+<rect x="660" y="510" width="230" height="140" rx="12" fill="#efe9fb" stroke="#7c4dcc"/>
+<rect x="980" y="70" width="240" height="140" rx="12" fill="#fbf1e0" stroke="#c27a00"/>
+<rect x="980" y="290" width="240" height="140" rx="12" fill="#e3f4ef" stroke="#0f8f6f"/>
+<rect x="980" y="510" width="240" height="140" rx="12" fill="#fbe8e6" stroke="#c4382b"/>
+<rect x="1300" y="290" width="170" height="360" rx="12" fill="#e3f4ef" stroke="#0f8f6f"/>
+<rect x="340" y="684" width="880" height="44" rx="10" fill="#f5f5f4" stroke="#a8a29e"/>
+</g>
+<text class="t" x="60" y="146">User · Web UI</text>
+<text class="s" x="60" y="176">chat with cited answers</text><text class="s" x="60" y="198">selection → next question</text>
+<text class="s" x="60" y="220">parameter controls</text><text class="s" x="60" y="242">versions · undo · compare</text><text class="s" x="60" y="264">trace · artifacts · plan</text>
+<text class="t" x="60" y="456">View runtime</text>
+<text class="s" x="60" y="486">agent-written JS module</text><text class="s" x="60" y="508">in a sandboxed iframe</text>
+<text class="s" x="60" y="530">generic contract: data-bound</text><text class="s" x="60" y="552">marks, select · hover ·</text><text class="s" x="60" y="574">highlight · update(params)</text><text class="s" x="60" y="596">→ linked views</text>
+<text class="t" x="360" y="288">Lead agent</text>
+<text class="s" x="360" y="318">understands the question</text><text class="s" x="360" y="340">plans dynamically (todos)</text>
+<text class="s" x="360" y="362">delegates with fixed briefs</text><text class="s" x="360" y="384">shows / edits views</text>
+<text class="s" x="360" y="406">answers with artifact citations</text><text class="s" x="360" y="428">runs no code itself</text>
+<text class="t" x="680" y="106">Data agent</text><text class="s" x="680" y="136">catalog · read-only SQL</text><text class="s" x="680" y="158">filters, cleans, saves tables</text><text class="s" x="680" y="180">records definitions</text>
+<text class="t" x="680" y="326">Analyst agent</text><text class="s" x="680" y="356">Python (pandas, networkx,</text><text class="s" x="680" y="378">scipy, sklearn) · findings</text><text class="s" x="680" y="400">graphs, trees, metrics</text>
+<text class="t" x="680" y="546">Viz agent</text><text class="s" x="680" y="576">chooses technique</text><text class="s" x="680" y="598">discovers libraries (npm, docs)</text><text class="s" x="680" y="620">writes + previews module</text>
+<text class="t" x="1000" y="106">OpenAlex snapshot</text><text class="s" x="1000" y="136">Columbia, 2021–2024</text><text class="s" x="1000" y="158">55,371 works · DuckDB</text><text class="s" x="1000" y="180">catalog: semantics, caveats</text>
+<text class="t" x="1000" y="326">Execution sandbox</text><text class="s" x="1000" y="356">Jupyter kernel per agent</text><text class="s" x="1000" y="378">secrets stripped · timeouts</text><text class="s" x="1000" y="400">pinned JS libraries</text>
+<text class="t" x="1000" y="546">Verification gate</text><text class="s" x="1000" y="576">headless render + metrics</text><text class="s" x="1000" y="598">generic interaction tests</text><text class="s" x="1000" y="620">independent Critic (vision)</text>
+<text class="t" x="1318" y="326">Harness</text><text class="s" x="1318" y="358">Deep Agents</text><text class="s" x="1318" y="380">on LangGraph</text><text class="s" x="1318" y="420">model escalation</text><text class="s" x="1318" y="442">(GPT-6.2 Astra)</text><text class="s" x="1318" y="482">budget ledger</text><text class="s" x="1318" y="522">event log →</text><text class="s" x="1318" y="544">live trace + replay</text><text class="s" x="1318" y="584">checkpoints,</text><text class="s" x="1318" y="606">interrupts</text>
+<text class="s" x="360" y="712" style="font-size:15px;fill:#44403c">Shared workspace: artifacts with lineage (code that produced them) · decision log · view state · events</text>
+<g stroke="#57534e" stroke-width="1.6" fill="none">
+<line x1="262" y1="230" x2="336" y2="300" marker-start="url(#a)" marker-end="url(#a)"/>
+<line x1="582" y1="300" x2="656" y2="150" marker-start="url(#a)" marker-end="url(#a)"/>
+<line x1="582" y1="360" x2="656" y2="360" marker-start="url(#a)" marker-end="url(#a)"/>
+<line x1="582" y1="420" x2="656" y2="570" marker-start="url(#a)" marker-end="url(#a)"/>
+<line x1="892" y1="140" x2="976" y2="140" marker-end="url(#a)"/>
+<line x1="892" y1="360" x2="976" y2="360" marker-end="url(#a)"/>
+<line x1="892" y1="570" x2="976" y2="570" marker-start="url(#a)" marker-end="url(#a)" stroke-dasharray="6 4"/>
+<path d="M1100 652 L1100 668 L150 668 L150 624" marker-end="url(#a)"/>
+<line x1="150" y1="416" x2="150" y2="304" marker-start="url(#a)" marker-end="url(#a)"/>
+</g>
+<text class="s" x="452" y="236" style="font-size:13px">brief ↓ report ↑</text>
+<text class="s" x="896" y="560" style="font-size:13px">submit / revise</text>
+<text class="s" x="560" y="662" style="font-size:13px">only approved views are shown</text>
+</svg></div></body></html>

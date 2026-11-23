@@ -1,0 +1,39 @@
+{
+  "title": "Citation flows within Columbia research",
+  "description": "Follow references from the citing field on the left to the cited field on the right. Ribbon thickness is proportional to the number of distinct directed work pairs shown. Use Flow mode to isolate citations between two different classified fields, or change Top field-pair links to adjust the rank cutoff. All links eligible includes same-field, cross-field, and unclassified pairs. Coverage is relative to the full eligible mode, not just the displayed links.",
+  "data": {
+    "pairs": "T1"
+  },
+  "params": {
+    "type": "object",
+    "properties": {
+      "mode": {
+        "type": "string",
+        "enum": [
+          "All links eligible",
+          "Cross-field only"
+        ],
+        "default": "All links eligible",
+        "title": "Flow mode"
+      },
+      "topN": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 100,
+        "default": 25,
+        "title": "Top field-pair links"
+      }
+    }
+  },
+  "entity_types": [
+    "field",
+    "field_pair"
+  ],
+  "libraries": [
+    {
+      "name": "d3-sankey",
+      "version": "0.12.3",
+      "url": "https://esm.sh/d3-sankey@0.12.3"
+    }
+  ]
+}

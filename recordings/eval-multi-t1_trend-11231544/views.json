@@ -1,0 +1,13 @@
+{
+  "views": [
+    {
+      "view_id": "view1",
+      "viz": "V1",
+      "title": "Columbia publication trends across its 10 largest fields, 2021–2024 (source: OpenAlex) 📈\n    • **Index** view: 2021 = 100; compare relative changes\n    • **Counts** view: shared zero-based scale; compare total output\n    • Hover or focus points for exact annual counts and YoY changes\n    • Select field names or points to highlight a series\n    • Fixed ranking by 2021–2024 total; each work counted once by primary OpenAlex field\n    • Snapshot includes Columbia-affiliated works and defined child institutions; field classifications and coverage may vary. Source: OpenAlex snapshot, 2026-11-23.",
+      "params": {},
+      "highlight": [],
+      "created_at": 1795466941.55876
+    }
+  ],
+  "selection": null
+}

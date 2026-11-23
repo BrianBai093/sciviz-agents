@@ -1,0 +1,13 @@
+{
+  "views": [
+    {
+      "view_id": "view1",
+      "viz": "V1",
+      "title": "Citation flows within Columbia | 2021–2024",
+      "params": {},
+      "highlight": [],
+      "created_at": 1795467361.693679
+    }
+  ],
+  "selection": null
+}

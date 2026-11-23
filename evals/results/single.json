@@ -1,0 +1,116 @@
+[
+  {
+    "task": "t1_trend",
+    "mode": "single",
+    "session": "eval-single-t1_trend-11231552",
+    "question": "How has Columbia's yearly publication output changed across its largest research fields from 2021 to 2024?",
+    "success": true,
+    "views_shown": [
+      "V1"
+    ],
+    "approved": [
+      "V1"
+    ],
+    "gate_automated_rejections": 0,
+    "gate_critic_rejections": 0,
+    "gate_passes": 1,
+    "escalated": false,
+    "critic_scores": "answers_question 5/5, truthfulness 5/5, readability 4/5, interaction 5/5",
+    "seconds": 122.9,
+    "cost_usd": 0.121,
+    "model_calls": {
+      "single": 21,
+      "critic": 1
+    },
+    "libraries": [],
+    "screenshot": "evals/results/shots/single_t1_trend.png",
+    "error": null
+  },
+  {
+    "task": "t2_network",
+    "mode": "single",
+    "session": "eval-single-t2_network-11231552",
+    "question": "Show the collaboration network among Columbia's 80 most prolific researchers in 2021-2024 as a force-directed node-link diagram.",
+    "success": true,
+    "views_shown": [
+      "V1"
+    ],
+    "approved": [
+      "V1"
+    ],
+    "gate_automated_rejections": 0,
+    "gate_critic_rejections": 0,
+    "gate_passes": 1,
+    "escalated": false,
+    "critic_scores": "answers_question 5/5, truthfulness 4/5, readability 4/5, interaction 5/5",
+    "seconds": 136.7,
+    "cost_usd": 0.1172,
+    "model_calls": {
+      "single": 23,
+      "critic": 1
+    },
+    "libraries": [
+      "d3@7.9.2"
+    ],
+    "screenshot": "evals/results/shots/single_t2_network.png",
+    "error": null
+  },
+  {
+    "task": "t3_bundling",
+    "mode": "single",
+    "session": "eval-single-t3_bundling-11231552",
+    "question": "Show the collaboration network among Columbia's 80 most prolific researchers in 2021-2024 with hierarchical edge bundling, grouping the researchers by field and subfield so that cross-field collaborations stand out.",
+    "success": true,
+    "views_shown": [
+      "V1"
+    ],
+    "approved": [
+      "V1"
+    ],
+    "gate_automated_rejections": 0,
+    "gate_critic_rejections": 0,
+    "gate_passes": 1,
+    "escalated": false,
+    "critic_scores": "answers_question 5/5, truthfulness 5/5, readability 4/5, interaction 5/5",
+    "seconds": 183.1,
+    "cost_usd": 0.1559,
+    "model_calls": {
+      "single": 20,
+      "critic": 1
+    },
+    "libraries": [
+      "d3-shape@3.2.0"
+    ],
+    "screenshot": "evals/results/shots/single_t3_bundling.png",
+    "error": null
+  },
+  {
+    "task": "t4_flows",
+    "mode": "single",
+    "session": "eval-single-t4_flows-11231552",
+    "question": "How do citations flow between research fields within Columbia's own papers (Columbia papers citing other Columbia papers)? Show the flows as a Sankey diagram.",
+    "success": true,
+    "views_shown": [
+      "V1"
+    ],
+    "approved": [
+      "V1"
+    ],
+    "gate_automated_rejections": 0,
+    "gate_critic_rejections": 0,
+    "gate_passes": 1,
+    "escalated": false,
+    "critic_scores": "answers_question 5/5, truthfulness 5/5, readability 4/5, interaction 5/5",
+    "seconds": 219.2,
+    "cost_usd": 0.2163,
+    "model_calls": {
+      "single": 34,
+      "critic": 1
+    },
+    "libraries": [
+      "d3-sankey@0.12.3"
+    ],
+    "screenshot": "evals/results/shots/single_t4_flows.png",
+    "error": null
+  }
+]

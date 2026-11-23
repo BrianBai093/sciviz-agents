@@ -1,0 +1,29 @@
+{
+  "id": "T1",
+  "kind": "table",
+  "title": "Internal citation audit",
+  "description": "One row: counts and join checks for all references flagged as internal to the Columbia works snapshot.",
+  "producer": "single",
+  "inputs": [],
+  "code": "SELECT (SELECT count(*)-count(DISTINCT topic_id) FROM topics) duplicate_topics, (SELECT count(*)-count(DISTINCT work_id) FROM works) duplicate_works, count(*) AS internal_rows, count(DISTINCT (c.citing_work_id,c.cited_work_id)) AS distinct_pairs, count(*) FILTER (WHERE a.work_id IS NULL OR b.work_id IS NULL) AS missing_works, count(*) FILTER (WHERE ta.field_id IS NULL OR tb.field_id IS NULL) AS unknown_pairs, count(*) FILTER (WHERE ta.field_id=tb.field_id) AS same_field, count(*) FILTER (WHERE ta.field_id<>tb.field_id) AS cross_field, count(*) FILTER (WHERE c.citing_work_id=c.cited_work_id) AS self_loops, count(DISTINCT ta.field_id) AS citing_fields, count(DISTINCT tb.field_id) AS cited_fields FROM citations c LEFT JOIN works a ON c.citing_work_id=a.work_id LEFT JOIN works b ON c.cited_work_id=b.work_id LEFT JOIN topics ta ON ta.topic_id=a.primary_topic_id LEFT JOIN topics tb ON tb.topic_id=b.primary_topic_id WHERE c.cited_in_snapshot",
+  "created_at": 1795467167.784,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "1 rows; columns: duplicate_topics, duplicate_works, internal_rows, distinct_pairs, missing_works, unknown_pairs, same_field, cross_field, self_loops, citing_fields, cited_fields",
+    "text": "1 rows x 11 columns\nduplicate_topics: int64 [min 0, max 0, mean 0]\nduplicate_works: int64 [min 0, max 0, mean 0]\ninternal_rows: int64 [min 3.913e+04, max 3.913e+04, mean 3.913e+04]\ndistinct_pairs: int64 [min 3.913e+04, max 3.913e+04, mean 3.913e+04]\nmissing_works: int64 [min 0, max 0, mean 0]\nunknown_pairs: int64 [min 92, max 92, mean 92]\nsame_field: int64 [min 2.878e+04, max 2.878e+04, mean 2.878e+04]\ncross_field: int64 [min 1.026e+04, max 1.026e+04, mean 1.026e+04]\nself_loops: int64 [min 0, max 0, mean 0]\nciting_fields: int64 [min 26, max 26, mean 26]\ncited_fields: int64 [min 26, max 26, mean 26]\nfirst rows:\n duplicate_topics  duplicate_works  internal_rows  distinct_pairs  missing_works  unknown_pairs  same_field  cross_field  self_loops  citing_fields  cited_fields\n                0                0          39134           39134              0             92       28778        10264           0             26            26",
+    "rows": 1,
+    "columns": [
+      "duplicate_topics",
+      "duplicate_works",
+      "internal_rows",
+      "distinct_pairs",
+      "missing_works",
+      "unknown_pairs",
+      "same_field",
+      "cross_field",
+      "self_loops",
+      "citing_fields",
+      "cited_fields"
+    ]
+  }
+}

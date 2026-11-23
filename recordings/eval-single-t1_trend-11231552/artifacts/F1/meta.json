@@ -1,0 +1,18 @@
+{
+  "id": "F1",
+  "kind": "finding",
+  "title": "Snapshot annual totals, 2024 vs 2021, and number without a p",
+  "description": "",
+  "producer": "single",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "a=load('T1'); b=load('T2'); n=a.n.tolist(); f=b.head(8); print(n, f.total.sum()); record_finding('Snapshot annual totals, 2024 vs 2021, and number without a primary field [T1]', {'annual':n,'delta':n[-1]-n[0],'percent':round(100*(n[-1]/n[0]-1),1),'unclassified':int(a.unclassified.sum())}); record_finding('Top eight fields by total, their annual counts, and net changes [T2]',f.to_dict('records')); record_finding('Top-eight share of classified works [T2]', round(100*f.total.sum()/b.total.sum(),1))",
+  "created_at": 1795467184.827,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": {\"annual\": \"list[4] of \\\"...\\\"\", \"delta\": \"int\", \"percent\": \"float\", \"unclassified\": \"int\"}}",
+    "text": "structure: {\"text\": \"str\", \"value\": {\"annual\": \"list[4] of \\\"...\\\"\", \"delta\": \"int\", \"percent\": \"float\", \"unclassified\": \"int\"}}\npreview: {\"text\": \"Snapshot annual totals, 2024 vs 2021, and number without a primary field [T1]\", \"value\": {\"annual\": [14175, 13636, 13616, 13944], \"delta\": -231, \"percent\": -1.6, \"unclassified\": 305}}"
+  }
+}

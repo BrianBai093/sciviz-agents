@@ -1,0 +1,25 @@
+{
+  "id": "T2",
+  "kind": "table",
+  "title": "Columbia top 80 researchers, 2021–2024 — coauthorship edges",
+  "description": "One row per undirected pair of top-80 OpenAlex author IDs, stored in ascending lexicographic endpoint order. Weight shared_works counts distinct 2021–2024 snapshot works with both IDs on the byline, regardless of their affiliations on that work; all work types. Annual columns partition the weight by publication year.",
+  "producer": "data",
+  "inputs": [],
+  "code": "print(sql(base+'''SELECT publication_year,count(*) AS selected_work_authors,count(DISTINCT b.work_id) AS selected_works,count(*) FILTER (WHERE q.work_id IS NOT NULL) AS affiliated_work_authors FROM selected_bylines b LEFT JOIN qual q USING(work_id,publication_year,author_id) GROUP BY 1 ORDER BY 1''').to_string(index=False)); print(sql(base+'''SELECT publication_year,count(*) AS pair_works,count(DISTINCT work_id) AS collaboration_works FROM pair_works GROUP BY 1 ORDER BY 1''').to_string(index=False));print(nodes[nodes.author_id.isin(['A5057686070','A5091772334'])][['author_id','display_name','rank']].to_string(index=False))\nprint(sql(base+'''SELECT count(*) AS top_bylines_before_dedup,(SELECT count(*) FROM selected_bylines) AS top_bylines_after_dedup FROM snap JOIN authorships USING(work_id) JOIN top USING(author_id)''').to_string(index=False))\nprint(save_table(nodes,'Columbia top 80 researchers, 2021–2024 — author nodes','One row per top-80 resolved OpenAlex author ID, including isolates. Profile display name and one-based rank by descending count of distinct 2021–2024 snapshot works where the author personally lists Columbia University or one of the four covered child institutions; all work types; ties by ascending lexicographic OpenAlex author ID. Annual columns partition that same affiliated-work count by publication year.'))\nprint(save_table(links,'Columbia top 80 researchers, 2021–2024 — coauthorship edges','One row per undirected pair of top-80 OpenAlex author IDs, stored in ascending lexicographic endpoint order. Weight shared_works counts distinct 2021–2024 snapshot works with both IDs on the byline, regardless of their affiliations on that work; all work types. Annual columns partition the weight by publication year.'))",
+  "created_at": 1795466754.604,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "208 rows; columns: source_author_id, target_author_id, shared_works, shared_works_2021, shared_works_2022, shared_works_2023, shared_works_2024",
+    "text": "208 rows x 7 columns\nsource_author_id: str [49 distinct]\ntarget_author_id: str [55 distinct]\nshared_works: int64 [min 1, max 85, mean 8.562]\nshared_works_2021: int64 [min 0, max 33, mean 2.029]\nshared_works_2022: int64 [min 0, max 28, mean 2.236]\nshared_works_2023: int64 [min 0, max 28, mean 2.442]\nshared_works_2024: int64 [min 0, max 26, mean 1.856]\nfirst rows:\nsource_author_id target_author_id  shared_works  shared_works_2021  shared_works_2022  shared_works_2023  shared_works_2024\n     A5000454252      A5050822671             1                  0                  0                  1                  0\n     A5002038978      A5006605951             2                  1                  1                  0                  0\n     A5002038978      A5021008013             1                  0                  1                  0                  0\n     A5002038978      A5044313704             2                  1                  1                  0                  0\n     A5002038978      A5057686070            75                 33                 28                  6                  8",
+    "rows": 208,
+    "columns": [
+      "source_author_id",
+      "target_author_id",
+      "shared_works",
+      "shared_works_2021",
+      "shared_works_2022",
+      "shared_works_2023",
+      "shared_works_2024"
+    ]
+  }
+}

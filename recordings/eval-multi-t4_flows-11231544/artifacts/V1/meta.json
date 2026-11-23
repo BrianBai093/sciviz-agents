@@ -1,0 +1,106 @@
+{
+  "id": "V1",
+  "kind": "viz",
+  "title": "Citation flows within Columbia research",
+  "description": "Follow references from the citing field on the left to the cited field on the right. Ribbon thickness is proportional to the number of distinct directed work pairs shown. Use Flow mode to isolate citations between two different classified fields, or change Top field-pair links to adjust the rank cutoff. All links eligible includes same-field, cross-field, and unclassified pairs. Coverage is relative to the full eligible mode, not just the displayed links.",
+  "producer": "viz",
+  "inputs": [
+    "T1"
+  ],
+  "code": null,
+  "created_at": 1795466935.324,
+  "file": "module.js",
+  "source_dir": "viz/columbia-citation-flows",
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "stage": "automated",
+      "report": {
+        "ok": true,
+        "ready": true,
+        "error": null,
+        "errors": [],
+        "blocked_requests": [],
+        "metrics": {
+          "marks": 57,
+          "elements": 220,
+          "canvases": 0,
+          "texts": 41,
+          "text_overlap_ratio": 0,
+          "out_of_bounds_marks": 0,
+          "has_pick": false,
+          "has_update": true,
+          "has_set_selection": true,
+          "has_highlight": true
+        },
+        "blank": false,
+        "render_seconds": 1.16,
+        "screenshots": {
+          "default": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-multi-t4_flows-11231544/artifacts/V1/shots/default.png",
+          "selected": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/eval-multi-t4_flows-11231544/artifacts/V1/shots/selected.png"
+        },
+        "interactions": [
+          {
+            "name": "hover_details",
+            "passed": true,
+            "detail": "hovering a mark emitted 1 hover event(s)"
+          },
+          {
+            "name": "click_select",
+            "passed": true,
+            "detail": "click selected [{'type': 'field_pair', 'key': {'citing_field_id': '27', 'cited_field_id': '27'}, 'label': 'Medicine → Medicine'}]; ids/keys found in bound data: True"
+          },
+          {
+            "name": "selection_visible",
+            "passed": true,
+            "detail": "28.94% of pixels changed after selecting"
+          },
+          {
+            "name": "highlight_visible",
+            "passed": true,
+            "detail": "28.94% of pixels changed after highlight([{\"citing_field_id\":\"27\",\"cited_field_id\":\"27\"}])"
+          },
+          {
+            "name": "multi_item_and_state",
+            "passed": true,
+            "detail": "selection/highlight with 3 items and module keeps no state (getState not implemented): 0 new errors"
+          },
+          {
+            "name": "param_mode",
+            "passed": true,
+            "detail": "set mode='Cross-field only': 0 new errors, 18.84% pixels changed"
+          },
+          {
+            "name": "param_topN",
+            "passed": true,
+            "detail": "set topN=75: 0 new errors, 6.50% pixels changed"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "critic",
+      "verdict": "pass",
+      "answers_question": 5,
+      "truthfulness": 5,
+      "readability": 4,
+      "interaction": 5,
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "Selection makes nonselected field labels so faint that they are difficult to read while tracing the selected flow.",
+          "fix": "Keep the selected ribbon’s outline and dim the other ribbons, but retain enough contrast for all field labels to remain legible."
+        },
+        {
+          "severity": "minor",
+          "problem": "The mode-switch test confirms a visual update, but it does not verify the exact cross-field coverage or that every displayed link joins two different classified fields.",
+          "fix": "Extend the headless test to assert 4,490 of 10,264 citations shown at the top-25 cutoff and verify that all displayed links have two classified, different endpoints."
+        }
+      ],
+      "summary": "The two-column Sankey clearly follows references from citing fields on the left to cited fields on the right. Ribbon width encodes distinct directed work-pair counts, and color distinguishes same-field from cross-field flows. The default view prominently reports the top 25 of 413 eligible links and 30,307 of 39,134 citations shown, making clear that the diagram is not exhaustive. The selection screenshot shows a clear highlight and an ordered field-pair tooltip with the raw count. Hover, selection, highlighting, and both host parameter updates passed the reported checks."
+    }
+  ],
+  "summary": "visualization module (14502 chars) bound to ['T1']"
+}

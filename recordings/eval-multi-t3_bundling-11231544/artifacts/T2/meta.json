@@ -1,0 +1,22 @@
+{
+  "id": "T2",
+  "kind": "table",
+  "title": "Columbia top 80 researchers — weighted coauthorship edges",
+  "description": "One row per unordered pair of selected OpenAlex authors with a shared work (source ID < target ID). Weight is the distinct count of shared 2021–2024 snapshot works, regardless of either byline’s affiliation. cross_field compares the assigned fields and is unknown if either field is unknown.",
+  "producer": "data",
+  "inputs": [],
+  "code": "check=sql(base+''', inc AS (SELECT a.work_id,a.author_id,bool_or(a.is_columbia) AS affil,count(*) AS raw FROM authorships a JOIN selected USING(author_id) GROUP BY 1,2), work_sizes AS (SELECT work_id,count(*) AS n,count(*) FILTER (WHERE affil) AS m, sum(raw-1) AS duplicate_rows FROM inc GROUP BY 1) SELECT count(*) AS represented_works,sum(n) AS unique_incidences,sum(duplicate_rows) AS collapsed_rows,sum(n-m) AS non_columbia_incidences,count(*) FILTER(WHERE n>1) AS contributing_works,sum(n*(n-1)//2) AS pair_work_incidences,sum(n*(n-1)//2-m*(m-1)//2) AS pair_work_incidences_with_non_columbia_endpoint FROM work_sizes''')\nprint(check.to_string(index=False)); assert check.pair_work_incidences.iat[0]==edges.shared_work_count.sum()\nprint(nodes.loc[nodes.field_tie_size>1,['author_id','display_name','field_id','field','field_votes','field_tie_size']].to_string(index=False))\nprint(nodes[['field_strength','subfield_strength']].agg(['min','median','max']).to_string())\nnode_id=save_table(nodes,'Columbia top 80 researchers — ranked hierarchy nodes','One row per selected OpenAlex author, including isolates. Rank by distinct 2021–2024 snapshot work IDs with Columbia-system affiliation on the author’s own byline, across all work types; literal author-ID tie-break. Field and then nested subfield are plurality assignments from works.primary_topic_id on qualifying works, excluding missing topics and using numeric ID tie-breaks. Counts, conditional strengths, and tie sizes describe the assignment.')\nedge_id=save_table(edges,'Columbia top 80 researchers — weighted coauthorship edges','One row per unordered pair of selected OpenAlex authors with a shared work (source ID < target ID). Weight is the distinct count of shared 2021–2024 snapshot works, regardless of either byline’s affiliation. cross_field compares the assigned fields and is unknown if either field is unknown.')\nprint(node_id,edge_id)",
+  "created_at": 1795466759.414,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "208 rows; columns: source_author_id, target_author_id, shared_work_count, cross_field",
+    "text": "208 rows x 4 columns\nsource_author_id: str [49 distinct]\ntarget_author_id: str [55 distinct]\nshared_work_count: int64 [min 1, max 85, mean 8.562]\ncross_field: boolean [min 0, max 1, mean 0.4519]\nfirst rows:\nsource_author_id target_author_id  shared_work_count  cross_field\n     A5000454252      A5050822671                  1         True\n     A5002038978      A5006605951                  2         True\n     A5002038978      A5021008013                  1         True\n     A5002038978      A5044313704                  2         True\n     A5002038978      A5057686070                 75        False",
+    "rows": 208,
+    "columns": [
+      "source_author_id",
+      "target_author_id",
+      "shared_work_count",
+      "cross_field"
+    ]
+  }
+}

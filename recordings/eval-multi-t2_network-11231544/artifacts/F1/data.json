@@ -1,0 +1,1 @@
+{"text": "Verified selected coauthorship network size, reachability components and edge counts by component", "value": {"authors": 80, "edges": 208, "components": 17, "linked_authors": 65, "largest_component": {"authors": 57, "edges": 195}, "other_linked_component": {"authors": 8, "edges": 13}, "isolates": 15, "isolate_component_size": 1, "source": "J1"}}

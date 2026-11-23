@@ -1,0 +1,31 @@
+{
+  "id": "T6",
+  "kind": "table",
+  "title": "Columbia four-year pooled totals and top-10 direction counts",
+  "description": "T1 and T2; pooled top-10 share is the ratio of four-year sums, not the mean of annual shares. Directions compare 2024 to 2021.",
+  "producer": "analyst",
+  "inputs": [
+    "T1",
+    "T2"
+  ],
+  "code": "a=a.rename(columns={y:f'works_{y}' for y in years}); a['endpoint_direction']=np.select([a.change_2021_to_2024.gt(0),a.change_2021_to_2024.lt(0)],['rising','falling'],default='flat')\nfor df in (l,o):\n    for col in filter(lambda c:'yoy_' in c,df.columns): df[col]=df[col].astype(float)\nprint(save_table(l,'Columbia top 10 fields: annual trends','T1-derived; 40 field-year rows, fixed cohort ranked on 2021–2024 distinct works by primary-topic field. 2021 index is 100; YoY fields are null where no prior year is present.'))\nprint(save_table(a,'Columbia top 10 fields: four-year ranking and endpoint changes','T1-derived; one row per field, fixed rank by 2021–2024 total; endpoint change and direction compare 2024 to 2021.'))\nprint(save_table(o,'Columbia annual totals and top-10 share','T1 and T2; one row per year, totals and reconciliation plus fixed top-10 and other assigned counts, shares of all snapshot works and year-over-year and baseline changes.'))\npool={'institution_id':'I78577930','institution_name':'Columbia University','start_year':2021,'end_year':2024,'snapshot_work_count':int(o.snapshot_work_count.sum()),'top10_work_count':int(o.top10_work_count.sum()),'top10_share_pct':100*o.top10_work_count.sum()/o.snapshot_work_count.sum(),'fields_rising':int((a.endpoint_direction=='rising').sum()),'fields_falling':int((a.endpoint_direction=='falling').sum()),'fields_flat':int((a.endpoint_direction=='flat').sum())}\nprint(save_table(pd.DataFrame([pool]),'Columbia four-year pooled totals and top-10 direction counts','T1 and T2; pooled top-10 share is the ratio of four-year sums, not the mean of annual shares. Directions compare 2024 to 2021.'))\nprint(record_finding('Fixed top 10: ranks, exact annual counts, four-year volumes and endpoint changes; cutoff verified against rank 11.',{'fields':a.to_dict(orient='records'),'first_excluded':s.iloc[10][['rank','field_id','field_name','total_2021_2024']].to_dict()}))\nprint(record_finding('Annual totals, shares and changes; T1 reconciles to independently counted T2 totals each year.',o.astype(object).where(pd.notna(o),None).to_dict(orient='records')))\nprint(record_finding('Four-year pooled share and counts of top-10 fields by endpoint direction.',pool))\nturns=l[l.publication_year.gt(2021) & l.field_id.isin(['17','19','31','28','13','33','32','20'])][['field_id','field_name','publication_year','work_count','yoy_change','yoy_pct_change']]\nprint(record_finding('Interim movements: Computer Science jumps in 2024; Earth and Planetary Sciences declines every year; Physics, Neuroscience and Biochemistry peak in 2023; Social Sciences, Psychology and Economics rebound in 2024.',turns.to_dict(orient='records')))",
+  "created_at": 1795466777.859,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "1 rows; columns: institution_id, institution_name, start_year, end_year, snapshot_work_count, top10_work_count, top10_share_pct, fields_rising, fields_falling, fields_flat",
+    "text": "1 rows x 10 columns\ninstitution_id: str [1 distinct]\ninstitution_name: str [1 distinct]\nstart_year: int64 [min 2021, max 2021, mean 2021]\nend_year: int64 [min 2024, max 2024, mean 2024]\nsnapshot_work_count: int64 [min 5.537e+04, max 5.537e+04, mean 5.537e+04]\ntop10_work_count: int64 [min 4.385e+04, max 4.385e+04, mean 4.385e+04]\ntop10_share_pct: float64 [min 79.19, max 79.19, mean 79.19]\nfields_rising: int64 [min 3, max 3, mean 3]\nfields_falling: int64 [min 7, max 7, mean 7]\nfields_flat: int64 [min 0, max 0, mean 0]\nfirst rows:\ninstitution_id    institution_name  start_year  end_year  snapshot_work_count  top10_work_count  top10_share_pct  fields_rising  fields_falling  fields_flat\n     I78577930 Columbia University        2021      2024                55371             43846        79.185855              3               7            0",
+    "rows": 1,
+    "columns": [
+      "institution_id",
+      "institution_name",
+      "start_year",
+      "end_year",
+      "snapshot_work_count",
+      "top10_work_count",
+      "top10_share_pct",
+      "fields_rising",
+      "fields_falling",
+      "fields_flat"
+    ]
+  }
+}

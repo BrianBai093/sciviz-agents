@@ -1,0 +1,10 @@
+{
+  "title": "Columbia’s collaboration network",
+  "description": "Circular hierarchical edge bundling across Columbia’s 80 most prolific researchers in 2021–2024. Read the outer field bands and inner subfield segments, then hover or select links and researchers. Cross-field links are emphasized; width rises with the square root of the number of shared works.",
+  "data": {"authors": "T1", "edges": "T2"},
+  "params": {"type": "object", "properties": {
+    "edge_scope": {"type": "string", "enum": ["All collaborations", "Cross-field only"], "default": "All collaborations", "title": "Show collaborations"},
+    "min_shared_works": {"type": "integer", "minimum": 1, "maximum": 85, "default": 1, "title": "Minimum shared works"}
+  }},
+  "entity_types": ["author", "collaboration", "field", "subfield"]
+}
