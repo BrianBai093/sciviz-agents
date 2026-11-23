@@ -186,6 +186,7 @@ Each record states the context, the options considered, the decision, and why. R
 | D30 | Sample DB is a 3% hash sample (11 MB) | Accepted |
 | D31 | Remove shell `execute` and the generic sub-agent; Lead's file tools are read-only | Accepted |
 | D32 | `highlight()` and `setSelection()` take items, not bare ids | Accepted (refines PLAN §4.1) |
+| D33 | The Critic knows the host renders parameter controls | Accepted |
 
 ## D26. Kernel lifetime
 - **Decision:** One persistent kernel per (session, agent).
@@ -216,3 +217,8 @@ Each record states the context, the options considered, the decision, and why. R
 ## D32. Item-based selection API
 - **Decision:** `highlight(items)` and `setSelection(items)` take items (`{type, id}` or `{type, key}`) rather than bare ids.
 - **Why:** Aggregated marks are identified by grouping keys, not ids.
+
+## D33. The Critic knows about host-rendered parameter controls
+- **Context:** In Q3, the Critic rejected V2 because the declared filters had no visible in-view widgets. The Viz prompt, meanwhile, tells modules not to build such widgets, because the host app renders controls for declared parameters.
+- **Decision:** The Critic prompt says host controls exist outside the screenshots, and the review message lists the declared parameters (name, title, default). The Critic judges whether the parameters are meaningful, not whether they have widgets inside the view.
+- **Status:** Accepted.

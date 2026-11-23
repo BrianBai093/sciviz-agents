@@ -150,3 +150,9 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
   - The answer cites G1 and T1–T6.
 - **Prompt fix (generic):** the Viz prompt now says the host renders controls for declared parameters, so modules should not duplicate them inside the view. Q1 had built in-view widgets.
 - Kernel process output (a transport warning) is now discarded, so it no longer clutters agent output.
+- **Q3** (follow-up in `s20261123-125649`): "…redraw the same collaboration network with hierarchical edge bundling, grouping the researchers by their field and subfield…"
+  - Flow: lead → data (field/subfield assignment for the same 80 researchers) → analyst (hierarchy + cross-field measures; finding F7: 94 of 208 ties cross fields) → viz.
+  - Gate: V2 was **rejected** by the Critic. Its major issue was that the declared filters are not visible in the screenshots. V3 was **approved** (5/5/4/5).
+  - 690 s, $1.24. V1 stays available as view1 for comparison; V3 is view2.
+- **Harness fix (D33):** the Critic now gets the declared parameters and is told the host renders their controls. The V2 rejection showed that the Viz prompt and the Critic disagreed on this.
+- **M1 self-review:** written to `docs/reviews/M1.md`. Evidence (screenshots, CLI logs) is in `docs/reviews/m1/`. All exit criteria are met; ledger total $1.62.

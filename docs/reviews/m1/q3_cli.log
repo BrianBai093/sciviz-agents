@@ -1,0 +1,90 @@
+session s20261123-125649
+  lead decided Reuse the same G1 roster and all weighted ties. For hierarchical grouping, give each researcher one dominant OpenAlex field and one dominant 
+subfield within tha…
+lead → data GOAL: Assign one OpenAlex field/subfield classification to every one of the unchanged 80 researchers, providing useful diagnostic counts and stable 
+IDs for a hi
+  data list_tables 
+  data describe_table works
+  data describe_table topics
+  data describe_table work_topics
+  data run_sql select (select count(*)-count(distinct work_id) from works) works_duplicate_ids, (select count(*)-co…
+  data run_python r=load('T1'); i=load('T2'); g=load('G1'); print(r.shape,i.shape,type(g)); print(r.dtypes); print(i.d…
+  data run_python print(sql('''select wt.rank, wt.is_primary, count(*) n, count(*) filter(where t.topic_id is null) un…
+  data run_python rec=[]
+  data decided Use T1 unchanged as the roster and G1 unchanged as topology. The voting denominator is distinct T2 (author_id, work_id) pairs for which that 
+author has is_colum…
+  data decided Assign modal field over classified works, then modal subfield among works in that field; ties break by string taxonomy ID ascending. Coverage is 
+classified/elig…
+  data run_python assert ef.notna().all() and tf.notna().all()
+  data saved T7 (table) OpenAlex field/subfield assignments for the unchanged 80 researchers
+  data run_python dist=(a.groupby(['field_id','field']).agg(researchers=('author_id','size'),subfields=('subfield_id',…
+  data saved F6 (finding) Classification coverage, ambiguity, field distribution and c
+report STATUS: done
+lead → analyst GOAL: Produce bundle-ready graph/hierarchy and quantify cross-field structure; preserve exact topology and author IDs.
+  analyst inspect_artifact 
+  analyst inspect_artifact 
+  analyst inspect_artifact 
+  analyst decided Use fixed T7 field/subfield assignments and parent-qualified branch IDs. Cross-field = endpoint field IDs differ; same-subfield = 
+parent-qualified subfield IDs …
+  analyst run_python g,t,f = load('G1'),load('T7'),load('F6')
+  analyst run_python from collections import Counter
+  analyst run_python for e in edges:
+  analyst saved J1 (json) Bundle-ready Columbia collaboration network
+  analyst saved T8 (table) Cross-field collaboration pairs by scope
+  analyst saved F7 (finding) Exact G1 topology and hierarchy verification; cross-field co
+report STATUS: done
+lead → viz GOAL: Deliver a legible approved interactive hierarchical edge-bundling view side by side in session with existing V1 (do not overwrite V1). V1 is a 
+starting re
+  viz inspect_artifact 
+  viz inspect_artifact 
+  viz inspect_artifact 
+  viz run_python j=load('J1'); print(j['metadata']); print([(f['id'], f['label'], [(s['id'],s['label'],len(s['childre…
+  viz run_python import os,shutil,importlib.util
+  viz render_preview columbia-bundles
+  viz run_python from pathlib import Path
+  viz run_python from playwright.sync_api import sync_playwright
+    ✗ run_python ERROR:
+  viz run_python import concurrent.futures
+  viz submit_viz columbia-bundles
+  viz saved V2 (viz) Columbia collaborations by field · Edge bundles
+  gate V2: revise  answers_question 4/5, truthfulness 5/5, readability 5/5, interaction 3/5 The bundling makes cross-field collaborations stand out while 
+keeping within-field ties visible. The numbered ring, field directory, and selection details are r…
+    ✗ submit_viz REVISE (attempt 1 of 3).
+  viz run_python import os
+  viz run_python proj=Path.cwd().parents[1]
+  viz run_python for p in (proj/'backend').rglob('*'):
+  viz run_python host=(proj/'backend/sciviz/runtime/static/host.js').read_text(); hh=(proj/'backend/sciviz/runtime/st…
+  viz run_python for p in (proj/'docs').glob('*.md'):
+  viz run_python print((proj/'README.md').read_text()[:6200]); print((proj/'backend/sciviz/runtime/static/host.js').r…
+  viz render_preview columbia-bundles
+  viz run_python print(host[6800:]); rsrc=(proj/'backend/sciviz/runtime/renderer.py').read_text();
+  viz run_python print('\n'.join(rsrc.splitlines()[145:217])); print([x.relative_to(proj) for x in proj.joinpath('cat…
+  viz run_python def host_exercise():
+  viz render_preview columbia-bundles
+  viz submit_viz columbia-bundles
+  viz saved V3 (viz) Columbia collaborations by field · Edge bundles
+  gate V3: pass  answers_question 5/5, truthfulness 5/5, readability 4/5, interaction 5/5 The edge-bundled companion makes blue cross-field collaborations stand
+out while keeping gray within-field ties visible. The default view matches the checked ne…
+report **STATUS: approved**  
+  view show view2 V3 Columbia coauthorship by field and subfield, 2021–2024
+──────────────────────────────────────────────────────────────────────────── answer ────────────────────────────────────────────────────────────────────────────
+The new hierarchical edge-bundling view keeps the same 80 researchers and 208 weighted coauthorship ties as the force-directed view, which remains available for
+comparison. It groups researchers into 14 OpenAlex fields and 35 subfields. Blue curves connect researchers in different fields; gray curves stay within a      
+field. Thicker curves indicate more shared works. [G1, J1, V3]                                                                                                  
+
+94 of 208 ties (45%) cross field boundaries, including 85 of 195 (44%) in the largest connected group. Environmental Science and Medicine have the most         
+cross-field ties (21). [F7, T8]                                                                                                                                 
+
+To untangle the largest group, set Component focus → Largest component and Tie scope → Cross-field only. You can also raise Minimum shared works without moving 
+the researchers. If curves overlap, select or search for a researcher to see their collaborators and shared-work counts. [V3]                                   
+
+Field and subfield labels are inferred from the primary topics of each researcher’s Columbia-affiliated works, not from department appointments. A blue tie     
+means the two researchers were assigned to different fields; it does not mean their shared work was itself interdisciplinary. [T7, F7]                          
+
+Possible follow-ups: Which researchers connect the most fields? Which field pairs still stand out after filtering to recurring collaborations?                  
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+view1: V1 Coauthorship among Columbia’s 80 most prolific researchers, 2021–2024 -> 
+/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/s20261123-125649/artifacts/V1/shots/default.png
+view2: V3 Columbia coauthorship by field and subfield, 2021–2024 -> 
+/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/s20261123-125649/artifacts/V3/shots/default.png
+690s, session cost $1.243, ledger total $1.62

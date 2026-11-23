@@ -1,0 +1,71 @@
+session s20261123-125430
+  lead decided Use OpenAlex field (domain > field > subfield > topic) of each work’s primary topic; count distinct snapshot works once by publication year, 
+retaining unclassif…
+lead → data GOAL: Produce validated analysis-ready field-by-year counts and changes, and numerical summary for final response. Compute in SQL as practical.
+  data list_tables 
+  data describe_table works
+  data describe_table topics
+  data run_sql SELECT publication_year, count(*) AS works, count(DISTINCT work_id) AS distinct_works, count(DISTINC…
+  data run_sql SELECT field_id, list(DISTINCT field) AS names, list(DISTINCT domain_id) AS domain_ids, list(DISTINC…
+  data run_sql SELECT count(*) AS topic_rows, count(DISTINCT topic_id) AS topic_ids, count(DISTINCT field_id) AS fi…
+  data run_sql SELECT count(*) AS joined_rows, count(DISTINCT w.work_id) AS joined_works, count(*) FILTER (WHERE w.…
+  data run_sql SELECT field_id, field, domain_id, domain FROM topics GROUP BY ALL EXCEPT SELECT t.field_id, t.field…
+  data decided Use all 55,371 works in the fixed Columbia snapshot (published 2021–2024) at one count per OpenAlex work ID, without type, paratext, or 
+authorship filters. Attr…
+  data run_sql WITH wide AS (SELECT t.field_id, coalesce(t.field,'Unclassified') AS field_name, t.domain_id, t.doma…
+  data saved T1 (table) Columbia works by primary OpenAlex field, 2021–2024
+  data run_sql WITH joined AS (SELECT w.publication_year, w.work_id, t.field_id FROM works w LEFT JOIN topics t ON …
+  data run_python f=load('T1'); c=f; a,b,d,e=[c for y in range(2021,2025)]; print('Stri…
+  data saved T2 (table) Columbia annual publication totals and field direction summary
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+  data saved T2 (table) Columbia annual publication totals and field direction summary
+  data decided A named field is rising, falling, or tied solely by the sign of its 2024 minus 2021 work count, not by intermediate-year monotonicity. Percent 
+change is a relat…
+  data run_sql WITH raw AS (SELECT publication_year, count(*) raw_rows, count(DISTINCT work_id) raw_distinct_works …
+  data saved T3 (table) Validation of primary-topic attribution and corpus reconciliation
+report STATUS: done
+lead → viz GOAL: Create an approved interactive comparison of all fields, giving both endpoint difference and four yearly counts, with overall context.
+  viz inspect_artifact 
+  viz inspect_artifact 
+  viz inspect_artifact 
+  viz run_python print(load('T1').to_string(index=False))
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+  viz render_preview columbia-fields
+  viz render_preview columbia-fields
+  viz render_preview columbia-fields
+  viz submit_viz columbia-fields
+  viz saved V1 (viz) Columbia research publication output, 2021–2024
+  gate V1: pass  answers_question 5/5, truthfulness 5/5, readability 4/5, interaction 4/5 The default view answers the question directly: it ranks fields by the
+magnitude of their 2024-minus-2021 change and keeps all four annual counts alongside the …
+report **STATUS:** approved  
+  view show view1 V1 Columbia publication output by research field, 2021–2024
+──────────────────────────────────────────────────────────────────────────── answer ────────────────────────────────────────────────────────────────────────────
+Columbia’s publication output fell 1.6% from 2021 to 2024, even though 13 research fields gained output and 13 lost output. The total rebounded in 2024 after   
+two years of decline: 14,175 → 13,636 → 13,616 → 13,944 works. [T2]                                                                                             
+
+                                                         
+ Largest changes by work count        2021  2024  Change 
+ ─────────────────────────────────────────────────────── 
+ Computer Science                      801   979    +178 
+ Physics and Astronomy                 567   668    +101 
+ Business, Management and Accounting   154   225     +71 
+ Arts and Humanities                   474   389     −85 
+ Environmental Science                 769   681     −88 
+ Earth and Planetary Sciences          667   456    −211 
+                                                         
+
+Business, Management and Accounting was the only field to grow every year. Earth and Planetary Sciences, Environmental Science, and Chemistry declined every    
+year. Medicine remained the largest field in all four years, despite finishing 80 works below its 2021 count. [T1]                                              
+
+Explore every field in the interactive view. The bars show the change from 2021 to 2024, and the four year columns give exact counts. Use More fields to see the
+rest of the ranking, filter by OpenAlex domain, or switch from work counts to percentage change. Percentages can be large when the starting count is small:     
+Veterinary went from 1 to 6 works, a 500% increase. [V1, T1]                                                                                                    
+
+Each work is counted once by publication year and assigned to the OpenAlex field of its primary topic; unclassified works are shown separately. The counts      
+include all work types in the fixed OpenAlex snapshot, not a complete Columbia publication census. [T1, T3]                                                     
+
+Two useful follow-ups: Which fields gained the most share of Columbia’s output? And do the same trends hold if we count only journal articles?                  
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+view1: V1 Columbia publication output by research field, 2021–2024 -> 
+/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/s20261123-125430/artifacts/V1/shots/default.png
+387s, session cost $0.373, ledger total $0.54

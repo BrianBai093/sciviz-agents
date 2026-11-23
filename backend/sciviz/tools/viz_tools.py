@@ -157,7 +157,8 @@ def viz_tools(s: Session, agent: str):
             return text
         verdict = critic.review(s.user_question, acceptance_criteria, manifest["title"],
                                 manifest.get("description", ""), automated, _data_summary(s, manifest),
-                                rep.screenshots, callbacks=[s.usage_callback])
+                                rep.screenshots, params_schema=manifest.get("params"),
+                                callbacks=[s.usage_callback])
         review_c = {"stage": "critic", **verdict.model_dump()}
         issues = "\n".join(f"- [{i.severity}] {i.problem} -> {i.fix}" for i in verdict.issues) or "- none"
         scores = (f"answers_question {verdict.answers_question}/5, truthfulness {verdict.truthfulness}/5, "

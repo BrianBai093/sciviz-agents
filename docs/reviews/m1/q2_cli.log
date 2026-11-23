@@ -1,0 +1,87 @@
+session s20261123-125649
+  lead decided Rank researchers by distinct 2021–2024 snapshot works on which they themselves list Columbia or an included OpenAlex child institution, all work 
+types; ties by …
+lead → data GOAL: Build node candidate and work-author incidence artifacts for analyst.
+  data list_tables 
+  data describe_table institutions
+  data describe_table authorship_institutions
+  data describe_table works
+  data describe_table authors
+  data describe_table snapshot_meta
+  data describe_table authorships
+  data run_sql SELECT * FROM snapshot_meta
+  data run_sql SELECT publication_year, count(*) row_count, count(DISTINCT work_id) works, count(DISTINCT type) wor…
+  data run_sql SELECT i.institution_id, i.name, i.is_columbia, count(ai.work_id) institution_rows, count(DISTINCT a…
+  data run_sql WITH ai AS (SELECT work_id,author_order, bool_or(institution_id IN ('I78577930','I152304114','I11657…
+  data run_sql WITH d AS (SELECT work_id, author_id, count(*) n, count(DISTINCT is_columbia) f FROM authorships WHE…
+  data decided Ranking uses distinct 2021–2024 work IDs, all types, for each non-null author ID with at least one byline slot on that work listing I78577930, 
+I152304114, I1165…
+  data decided Select exactly 80 using ROW_NUMBER ordered by qualifying work count descending, then full stored OpenAlex author ID VARCHAR ascending 
+(lexicographic, not numeri…
+  data run_python pd.set_option('display.max_colwidth', None)
+  data run_python nodes = sql(base+' SELECT * FROM ranked WHERE rank <= 80 ORDER BY rank')
+  data saved T1 (table) Columbia top 80 researchers, 2021–2024
+  data saved T2 (table) Top 80 selected-author work incidence, 2021–2024
+  data run_python cutoff = sql(base+''' SELECT rank, author_id, label, columbia_work_count, rank<=80 AS selected FROM …
+  data saved T3 (table) Top-80 cutoff tie audit
+report STATUS: done
+lead → analyst GOAL: Produce graph artifacts with defensible network findings and affordances for diagram.
+  analyst inspect_artifact 
+  analyst inspect_artifact 
+  analyst inspect_artifact 
+  analyst decided Use all T1 authors, including isolates, and all distinct T2 author–work incidences regardless of is_columbia. Each work contributes once to 
+each unordered pair …
+  analyst run_python from itertools import combinations
+  analyst run_python lookup={v:k for k,v in labels.items()}; trio={lookup for x in ['Jason Dennis Wright','Alexander M…
+  analyst run_python def meta(name): return e.notna().all()
+  analyst saved T4 (table) Columbia collaboration nodes
+  analyst saved T5 (table) Columbia collaboration edges
+  analyst saved T6 (table) Columbia collaboration components
+  analyst saved G1 (graph) Columbia collaboration network, 2021–2024
+  analyst run_python print(record_finding('Network size and integrity check against expected counts',{'nodes':len(n),'uni…
+  analyst saved F1 (finding) Network size and integrity check against expected counts
+  analyst saved F2 (finding) Connected component sizes and tie counts
+  analyst saved F3 (finding) Strongest five pairs and weight supported by works with thre
+  analyst saved F4 (finding) Degree summary across all selected authors, including isolat
+  analyst saved F5 (finding) Multi-author support for the network and Wright–Melamed–Hers
+report STATUS: done
+lead → viz GOAL: Build and submit for approval an interactive force-directed node-link diagram. Scope: 80 authors, 208 ties; components of 57 and 8 plus 15 
+isolates. Make 
+  viz inspect_artifact 
+  viz inspect_artifact 
+  viz inspect_artifact 
+  viz inspect_artifact 
+  viz read_package_docs 
+  viz run_python g=load('G1'); print(type(g)); print(g.keys()); n=pd.DataFrame(g['nodes']); e=pd.DataFrame(g['edges']…
+  viz read_package_docs 
+  viz render_preview columbia-collab
+  viz render_preview columbia-collab
+  viz render_preview columbia-collab
+  viz run_python print('Edges at ≥8 works:', int((e.weight>=8).sum())); print('Edges at ≥85 works:', int((e.weight>=8…
+  viz submit_viz columbia-collab
+  viz saved V1 (viz) Columbia’s collaboration network, 2021–2024
+  gate V1: pass  answers_question 5/5, truthfulness 5/5, readability 4/5, interaction 4/5 The default view shows all 80 authors and 208 ties, with the 57- and 
+8-author components clearly separated and all 15 isolates visible. The legend explains node…
+report **STATUS: approved**  
+  view show view1 V1 Coauthorship among Columbia’s 80 most prolific researchers, 2021–2024
+──────────────────────────────────────────────────────────────────────────── answer ────────────────────────────────────────────────────────────────────────────
+The force-directed diagram shows 208 coauthorship ties among Columbia’s 80 most prolific researchers in 2021–2024. The largest connected group contains 57      
+researchers, a second contains 8, and 15 have no recorded tie to anyone else in the selected group. [G1, T6]                                                    
+
+Jason Dennis Wright and Dawn L. Hershman had the strongest tie, with 85 shared works. Katherine M. Keyes had the most distinct collaborators within the group,  
+with 17. [T4, T5]                                                                                                                                               
+
+How to read the diagram: Larger circles represent more Columbia-affiliated works, thicker lines represent more shared works, and colors distinguish the         
+connected groups. Gray circles are researchers with no ties within the selected group. Search for an author, hover for details, or click an author to highlight 
+their collaborators. You can zoom and pan, adjust label density, or raise the minimum shared-work threshold to hide weaker ties without moving the nodes. [V1]  
+
+Scope: Researchers were ranked by distinct works of any type on which they personally listed Columbia or an included affiliate. Ties count any works they       
+coauthored in the Columbia-scoped OpenAlex snapshot, even if one of them did not list Columbia on that work. The snapshot is not a complete publication history.
+[T1, T2]                                                                                                                                                        
+
+Possible follow-ups: Which researchers connect otherwise separate parts of the largest group? How does the network change when only recurring collaborations are
+shown?                                                                                                                                                          
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+view1: V1 Coauthorship among Columbia’s 80 most prolific researchers, 2021–2024 -> 
+/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/s20261123-125649/artifacts/V1/shots/default.png
+464s, session cost $0.471, ledger total $0.84
