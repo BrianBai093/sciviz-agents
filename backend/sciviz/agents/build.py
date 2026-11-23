@@ -13,7 +13,8 @@ from pathlib import Path
 from deepagents import GeneralPurposeSubagentProfile, HarnessProfile, create_deep_agent, register_harness_profile
 from deepagents.backends.filesystem import FilesystemBackend
 from deepagents.middleware.filesystem import FilesystemMiddleware
-from langchain.agents.middleware import ModelCallLimitMiddleware, ModelRetryMiddleware, TodoListMiddleware
+from langchain.agents.middleware import (ModelCallLimitMiddleware, ModelRetryMiddleware, TodoListMiddleware,
+                                       ToolErrorMiddleware)
 from langgraph.checkpoint.sqlite import SqliteSaver
 
 from ..config import settings
@@ -95,8 +96,14 @@ def checkpointer_for(s: Session) -> SqliteSaver:
     return SqliteSaver(sqlite3.connect(str(s.ws.root / "checkpoints.sqlite"), check_same_thread=False))
 
 
+def _tool_error(exc: Exception) -> str:
+    """A failing tool must not abort the agent run: report the failure to the model (DECISIONS D43)."""
+    return f"Tool failed with {type(exc).__name__}: {str(exc)[:500]}. Adjust the call or try another approach."
+
+
 def _limits(n: int) -> list:
-    return [ModelCallLimitMiddleware(run_limit=n), ModelRetryMiddleware(max_retries=2)]
+    return [ModelCallLimitMiddleware(run_limit=n), ModelRetryMiddleware(max_retries=2),
+            ToolErrorMiddleware(on_error=_tool_error)]
 
 
 def build_multi_agent(s: Session, checkpointer=None):

@@ -196,6 +196,8 @@ Each record states the context, the options considered, the decision, and why. R
 | D40 | Single-agent ablation mode with the same tools and gate | Accepted |
 | D41 | Process-safe ledger; cost events are the source of truth | Accepted |
 | D42 | The Critic reviews each view in isolation, against checkable criteria | Accepted |
+| D43 | Atomic, locked view-state updates; tool exceptions are returned to the model | Accepted |
+| D44 | Retry a failed turn by forking from the last good checkpoint | Accepted |
 
 ## D26. Kernel lifetime
 - **Decision:** One persistent kernel per (session, agent).
@@ -281,4 +283,15 @@ Each record states the context, the options considered, the decision, and why. R
   - The Critic reviews one view in isolation. Cross-view placement and linking, and other viewport sizes, are the host's job.
   - The Critic must not reject a view for evidence the gate cannot provide, and ignores criteria that cannot be checked from a single view.
   - The Viz prompt says to pass only criteria checkable from the view itself.
+- **Status:** Accepted.
+
+## D43. Atomic view-state updates; tool failures go back to the model
+- **Context:** In the demo session the Lead called `highlight_view` for two views as parallel tool calls. One read `views.json` while the other was rewriting it, got an empty file, raised `JSONDecodeError`, and the exception aborted the whole agent run.
+- **Decision:**
+  - `views.json` is written atomically (temp file + replace), and every read-modify-write runs under a lock (`Workspace.update_views`, also used by `show_view` and the API).
+  - Every agent has LangChain's `ToolErrorMiddleware`, so any tool exception becomes an error `ToolMessage` the model can react to instead of halting the run.
+- **Status:** Accepted.
+
+## D44. Retry a failed turn from the last good checkpoint
+- **Decision:** `run_turn(..., from_checkpoint=<id>)` forks the conversation from an earlier LangGraph checkpoint, so a crashed turn can be retried without the failed attempt in the agents' context. It was used once to repair the demo session (`demo/continue_demo.py`). The event log is truncated to match.
 - **Status:** Accepted.

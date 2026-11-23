@@ -265,3 +265,21 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
 - `demo-network` is set aside as `_superseded-demo-network`. `demo-network-2` was regenerated with D42.
 
 **Recordings.** `demo/package_recordings.py` copies selected sessions to `recordings/` without LangGraph checkpoints and preview renders, about 0.4–1 MB each. The 8 eval sessions are packaged.
+
+**`demo-network-2`** (regenerated with D42)
+- Turns 1–2 were clean: V1 force-directed and V2 edge-bundling, both approved on the first submission.
+- Turn 3 crashed: parallel `highlight_view` calls raced on `views.json`.
+- Fixes: D43 (atomic, locked view state; `ToolErrorMiddleware`) and D44 (fork from a checkpoint). A stress test with 6 threads × 200 concurrent updates gave no errors.
+- `demo/continue_demo.py` rolled the session back to the end of turn 2 (event log truncated, view state restored, conversation forked from the turn-2 checkpoint) and re-ran turns 3–5.
+- Also fixed: `show_view(replace_view=…)` with the version already shown is now a no-op. Before, it added a self-referencing undo entry, and the UI ignores such events.
+
+**Demo video.** `demo/build_video.py` + `demo/storyboard.yaml`.
+- Pipeline: 18 narrated steps; OpenAI `gpt-4o-mini-tts` (voice "marin"), cached in `demo/tts_cache/`; Playwright drives the UI in director mode over the no-key replay server (`SCIVIZ_WORKSPACES=recordings`); captions are overlaid in the page; ffmpeg places each clip at its step's start time.
+- Fixes during building: captions were shown only after a step's actions; `-shortest` cut the video to the audio length; one click hit a link instead of a node, so it now targets A5057686070.
+- Result: `demo/video/sciviz_demo.mp4`, 3:28, 12.7 MB.
+
+**M3 wrap-up**
+- Self-review in `docs/reviews/M3.md`.
+- 11 unit tests pass and lint is clean. CI lint now also covers `evals/` and `demo/`.
+- Ledger total: **$6.90**, plus about $1–2 untracked (D41) and about $0.10 of TTS.
+- Push to GitHub and the release asset are waiting for the user's OK.

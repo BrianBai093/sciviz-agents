@@ -1,0 +1,28 @@
+{
+  "id": "T14",
+  "kind": "table",
+  "title": "Jason Dennis Wright — direct coauthors for V1 and V2",
+  "description": "One row per distinct direct T2 neighbor of A5057686070 among the selected 80 researchers. Exact match on either endpoint, self excluded, no additional threshold. T1 display names and T2 distinct shared 2021–2024 snapshot work counts. Validated against T4 degree and the incident T12 edges.",
+  "producer": "data",
+  "inputs": [
+    "T1",
+    "T12",
+    "T2",
+    "T3",
+    "T4"
+  ],
+  "code": "import json\nsid = 'A5057686070'\nnodes, edges, deg, routed = [load(x) for x in ('T1','T2','T4','T12')]\ncols = ['source_author_id','target_author_id','shared_snapshot_work_count']\ndef incident(df):\n    return df.loc[(df.source_author_id.eq(sid) | df.target_author_id.eq(sid)) & df.source_author_id.ne(df.target_author_id), cols].copy()\ne = incident(edges)\nr = incident(routed)\nassert nodes.author_id.is_unique and (nodes.author_id == sid).sum() == 1\nassert e.sort_values(cols).reset_index(drop=True).equals(r.sort_values(cols).reset_index(drop=True))\ne['author_id'] = e.target_author_id.where(e.source_author_id.eq(sid), e.source_author_id)\nassert e.author_id.is_unique\nout = e[['author_id','shared_snapshot_work_count']].merge(nodes[['author_id','display_name']], on='author_id', how='left', validate='one_to_one')\nassert out.display_name.notna().all()\ncheck = deg.loc[deg.author_id.eq(sid)].iloc[0]\nassert len(out) == check.degree and out.shared_snapshot_work_count.sum() == check.weighted_degree\nout = out[['author_id','display_name','shared_snapshot_work_count']].sort_values(['shared_snapshot_work_count','author_id'], ascending=[False,True]).reset_index(drop=True)\nout.insert(0,'type','author')\nprint('Source matches:', int(e.source_author_id.eq(sid).sum()), 'Target matches:', int(e.target_author_id.eq(sid).sum()), 'T4 degree:', check.degree, 'Weighted:', check.weighted_degree)\nprint(out.to_string(index=False))\nprint(json.dumps(out[['type','author_id']].rename(columns={'author_id':'id'}).to_dict('records')))\nprint(save_table(out, 'Jason Dennis Wright — direct coauthors for V1 and V2', 'One row per distinct direct T2 neighbor of A5057686070 among the selected 80 researchers. Exact match on either endpoint, self excluded, no additional threshold. T1 display names and T2 distinct shared 2021–2024 snapshot work counts. Validated against T4 degree and the incident T12 edges.'))",
+  "created_at": 1795469059.775,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "5 rows; columns: type, author_id, display_name, shared_snapshot_work_count",
+    "text": "5 rows x 4 columns\ntype: str [1 distinct]\nauthor_id: str [5 distinct]\ndisplay_name: str [5 distinct]\nshared_snapshot_work_count: int64 [min 1, max 85, mean 34.2]\nfirst rows:\n  type   author_id      display_name  shared_snapshot_work_count\nauthor A5091772334  Dawn L. Hershman                          85\nauthor A5002038978 Alexander Melamed                          75\nauthor A5085688534     Andrew Rundle                           6\nauthor A5082554584  Alfred I. Neugut                           4\nauthor A5062821367   Mary Beth Terry                           1",
+    "rows": 5,
+    "columns": [
+      "type",
+      "author_id",
+      "display_name",
+      "shared_snapshot_work_count"
+    ]
+  }
+}

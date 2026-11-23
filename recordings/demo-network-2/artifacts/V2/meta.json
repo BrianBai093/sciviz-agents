@@ -1,0 +1,114 @@
+{
+  "id": "V2",
+  "kind": "viz",
+  "title": "Columbia collaborations by field",
+  "description": "A radial hierarchical edge-bundling companion to the original Columbia network. The same 80 researchers are ordered by plurality OpenAlex field and subfield. Cross-field ties are emphasized; select a pair, sector or researcher to trace its ties. Field-pair counts are unweighted coauthor pairs, not counts of works by topic.",
+  "producer": "viz",
+  "inputs": [
+    "T9",
+    "T10",
+    "T12",
+    "T13"
+  ],
+  "code": null,
+  "created_at": 1795468993.071,
+  "file": "module.js",
+  "source_dir": "viz/columbia-bundled",
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "stage": "automated",
+      "report": {
+        "ok": true,
+        "ready": true,
+        "error": null,
+        "errors": [],
+        "blocked_requests": [],
+        "metrics": {
+          "marks": 355,
+          "elements": 1151,
+          "canvases": 0,
+          "texts": 88,
+          "text_overlap_ratio": 0,
+          "out_of_bounds_marks": 0,
+          "has_pick": false,
+          "has_update": true,
+          "has_set_selection": true,
+          "has_highlight": true
+        },
+        "blank": false,
+        "render_seconds": 0.86,
+        "screenshots": {
+          "default": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/demo-network-2/artifacts/V2/shots/default.png",
+          "selected": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/demo-network-2/artifacts/V2/shots/selected.png"
+        },
+        "interactions": [
+          {
+            "name": "hover_details",
+            "passed": true,
+            "detail": "hovering a mark emitted 1 hover event(s)"
+          },
+          {
+            "name": "click_select",
+            "passed": true,
+            "detail": "click selected [{'type': 'subfield', 'key': {'field_id': '27', 'subfield_id': '2705'}, 'label': 'Cardiology and Cardiovascular Medicine'}]; ids/keys found in bound data: True"
+          },
+          {
+            "name": "selection_visible",
+            "passed": true,
+            "detail": "12.32% of pixels changed after selecting"
+          },
+          {
+            "name": "highlight_visible",
+            "passed": true,
+            "detail": "6.62% of pixels changed after highlight([{\"field_id\":\"27\",\"subfield_id\":\"2705\"}])"
+          },
+          {
+            "name": "multi_item_and_state",
+            "passed": true,
+            "detail": "selection/highlight with 3 items and module keeps no state (getState not implemented): 0 new errors"
+          },
+          {
+            "name": "param_minShared",
+            "passed": true,
+            "detail": "set minShared=64: 0 new errors, 11.00% pixels changed"
+          },
+          {
+            "name": "param_tieVisibility",
+            "passed": true,
+            "detail": "set tieVisibility='Cross-field only': 0 new errors, 6.82% pixels changed"
+          },
+          {
+            "name": "param_bundleStrength",
+            "passed": true,
+            "detail": "set bundleStrength=25: 0 new errors, 9.47% pixels changed"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "critic",
+      "verdict": "pass",
+      "answers_question": 5,
+      "truthfulness": 5,
+      "readability": 4,
+      "interaction": 5,
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The field-pair list extends below the visible panel, and the partially visible last row is the only cue that more pairs are available.",
+          "fix": "Add a visible scroll cue or a small indicator showing how many of the 18 pairs are in view."
+        },
+        {
+          "severity": "minor",
+          "problem": "The outer-ring numbers keep the chart uncluttered, but readers must match them to the explorer to identify fields.",
+          "fix": "Add a short hint that the Fields tab maps ring numbers to field names, while keeping the ring itself compact."
+        }
+      ],
+      "summary": "The companion preserves the 80 researchers, including 15 isolates, and shows all 208 ties by default. Blue bundles distinguish the 94 cross-field ties from within-field ties, and the largest-component note correctly reports 85 of 195 ties before filtering. The explorer presents exact unweighted pair counts and makes clear that the groups describe researchers, not the topics of their shared works. Subfield selection visibly isolates the relevant ties without moving the researchers, and the automated hover, highlight, and parameter checks passed."
+    }
+  ],
+  "summary": "visualization module (25492 chars) bound to ['T9', 'T10', 'T12', 'T13']"
+}

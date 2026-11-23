@@ -101,6 +101,14 @@ class Director:
         self.page.wait_for_timeout(500)
         box.press("Enter")
 
+    def type_next(self, delay: int = 12) -> None:
+        """Type the next recorded user message exactly as it was sent (it then appears when played)."""
+        evs = self.page.evaluate("window.__director.events()")
+        start = self.page.evaluate("window.__director.index()")
+        text = next(e["payload"]["text"] for e in evs[start:]
+                    if e["kind"] == "message" and e["agent"] == "user" and not e["payload"].get("answer_to"))
+        self.type(text, delay)
+
     def _frame(self, view: int):
         frames = [f for f in self.page.frames if "view.html" in f.url]
         return frames[view], self.page.locator("iframe").nth(view)
@@ -134,6 +142,21 @@ class Director:
     def wait(self, ms: int) -> None:
         self.page.wait_for_timeout(ms)
 
+    def button(self, name: str) -> None:
+        self.page.get_by_role("button", name=name).first.click()
+
+    def param(self, panel: int = 0, index: int = 0) -> None:
+        """Change one generated parameter control of a view panel (next option / middle of a slider)."""
+        ctl = self.page.locator("section").nth(panel).locator("select, input[type=range]").nth(index)
+        if ctl.evaluate("e => e.tagName") == "SELECT":
+            n = ctl.locator("option").count()
+            cur = ctl.evaluate("e => e.selectedIndex")
+            ctl.select_option(index=(cur + 1) % max(n, 1))
+        else:
+            ctl.evaluate("e => { const s = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;"
+                         " s.call(e, String(Math.round(+e.min + (+e.max - +e.min) * 0.6)));"
+                         " e.dispatchEvent(new Event('input', {bubbles: true})); }")
+
 
 def run(storyboard: Path, out: Path, base: str, size: tuple[int, int]) -> None:
     sb = yaml.safe_load(storyboard.read_text())
@@ -152,6 +175,9 @@ def run(storyboard: Path, out: Path, base: str, size: tuple[int, int]) -> None:
         d = Director(page, base)
         for step, (clip, dur) in zip(steps, clips):
             start = time.time() - t0
+            if step.get("say") and not step.get("say_after_do"):
+                d.caption(step.get("caption", step["say"]))
+                placed.append((start, clip))
             for action in step.get("do", []):
                 (name, arg), = action.items() if isinstance(action, dict) else ((action, None),)
                 fn = getattr(d, name)
@@ -161,9 +187,9 @@ def run(storyboard: Path, out: Path, base: str, size: tuple[int, int]) -> None:
                     fn()
                 else:
                     fn(arg)
-            if step.get("say"):
+            if step.get("say") and step.get("say_after_do"):
                 d.caption(step.get("caption", step["say"]))
-                placed.append((time.time() - t0 if step.get("say_after_do") else start, clip))
+                placed.append((time.time() - t0, clip))
             elapsed = time.time() - t0 - (placed[-1][0] if step.get("say") else start)
             page.wait_for_timeout(int(max(0.0, dur + step.get("pad", 0.4) - elapsed) * 1000))
             print(f"{start:6.1f}s  {step.get('say', '')[:70]}", flush=True)
@@ -182,7 +208,7 @@ def run(storyboard: Path, out: Path, base: str, size: tuple[int, int]) -> None:
     filters.append(f"{mix}amix=inputs={len(placed)}:normalize=0[aout]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", ";".join(filters),
                     "-map", "0:v", "-map", "[aout]", "-c:v", "libx264", "-preset", "medium", "-crf", "23",
-                    "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k", "-shortest", str(out)], check=True)
+                    "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k", str(out)], check=True)
     shutil.rmtree(raw, ignore_errors=True)
     dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of",
                                          "default=nw=1:nk=1", str(out)]).decode())

@@ -25,6 +25,7 @@ import pandas as pd
 
 KINDS = ("table", "graph", "tree", "json", "finding", "viz")
 _lock = threading.Lock()
+_views_lock = threading.RLock()
 
 
 def _now() -> float:
@@ -182,7 +183,19 @@ class Workspace:
         return json.loads(p.read_text()) if p.exists() else {"views": [], "selection": None}
 
     def save_views(self, views: dict) -> None:
-        (self.root / "views.json").write_text(json.dumps(views, indent=2, ensure_ascii=False))
+        """Atomic write: readers never see a half-written file (DECISIONS D43)."""
+        p = self.root / "views.json"
+        tmp = p.with_name(f"views.{threading.get_ident()}.tmp")
+        tmp.write_text(json.dumps(views, indent=2, ensure_ascii=False))
+        tmp.replace(p)
+
+    def update_views(self, fn) -> object:
+        """Read-modify-write of the view state under a lock (parallel tool calls touch it at the same time)."""
+        with _views_lock:
+            views = self.views()
+            result = fn(views)
+            self.save_views(views)
+            return result
 
 
 # ---- summaries ----------------------------------------------------------------------------

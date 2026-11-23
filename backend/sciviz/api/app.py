@@ -20,6 +20,7 @@ from sse_starlette.sse import EventSourceResponse
 from ..config import settings
 from ..datasets import Dataset
 from ..harness.budget import SpendLedger
+from ..harness.workspace import _views_lock
 from ..runner import run_turn
 from ..session import Session
 
@@ -261,6 +262,11 @@ class ViewUpdate(BaseModel):
 def update_view(sid: str, view_id: str, body: ViewUpdate):
     """User-driven view changes (no LLM): parameter values from the controls, switching versions / undo."""
     s = handle(sid).session
+    with _views_lock:
+        return _update_view(s, view_id, body)
+
+
+def _update_view(s, view_id: str, body: "ViewUpdate"):
     views = s.ws.views()
     v = next((x for x in views["views"] if x["view_id"] == view_id), None)
     if not v:
@@ -289,9 +295,7 @@ class SelectionIn(BaseModel):
 def set_selection(sid: str, body: SelectionIn):
     """Selections made in views are logged so the Lead and replay mode can see them."""
     s = handle(sid).session
-    views = s.ws.views()
-    views["selection"] = body.model_dump()
-    s.ws.save_views(views)
+    s.ws.update_views(lambda views: views.__setitem__("selection", body.model_dump()))
     s.events.emit("user", "select", view_id=body.view_id, viz=body.viz, items=body.items[:200])
     return {"ok": True}
 

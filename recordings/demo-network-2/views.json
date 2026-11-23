@@ -1,0 +1,69 @@
+{
+  "views": [
+    {
+      "view_id": "view1",
+      "viz": "V3",
+      "title": "Columbia’s top 80 researchers: coauthorship network, 2021–2024",
+      "params": {},
+      "highlight": [
+        {
+          "type": "author",
+          "id": "A5091772334"
+        },
+        {
+          "type": "author",
+          "id": "A5002038978"
+        },
+        {
+          "type": "author",
+          "id": "A5085688534"
+        },
+        {
+          "type": "author",
+          "id": "A5082554584"
+        },
+        {
+          "type": "author",
+          "id": "A5062821367"
+        }
+      ],
+      "created_at": 1795468546.748107,
+      "history": [
+        "V1"
+      ]
+    },
+    {
+      "view_id": "view2",
+      "viz": "V2",
+      "title": "Columbia’s top 80 researchers: field and subfield edge bundles, 2021–2024",
+      "params": {
+        "tieVisibility": "Cross-field only"
+      },
+      "highlight": [
+        {
+          "type": "author",
+          "id": "A5091772334"
+        },
+        {
+          "type": "author",
+          "id": "A5002038978"
+        },
+        {
+          "type": "author",
+          "id": "A5085688534"
+        },
+        {
+          "type": "author",
+          "id": "A5082554584"
+        },
+        {
+          "type": "author",
+          "id": "A5062821367"
+        }
+      ],
+      "created_at": 1795469024.730282,
+      "history": []
+    }
+  ],
+  "selection": null
+}

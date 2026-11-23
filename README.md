@@ -49,11 +49,15 @@ uv run python data_pipeline/build_catalog.py --db data/columbia.duckdb --semanti
 ```
 For a quick look, `SCIVIZ_DB=catalog/columbia_sample.duckdb` uses the small (3%) sample that is committed to the repo.
 
-**Replay mode (no API key needed).** Explore the recorded sessions in `workspaces/` exactly as they happened:
+**Replay mode (no API key needed).** The recorded sessions in [`recordings/`](recordings/) can be explored exactly as they happened:
+- `demo-network-2`: network → edge bundling → highlight → parameter → code edit;
+- the 8 evaluation runs.
+
 ```bash
-uv run sciviz serve --port 8001           # serves the API and the built UI
-# open http://localhost:8001, pick a session, press "Replay" (or add ?session=<id>&replay=1&speed=8 to the URL)
+SCIVIZ_WORKSPACES=recordings uv run sciviz serve --port 8001     # API + built UI, no key needed
 ```
+Then open http://localhost:8001, pick a session, and press "Replay", or open http://localhost:8001/?session=demo-network-2&replay=1&speed=8.
+Use a regular browser such as Chrome or Safari. The views run in sandboxed iframes, which some embedded browser panes block.
 
 **Live mode.**
 ```bash
@@ -81,7 +85,7 @@ uv run python evals/run_eval.py --mode multi     # 4-task evaluation (live; cost
 | Network with an algorithmic layout | "…collaboration network among the 80 most prolific researchers… force-directed" → the Viz agent looked up `d3-force`, built a zoomable network, and kept components separate |
 | Advanced layout that is more readable | Follow-up: "…redraw with hierarchical edge bundling, grouped by field and subfield…" → a radial bundled view next to the force layout, with linked selection, so cross-field ties are visible at a glance |
 | A technique used nowhere else (generality) | "…citation flows between fields… as a Sankey diagram" |
-| Follow-ups and modifications (T2) | Select a researcher, then ask "highlight this researcher's coauthors in both views" (highlight path, ~40 s). "Show only cross-field ties" (parameter path, ~5 s). "Color the researchers by field" (code path: the module is edited, re-verified and hot-swapped, ~4 min; the old version stays available for undo and compare). |
+| Follow-ups and modifications (T2) | In session `demo-network-2`: select a researcher, then ask "highlight this researcher's coauthors in both views" (highlight path, 10 s). "Show only the cross-field ties" (parameter path, 15 s). "Color the researchers by their field and add a field legend" (code path: the module is edited, re-verified and hot-swapped, 232 s; the old version stays available for undo and compare). |
 
 Interaction in every view comes from a generic runtime:
 - hovering shows details (the dataset record plus the view's own data);
@@ -222,7 +226,7 @@ The revise loop does work when needed. In development, the Critic rejected one e
 - **Views need internet access** for their pinned CDN libraries (D35).
 - **Data scope.** Columbia University only (not the separate Irving Medical Center record), 2021–2024, at most 100 authors per work. OpenAlex author disambiguation and topic classification errors apply (docs/DATA.md).
 - **Early development sessions** (M1/M2) contained views with bugs that the later gate rules (D33, D38) now catch. Those sessions are not part of `recordings/`.
-- **Spend.** The ledger counted about $6 of LLM spend in total. About $1–2 more went untracked during a ledger incident (D41). TTS narration cost roughly $0.10.
+- **Spend.** The ledger counted **$6.90** of LLM spend in total, all on GPT-6.2 Sol; Astra was never needed. That covers every development run, the evaluation and the demo sessions. About $1–2 more went untracked during a ledger incident (D41), and TTS narration cost roughly $0.10.
 
 <a id="decisions"></a>
 ## 7. Main technical decisions

@@ -1,0 +1,42 @@
+{
+  "id": "T3",
+  "kind": "table",
+  "title": "Columbia top 80 researchers — graph validation counts, 2021–2024",
+  "description": "One row summarizing input scope, rank cutoff and ties, affiliation validation, and network totals. Author-work counts count distinct author/work pairs; edge_weight_sum counts distinct selected pair/work combinations, including one contribution per pair when a work has several selected coauthors. Components include isolates.",
+  "producer": "data",
+  "inputs": [],
+  "code": "from collections import Counter\nfrom itertools import combinations\nsw = sql(base + 'SELECT DISTINCT work_id,author_id,is_columbia FROM period_bylines JOIN selected USING(author_id)')\nverified = Counter()\nfor _, group in sw.groupby('work_id'):\n    verified.update(combinations(sorted(set(group.author_id)),2))\nassert verified == {(a,b):int(n) for a,b,n in ed.itertuples(index=False,name=None)}\nassert sw.groupby('author_id').work_id.nunique().to_dict() == nd.set_index('author_id').total_snapshot_work_count.to_dict()\nassert sw[sw.is_columbia].groupby('author_id').work_id.nunique().to_dict() == nd.set_index('author_id').columbia_affiliated_work_count.to_dict()\nprint(save_table(nd,'Columbia top 80 researchers — ranked nodes, 2021–2024','One row per selected stable OpenAlex author ID, including isolates. Rank by distinct 2021–2024 snapshot works with a Columbia parent or included child affiliation on the specific authorship, descending, then author ID ascending. Profile display names. total_snapshot_work_count includes all of the author’s works in this snapshot and period, independently of their own affiliation. All work types; neither count is lifetime.'))\nprint(save_table(ed,'Columbia top 80 researchers — undirected coauthorship edges, 2021–2024','One row per unordered pair of selected stable OpenAlex author IDs that coauthored at least one work, stored as source_author_id < target_author_id. Weight is the number of distinct shared 2021–2024 snapshot works of any type, regardless of their affiliations on those works.'))\ndiagnostics = pd.DataFrame([dict(snapshot_work_count=55371,work_type_count=24,eligible_author_count=29520,selected_author_count=len(nd),cutoff_columbia_affiliated_work_count=int(nd.iloc[-1].columbia_affiliated_work_count),cutoff_tied_author_count=4,cutoff_tied_selected_count=2,affiliated_bylines_without_stable_id=4733,bylines_with_both_parent_and_child=5406,marker_mismatches=0,selected_author_work_count=8796,selected_columbia_affiliated_author_work_count=8191,works_with_selected_author_count=7419,works_with_multiple_selected_authors_count=1054,edge_count=len(ed),edge_weight_sum=int(ed.shared_snapshot_work_count.sum()),edge_weight_min=int(ed.shared_snapshot_work_count.min()),edge_weight_median=float(ed.shared_snapshot_work_count.median()),edge_weight_max=int(ed.shared_snapshot_work_count.max()),pair_work_count_not_both_affiliated=321,component_count=nx.number_connected_components(G),largest_component_size=max(map(len,nx.connected_components(G))),second_component_size=8,isolate_count=nx.number_of_isolates(G))])\nprint(save_table(diagnostics,'Columbia top 80 researchers — graph validation counts, 2021–2024','One row summarizing input scope, rank cutoff and ties, affiliation validation, and network totals. Author-work counts count distinct author/work pairs; edge_weight_sum counts distinct selected pair/work combinations, including one contribution per pair when a work has several selected coauthors. Components include isolates.'))",
+  "created_at": 1795468159.484,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "1 rows; columns: snapshot_work_count, work_type_count, eligible_author_count, selected_author_count, cutoff_columbia_affiliated_work_count, cutoff_tied_author_count, cutoff_tied_selected_count, affiliated_bylines_without_stable_id, bylines_with_both_parent_and_child, marker_mismatches, selected_author_work_count, selected_columbia_affiliated_author_work_count",
+    "text": "1 rows x 24 columns\nsnapshot_work_count: int64 [min 5.537e+04, max 5.537e+04, mean 5.537e+04]\nwork_type_count: int64 [min 24, max 24, mean 24]\neligible_author_count: int64 [min 2.952e+04, max 2.952e+04, mean 2.952e+04]\nselected_author_count: int64 [min 80, max 80, mean 80]\ncutoff_columbia_affiliated_work_count: int64 [min 71, max 71, mean 71]\ncutoff_tied_author_count: int64 [min 4, max 4, mean 4]\ncutoff_tied_selected_count: int64 [min 2, max 2, mean 2]\naffiliated_bylines_without_stable_id: int64 [min 4733, max 4733, mean 4733]\nbylines_with_both_parent_and_child: int64 [min 5406, max 5406, mean 5406]\nmarker_mismatches: int64 [min 0, max 0, mean 0]\nselected_author_work_count: int64 [min 8796, max 8796, mean 8796]\nselected_columbia_affiliated_author_work_count: int64 [min 8191, max 8191, mean 8191]\nworks_with_selected_author_count: int64 [min 7419, max 7419, mean 7419]\nworks_with_multiple_selected_authors_count: int64 [min 1054, max 1054, mean 1054]\nedge_count: int64 [min 208, max 208, mean 208]\nedge_weight_sum: int64 [min 1781, max 1781, mean 1781]\nedge_weight_min: int64 [min 1, max 1, mean 1]\nedge_weight_median: float64 [min 3, max 3, mean 3]\nedge_weight_max: int64 [min 85, max 85, mean 85]\npair_work_count_not_both_affiliated: int64 [min 321, max 321, mean 321]\ncomponent_count: int64 [min 17, max 17, mean 17]\nlargest_component_size: int64 [min 57, max 57, mean 57]\nsecond_component_size: int64 [min 8, max 8, mean 8]\nisolate_count: int64 [min 15, max 15, mean 15]\nfirst rows:\n snapshot_work_count  work_type_count  eligible_author_count  selected_author_count  cutoff_columbia_affiliated_work_count  cutoff_tied_author_count  cutoff_tied_selected_count  affiliated_bylines_without_stable_id  bylines_with_both_parent_and_child  marker_mismatches  selected_author_work_count  selected_columbia_affiliated_author_work_count  works_with_selected_author_count  works_with_multiple_selected_authors_count  edge_count  edge_weight_sum  edge_weight_min  edge_weight_median  edge_weight_max  pair_work_count_not_both_affiliated  component_count  largest_component_size  second_component_size  isolate_count\n               55371               24                  29520                     80                                     71                         4                           2                                  4733                                5406                  0                        8796                                     8191                                     7419                                     1054            208             1781                1                 3.0               85                                  321               17                      57                      8             15",
+    "rows": 1,
+    "columns": [
+      "snapshot_work_count",
+      "work_type_count",
+      "eligible_author_count",
+      "selected_author_count",
+      "cutoff_columbia_affiliated_work_count",
+      "cutoff_tied_author_count",
+      "cutoff_tied_selected_count",
+      "affiliated_bylines_without_stable_id",
+      "bylines_with_both_parent_and_child",
+      "marker_mismatches",
+      "selected_author_work_count",
+      "selected_columbia_affiliated_author_work_count",
+      "works_with_selected_author_count",
+      "works_with_multiple_selected_authors_count",
+      "edge_count",
+      "edge_weight_sum",
+      "edge_weight_min",
+      "edge_weight_median",
+      "edge_weight_max",
+      "pair_work_count_not_both_affiliated",
+      "component_count",
+      "largest_component_size",
+      "second_component_size",
+      "isolate_count"
+    ]
+  }
+}

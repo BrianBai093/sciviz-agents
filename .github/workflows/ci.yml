@@ -7,5 +7,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
       - run: uv sync
-      - run: uv run ruff check backend data_pipeline tests --select F,E9
+      - run: uv run ruff check backend data_pipeline tests evals demo --select F,E9
       - run: uv run pytest -q   # no LLM calls; includes the no-hardcoding check

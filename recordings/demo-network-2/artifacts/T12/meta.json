@@ -1,0 +1,46 @@
+{
+  "id": "T12",
+  "kind": "table",
+  "title": "Edge bundling — unchanged T2 ties with explicit hierarchy routes",
+  "description": "Exact T2 endpoint IDs and weights, plus stable edge key, labeled endpoints and taxonomy, component, relationship, LCA and route_ids_json (parse as ordered source-leaf-to-target-leaf ID array).",
+  "producer": "analyst",
+  "inputs": [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T6",
+    "T7"
+  ],
+  "code": "import json\nedge['route_ids_json']=edge.pop('route_ids').map(lambda r: json.dumps(r,separators=(',',':')))\nE=save_table(edge,'Edge bundling — unchanged T2 ties with explicit hierarchy routes','Exact T2 endpoint IDs and weights, plus stable edge key, labeled endpoints and taxonomy, component, relationship, LCA and route_ids_json (parse as ordered source-leaf-to-target-leaf ID array).'); S=save_table(summary,'Edge bundling — class shares and cross-field pair counts','Full network and largest component. Unweighted author–author ties: scope totals, relationship counts and shares, and all observed cross-field pairs in deterministic display order.')\nprint(N,H,E,S)\nse=load(E); pd.testing.assert_frame_equal(se[e.columns],e); assert se.route_ids_json.map(json.loads).tolist()==routes\nassert set(load(N).author_id)==set(n.author_id) and load(H).hierarchy_id.tolist()==h.hierarchy_id.tolist()\nprint(se[[s,t,'relationship','lca_id','route_ids_json']].head(2).to_string(index=False))\nprint(summary[(summary.row_type=='field_pair') & (summary.pair_display_order<=5)][['scope','label','tie_count']].to_string(index=False))",
+  "created_at": 1795468740.267,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "208 rows; columns: edge_id, source_author_id, target_author_id, shared_snapshot_work_count, component_id, source_field_id, source_field, source_subfield_id, source_subfield, source_display_name, target_field_id, target_field",
+    "text": "208 rows x 21 columns\nedge_id: str [208 distinct]\nsource_author_id: str [49 distinct]\ntarget_author_id: str [55 distinct]\nshared_snapshot_work_count: int64 [min 1, max 85, mean 8.562]\ncomponent_id: str [2 distinct]\nsource_field_id: str [10 distinct]\nsource_field: str [10 distinct]\nsource_subfield_id: str [23 distinct]\nsource_subfield: str [23 distinct]\nsource_display_name: str [49 distinct]\ntarget_field_id: str [10 distinct]\ntarget_field: str [10 distinct]\ntarget_subfield_id: str [25 distinct]\ntarget_subfield: str [25 distinct]\ntarget_display_name: str [55 distinct]\nrelationship: str [3 distinct]\nroute_point_count: int64 [min 3, max 7, mean 5.452]\nlca_id: str [14 distinct]\nlca_level: str [3 distinct]\nin_largest_component: bool [min 0, max 1, mean 0.9375]\nroute_ids_json: str [208 distinct]\nfirst rows:\n                 edge_id source_author_id target_author_id  shared_snapshot_work_count component_id source_field_id source_field source_subfield_id                         source_subfield source_display_name target_field_id                             target_field target_subfield_id                    target_subfield            target_display_name  relationship  route_point_count           lca_id lca_level  in_largest_component                           route_ids_json\nA5000454252--A5050822671      A5000454252      A5050822671                           1  A5057686070              27     Medicine               2741 Radiology, Nuclear Medicine and Imaging  Elisa E. Konofagou              13 Biochemistry, Genetics and Molecular ...               1312                  Molecular Biology                   Kam W. Leong   inter_field                  7         root:all      root                  True [\"author:A5000454252\",\"subfield:27:27...\nA5002038978--A5006605951      A5002038978      A5006605951                           2  A5057686070              27     Medicine               2729               Obstetrics and Gynecology   Alexander Melamed              26                              Mathematics               2611            Modeling and Simulation              Jeffrey L. Shaman   inter_field                  7         root:all      root                  True [\"author:A5002038978\",\"subfield:27:27...\nA5002038978--A5021008013      A5002038978      A5021008013                           1  A5057686070              27     Medicine               2729               Obstetrics and Gynecology   Alexander Melamed              23                    Environmental Science               2307 Health, Toxicology and Mutagenesis Marianthi‐Anna Kioumourtzoglou   inter_field                  7         root:all      root                  True [\"author:A5002038978\",\"subfield:27:27...\nA5002038978--A5044313704      A5002038978      A5044313704                           2  A5057686070              27     Medicine               2729               Obstetrics and Gynecology   Alexander Melamed              23                    Environmental Science               2307 Health, Toxicology and Mutagenesis                  Joan A. Casey   inter_field                  7         root:all      root                  True [\"author:A5002038978\",\"subfield:27:27...\nA5002038978--A5057686070      A5002038978      A5057686070                          75  A5057686070              27     Medicine               2729               Obstetrics and Gynecology   Alexander Melamed              27                                 Medicine               2729          Obstetrics and Gynecology            Jason Dennis Wright same_subfield                  3 subfield:27:2729  subfield                  True [\"author:A5002038978\",\"subfield:27:27...",
+    "rows": 208,
+    "columns": [
+      "edge_id",
+      "source_author_id",
+      "target_author_id",
+      "shared_snapshot_work_count",
+      "component_id",
+      "source_field_id",
+      "source_field",
+      "source_subfield_id",
+      "source_subfield",
+      "source_display_name",
+      "target_field_id",
+      "target_field",
+      "target_subfield_id",
+      "target_subfield",
+      "target_display_name",
+      "relationship",
+      "route_point_count",
+      "lca_id",
+      "lca_level",
+      "in_largest_component",
+      "route_ids_json"
+    ]
+  }
+}

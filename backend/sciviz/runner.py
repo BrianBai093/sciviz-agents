@@ -42,7 +42,9 @@ def format_selection(s: Session, selection: dict | None) -> str:
 
 
 def run_turn(s: Session, text: str, selection: dict | None = None, answer_fn: AnswerFn | None = None,
-             mode: str = "multi") -> str:
+             mode: str = "multi", from_checkpoint: str | None = None) -> str:
+    """`from_checkpoint`: retry a failed turn by forking the conversation from an earlier LangGraph checkpoint
+    (DECISIONS D44); the failed attempt stays in the checkpoint history but not on the new branch."""
     t0 = time.time()
     cost0 = s.ledger.session_total(s.id)
     s.user_question = text
@@ -52,9 +54,11 @@ def run_turn(s: Session, text: str, selection: dict | None = None, answer_fn: An
         cfg = {"configurable": {"thread_id": s.id}, "callbacks": [s.usage_callback, TraceCallback(s)],
                "recursion_limit": 300}
         inp = {"messages": [{"role": "user", "content": text + format_selection(s, selection)}]}
+        first_cfg = {**cfg, "configurable": {**cfg["configurable"], "checkpoint_id": from_checkpoint}} \
+            if from_checkpoint else cfg
         while True:
             interrupted = None
-            for chunk in agent.stream(inp, cfg, stream_mode="updates"):
+            for chunk in agent.stream(inp, first_cfg, stream_mode="updates"):
                 if isinstance(chunk, dict) and "__interrupt__" in chunk:
                     interrupted = chunk["__interrupt__"]
             if not interrupted:
@@ -62,7 +66,7 @@ def run_turn(s: Session, text: str, selection: dict | None = None, answer_fn: An
             question = interrupted[0].value.get("question", "?")
             answer = answer_fn(question) if answer_fn else "Use your best judgement and state your assumption."
             s.events.emit("user", "message", text=answer, answer_to=question)
-            inp = Command(resume=answer)
+            inp, first_cfg = Command(resume=answer), cfg
         final = agent.get_state(cfg).values["messages"][-1].text
         s.events.emit("lead", "message", text=final)
         return final

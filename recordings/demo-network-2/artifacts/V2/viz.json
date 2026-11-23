@@ -1,0 +1,53 @@
+{
+  "title": "Columbia collaborations by field",
+  "description": "A radial hierarchical edge-bundling companion to the original Columbia network. The same 80 researchers are ordered by plurality OpenAlex field and subfield. Cross-field ties are emphasized; select a pair, sector or researcher to trace its ties. Field-pair counts are unweighted coauthor pairs, not counts of works by topic.",
+  "data": {
+    "authors": "T9",
+    "hierarchy": "T10",
+    "ties": "T12",
+    "summary": "T13"
+  },
+  "params": {
+    "type": "object",
+    "properties": {
+      "minShared": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 85,
+        "default": 1,
+        "title": "Minimum shared works per tie"
+      },
+      "tieVisibility": {
+        "type": "string",
+        "enum": [
+          "All ties",
+          "Cross-field only",
+          "Within-field only"
+        ],
+        "default": "All ties",
+        "title": "Ties to show"
+      },
+      "bundleStrength": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 100,
+        "default": 78,
+        "title": "Bundling strength (%)"
+      }
+    }
+  },
+  "entity_types": [
+    "author",
+    "coauthorship",
+    "field",
+    "subfield",
+    "field_pair"
+  ],
+  "libraries": [
+    {
+      "name": "d3-shape",
+      "version": "3.2.0",
+      "url": "https://esm.sh/d3-shape@3.2.0"
+    }
+  ]
+}

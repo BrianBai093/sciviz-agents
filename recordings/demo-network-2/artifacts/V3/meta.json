@@ -1,0 +1,106 @@
+{
+  "id": "V3",
+  "kind": "viz",
+  "title": "Columbia’s collaboration network",
+  "description": "A fixed force-directed view of coauthorship among the 80 researchers with the most Columbia-affiliated works in the 2021–2024 snapshot. Search or select a researcher to trace their direct collaborators. Circle fill shows the plurality OpenAlex field from primary topics on each researcher’s Columbia-affiliated works. Circle area represents qualifying affiliated works; line width represents shared works regardless of affiliation.",
+  "producer": "viz",
+  "inputs": [
+    "T4",
+    "T2",
+    "J1",
+    "T5",
+    "T3",
+    "T9"
+  ],
+  "code": null,
+  "created_at": 1795469376.14,
+  "file": "module.js",
+  "source_dir": "viz/columbia-collaboration",
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "stage": "automated",
+      "report": {
+        "ok": true,
+        "ready": true,
+        "error": null,
+        "errors": [],
+        "blocked_requests": [],
+        "metrics": {
+          "marks": 288,
+          "elements": 977,
+          "canvases": 0,
+          "texts": 41,
+          "text_overlap_ratio": 0,
+          "out_of_bounds_marks": 0,
+          "has_pick": false,
+          "has_update": true,
+          "has_set_selection": true,
+          "has_highlight": true
+        },
+        "blank": false,
+        "render_seconds": 0.85,
+        "screenshots": {
+          "default": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/demo-network-2/artifacts/V3/shots/default.png",
+          "selected": "/Users/brianbai/Desktop/fsu/sciviz-agents/workspaces/demo-network-2/artifacts/V3/shots/selected.png"
+        },
+        "interactions": [
+          {
+            "name": "hover_details",
+            "passed": true,
+            "detail": "hovering a mark emitted 1 hover event(s)"
+          },
+          {
+            "name": "click_select",
+            "passed": true,
+            "detail": "click selected [{'type': 'coauthorship', 'key': {'source_author_id': 'A5000454252', 'target_author_id': 'A5050822671'}, 'label': 'Elisa E. Konofagou & Kam W. Leong'}]; ids/keys found in bound data: True"
+          },
+          {
+            "name": "selection_visible",
+            "passed": true,
+            "detail": "2.72% of pixels changed after selecting"
+          },
+          {
+            "name": "highlight_visible",
+            "passed": true,
+            "detail": "2.84% of pixels changed after highlight([{\"source_author_id\":\"A5000454252\",\"target_author_id\":\"A5050822671\"}])"
+          },
+          {
+            "name": "multi_item_and_state",
+            "passed": true,
+            "detail": "selection/highlight with 3 items and getState/setState round trip: 0 new errors"
+          },
+          {
+            "name": "param_minShared",
+            "passed": true,
+            "detail": "set minShared=64: 0 new errors, 0.97% pixels changed"
+          },
+          {
+            "name": "param_labels",
+            "passed": true,
+            "detail": "set labels='More': 0 new errors, 0.74% pixels changed"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "critic",
+      "verdict": "pass",
+      "answers_question": 5,
+      "truthfulness": 5,
+      "readability": 4,
+      "interaction": 5,
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "Some field colors are hard to distinguish on small nodes, especially the purples for Social Sciences and Materials Science and the greens for Energy and Health Professions.",
+          "fix": "Increase the contrast between those hues in both the node fills and the matching legend swatches."
+        }
+      ],
+      "summary": "The view shows 80 researchers and 208 ties across the expected 57 / 8 / 15 regions. Field colors extend to the isolates, and the footer lists all 14 full field names without overlapping the map. The fixed layout, size and tie-width encodings, and search and zoom controls appear intact. Hover, selection, highlight, and both parameter checks passed. The selected screenshot shows tie details, so it does not verify the field label in researcher details."
+    }
+  ],
+  "summary": "visualization module (29110 chars) bound to ['T4', 'T2', 'J1', 'T5', 'T3', 'T9']"
+}

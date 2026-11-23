@@ -30,3 +30,8 @@ frontend/dist/
 
 # run logs
 logs/
+
+# replay server artifacts
+recordings/_ledger.*
+demo/video/_raw/
+demo/tts_cache/

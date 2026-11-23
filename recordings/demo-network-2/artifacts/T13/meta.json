@@ -1,0 +1,42 @@
+{
+  "id": "T13",
+  "kind": "table",
+  "title": "Edge bundling — class shares and cross-field pair counts",
+  "description": "Full network and largest component. Unweighted author–author ties: scope totals, relationship counts and shares, and all observed cross-field pairs in deterministic display order.",
+  "producer": "analyst",
+  "inputs": [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T6",
+    "T7"
+  ],
+  "code": "import json\nedge['route_ids_json']=edge.pop('route_ids').map(lambda r: json.dumps(r,separators=(',',':')))\nE=save_table(edge,'Edge bundling — unchanged T2 ties with explicit hierarchy routes','Exact T2 endpoint IDs and weights, plus stable edge key, labeled endpoints and taxonomy, component, relationship, LCA and route_ids_json (parse as ordered source-leaf-to-target-leaf ID array).'); S=save_table(summary,'Edge bundling — class shares and cross-field pair counts','Full network and largest component. Unweighted author–author ties: scope totals, relationship counts and shares, and all observed cross-field pairs in deterministic display order.')\nprint(N,H,E,S)\nse=load(E); pd.testing.assert_frame_equal(se[e.columns],e); assert se.route_ids_json.map(json.loads).tolist()==routes\nassert set(load(N).author_id)==set(n.author_id) and load(H).hierarchy_id.tolist()==h.hierarchy_id.tolist()\nprint(se[[s,t,'relationship','lca_id','route_ids_json']].head(2).to_string(index=False))\nprint(summary[(summary.row_type=='field_pair') & (summary.pair_display_order<=5)][['scope','label','tie_count']].to_string(index=False))",
+  "created_at": 1795468740.274,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "41 rows; columns: scope, component_id, scope_author_count, scope_tie_count, scope_cross_field_tie_count, summary_id, row_type, label, tie_count, share_of_scope_ties, relationship, field_a_id",
+    "text": "41 rows x 17 columns\nscope: str [2 distinct]\ncomponent_id: str [1 distinct] (54% null)\nscope_author_count: int64 [min 57, max 80, mean 69.34]\nscope_tie_count: int64 [min 195, max 208, mean 202]\nscope_cross_field_tie_count: int64 [min 85, max 94, mean 89.83]\nsummary_id: str [41 distinct]\nrow_type: str [3 distinct]\nlabel: str [22 distinct]\ntie_count: int64 [min 1, max 208, mean 24.02]\nshare_of_scope_ties: float64 [min 0.004808, max 1, mean 0.1192]\nrelationship: str [3 distinct] (5% null)\nfield_a_id: str [7 distinct] (20% null)\nfield_b_id: str [8 distinct] (20% null)\nfield_a: str [7 distinct] (20% null)\nfield_b: str [8 distinct] (20% null)\nshare_of_scope_cross_field_ties: float64 [min 0.01064, max 0.2471, mean 0.06061] (20% null)\npair_display_order: Int64 [min 1, max 18, mean 8.818] (20% null)\nfirst rows:\n       scope component_id  scope_author_count  scope_tie_count  scope_cross_field_tie_count                               summary_id     row_type                            label  tie_count  share_of_scope_ties                   relationship field_a_id field_b_id               field_a  field_b  share_of_scope_cross_field_ties  pair_display_order\nfull_network          NaN                  80              208                           94                       full_network:total  scope_total                         All ties        208             1.000000                            NaN        NaN        NaN                   NaN      NaN                              NaN                <NA>\nfull_network          NaN                  80              208                           94                 full_network:inter_field relationship                      Cross-field         94             0.451923                    inter_field        NaN        NaN                   NaN      NaN                              NaN                <NA>\nfull_network          NaN                  80              208                           94 full_network:within_field_between_sub... relationship  Same field, different subfields         67             0.322115 within_field_between_subfields        NaN        NaN                   NaN      NaN                              NaN                <NA>\nfull_network          NaN                  80              208                           94               full_network:same_subfield relationship                    Same subfield         47             0.225962                  same_subfield        NaN        NaN                   NaN      NaN                              NaN                <NA>\nfull_network          NaN                  80              208                           94                  full_network:pair:23:27   field_pair Environmental Science × Medicine         21             0.100962                    inter_field         23         27 Environmental Science Medicine                         0.223404                   1",
+    "rows": 41,
+    "columns": [
+      "scope",
+      "component_id",
+      "scope_author_count",
+      "scope_tie_count",
+      "scope_cross_field_tie_count",
+      "summary_id",
+      "row_type",
+      "label",
+      "tie_count",
+      "share_of_scope_ties",
+      "relationship",
+      "field_a_id",
+      "field_b_id",
+      "field_a",
+      "field_b",
+      "share_of_scope_cross_field_ties",
+      "pair_display_order"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "T4",
+  "kind": "table",
+  "title": "Columbia collaboration — force-directed node geometry",
+  "description": "All 80 T1 nodes with original columns, component membership, degree metrics and precomputed x/y. Join to unchanged T2 endpoints by author_id. Coordinates use a 1440 × 900 canvas, x right and y down.",
+  "producer": "analyst",
+  "inputs": [
+    "T1",
+    "T2",
+    "T3"
+  ],
+  "code": "def layout():\n    out={}; audit={}\n    for j,c in enumerate(C[:2]):\n        region=['linked_main','linked_second'][j]; box=np.array(regions[region],float); pad=30\n        p=nx.spring_layout(G.subgraph(c),k=1.35/np.sqrt(len(c)),weight='spring_weight',iterations=800,threshold=1e-6,seed=seed+j,method='force',scale=None)\n        q=np.array([p[a] for a in c]); q-=q.mean(axis=0); _,_,vt=np.linalg.svd(q,full_matrices=False); q=q@vt.T\n        for axis in range(2):\n            if q[np.argmax(np.abs(q[:,axis])),axis]<0: q[:,axis]*=-1\n        if j==1:\n            angle=np.deg2rad(30); cs,sn=np.cos(angle),np.sin(angle); q=q@np.array([[cs,sn],[-sn,cs]])\n        q-=(q.min(axis=0)+q.max(axis=0))/2\n        scales=(box[2:]-box[:2]-2*pad)/np.ptp(q,axis=0); q*=np.minimum(scales,1.25*min(scales)); q+=(box[:2]+box[2:])/2\n        start=q.copy(); target=44.01\n        for sweep in range(500):\n            for a in range(len(q)):\n                for b in range(a+1,len(q)):\n                    delta=q[b]-q[a]; d=np.linalg.norm(delta)\n                    if d<target:\n                        step=(target-d)*0.5*(delta/d if d else np.array([1.,0.])); q[a]-=step; q[b]+=step\n            q=np.clip(q,box[:2]+24,box[2:]-24)\n            if min(pdist(q))>=44.005: break\n        q=np.round(q,3); assert min(pdist(q))>=44\n        out.update(zip(c,q)); audit[region]={'minimum_center_spacing':round(float(min(pdist(q))),3),'median_pairwise_distance':round(float(np.median(pdist(q))),3),'max_collision_adjustment':round(float(np.linalg.norm(q-start,axis=1).max()),3)}\n    for i,c in enumerate(C[2:]): out[c[0]]=np.array([1120+115*(i%3),520+67*(i//3)],float)\n    return out,audit\ncoordinates,qa=layout(); rerun,_=layout(); assert all(np.array_equal(coordinates[a],rerun[a]) for a in ids)\nL=N.copy(); cids={a:c[0] for c in C for a in c}; orders={a:i+1 for i,c in enumerate(C) for a in c}; L['component_id']=L.author_id.map(cids); L['component_order']=L.author_id.map(orders); L['component_size']=L.component_order.map(dict(enumerate(sizes,1))); L['is_isolate']=L.component_size.eq(1); L['layout_region']=L.component_order.map(lambda i: ['linked_main','linked_second'][i-1] if i<=2 else 'isolates'); L['degree']=L.author_id.map(degree); L['weighted_degree']=L.author_id.map(strength); L[['x','y']]=np.vstack([coordinates[a] for a in ids]); assert np.isfinite(L[['x','y']]).all().all(); assert (L.degree.eq(0)==L.is_isolate).all(); assert L[N.columns].equals(N)\nfor region,grp in L.groupby('layout_region'):\n    box=np.array(regions[region]); xy=grp[['x','y']].to_numpy(); assert (xy>=box[:2]+24).all() and (xy<=box[2:]-24).all(); qa.setdefault(region,{'minimum_center_spacing':round(float(min(pdist(xy))),3)}); qa[region]['center_bounds']=[*xy.min(axis=0).tolist(),*xy.max(axis=0).tolist()]\nfor i,r in enumerate(regions.values()):\n    for s in list(regions.values())[i+1:]: assert r[2]<s[0] or s[2]<r[0] or r[3]<s[1] or s[3]<r[1]\nassert len(set(zip(L.x,L.y)))==len(N)\nprint(qa); print(L[['x','y']].agg(['min','max'])); lid=save_table(L,'Columbia collaboration — force-directed node geometry','All 80 T1 nodes with original columns, component membership, degree metrics and precomputed x/y. Join to unchanged T2 endpoints by author_id. Coordinates use a 1440 × 900 canvas, x right and y down.'); print(lid)",
+  "created_at": 1795468240.131,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "80 rows; columns: author_id, display_name, prolificness_rank, columbia_affiliated_work_count, total_snapshot_work_count, component_id, component_order, component_size, is_isolate, layout_region, degree, weighted_degree",
+    "text": "80 rows x 14 columns\nauthor_id: str [80 distinct]\ndisplay_name: str [80 distinct]\nprolificness_rank: int64 [min 1, max 80, mean 40.5]\ncolumbia_affiliated_work_count: int64 [min 71, max 259, mean 102.4]\ntotal_snapshot_work_count: int64 [min 71, max 289, mean 110]\ncomponent_id: str [17 distinct]\ncomponent_order: int64 [min 1, max 17, mean 2.788]\ncomponent_size: int64 [min 1, max 57, mean 41.6]\nis_isolate: bool [min 0, max 1, mean 0.1875]\nlayout_region: str [3 distinct]\ndegree: int64 [min 0, max 17, mean 5.2]\nweighted_degree: int64 [min 0, max 199, mean 44.52]\nx: float64 [min 70, max 1370, mean 700.7]\ny: float64 [min 70, max 830, mean 442.9]\nfirst rows:\n  author_id         display_name  prolificness_rank  columbia_affiliated_work_count  total_snapshot_work_count component_id  component_order  component_size  is_isolate layout_region  degree  weighted_degree        x       y\nA5057686070  Jason Dennis Wright                  1                             259                        289  A5057686070                1              57       False   linked_main       5              171  393.117 277.465\nA5069636788    Andrea Baccarelli                  2                             219                        239  A5057686070                1              57       False   linked_main      15              106  402.156 364.976\nA5080186393   Katherine M. Keyes                  3                             205                        208  A5057686070                1              57       False   linked_main      17              183  567.166 342.335\nA5113514048 Mitchell S.V. Elkind                  4                             203                        221  A5057686070                1              57       False   linked_main      15              102  469.663 470.327\nA5061588829       Pierre Gentine                  5                             181                        182  A5061588829                3               1        True      isolates       0                0 1120.000 520.000",
+    "rows": 80,
+    "columns": [
+      "author_id",
+      "display_name",
+      "prolificness_rank",
+      "columbia_affiliated_work_count",
+      "total_snapshot_work_count",
+      "component_id",
+      "component_order",
+      "component_size",
+      "is_isolate",
+      "layout_region",
+      "degree",
+      "weighted_degree",
+      "x",
+      "y"
+    ]
+  }
+}

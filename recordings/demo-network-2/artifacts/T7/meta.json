@@ -1,0 +1,31 @@
+{
+  "id": "T7",
+  "kind": "table",
+  "title": "Columbia top 80 — publication mix by taxonomy",
+  "description": "One row per selected author and observed OpenAlex field/subfield pair with at least one valid vote. Count is distinct Columbia-affiliated works with validated primary topics, 2021–2024; sum subfield rows within field for field totals. Flags indicate the selected field and selected subfield.",
+  "producer": "data",
+  "inputs": [
+    "T1",
+    "T2",
+    "T3"
+  ],
+  "code": "import networkx as nx\nG=nx.Graph(); G.add_nodes_from(t1.author_id); G.add_edges_from(zip(t2.source_author_id,t2.target_author_id)); largest=max(nx.connected_components(G),key=len)\nassert G.number_of_edges()==len(t2)==int(t3.edge_count.iloc[0]); assert t2.shared_snapshot_work_count.sum()==int(t3.edge_weight_sum.iloc[0]); assert len(a)==int(t3.selected_author_work_count.iloc[0]) and len(aff)==int(t3.selected_columbia_affiliated_author_work_count.iloc[0]); assert len(largest)==int(t3.largest_component_size.iloc[0]); assert not t2.source_author_id.eq(t2.target_author_id).any()\nassert c[t1.columns].reset_index(drop=True).equals(t1.sort_values('prolificness_rank').reset_index(drop=True));\nin_largest=t2.source_author_id.isin(largest)&t2.target_author_id.isin(largest)\nprint('largest nodes; ties; cross ties:',len(largest),int(in_largest.sum()),int((in_largest & cross).sum()));\nprint(c.loc[c.field_top_tie_count.gt(1),['display_name','field_id','field','field_runner_up_id','field_runner_up','assigned_field_vote_count','classified_work_count']].to_string(index=False));\nv=v.merge(c[['author_id','prolificness_rank','field_id','subfield_id']].rename(columns={'field_id':'selected_field','subfield_id':'selected_subfield'}),on='author_id',validate='many_to_one'); v['is_assigned_field']=v.field_id.eq(v.selected_field); v['is_assigned_subfield']=v.is_assigned_field & v.subfield_id.eq(v.selected_subfield); v=v.drop(columns=['selected_field','selected_subfield']).sort_values(['prolificness_rank','field_id','vote_count','subfield_id'],ascending=[True,True,False,True]);\nledger=ledger.sort_values(['author_id','work_id']);\nprint(save_table(c,'Columbia top 80 — field and subfield classification','One row per unchanged T1 author ID, with original name, rank and counts. Distinct author-affiliated 2021–2024 snapshot works vote via validated OpenAlex primary topic. Plurality field across classified works, then plurality subfield within selected field; numeric taxonomy ID ascending resolves ties. Coverage is per eligible work; field share is per classified work; subfield share is per assigned-field work. Top tie count is number of categories sharing the maximum; close non-tie is a positive lead of at most five percentage points over an actual runner-up. Unclassified uses null IDs and explicit labels. Use T2 unchanged.'))\nprint(save_table(v,'Columbia top 80 — publication mix by taxonomy','One row per selected author and observed OpenAlex field/subfield pair with at least one valid vote. Count is distinct Columbia-affiliated works with validated primary topics, 2021–2024; sum subfield rows within field for field totals. Flags indicate the selected field and selected subfield.'))\nprint(save_table(ledger,'Columbia top 80 — primary-topic vote audit','One row per distinct T1 author and work in the 2021–2024 snapshot on which that author lists Columbia or an included child institution, all work types. Shows work ID, primary topic ID, explicit field/subfield labels, joined taxonomy labels and stable IDs, eligibility outcome and the resulting vote IDs. No vote for missing or invalid primary topics; no secondary topic fallback.'))",
+  "created_at": 1795468645.16,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "1,209 rows; columns: author_id, field_id, subfield_id, vote_count, field, subfield, prolificness_rank, is_assigned_field, is_assigned_subfield",
+    "text": "1,209 rows x 9 columns\nauthor_id: str [80 distinct]\nfield_id: str [25 distinct]\nsubfield_id: str [172 distinct]\nvote_count: int64 [min 1, max 128, mean 6.76]\nfield: str [25 distinct]\nsubfield: str [172 distinct]\nprolificness_rank: int64 [min 1, max 80, mean 35.79]\nis_assigned_field: bool [min 0, max 1, mean 0.359]\nis_assigned_subfield: bool [min 0, max 1, mean 0.06617]\nfirst rows:\n  author_id field_id subfield_id  vote_count                                    field                           subfield  prolificness_rank  is_assigned_field  is_assigned_subfield\nA5057686070       13        1311           7 Biochemistry, Genetics and Molecular ...                           Genetics                  1              False                 False\nA5057686070       13        1306           5 Biochemistry, Genetics and Molecular ...                    Cancer Research                  1              False                 False\nA5057686070       17        1702           1                         Computer Science            Artificial Intelligence                  1              False                 False\nA5057686070       20        2002           8      Economics, Econometrics and Finance         Economics and Econometrics                  1              False                 False\nA5057686070       23        2307           2                    Environmental Science Health, Toxicology and Mutagenesis                  1              False                 False",
+    "rows": 1209,
+    "columns": [
+      "author_id",
+      "field_id",
+      "subfield_id",
+      "vote_count",
+      "field",
+      "subfield",
+      "prolificness_rank",
+      "is_assigned_field",
+      "is_assigned_subfield"
+    ]
+  }
+}

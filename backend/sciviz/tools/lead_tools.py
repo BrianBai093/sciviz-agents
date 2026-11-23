@@ -6,6 +6,7 @@ import time
 from langchain_core.tools import tool
 from langgraph.types import interrupt
 
+from ..harness.workspace import _views_lock
 from ..session import Session
 
 
@@ -27,11 +28,17 @@ def lead_tools(s: Session):
             return str(e)
         if meta["kind"] != "viz" or meta.get("status") not in ("approved", "approved_with_issues"):
             return f"{viz_artifact_id} is not an approved visualization (status: {meta.get('status')}); it cannot be shown."
+        with _views_lock:
+            return _show(meta, viz_artifact_id, title, replace_view)
+
+    def _show(meta, viz_artifact_id, title, replace_view):
         views = _views()
         if replace_view:
             target = _find(views, replace_view)
             if not target:
                 return f"No view {replace_view!r} to replace. Shown views: {[x['view_id'] for x in views['views']]}"
+            if target["viz"] == viz_artifact_id:
+                return f"{target['view_id']} already shows {viz_artifact_id}."
             target.setdefault("history", []).append(target["viz"])
             target["viz"] = viz_artifact_id
             target["title"] = title or meta["title"]
@@ -63,8 +70,7 @@ def lead_tools(s: Session):
         unknown = [k for k in params if declared and k not in declared]
         if unknown:
             return f"Unknown parameters {unknown}; this view declares {sorted(declared)}."
-        v["params"].update(params)
-        s.ws.save_views(views)
+        s.ws.update_views(lambda vs: _find(vs, view)["params"].update(params))
         s.events.emit("lead", "view", action="params", view_id=v["view_id"], params=params)
         return f"Updated {v['view_id']} parameters: {params}"
 
@@ -72,12 +78,14 @@ def lead_tools(s: Session):
     def highlight_view(view: str, items: list[dict]) -> str:
         """Highlight items in a shown view. Items look like {"type": "<entity type>", "id": "<dataset id>"} or
         {"type": "group", "key": {...}}; pass [] to clear."""
-        views = _views()
-        v = _find(views, view)
+        def change(views):
+            v = _find(views, view)
+            if v:
+                v["highlight"] = items
+            return v
+        v = s.ws.update_views(change)
         if not v:
             return f"No view {view!r}."
-        v["highlight"] = items
-        s.ws.save_views(views)
         s.events.emit("lead", "view", action="highlight", view_id=v["view_id"], items=items)
         return f"Highlighted {len(items)} item(s) in {v['view_id']}."
 

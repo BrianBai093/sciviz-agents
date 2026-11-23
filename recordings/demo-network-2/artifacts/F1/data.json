@@ -1,0 +1,1 @@
+{"text": "Network counts validated against T3; degrees independently recomputed from T2 endpoints.", "value": {"authors": 80, "ties": 208, "components": 17, "linked_component_sizes": [57, 8], "linked_component_edge_counts": [195, 13], "isolates": 15, "degree_sum": 416, "median_shared_works_per_tie": 3}}

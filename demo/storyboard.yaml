@@ -1,0 +1,38 @@
+# Narrated demo video (built by demo/build_video.py). Sessions are replayed from recordings; no live LLM calls.
+steps:
+  - say: "This is sciviz, a multi-agent system that answers questions about scholarly data with interactive visualizations. It runs on an OpenAlex snapshot of Columbia University's fifty-five thousand publications from 2021 to 2024. What you see is a sped-up replay of recorded sessions."
+    do: [{slide: slides/title.html}]
+  - say: "A Lead agent plans each answer and delegates, with structured briefs, to three specialists with isolated contexts: Data, Analyst, and Viz. The Viz agent writes each visualization as a JavaScript module against one generic interaction contract. Before anything is shown, the harness renders it in a headless browser, runs interaction tests, and an independent Critic reviews the screenshots."
+    do: [{slide: slides/architecture.html}]
+  - say: "First, a standard statistical question: how did output change across the largest fields?"
+    do: [{open: {session: eval-multi-t1_trend-11231544, drawer: trace}}, type_next]
+  - say: "The Lead delegates to the Data agent and the Analyst, then to the Viz agent. The trace on the right shows every delegation, tool call, and review."
+    do: [{play: {until: {kind: gate, payload: {verdict: pass}}, ms: 9000}}]
+  - say: "The chart passed review on its first submission, and every number in the answer cites the artifact it came from, including the code that produced it."
+    do: [{play: {until: end, ms: 2500}}]
+  - say: "Hovering shows details, and the parameter controls change the view without another model call."
+    do: [{hover: {view: 0}}, {wait: 900}, {param: {panel: 0, index: 0}}]
+  - say: "Next, the collaboration network of the eighty most prolific researchers, as a force-directed layout."
+    do: [{open: {session: demo-network-2, drawer: trace}}, type_next]
+  - say: "The Data agent ranks the researchers, the Analyst builds the coauthorship graph, and the Viz agent writes the network view, which passes review."
+    do: [{play: {until: {kind: view, payload: {action: show}}, ms: 10000}}]
+  - say: "Clicking a researcher selects them, and the details panel shows their record from the dataset."
+    do: [{play: {until: {kind: done}, ms: 1500}}, {drawer: details}, {click: {view: 0, id: A5057686070}}]
+  - say: "The largest group is a hairball. So we ask for hierarchical edge bundling, grouped by field and subfield, next to the original."
+    do: [{drawer: trace}, type_next]
+  - say: "The new view keeps the same researchers but routes the ties through the field hierarchy, so cross-field collaborations become readable at a glance."
+    do: [{play: {until: {kind: view, payload: {action: show}}, ms: 10000}}, {play: {until: {kind: done}, ms: 1200}}]
+  - say: "Selections are linked across views, and the current selection is sent along with the next question."
+    do: [{play: {until: {kind: select}, ms: 400}}]
+  - say: "Asked to highlight this researcher's coauthors, the Lead has a specialist look up their ids in the data and highlights them in both views."
+    do: [type_next, {play: {until: {kind: done}, ms: 6000}}]
+  - say: "Changing a declared parameter is immediate: the Lead sets it directly, within seconds."
+    do: [type_next, {play: {until: {kind: done}, ms: 2500}}]
+  - say: "Changes that need new code go back to the Viz agent. The edited module is verified again and replaces the old view, which stays available for undo and side-by-side comparison."
+    do: [type_next, {play: {until: {kind: done}, ms: 9000}}, {button: "⇆ Compare"}, {wait: 2500}]
+  - say: "Finally, a technique used nowhere else in this project: citation flows between fields as a Sankey diagram. The Viz agent searched npm, read the documentation of d3-sankey, and built the view on its own."
+    do: [{open: {session: eval-multi-t4_flows-11231544, drawer: trace}}, type_next, {play: {until: end, ms: 9000}}]
+  - say: "On four evaluation tasks, both the multi-agent system and a single agent with the same tools and the same gate solved every task. The single agent was faster and cheaper on these short tasks, while the multi-agent roles keep much smaller contexts. The README reports this, with its limits."
+    do: [{slide: slides/results.html}]
+  - say: "The repository documents the architecture, every design decision, and a development log, and anyone can replay these sessions without an API key. Thank you for watching."
+    do: [{wait: 300}]

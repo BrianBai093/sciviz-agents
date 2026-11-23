@@ -1,0 +1,39 @@
+{
+  "id": "T10",
+  "kind": "table",
+  "title": "Edge bundling — taxonomy hierarchy and control-point coordinates",
+  "description": "Root > field > subfield > author, preorder. Parent key, raw taxonomy/author IDs, contiguous inclusive leaf span, normalized polar and canvas coordinates.",
+  "producer": "analyst",
+  "inputs": [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T6",
+    "T7"
+  ],
+  "code": "par[root]=None\nexec(In[6][In[6].index('routes=[]; lcas=[]'):])",
+  "created_at": 1795468734.862,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "130 rows; columns: hierarchy_id, parent_id, level, label, field_id, subfield_id, author_id, leaf_order_start, leaf_order_end, descendant_author_count, angle_rad, radius_norm",
+    "text": "130 rows x 14 columns\nhierarchy_id: str [130 distinct]\nparent_id: str [50 distinct] (1% null)\nlevel: str [4 distinct]\nlabel: str [130 distinct]\nfield_id: str [14 distinct] (1% null)\nsubfield_id: str [35 distinct] (12% null)\nauthor_id: str [80 distinct] (38% null)\nleaf_order_start: int64 [min 0, max 79, mean 37.26]\nleaf_order_end: int64 [min 0, max 79, mean 38.72]\ndescendant_author_count: int64 [min 1, max 80, mean 2.462]\nangle_rad: float64 [min 0, max 6.213, mean 3.111]\nradius_norm: float64 [min 0, max 1, mean 0.8577]\nx_norm: float64 [min -0.9998, max 1, mean -0.01751]\ny_norm: float64 [min -0.9975, max 0.9996, mean 0.03085]\nfirst rows:\n      hierarchy_id        parent_id    level                                    label field_id subfield_id   author_id  leaf_order_start  leaf_order_end  descendant_author_count  angle_rad  radius_norm   x_norm    y_norm\n          root:all              NaN     root                          All researchers      NaN         NaN         NaN                 0              79                       80   0.000000         0.00 0.000000 -0.000000\n          field:13         root:all    field Biochemistry, Genetics and Molecular ...       13         NaN         NaN                 0               2                        3   0.140879         0.45 0.063186 -0.445542\n  subfield:13:1311         field:13 subfield                                 Genetics       13        1311         NaN                 0               0                        1   0.070439         0.72 0.050674 -0.718215\nauthor:A5018722278 subfield:13:1311   author                           Wendy K. Chung       13        1311 A5018722278                 0               0                        1   0.070439         1.00 0.070381 -0.997520\n  subfield:13:1312         field:13 subfield                        Molecular Biology       13        1312         NaN                 1               2                        2   0.183142         0.72 0.131126 -0.707959",
+    "rows": 130,
+    "columns": [
+      "hierarchy_id",
+      "parent_id",
+      "level",
+      "label",
+      "field_id",
+      "subfield_id",
+      "author_id",
+      "leaf_order_start",
+      "leaf_order_end",
+      "descendant_author_count",
+      "angle_rad",
+      "radius_norm",
+      "x_norm",
+      "y_norm"
+    ]
+  }
+}

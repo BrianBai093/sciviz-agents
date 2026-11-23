@@ -108,7 +108,7 @@ export const useStore = create<State>((set, get) => ({
         const v = views.find((x) => x.view_id === p.view_id);
         if (p.action === "show" && !v) {
           views.push({ view_id: p.view_id, viz: p.viz, title: p.title, params: {}, highlight: [], history: [], compareWith: null, revision: 0 });
-        } else if (v && p.action === "replace") {
+        } else if (v && p.action === "replace" && p.viz !== v.viz) {
           v.history = [...v.history, v.viz]; v.viz = p.viz; v.title = p.title ?? v.title; v.highlight = []; v.revision++;
         } else if (v && p.action === "params") {
           v.params = { ...v.params, ...p.params };

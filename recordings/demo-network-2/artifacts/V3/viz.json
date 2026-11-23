@@ -1,0 +1,39 @@
+{
+  "title": "Columbia’s collaboration network",
+  "description": "A fixed force-directed view of coauthorship among the 80 researchers with the most Columbia-affiliated works in the 2021–2024 snapshot. Search or select a researcher to trace their direct collaborators. Circle fill shows the plurality OpenAlex field from primary topics on each researcher’s Columbia-affiliated works. Circle area represents qualifying affiliated works; line width represents shared works regardless of affiliation.",
+  "data": {
+    "authors": "T4",
+    "ties": "T2",
+    "brief": "J1",
+    "findings": "T5",
+    "validation": "T3",
+    "fields": "T9"
+  },
+  "params": {
+    "type": "object",
+    "properties": {
+      "minShared": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 85,
+        "default": 1,
+        "title": "Minimum shared works per tie"
+      },
+      "labels": {
+        "type": "string",
+        "enum": [
+          "Anchors",
+          "More",
+          "None"
+        ],
+        "default": "Anchors",
+        "title": "Researcher labels"
+      }
+    }
+  },
+  "entity_types": [
+    "author",
+    "coauthorship"
+  ],
+  "libraries": []
+}
