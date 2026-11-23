@@ -1,0 +1,190 @@
+# Hand-written dataset documentation for the Columbia OpenAlex snapshot.
+# Merged with automatic profiling by data_pipeline/build_catalog.py.
+# This file documents the DATA only (meaning of fields, joins, caveats).
+# It must not contain analysis recipes or visualization guidance.
+
+dataset:
+  id: columbia_openalex
+  title: Columbia University publications, 2021-2024 (OpenAlex snapshot of 2026-11-23)
+  description: >
+    Works (papers, preprints, books, datasets, ...) published 2021-2024 with at least one author
+    affiliated with Columbia University (OpenAlex institution I78577930 and its OpenAlex child
+    institutions: NASA GISS, Lamont-Doherty Earth Observatory, ICAP, CZ Biohub NY), taken from the
+    OpenAlex API on 2026-11-23 and never refreshed. Includes all co-authors and their institutions,
+    the OpenAlex topic hierarchy, profiles of Columbia-affiliated authors, venues, outgoing references,
+    yearly citation counts, keywords and funders.
+  scope_exclusions:
+    - Works with more than 100 authors are excluded entirely.
+    - Columbia University Irving Medical Center (OpenAlex I2799503643) is a separate OpenAlex institution
+      and is NOT part of this scope unless a paper also lists Columbia University itself.
+    - Affiliated but separate colleges (e.g. Barnard College, Teachers College) are not included unless
+      a paper also lists Columbia University itself.
+  caveats:
+    - Author identities come from OpenAlex's algorithmic disambiguation; common names can be split or merged.
+    - Topics, subfields, fields and domains are assigned by OpenAlex's classifier and can be wrong.
+    - Citation counts (cited_by_count, work_citations_by_year) are as of the snapshot date; newer works
+      have had less time to be cited.
+    - citations lists every outgoing reference; only rows with cited_in_snapshot = true point to works that
+      are themselves in this dataset (and therefore have metadata here).
+    - authors contains profiles only for authors who are Columbia-affiliated on at least one work in the
+      snapshot; other co-authors appear only in authorships (name and id).
+    - Profile metrics in authors and sources (works_count, cited_by_count, h_index, ...) are global
+      OpenAlex values for the whole career / whole venue, not restricted to this snapshot.
+    - Some works have no abstract (abstract is NULL), no topic, or no source.
+  counting_rules:
+    - authorships has one row per (work, author); count works with count(DISTINCT work_id) after joining it.
+    - authorships.is_columbia is true when that author lists a Columbia institution on that specific work.
+    - A work can have up to 3 topics in work_topics; works.primary_topic_* gives the single primary one.
+    - work_topics joins to topics for the full hierarchy domain > field > subfield > topic.
+
+tables:
+  works:
+    description: One row per work in the snapshot.
+    columns:
+      work_id: OpenAlex work id (e.g. W4312345678). Primary key.
+      doi: DOI URL when available.
+      title: Title of the work.
+      abstract: Abstract text rebuilt from OpenAlex's inverted index; NULL when unavailable.
+      publication_year: Year of publication (2021-2024).
+      publication_date: Publication date.
+      type: OpenAlex work type (article, preprint, review, book-chapter, dataset, ...).
+      language: ISO language code of the work.
+      source_id: OpenAlex id of the primary venue (joins sources.source_id).
+      source_name: Name of the primary venue (denormalized from sources).
+      cited_by_count: Number of citations received (global, as of snapshot date).
+      fwci: Field-weighted citation impact; 1.0 means cited at the world average for similar works.
+      citation_percentile: Citation percentile among works of the same field and year (0-1).
+      is_top_1pct_cited: True if in the top 1% most cited works of its field and year.
+      is_top_10pct_cited: True if in the top 10% most cited works of its field and year.
+      is_oa: True if the work is open access.
+      oa_status: Open-access route (gold, green, hybrid, bronze, diamond, closed).
+      referenced_works_count: Number of outgoing references.
+      authors_count: Number of authors (at most 100 in this snapshot).
+      columbia_authors_count: Number of authors affiliated with Columbia on this work.
+      countries_distinct_count: Number of distinct countries among the authors' institutions.
+      institutions_distinct_count: Number of distinct institutions among the authors.
+      is_retracted: True if the work has been retracted.
+      is_paratext: True for front matter, tables of contents and similar non-research items.
+      primary_topic_id: OpenAlex id of the primary topic (joins topics.topic_id).
+      primary_topic: Name of the primary topic.
+      primary_subfield: Subfield of the primary topic.
+      primary_field: Field of the primary topic (26 fields in OpenAlex).
+      primary_domain: Domain of the primary topic (Life, Social, Physical, Health Sciences).
+  authorships:
+    description: One row per (work, author) in byline order, including non-Columbia co-authors.
+    columns:
+      work_id: Work id (joins works.work_id).
+      author_order: 0-based position in the byline.
+      author_id: OpenAlex author id (may be NULL for unresolved authors).
+      author_name: Author display name.
+      author_position: first, middle or last.
+      is_corresponding: True if marked as corresponding author.
+      is_columbia: True if this author lists a Columbia institution on this work.
+  authorship_institutions:
+    description: Institutions listed by each author on each work (an author can list several).
+    columns:
+      work_id: Work id.
+      author_order: Byline position; together with work_id identifies the authorship.
+      author_id: Author id.
+      institution_id: OpenAlex institution id (joins institutions.institution_id).
+  institutions:
+    description: Every institution that appears in the authorships of the snapshot works.
+    columns:
+      institution_id: OpenAlex institution id. Primary key.
+      name: Institution name.
+      country_code: ISO 3166-1 alpha-2 country code.
+      type: Institution type (education, healthcare, company, government, facility, nonprofit, ...).
+      ror: ROR identifier URL.
+      is_columbia: True for Columbia University and its OpenAlex child institutions.
+  authors:
+    description: Profiles of authors who are Columbia-affiliated on at least one snapshot work.
+    columns:
+      author_id: OpenAlex author id. Primary key.
+      name: Display name.
+      orcid: ORCID URL when known.
+      works_count: Total works in OpenAlex over the whole career (global).
+      cited_by_count: Total citations over the whole career (global).
+      h_index: h-index (global).
+      i10_index: i10-index (global).
+      two_year_mean_citedness: Mean citations per work over the last two years (global).
+      last_known_institutions: Names of the author's most recent institutions, separated by "; ".
+      works_in_snapshot: Number of snapshot works on which the author is Columbia-affiliated.
+  topics:
+    description: The full OpenAlex topic hierarchy (domain > field > subfield > topic), not only topics used here.
+    columns:
+      topic_id: OpenAlex topic id. Primary key.
+      topic: Topic name.
+      subfield_id: Subfield id.
+      subfield: Subfield name.
+      field_id: Field id.
+      field: Field name.
+      domain_id: Domain id.
+      domain: Domain name.
+      description: Short description of the topic.
+      keywords: Keywords associated with the topic, separated by "; ".
+      works_count: Number of works with this topic in all of OpenAlex (global).
+  work_topics:
+    description: Topics assigned to each work (up to 3), with the classifier's score.
+    columns:
+      work_id: Work id.
+      topic_id: Topic id (joins topics.topic_id).
+      score: Classifier confidence (0-1).
+      is_primary: True for the work's primary topic.
+      rank: 0-based rank of the topic for this work.
+  sources:
+    description: Venues (journals, repositories, conferences, book series) that are the primary location of snapshot works.
+    columns:
+      source_id: OpenAlex source id. Primary key.
+      name: Venue name.
+      type: journal, repository, conference, ebook platform, book series, ...
+      issn_l: Linking ISSN.
+      publisher: Host organization / publisher name.
+      country_code: Country of the venue.
+      is_oa: True if the venue is fully open access.
+      works_count: Works published in the venue (global).
+      cited_by_count: Citations to the venue's works (global).
+      h_index: Venue h-index (global).
+  citations:
+    description: Outgoing references of snapshot works (one row per citing -> cited pair).
+    columns:
+      citing_work_id: The snapshot work that cites (joins works.work_id).
+      cited_work_id: The referenced work's OpenAlex id.
+      cited_in_snapshot: True if the cited work is also in this snapshot.
+  work_citations_by_year:
+    description: Citations received by each work per calendar year (as reported by OpenAlex).
+    columns:
+      work_id: Work id.
+      year: Calendar year in which the citations were received.
+      cited_by_count: Citations received in that year.
+  work_keywords:
+    description: Keywords that OpenAlex extracted for each work, with a relevance score.
+    columns:
+      work_id: Work id.
+      keyword_id: OpenAlex keyword id.
+      keyword: Keyword text.
+      score: Relevance score (0-1).
+  work_funders:
+    description: Funders acknowledged by each work.
+    columns:
+      work_id: Work id.
+      funder_id: OpenAlex funder id.
+      funder_name: Funder name.
+  snapshot_meta:
+    description: Provenance of the snapshot (date, filter, scope) as key/value pairs.
+    columns:
+      key: Property name.
+      value: Property value.
+
+relationships:
+  - works.work_id = authorships.work_id
+  - authorships.(work_id, author_order) = authorship_institutions.(work_id, author_order)
+  - authorship_institutions.institution_id = institutions.institution_id
+  - authorships.author_id = authors.author_id   # authors holds Columbia-affiliated authors only
+  - works.source_id = sources.source_id
+  - works.primary_topic_id = topics.topic_id
+  - work_topics.work_id = works.work_id ; work_topics.topic_id = topics.topic_id
+  - citations.citing_work_id = works.work_id
+  - citations.cited_work_id = works.work_id      # only when cited_in_snapshot
+  - work_citations_by_year.work_id = works.work_id
+  - work_keywords.work_id = works.work_id
+  - work_funders.work_id = works.work_id

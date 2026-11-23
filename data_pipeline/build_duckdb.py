@@ -154,7 +154,9 @@ def build(snapshot: Path, out: Path) -> None:
         topics.add(topic_id=short(t["id"]), topic=t.get("display_name"), subfield_id=short(sf.get("id")),
                    subfield=sf.get("display_name"), field_id=short(fd.get("id")), field=fd.get("display_name"),
                    domain_id=short(dm.get("id")), domain=dm.get("display_name"), description=t.get("description"),
-                   keywords="; ".join(t.get("keywords") or []), works_count=t.get("works_count"))
+                   keywords="; ".join(k if isinstance(k, str) else (k.get("display_name") or "")
+                                      for k in (t.get("keywords") or [])),
+                   works_count=t.get("works_count"))
 
     authors = Columns({
         "author_id": S, "name": S, "orcid": S, "works_count": I, "cited_by_count": I, "h_index": I,

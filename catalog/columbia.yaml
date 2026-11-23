@@ -1,0 +1,990 @@
+dataset:
+  id: columbia_openalex
+  title: Columbia University publications, 2021-2024 (OpenAlex snapshot of 2026-11-23)
+  description: 'Works (papers, preprints, books, datasets, ...) published 2021-2024 with at least one author affiliated with
+    Columbia University (OpenAlex institution I78577930 and its OpenAlex child institutions: NASA GISS, Lamont-Doherty Earth
+    Observatory, ICAP, CZ Biohub NY), taken from the OpenAlex API on 2026-11-23 and never refreshed. Includes all co-authors
+    and their institutions, the OpenAlex topic hierarchy, profiles of Columbia-affiliated authors, venues, outgoing references,
+    yearly citation counts, keywords and funders.
+
+    '
+  scope_exclusions:
+  - Works with more than 100 authors are excluded entirely.
+  - Columbia University Irving Medical Center (OpenAlex I2799503643) is a separate OpenAlex institution and is NOT part of
+    this scope unless a paper also lists Columbia University itself.
+  - Affiliated but separate colleges (e.g. Barnard College, Teachers College) are not included unless a paper also lists Columbia
+    University itself.
+  caveats:
+  - Author identities come from OpenAlex's algorithmic disambiguation; common names can be split or merged.
+  - Topics, subfields, fields and domains are assigned by OpenAlex's classifier and can be wrong.
+  - Citation counts (cited_by_count, work_citations_by_year) are as of the snapshot date; newer works have had less time to
+    be cited.
+  - citations lists every outgoing reference; only rows with cited_in_snapshot = true point to works that are themselves in
+    this dataset (and therefore have metadata here).
+  - authors contains profiles only for authors who are Columbia-affiliated on at least one work in the snapshot; other co-authors
+    appear only in authorships (name and id).
+  - Profile metrics in authors and sources (works_count, cited_by_count, h_index, ...) are global OpenAlex values for the
+    whole career / whole venue, not restricted to this snapshot.
+  - Some works have no abstract (abstract is NULL), no topic, or no source.
+  counting_rules:
+  - authorships has one row per (work, author); count works with count(DISTINCT work_id) after joining it.
+  - authorships.is_columbia is true when that author lists a Columbia institution on that specific work.
+  - A work can have up to 3 topics in work_topics; works.primary_topic_* gives the single primary one.
+  - work_topics joins to topics for the full hierarchy domain > field > subfield > topic.
+tables:
+  authors:
+    description: Profiles of authors who are Columbia-affiliated on at least one snapshot work.
+    row_count: 29518
+    columns:
+      author_id:
+        description: OpenAlex author id. Primary key.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 30686
+        examples:
+        - A5000004691
+        - A5000068004
+        - A5000355552
+      name:
+        description: Display name.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 28388
+        examples:
+        - Carl Asher Latkin
+        - Michael G. Rosenfeld
+        - Michael T. Compton
+      orcid:
+        description: ORCID URL when known.
+        type: VARCHAR
+        null_pct: 32.7
+        distinct: 19196
+        examples:
+        - https://orcid.org/0000-0002-7931-2116
+        - https://orcid.org/0000-0002-1572-156X
+        - https://orcid.org/0000-0001-6835-2502
+      works_count:
+        description: Total works in OpenAlex over the whole career (global).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 959
+        range:
+        - 1
+        - 19063
+      cited_by_count:
+        description: Total citations over the whole career (global).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 7248
+        range:
+        - 0
+        - 502817
+      h_index:
+        description: h-index (global).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 193
+        range:
+        - 0
+        - 318
+      i10_index:
+        description: i10-index (global).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 592
+        range:
+        - 0
+        - 1881
+      two_year_mean_citedness:
+        description: Mean citations per work over the last two years (global).
+        type: DOUBLE
+        null_pct: 0.0
+        distinct: 4192
+        range:
+        - 0.0
+        - 2533.5
+      last_known_institutions:
+        description: Names of the author's most recent institutions, separated by "; ".
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 10067
+        examples:
+        - Johns Hopkins University
+        - Howard Hughes Medical Institute; University of California San Diego
+        - New York State Psychiatric Institute; Columbia University
+      works_in_snapshot:
+        description: Number of snapshot works on which the author is Columbia-affiliated.
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 119
+        range:
+        - 1
+        - 259
+  authorship_institutions:
+    description: Institutions listed by each author on each work (an author can list several).
+    row_count: 619528
+    columns:
+      work_id:
+        description: Work id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 55410
+        examples:
+        - W4406050389
+        - W4406050417
+        - W4406050509
+      author_order:
+        description: Byline position; together with work_id identifies the authorship.
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 102
+        range:
+        - 0
+        - 99
+      author_id:
+        description: Author id.
+        type: VARCHAR
+        null_pct: 3.6
+        distinct: 175829
+        examples:
+        - A5121841164
+        - A5000414426
+        - A5021171640
+      institution_id:
+        description: OpenAlex institution id (joins institutions.institution_id).
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 14855
+        examples:
+        - I4394709130
+        - I170201317
+        - I136199984
+  authorships:
+    description: One row per (work, author) in byline order, including non-Columbia co-authors.
+    row_count: 438156
+    columns:
+      work_id:
+        description: Work id (joins works.work_id).
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 55410
+        examples:
+        - W4396903495
+        - W4396910542
+        - W4396930336
+      author_order:
+        description: 0-based position in the byline.
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 102
+        range:
+        - 0
+        - 99
+      author_id:
+        description: OpenAlex author id (may be NULL for unresolved authors).
+        type: VARCHAR
+        null_pct: 4.1
+        distinct: 184995
+        examples:
+        - A5034281360
+        - A5109658866
+        - A5067198663
+      author_name:
+        description: Author display name.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 185302
+        examples:
+        - Se-Il Suk
+        - Michael B. Gerrard
+        - Enno Schmidt
+      author_position:
+        description: first, middle or last.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 3
+        top_values:
+          middle: 333766
+          first: 55370
+          last: 49009
+      is_corresponding:
+        description: True if marked as corresponding author.
+        type: BOOLEAN
+        null_pct: 0.0
+        distinct: 2
+        top_values:
+          'False': 391220
+          'True': 46936
+      is_columbia:
+        description: True if this author lists a Columbia institution on this work.
+        type: BOOLEAN
+        null_pct: 0.0
+        distinct: 2
+        top_values:
+          'False': 321391
+          'True': 116765
+  citations:
+    description: Outgoing references of snapshot works (one row per citing -> cited pair).
+    row_count: 2322878
+    columns:
+      citing_work_id:
+        description: The snapshot work that cites (joins works.work_id).
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 46289
+        examples:
+        - W3123922203
+        - W3136955306
+        - W3121904249
+      cited_work_id:
+        description: The referenced work's OpenAlex id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 1444362
+        examples:
+        - W69095940
+        - W157902027
+        - W323406638
+      cited_in_snapshot:
+        description: True if the cited work is also in this snapshot.
+        type: BOOLEAN
+        null_pct: 0.0
+        distinct: 2
+        top_values:
+          'False': 2283744
+          'True': 39134
+  institutions:
+    description: Every institution that appears in the authorships of the snapshot works.
+    row_count: 15410
+    columns:
+      institution_id:
+        description: OpenAlex institution id. Primary key.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 14855
+        examples:
+        - I1334819555
+        - I78577930
+        - I3018134672
+      name:
+        description: Institution name.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 14558
+        examples:
+        - Memorial Sloan Kettering Cancer Center
+        - Columbia University
+        - Helmholtz Munich
+      country_code:
+        description: ISO 3166-1 alpha-2 country code.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 186
+        examples:
+        - US
+        - DE
+        - RU
+      type:
+        description: Institution type (education, healthcare, company, government, facility, nonprofit, ...).
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 9
+        top_values:
+          education: 4582
+          healthcare: 3507
+          facility: 3269
+          nonprofit: 1300
+          company: 1087
+          government: 1070
+          other: 440
+          archive: 146
+          funder: 9
+      ror:
+        description: ROR identifier URL.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 15575
+        examples:
+        - https://ror.org/02yrq0923
+        - https://ror.org/00hj8s172
+        - https://ror.org/00cfam450
+      is_columbia:
+        description: True for Columbia University and its OpenAlex child institutions.
+        type: BOOLEAN
+        null_pct: 0.0
+        distinct: 2
+        top_values:
+          'False': 15405
+          'True': 5
+  snapshot_meta:
+    description: Provenance of the snapshot (date, filter, scope) as key/value pairs.
+    row_count: 6
+    columns:
+      key:
+        description: Property name.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 6
+        top_values:
+          years: 1
+          max_authors: 1
+          snapshot_date_utc: 1
+          works_filter: 1
+          institution: 1
+          source: 1
+      value:
+        description: Property value.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 6
+        top_values:
+          I78577930: 1
+          '100': 1
+          authorships.institutions.lineage:I78577930,publication_year:2021-2024,authors...: 1
+          2021-2024: 1
+          '2026-11-23': 1
+          OpenAlex API (https://api.openalex.org): 1
+  sources:
+    description: Venues (journals, repositories, conferences, book series) that are the primary location of snapshot works.
+    row_count: 9465
+    columns:
+      source_id:
+        description: OpenAlex source id. Primary key.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 9766
+        examples:
+        - S10134376
+        - S101949793
+        - S100736837
+      name:
+        description: Venue name.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 9440
+        examples:
+        - Sustainability
+        - Sensors
+        - Plastic & Reconstructive Surgery
+      type:
+        description: journal, repository, conference, ebook platform, book series, ...
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 6
+        top_values:
+          journal: 8252
+          conference: 717
+          book series: 237
+          repository: 142
+          ebook platform: 115
+          other: 2
+      issn_l:
+        description: Linking ISSN.
+        type: VARCHAR
+        null_pct: 8.8
+        distinct: 8703
+        examples:
+        - 2071-1050
+        - 1424-8220
+        - 0032-1052
+      publisher:
+        description: Host organization / publisher name.
+        type: VARCHAR
+        null_pct: 6.0
+        distinct: 1296
+        examples:
+        - Multidisciplinary Digital Publishing Institute
+        - Lippincott Williams & Wilkins
+        - Elsevier BV
+      country_code:
+        description: Country of the venue.
+        type: VARCHAR
+        null_pct: 11.9
+        distinct: 88
+        examples:
+        - CH
+        - US
+        - DE
+      is_oa:
+        description: True if the venue is fully open access.
+        type: BOOLEAN
+        null_pct: 0.0
+        distinct: 2
+        top_values:
+          'False': 6695
+          'True': 2770
+      works_count:
+        description: Works published in the venue (global).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 5454
+        range:
+        - 1
+        - 7073238
+      cited_by_count:
+        description: Citations to the venue's works (global).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 9022
+        range:
+        - 0
+        - 44414673
+      h_index:
+        description: Venue h-index (global).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 580
+        range:
+        - 0
+        - 1997
+  topics:
+    description: The full OpenAlex topic hierarchy (domain > field > subfield > topic), not only topics used here.
+    row_count: 4516
+    columns:
+      topic_id:
+        description: OpenAlex topic id. Primary key.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 4606
+        examples:
+        - T10346
+        - T12618
+        - T11367
+      topic:
+        description: Topic name.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 4724
+        examples:
+        - Magnetic confinement fusion research
+        - Botany and Plant Ecology Studies
+        - Particle accelerators and beam dynamics
+      subfield_id:
+        description: Subfield id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 254
+        examples:
+        - '3106'
+        - '1110'
+        - '1109'
+      subfield:
+        description: Subfield name.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 247
+        examples:
+        - Nuclear and High Energy Physics
+        - Plant Science
+        - Insect Science
+      field_id:
+        description: Field id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 26
+        top_values:
+          '33': 830
+          '27': 716
+          '22': 467
+          '12': 299
+          '17': 265
+          '11': 255
+          '13': 202
+          '23': 184
+          '14': 155
+          '25': 144
+          '32': 128
+          '16': 119
+      field:
+        description: Field name.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 24
+        top_values:
+          Social Sciences: 830
+          Medicine: 716
+          Engineering: 467
+          Arts and Humanities: 299
+          Computer Science: 265
+          Agricultural and Biological Sciences: 255
+          Biochemistry, Genetics and Molecular Biology: 202
+          Environmental Science: 184
+          Business, Management and Accounting: 155
+          Materials Science: 144
+          Psychology: 128
+          Chemistry: 119
+      domain_id:
+        description: Domain id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 4
+        top_values:
+          '2': 1573
+          '3': 1510
+          '4': 828
+          '1': 605
+      domain:
+        description: Domain name.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 4
+        top_values:
+          Social Sciences: 1573
+          Physical Sciences: 1510
+          Health Sciences: 828
+          Life Sciences: 605
+      description:
+        description: Short description of the topic.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 4500
+        examples:
+        - This cluster of papers covers a wide range of topics in plasma physics and fu...
+        - This cluster of papers covers a wide range of topics related to the diversity...
+        - This cluster of papers focuses on advancements in accelerator technology, par...
+      keywords:
+        description: Keywords associated with the topic, separated by "; ".
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 4177
+        examples:
+        - Large Helical Device; Doppler reflectometry; neutral beam injection; electron...
+        - plant taxonomy; Asteraceae; herbarium specimen; species distribution; Fabacea...
+        - neutral beam injection; positive ion source; injection power; negative ion-ba...
+      works_count:
+        description: Number of works with this topic in all of OpenAlex (global).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 4396
+        range:
+        - 0
+        - 42570070
+  work_citations_by_year:
+    description: Citations received by each work per calendar year (as reported by OpenAlex).
+    row_count: 155356
+    columns:
+      work_id:
+        description: Work id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 45883
+        examples:
+        - W4387503605
+        - W4387648584
+        - W4387660974
+      year:
+        description: Calendar year in which the citations were received.
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 15
+        range:
+        - 2012
+        - 2026
+      cited_by_count:
+        description: Citations received in that year.
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 438
+        range:
+        - 1
+        - 2348
+  work_funders:
+    description: Funders acknowledged by each work.
+    row_count: 120254
+    columns:
+      work_id:
+        description: Work id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 29698
+        examples:
+        - W3123922203
+        - W3136955306
+        - W4383957026
+      funder_id:
+        description: OpenAlex funder id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 7341
+        examples:
+        - F4320309468
+        - F4320320300
+        - F4320320879
+      funder_name:
+        description: Funder name.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 7327
+        examples:
+        - Memorial Sloan-Kettering Cancer Center
+        - European Commission
+        - Deutsche Forschungsgemeinschaft
+  work_keywords:
+    description: Keywords that OpenAlex extracted for each work, with a relevance score.
+    row_count: 468258
+    columns:
+      work_id:
+        description: Work id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 54771
+        examples:
+        - W3123922203
+        - W3136955306
+        - W3121904249
+      keyword_id:
+        description: OpenAlex keyword id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 162874
+        examples:
+        - ferroptosis
+        - iron-dependent-lipid-peroxidation
+        - cell-death-mechanisms
+      keyword:
+        description: Keyword text.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 140392
+        examples:
+        - ferroptosis
+        - iron-dependent lipid peroxidation
+        - cell death mechanisms
+      score:
+        description: Relevance score (0-1).
+        type: DOUBLE
+        null_pct: 0.0
+        distinct: 691
+        range:
+        - 0.301
+        - 1.0
+  work_topics:
+    description: Topics assigned to each work (up to 3), with the classifier's score.
+    row_count: 165198
+    columns:
+      work_id:
+        description: Work id.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 54782
+        examples:
+        - W4310599586
+        - W4310702231
+        - W4310852317
+      topic_id:
+        description: Topic id (joins topics.topic_id).
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 4000
+        examples:
+        - T10762
+        - T10272
+        - T10043
+      score:
+        description: Classifier confidence (0-1).
+        type: DOUBLE
+        null_pct: 0.0
+        distinct: 4494
+        range:
+        - 0.0
+        - 1.0
+      is_primary:
+        description: True for the work's primary topic.
+        type: BOOLEAN
+        null_pct: 0.0
+        distinct: 2
+        top_values:
+          'False': 110132
+          'True': 55066
+      rank:
+        description: 0-based rank of the topic for this work.
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 3
+        range:
+        - 0
+        - 2
+  works:
+    description: One row per work in the snapshot.
+    row_count: 55371
+    columns:
+      work_id:
+        description: OpenAlex work id (e.g. W4312345678). Primary key.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 55410
+        examples:
+        - W3123922203
+        - W3136955306
+        - W3121904249
+      doi:
+        description: DOI URL when available.
+        type: VARCHAR
+        null_pct: 1.0
+        distinct: 56562
+        examples:
+        - https://doi.org/10.1038/s41580-020-00324-8
+        - https://doi.org/10.1038/s41591-021-01283-z
+        - https://doi.org/10.1038/s41586-023-06415-8
+      title:
+        description: Title of the work.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 54789
+        examples:
+        - 'Ferroptosis: mechanisms, biology and role in disease'
+        - Post-acute COVID-19 syndrome
+        - Measuring Massive Multitask Language Understanding
+      abstract:
+        description: Abstract text rebuilt from OpenAlex's inverted index; NULL when unavailable.
+        type: VARCHAR
+        null_pct: 26.4
+        distinct: 39384
+        examples:
+        - We propose a new test to measure a text model's multitask accuracy. The test ...
+        - There has been considerable recent progress in designing new proteins using d...
+        - Ferroptosis, a form of cell death driven by iron-dependent lipid peroxidation...
+      publication_year:
+        description: Year of publication (2021-2024).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 4
+        range:
+        - 2021
+        - 2024
+      publication_date:
+        description: Publication date.
+        type: DATE
+        null_pct: 0.0
+        distinct: 1384
+        range:
+        - '2021-01-01'
+        - '2024-12-31'
+      type:
+        description: OpenAlex work type (article, preprint, review, book-chapter, dataset, ...).
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 23
+        top_values:
+          article: 35735
+          preprint: 3791
+          conference-paper: 3423
+          conference-abstract: 2823
+          review: 2629
+          book-chapter: 2478
+          editorial: 975
+          dataset: 586
+          book-review: 527
+          report: 458
+          peer-review: 440
+          erratum: 386
+      language:
+        description: ISO language code of the work.
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 36
+        examples:
+        - en
+        - fr
+        - nl
+      source_id:
+        description: OpenAlex id of the primary venue (joins sources.source_id).
+        type: VARCHAR
+        null_pct: 1.3
+        distinct: 9766
+        examples:
+        - S196724125
+        - S203256638
+        - S4306419637
+      source_name:
+        description: Name of the primary venue (denormalized from sources).
+        type: VARCHAR
+        null_pct: 1.3
+        distinct: 9440
+        examples:
+        - Nature Reviews Molecular Cell Biology
+        - Nature Medicine
+        - International Conference on Learning Representations
+      cited_by_count:
+        description: Number of citations received (global, as of snapshot date).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 645
+        range:
+        - 0
+        - 8484
+      fwci:
+        description: Field-weighted citation impact; 1.0 means cited at the world average for similar works.
+        type: DOUBLE
+        null_pct: 19.8
+        distinct: 19946
+        range:
+        - 0.0
+        - 916.562
+      citation_percentile:
+        description: Citation percentile among works of the same field and year (0-1).
+        type: DOUBLE
+        null_pct: 19.8
+        distinct: 25092
+        range:
+        - 0.0
+        - 1.0
+      is_top_1pct_cited:
+        description: True if in the top 1% most cited works of its field and year.
+        type: BOOLEAN
+        null_pct: 19.8
+        distinct: 2
+        top_values:
+          'False': 42153
+          'True': 2242
+      is_top_10pct_cited:
+        description: True if in the top 10% most cited works of its field and year.
+        type: BOOLEAN
+        null_pct: 19.8
+        distinct: 2
+        top_values:
+          'False': 32062
+          'True': 12333
+      is_oa:
+        description: True if the work is open access.
+        type: BOOLEAN
+        null_pct: 0.0
+        distinct: 2
+        top_values:
+          'True': 40027
+          'False': 15344
+      oa_status:
+        description: Open-access route (gold, green, hybrid, bronze, diamond, closed).
+        type: VARCHAR
+        null_pct: 0.0
+        distinct: 6
+        top_values:
+          closed: 15344
+          green: 13177
+          gold: 11033
+          bronze: 6424
+          hybrid: 6397
+          diamond: 2996
+      referenced_works_count:
+        description: Number of outgoing references.
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 475
+        range:
+        - 0
+        - 2572
+      authors_count:
+        description: Number of authors (at most 100 in this snapshot).
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 102
+        range:
+        - 1
+        - 100
+      columbia_authors_count:
+        description: Number of authors affiliated with Columbia on this work.
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 38
+        range:
+        - 1
+        - 81
+      countries_distinct_count:
+        description: Number of distinct countries among the authors' institutions.
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 31
+        range:
+        - 1
+        - 38
+      institutions_distinct_count:
+        description: Number of distinct institutions among the authors.
+        type: BIGINT
+        null_pct: 0.0
+        distinct: 99
+        range:
+        - 1
+        - 205
+      is_retracted:
+        description: True if the work has been retracted.
+        type: BOOLEAN
+        null_pct: 0.0
+        distinct: 1
+        top_values:
+          'False': 55371
+      is_paratext:
+        description: True for front matter, tables of contents and similar non-research items.
+        type: BOOLEAN
+        null_pct: 0.0
+        distinct: 2
+        top_values:
+          'False': 55317
+          'True': 54
+      primary_topic_id:
+        description: OpenAlex id of the primary topic (joins topics.topic_id).
+        type: VARCHAR
+        null_pct: 0.6
+        distinct: 3219
+        examples:
+        - T11297
+        - T11368
+        - T10028
+      primary_topic:
+        description: Name of the primary topic.
+        type: VARCHAR
+        null_pct: 0.6
+        distinct: 3332
+        examples:
+        - Ferroptosis and cancer prognosis
+        - Long-Term Effects of COVID-19
+        - Topic Modeling
+      primary_subfield:
+        description: Subfield of the primary topic.
+        type: VARCHAR
+        null_pct: 0.6
+        distinct: 240
+        examples:
+        - Cancer Research
+        - Clinical Neurology
+        - Artificial Intelligence
+      primary_field:
+        description: Field of the primary topic (26 fields in OpenAlex).
+        type: VARCHAR
+        null_pct: 0.6
+        distinct: 24
+        top_values:
+          Medicine: 15750
+          Social Sciences: 6439
+          Computer Science: 3369
+          Biochemistry, Genetics and Molecular Biology: 3152
+          Psychology: 2943
+          Environmental Science: 2864
+          Physics and Astronomy: 2518
+          Neuroscience: 2328
+          Earth and Planetary Sciences: 2293
+          Economics, Econometrics and Finance: 2190
+          Engineering: 2072
+          Arts and Humanities: 1666
+      primary_domain:
+        description: Domain of the primary topic (Life, Social, Physical, Health Sciences).
+        type: VARCHAR
+        null_pct: 0.6
+        distinct: 4
+        top_values:
+          Health Sciences: 17397
+          Physical Sciences: 16203
+          Social Sciences: 14794
+          Life Sciences: 6672
+relationships:
+- works.work_id = authorships.work_id
+- authorships.(work_id, author_order) = authorship_institutions.(work_id, author_order)
+- authorship_institutions.institution_id = institutions.institution_id
+- authorships.author_id = authors.author_id
+- works.source_id = sources.source_id
+- works.primary_topic_id = topics.topic_id
+- work_topics.work_id = works.work_id ; work_topics.topic_id = topics.topic_id
+- citations.citing_work_id = works.work_id
+- citations.cited_work_id = works.work_id
+- work_citations_by_year.work_id = works.work_id
+- work_keywords.work_id = works.work_id
+- work_funders.work_id = works.work_id
