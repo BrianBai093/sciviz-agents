@@ -77,6 +77,7 @@ def merge(prof: dict, sem: dict) -> dict:
         "dataset": sem.get("dataset", {}),
         "tables": tables,
         "relationships": sem.get("relationships", []),
+        "entities": sem.get("entities", {}),
     }
 
 

@@ -328,9 +328,9 @@ tables:
         top_values:
           years: 1
           max_authors: 1
-          snapshot_date_utc: 1
           works_filter: 1
           institution: 1
+          snapshot_date_utc: 1
           source: 1
       value:
         description: Property value.
@@ -338,11 +338,11 @@ tables:
         null_pct: 0.0
         distinct: 6
         top_values:
+          2021-2024: 1
+          '2026-11-23': 1
           I78577930: 1
           '100': 1
           authorships.institutions.lineage:I78577930,publication_year:2021-2024,authors...: 1
-          2021-2024: 1
-          '2026-11-23': 1
           OpenAlex API (https://api.openalex.org): 1
   sources:
     description: Venues (journals, repositories, conferences, book series) that are the primary location of snapshot works.
@@ -629,9 +629,9 @@ tables:
         null_pct: 0.0
         distinct: 54771
         examples:
-        - W3123922203
-        - W3136955306
-        - W3121904249
+        - W4389301129
+        - W4389352414
+        - W4389434560
       keyword_id:
         description: OpenAlex keyword id.
         type: VARCHAR
@@ -988,3 +988,29 @@ relationships:
 - work_citations_by_year.work_id = works.work_id
 - work_keywords.work_id = works.work_id
 - work_funders.work_id = works.work_id
+entities:
+  author:
+    table: authors
+    key: author_id
+    label: name
+    pattern: ^A\d+$
+  work:
+    table: works
+    key: work_id
+    label: title
+    pattern: ^W\d+$
+  institution:
+    table: institutions
+    key: institution_id
+    label: name
+    pattern: ^I\d+$
+  source:
+    table: sources
+    key: source_id
+    label: name
+    pattern: ^S\d+$
+  topic:
+    table: topics
+    key: topic_id
+    label: topic
+    pattern: ^T\d{4,}$

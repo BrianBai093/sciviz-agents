@@ -188,3 +188,11 @@ relationships:
   - work_citations_by_year.work_id = works.work_id
   - work_keywords.work_id = works.work_id
   - work_funders.work_id = works.work_id
+
+# How UI details-on-demand resolves an id to a record (dataset documentation: id formats and lookup tables).
+entities:
+  author: {table: authors, key: author_id, label: name, pattern: '^A\d+$'}
+  work: {table: works, key: work_id, label: title, pattern: '^W\d+$'}
+  institution: {table: institutions, key: institution_id, label: name, pattern: '^I\d+$'}
+  source: {table: sources, key: source_id, label: name, pattern: '^S\d+$'}
+  topic: {table: topics, key: topic_id, label: topic, pattern: '^T\d{4,}$'}

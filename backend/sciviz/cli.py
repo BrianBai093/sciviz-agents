@@ -10,13 +10,11 @@ import json
 import time
 
 import typer
-from langgraph.types import Command
 from rich.console import Console
 from rich.markdown import Markdown
 
-from .agents.build import build_multi_agent
-from .agents.models import TraceCallback
 from .harness.budget import SpendLedger
+from .runner import run_turn
 from .session import Session
 
 app = typer.Typer(add_completion=False, help="sciviz: multi-agent analysis of scholarly data with interactive views")
@@ -64,31 +62,15 @@ def ask(question: str, session: str = typer.Option(None, help="continue an exist
         quiet: bool = typer.Option(False, help="do not print agent events")):
     """Ask a question (optionally continuing a session)."""
     s = Session(session)
-    s.user_question = question
     if not quiet:
         s.events.subscribe(_printer)
-    agent = build_multi_agent(s)
-    cfg = {"configurable": {"thread_id": s.id}, "callbacks": [s.usage_callback, TraceCallback(s)],
-           "recursion_limit": 300}
-    content = question if not selection else f"{question}\n\n[Current selection in the views: {selection}]"
-    s.events.emit("user", "message", text=content)
     console.print(f"[dim]session {s.id}[/]")
     t0 = time.time()
-    inp = {"messages": [{"role": "user", "content": content}]}
+    sel = json.loads(selection) if selection else None
+    if isinstance(sel, list):
+        sel = {"items": sel}
     try:
-        while True:
-            interrupted = None
-            for chunk in agent.stream(inp, cfg, stream_mode="updates"):
-                if isinstance(chunk, dict) and "__interrupt__" in chunk:
-                    interrupted = chunk["__interrupt__"]
-            if not interrupted:
-                break
-            q = interrupted[0].value.get("question", "?")
-            answer = typer.prompt(f"? {q}")
-            s.events.emit("user", "message", text=answer)
-            inp = Command(resume=answer)
-        final = agent.get_state(cfg).values["messages"][-1].text
-        s.events.emit("lead", "message", text=final)
+        final = run_turn(s, question, sel, answer_fn=lambda q: typer.prompt(f"? {q}"))
         console.rule("answer")
         console.print(Markdown(final))
         console.rule()
@@ -99,6 +81,13 @@ def ask(question: str, session: str = typer.Option(None, help="continue an exist
         spent = s.ledger.session_total(s.id)
         console.print(f"[dim]{time.time() - t0:.0f}s, session cost ${spent:.3f}, ledger total ${s.ledger.total:.2f}[/]")
         s.close()
+
+
+@app.command()
+def serve(port: int = 8000, host: str = "127.0.0.1"):
+    """Start the web API (and the built UI, if frontend/dist exists)."""
+    import uvicorn
+    uvicorn.run("sciviz.api.app:app", host=host, port=port, log_level="warning")
 
 
 @app.command()

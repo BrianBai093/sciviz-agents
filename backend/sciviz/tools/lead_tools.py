@@ -17,8 +17,10 @@ def lead_tools(s: Session):
         return next((v for v in views["views"] if ref in (v["view_id"], v["viz"])), None)
 
     @tool
-    def show_view(viz_artifact_id: str, title: str = "") -> str:
-        """Show an approved visualization artifact to the user as a view. Returns the view id."""
+    def show_view(viz_artifact_id: str, title: str = "", replace_view: str = "") -> str:
+        """Show an approved visualization artifact to the user. By default it becomes a new view; pass
+        `replace_view` (a view id) to put a new version in place of an existing view (the old version stays
+        available for undo and comparison). Returns the view id."""
         try:
             meta = s.ws.get(viz_artifact_id)
         except KeyError as e:
@@ -26,6 +28,18 @@ def lead_tools(s: Session):
         if meta["kind"] != "viz" or meta.get("status") not in ("approved", "approved_with_issues"):
             return f"{viz_artifact_id} is not an approved visualization (status: {meta.get('status')}); it cannot be shown."
         views = _views()
+        if replace_view:
+            target = _find(views, replace_view)
+            if not target:
+                return f"No view {replace_view!r} to replace. Shown views: {[x['view_id'] for x in views['views']]}"
+            target.setdefault("history", []).append(target["viz"])
+            target["viz"] = viz_artifact_id
+            target["title"] = title or meta["title"]
+            target["highlight"] = []
+            s.ws.save_views(views)
+            s.events.emit("lead", "view", action="replace", view_id=target["view_id"], viz=viz_artifact_id,
+                          previous=target["history"][-1], title=target["title"])
+            return f"{target['view_id']} now shows {viz_artifact_id} (previous version {target['history'][-1]} kept for undo)."
         existing = next((v for v in views["views"] if v["viz"] == viz_artifact_id), None)
         if existing:
             return f"{viz_artifact_id} is already shown as {existing['view_id']}."
@@ -44,7 +58,7 @@ def lead_tools(s: Session):
         v = _find(views, view)
         if not v:
             return f"No view {view!r}. Shown views: {[x['view_id'] for x in views['views']]}"
-        manifest = s.ws.load_manifest(v["viz"]) if hasattr(s.ws, "load_manifest") else {}
+        manifest = s.ws.load_manifest(v["viz"])
         declared = set(((manifest.get("params") or {}).get("properties") or {}).keys())
         unknown = [k for k in params if declared and k not in declared]
         if unknown:

@@ -187,6 +187,7 @@ Each record states the context, the options considered, the decision, and why. R
 | D31 | Remove shell `execute` and the generic sub-agent; Lead's file tools are read-only | Accepted |
 | D32 | `highlight()` and `setSelection()` take items, not bare ids | Accepted (refines PLAN §4.1) |
 | D33 | The Critic knows the host renders parameter controls | Accepted |
+| D34 | Viz agent at medium reasoning effort (user decision after M1) | Accepted (supersedes part of D27) |
 
 ## D26. Kernel lifetime
 - **Decision:** One persistent kernel per (session, agent).
@@ -222,3 +223,8 @@ Each record states the context, the options considered, the decision, and why. R
 - **Context:** In Q3, the Critic rejected V2 because the declared filters had no visible in-view widgets. The Viz prompt, meanwhile, tells modules not to build such widgets, because the host app renders controls for declared parameters.
 - **Decision:** The Critic prompt says host controls exist outside the screenshots, and the review message lists the declared parameters (name, title, default). The Critic judges whether the parameters are meaningful, not whether they have widgets inside the view.
 - **Status:** Accepted.
+
+## D34. Viz agent reasoning effort: medium
+- **Context:** M1 review issue 1. Questions took 6.5–11.5 min, and the Viz agent accounted for about 70% of model calls and cost at high effort.
+- **Decision:** The user chose to run Viz at medium effort from M2 on. The Critic stays at high effort, and escalation to GPT-6.2 Astra stays on as the safety net. Supersedes the Viz part of D27.
+- **Status:** Accepted (user decision, 2026-11-23).

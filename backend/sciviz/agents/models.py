@@ -11,7 +11,7 @@ from langchain_core.callbacks import BaseCallbackHandler
 from ..config import settings
 
 # Reasoning effort per role (DECISIONS D2, D27).
-EFFORT = {"lead": "medium", "data": "medium", "analyst": "medium", "viz": "high", "critic": "high", "single": "high"}
+EFFORT = {"lead": "medium", "data": "medium", "analyst": "medium", "viz": "medium", "critic": "high", "single": "high"}
 
 
 def make_llm(role: str, model: str | None = None):

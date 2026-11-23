@@ -73,3 +73,19 @@ class Dataset:
                 if q in text:
                     hits.append(f"{t}.{c}: {ci['description']}")
         return "\n".join(hits[:limit]) if hits else f"No catalog entries mention '{query}'."
+
+    def entity(self, ident: str) -> dict | None:
+        """Look up a dataset id (e.g. an author id) for details-on-demand, using the catalog's entity patterns."""
+        import re
+        for etype, spec in (self.catalog.get("entities") or {}).items():
+            if re.match(spec["pattern"], str(ident)):
+                con = self.connect()
+                try:
+                    df = con.execute(f'SELECT * FROM "{spec["table"]}" WHERE "{spec["key"]}" = ? LIMIT 1', [ident]).df()
+                finally:
+                    con.close()
+                if df.empty:
+                    return None
+                row = {k: (None if v != v else v) for k, v in df.iloc[0].to_dict().items()}  # NaN -> None
+                return {"type": etype, "id": ident, "label": row.get(spec["label"]), "record": row}
+        return None

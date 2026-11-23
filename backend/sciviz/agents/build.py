@@ -47,8 +47,14 @@ def prompt(name: str) -> str:
 
 def lead_prompt(s: Session) -> str:
     views = s.ws.views()["views"]
-    view_text = "\n".join(f"- {v['view_id']}: {v['viz']} '{v['title']}' params={json.dumps(v['params'])}"
-                          for v in views) or "(none)"
+    lines = []
+    for v in views:
+        man = s.ws.load_manifest(v["viz"])
+        declared = list(((man.get("params") or {}).get("properties") or {}).keys())
+        lines.append(f"- {v['view_id']}: {v['viz']} '{v['title']}' | entity types: {man.get('entity_types') or '?'} | "
+                     f"declared params: {declared} | current params: {json.dumps(v['params'])} | "
+                     f"earlier versions: {v.get('history') or []}")
+    view_text = "\n".join(lines) or "(none)"
     return prompt("lead").format(artifacts=s.ws.index_text(), decisions=s.ws.decisions_text(), views=view_text,
                                  dataset=s.dataset.overview())
 
