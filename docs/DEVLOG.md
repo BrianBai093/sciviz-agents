@@ -290,3 +290,21 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
 - Public repo https://github.com/BrianBai093/sciviz-agents (D45).
 - Release v1.0.0 carries `columbia.duckdb` (173 MB, SHA-256 `e7e28777…f45b49`). README §1 now has the clone and download commands, the checksum and a CI badge.
 - CI (GitHub Actions: ruff + pytest) runs on every push.
+
+## 2026-11-23: Design Test, Option A (architecture figure)
+
+- Agreed with the user:
+  - three stages (input → multi-agent harness → interactive web app);
+  - a feedback loop from the app back to the harness;
+  - the shared harness services as a band along the bottom;
+  - concept names plus a few real code names;
+  - abstract icons for the views, not screenshots.
+- Layout references from the top-conference figure gallery:
+  - MASPOB (ICML 2026): colored phase panels read left to right;
+  - MegaAgent (ACL 2025 Findings): a shared-module band along the bottom;
+  - OSDA Agent (ICLR 2025): a ×N generate, evaluate, revise loop.
+- `docs/figures/build_architecture_figure.py` writes the SVG, then uses Playwright to render:
+  - a vector PDF, 7 × 3.22 in (the width of a two-column figure), with fonts embedded;
+  - a 300 dpi PNG.
+- Colors follow the app: the agent colors, and accent blue for user input and selection.
+- README §3 now opens with the figure and a caption. The Mermaid diagram stays as a collapsible text version.

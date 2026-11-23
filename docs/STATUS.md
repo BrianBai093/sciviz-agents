@@ -6,7 +6,8 @@ _Last updated: 2026-11-23. M3 complete and published._
 - **All three milestones are done.** Reviews: `docs/reviews/M1.md`, `M2.md`, `M3.md`.
 - **Published (D45):** public repo https://github.com/BrianBai093/sciviz-agents. The full database is the asset of release [v1.0.0](https://github.com/BrianBai093/sciviz-agents/releases/tag/v1.0.0); README §1 gives the download command and checksum. GitHub Actions runs lint and the unit tests on every push.
 - **Open (user decision):** where to host the video. For now it is in the repo (`demo/video/sciviz_demo.mp4`).
-- **After that:** Design Test (Option A paper-style figure for P1; `demo/slides/architecture.html` is a starting point) and Project 2.
+- **Design Test (Option A):** done. The architecture figure is `docs/figures/sciviz_architecture.{pdf,png,svg}`, built by `docs/figures/build_architecture_figure.py` (D46), and it opens README §3.
+- **Next:** Project 2.
 
 ## How to run
 See README §1. In short:

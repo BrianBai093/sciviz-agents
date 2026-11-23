@@ -299,3 +299,7 @@ Each record states the context, the options considered, the decision, and why. R
 ## D45. Publishing
 - **Decision:** a public GitHub repository, https://github.com/BrianBai093/sciviz-agents. The full database (173 MB) is a release asset (v1.0.0), not a repository file. The 3% sample (for a quick look), the recordings (replay mode) and the demo video stay in the repository.
 - **Status:** Accepted.
+
+## D46. Architecture figure (Design Test, Option A)
+- **Decision:** the figure is an SVG drawn by a Python script (`docs/figures/build_architecture_figure.py`) and rendered to PDF and PNG with Playwright, not made in a drawing tool. This makes it reproducible and diffable, and it uses the same colors as the app. The layout and the level of detail were chosen with the user: three stages plus a feedback loop, concept names plus a few code names, and abstract icons.
+- **Status:** Accepted.

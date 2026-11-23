@@ -1,0 +1,362 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" width="7.0in" height="3.22in">
+<defs><style>
+text { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #1f2328; }
+.panel { font-size: 16px; font-weight: 700; }
+.badge { font-size: 11px; font-weight: 700; fill: #fff; }
+.box { font-size: 13.5px; font-weight: 700; }
+.box-s { font-size: 12px; font-weight: 700; }
+.body { font-size: 12px; fill: #3a3936; }
+.small { font-size: 11px; fill: #5c5b57; }
+.small-b { font-size: 11px; font-weight: 700; }
+.note { font-size: 11px; fill: #5c5b57; font-style: italic; }
+.quote { font-size: 11.5px; fill: #3a3936; font-style: italic; }
+.mono { font-family: Menlo, 'SF Mono', Consolas, 'DejaVu Sans Mono', monospace; font-size: 10.5px;
+         font-style: normal; fill: #3a3936; }
+.tiny { font-size: 8px; font-weight: 700; fill: #fff; }
+</style>
+<symbol id="i-robot" viewBox="0 0 24 24">
+  <line x1="12" y1="2.6" x2="12" y2="5.6" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="12" cy="2.3" r="1.5" fill="currentColor"/>
+  <rect x="3.6" y="5.6" width="16.8" height="13.6" rx="4" fill="#fff" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="9" cy="11.6" r="1.7" fill="currentColor"/><circle cx="15" cy="11.6" r="1.7" fill="currentColor"/>
+  <path d="M9.3 15.4 H14.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  <rect x="1.2" y="10" width="2.4" height="4.6" rx="1" fill="currentColor"/>
+  <rect x="20.4" y="10" width="2.4" height="4.6" rx="1" fill="currentColor"/>
+</symbol>
+<symbol id="i-user" viewBox="0 0 24 24">
+  <circle cx="12" cy="7.5" r="4.3" fill="currentColor"/>
+  <path d="M3.5 21.5 C3.5 15.6 7.4 13.1 12 13.1 C16.6 13.1 20.5 15.6 20.5 21.5 Z" fill="currentColor"/>
+</symbol>
+<symbol id="i-db" viewBox="0 0 24 24">
+  <path d="M4 5.5 V18.5 C4 20.4 7.6 22 12 22 C16.4 22 20 20.4 20 18.5 V5.5" fill="#fff" stroke="currentColor" stroke-width="1.5"/>
+  <ellipse cx="12" cy="5.5" rx="8" ry="3.2" fill="#fff" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M4 12 C4 13.9 7.6 15.4 12 15.4 C16.4 15.4 20 13.9 20 12" fill="none" stroke="currentColor" stroke-width="1.3"/>
+</symbol>
+<symbol id="i-shield" viewBox="0 0 24 24">
+  <path d="M12 2 L20 5.2 V11.2 C20 16.2 16.6 19.8 12 22 C7.4 19.8 4 16.2 4 11.2 V5.2 Z" fill="#fff" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M8.3 12 L11 14.7 L16 9.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-check" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+  <path d="M7.5 12.3 L10.6 15.3 L16.6 8.9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-cursor" viewBox="0 0 24 24">
+  <path d="M5 2.5 L5 19.5 L9.3 15.4 L12.2 21.6 L15 20.3 L12.1 14.3 L18 14.3 Z" fill="#fff" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-term" viewBox="0 0 24 24">
+  <rect x="2.5" y="4" width="19" height="16" rx="2.5" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M6.5 9.5 L9.5 12 L6.5 14.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M11.5 15 H16.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+</symbol>
+<symbol id="i-pkg" viewBox="0 0 24 24">
+  <path d="M12 2.5 L20.5 7 V17 L12 21.5 L3.5 17 V7 Z" fill="#fff" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M3.5 7 L12 11.5 L20.5 7 M12 11.5 V21.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-log" viewBox="0 0 24 24">
+  <rect x="4" y="2.5" width="16" height="19" rx="2" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M8 8 H16 M8 12 H16 M8 16 H12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+</symbol>
+<symbol id="i-retry" viewBox="0 0 24 24">
+  <path d="M19.5 12 A7.5 7.5 0 1 1 16.9 6.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M17.6 2.6 V7 H13.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-coin" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="9" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M14.8 8.6 C14.2 7.7 13.2 7.3 12 7.3 C10.3 7.3 9.2 8.2 9.2 9.5 C9.2 12.3 15 11.2 15 14.3 C15 15.7 13.8 16.7 12 16.7 C10.7 16.7 9.6 16.2 9 15.2 M12 5.6 V7.3 M12 16.7 V18.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</symbol>
+<symbol id="i-layers" viewBox="0 0 24 24">
+  <path d="M12 3 L21 8 L12 13 L3 8 Z" fill="#fff" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M3 12 L12 17 L21 12 M3 16 L12 21 L21 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-table" viewBox="0 0 24 24">
+  <rect x="3" y="4" width="18" height="16" rx="1.5" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M3 9 H21 M3 14.5 H21 M9.5 4 V20" stroke="currentColor" stroke-width="1.3"/>
+</symbol>
+<symbol id="i-graph" viewBox="0 0 24 24">
+  <path d="M6 6 L17 8 L8 18 Z M17 8 L19 18 L8 18" fill="none" stroke="currentColor" stroke-width="1.4"/>
+  <circle cx="6" cy="6" r="2.6" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="17" cy="8" r="2.6" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="8" cy="18" r="2.6" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="19" cy="18" r="2.6" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+</symbol>
+<symbol id="i-doc" viewBox="0 0 24 24">
+  <path d="M6 2.5 H14.5 L19 7 V21.5 H6 Z" fill="#fff" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M14.5 2.5 V7 H19" fill="none" stroke="currentColor" stroke-width="1.4"/>
+  <path d="M9 12 H16 M9 15.5 H16 M9 19 H13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+</symbol>
+<symbol id="i-code" viewBox="0 0 24 24">
+  <rect x="2.5" y="4" width="19" height="16" rx="2" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M9 9 L6 12 L9 15 M15 9 L18 12 L15 15 M13 8.5 L11 15.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<marker id="a-grey" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#6b6a66"/></marker><marker id="a-grey-s" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#6b6a66"/></marker><marker id="a-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#2a78d6"/></marker><marker id="a-blue-s" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#2a78d6"/></marker><marker id="a-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#c4382b"/></marker><marker id="a-red-s" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#c4382b"/></marker><marker id="a-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#2e8b43"/></marker><marker id="a-green-s" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#2e8b43"/></marker><marker id="a-amber" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#c27a00"/></marker><marker id="a-amber-s" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#c27a00"/></marker><clipPath id="win"><rect x="716" y="44" width="264" height="184" rx="6"/></clipPath></defs>
+<rect width="1000" height="460" fill="#fff"/>
+<rect x="10" y="10" width="146" height="324" rx="10" fill="#f7f7f5" stroke="#dcdbd5" stroke-width="1.0"/>
+<circle cx="27" cy="29" r="9" fill="#1f2328"/>
+<text x="27" y="32.8" class="badge" text-anchor="middle">1</text>
+<text x="42" y="34.5" class="panel">Input</text>
+<use href="#i-user" x="18" y="40" width="20" height="20" style="color:#5c5b57"/>
+<text x="43" y="55" class="box-s">User</text>
+<rect x="18" y="66" width="130" height="48" rx="6" fill="#fff" stroke="#cfcec8" stroke-width="1.0"/>
+<path d="M26,66.6 L29,59.5 L35,66.6" fill="#fff" stroke="#cfcec8" stroke-width="1" stroke-linejoin="round"/>
+<text x="26" y="82" class="quote">“How do our top 80</text>
+<text x="26" y="95" class="quote">researchers</text>
+<text x="26" y="108" class="quote">collaborate?”</text>
+<rect x="18" y="121" width="130" height="18" rx="9" fill="#e8f1fb" stroke="#2a78d6" stroke-width="0.8"/>
+<use href="#i-cursor" x="24" y="123.5" width="13" height="13" style="color:#2a78d6"/>
+<text x="40" y="133.8" class="small" style="fill:#1d5fae">+ current selection</text>
+<use href="#i-db" x="61" y="176" width="44" height="44" style="color:#0f8fa8"/>
+<text x="83" y="238" class="box-s" text-anchor="middle">OpenAlex snapshot</text>
+<text x="83" y="252" class="small" text-anchor="middle">Columbia University</text>
+<text x="83" y="265" class="small" text-anchor="middle">2021–24 · 55k works</text>
+<text x="83" y="280" class="mono" text-anchor="middle">DuckDB + catalog</text>
+<text x="83" y="304" class="note" text-anchor="middle">datasets are pluggable</text>
+<rect x="166" y="10" width="530" height="324" rx="10" fill="#f7f7f5" stroke="#dcdbd5" stroke-width="1.0"/>
+<circle cx="183" cy="29" r="9" fill="#1f2328"/>
+<text x="183" y="32.8" class="badge" text-anchor="middle">2</text>
+<text x="198" y="34.5" class="panel">Multi-agent harness</text>
+<rect x="446" y="18" width="240" height="18" rx="9" fill="#e9f5ec" stroke="#2e8b43" stroke-width="0.8"/>
+<use href="#i-check" x="451" y="20.5" width="13" height="13" style="color:#2e8b43"/>
+<text x="469" y="30.8" class="small" style="fill:#23683a">no technique-specific prompts or code</text>
+<rect x="230" y="46" width="224" height="70" rx="8" fill="#f3eefb" stroke="#7c4dcc" stroke-width="1.3"/>
+<use href="#i-robot" x="240" y="55" width="26" height="26" style="color:#7c4dcc"/>
+<text x="274" y="66" class="box">Lead agent</text>
+<text x="274" y="80" class="body">plans · delegates · answers</text>
+<text x="274" y="94" class="body">every claim cites an artifact</text>
+<text x="274" y="108" class="mono">task(brief) · show_view</text>
+<path d="M262,118 L228,144" fill="none" stroke="#6b6a66" stroke-width="1.1" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M342,118 L342,144" fill="none" stroke="#6b6a66" stroke-width="1.1" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M422,118 L456,144" fill="none" stroke="#6b6a66" stroke-width="1.1" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="336" y="135" class="note" text-anchor="end">brief / report</text>
+<rect x="176" y="146" width="104" height="90" rx="8" fill="#e7f4f7" stroke="#0f8fa8" stroke-width="1.3"/>
+<use href="#i-robot" x="184" y="152" width="20" height="20" style="color:#0f8fa8"/>
+<text x="209" y="167" class="box">Data</text>
+<text x="186" y="186" class="body">catalog lookup,</text>
+<text x="186" y="199" class="body">read-only SQL</text>
+<text x="186" y="212" class="body">→ clean tables</text>
+<text x="186" y="225" class="mono">run_sql</text>
+<rect x="290" y="146" width="104" height="90" rx="8" fill="#eaf4ec" stroke="#2e8b43" stroke-width="1.3"/>
+<use href="#i-robot" x="298" y="152" width="20" height="20" style="color:#2e8b43"/>
+<text x="323" y="167" class="box">Analyst</text>
+<text x="300" y="186" class="body">Python kernel:</text>
+<text x="300" y="199" class="body">stats, graphs,</text>
+<text x="300" y="212" class="body">trees, layouts</text>
+<text x="300" y="225" class="mono">run_python</text>
+<rect x="404" y="146" width="104" height="90" rx="8" fill="#fbf3e3" stroke="#c27a00" stroke-width="1.3"/>
+<use href="#i-robot" x="412" y="152" width="20" height="20" style="color:#c27a00"/>
+<text x="437" y="167" class="box">Viz</text>
+<text x="414" y="186" class="body">picks technique,</text>
+<text x="414" y="199" class="body">finds npm libs,</text>
+<text x="414" y="212" class="mono">module.js</text>
+<text x="414" y="225" class="mono">viz.json</text>
+<rect x="176" y="248" width="332" height="40" rx="8" fill="#fff" stroke="#cfcec8" stroke-width="1.0"/>
+<use href="#i-table" x="184" y="258" width="20" height="20" style="color:#5c5b57"/>
+<use href="#i-graph" x="206" y="258" width="20" height="20" style="color:#5c5b57"/>
+<use href="#i-doc" x="228" y="258" width="20" height="20" style="color:#5c5b57"/>
+<use href="#i-code" x="250" y="258" width="20" height="20" style="color:#5c5b57"/>
+<text x="280" y="264" class="box-s">Shared artifact store</text>
+<text x="280" y="279" class="small">each with lineage and producing code</text>
+<path d="M228,238 V246" fill="none" stroke="#6b6a66" stroke-width="1" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M342,238 V246" fill="none" stroke="#6b6a66" stroke-width="1" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M456,238 V246" fill="none" stroke="#6b6a66" stroke-width="1" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M509,174 H554" fill="none" stroke="#c27a00" stroke-width="1.3" marker-end="url(#a-amber)" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="531.5" y="168" class="note" text-anchor="middle">submit</text>
+<path d="M555,208 H511" fill="none" stroke="#c4382b" stroke-width="1.3" stroke-dasharray="3 2" marker-end="url(#a-red)" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="533" y="221" class="note" text-anchor="middle" style="fill:#c4382b">revise</text>
+<use href="#i-retry" x="515" y="183" width="16" height="16" style="color:#c4382b"/>
+<text x="534" y="195.5" class="small-b" style="fill:#c4382b">×N</text>
+<rect x="556" y="130" width="130" height="182" rx="8" fill="#fcebe9" stroke="#c4382b" stroke-width="1.3"/>
+<use href="#i-shield" x="564" y="138" width="22" height="22" style="color:#c4382b"/>
+<text x="592" y="150" class="box">Verification</text>
+<text x="592" y="164" class="box">gate</text>
+<text x="564" y="184" class="note">enforced by the harness</text>
+<circle cx="569" cy="198.3" r="5" fill="#c4382b"/>
+<text x="569" y="201" class="tiny" text-anchor="middle">1</text>
+<text x="579" y="202" class="small">static checks,</text>
+<text x="579" y="215" class="small">pinned imports</text>
+<circle cx="569" cy="227.3" r="5" fill="#c4382b"/>
+<text x="569" y="230" class="tiny" text-anchor="middle">2</text>
+<text x="579" y="231" class="small">headless render</text>
+<circle cx="569" cy="243.3" r="5" fill="#c4382b"/>
+<text x="569" y="246" class="tiny" text-anchor="middle">3</text>
+<text x="579" y="247" class="small">interaction tests:</text>
+<text x="579" y="260" class="small">hover · select ·</text>
+<text x="579" y="273" class="small">highlight · params</text>
+<rect x="562" y="280" width="118" height="26" rx="5" fill="#fff" stroke="#c4382b" stroke-width="0.9"/>
+<use href="#i-robot" x="566" y="283" width="20" height="20" style="color:#c4382b"/>
+<text x="590" y="291" class="box-s">Critic agent</text>
+<text x="590" y="302" class="small">vision → verdict</text>
+<path d="M630,129 V75" fill="none" stroke="#2e8b43" stroke-width="1.4" marker-end="url(#a-green)" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="636" y="106" class="small-b" style="fill:#2e7d32">approved</text>
+<rect x="176" y="294" width="332" height="34" rx="8" fill="#fff" stroke="#cfcec8" stroke-width="1.0"/>
+<text x="184" y="315" class="small-b">Lead picks:</text>
+<rect x="254" y="297" width="82" height="28" rx="9" fill="#f3eefb" stroke="#7c4dcc" stroke-width="0.9"/>
+<text x="295" y="309" class="small-b" text-anchor="middle">parameters</text>
+<text x="295" y="320.5" class="small" text-anchor="middle">≈15 s</text>
+<rect x="340" y="297" width="82" height="28" rx="9" fill="#f3eefb" stroke="#7c4dcc" stroke-width="0.9"/>
+<text x="381" y="309" class="small-b" text-anchor="middle">highlight</text>
+<text x="381" y="320.5" class="small" text-anchor="middle">≈10 s</text>
+<rect x="426" y="297" width="82" height="28" rx="9" fill="#fbf3e3" stroke="#c27a00" stroke-width="0.9"/>
+<text x="467" y="309" class="small-b" text-anchor="middle">code edit</text>
+<text x="467" y="320.5" class="small" text-anchor="middle">≈4 min (+gate)</text>
+<rect x="706" y="10" width="284" height="324" rx="10" fill="#f7f7f5" stroke="#dcdbd5" stroke-width="1.0"/>
+<circle cx="723" cy="29" r="9" fill="#1f2328"/>
+<text x="723" y="32.8" class="badge" text-anchor="middle">3</text>
+<text x="738" y="34.5" class="panel">Interactive web app</text>
+<rect x="716" y="44" width="264" height="184" rx="6" fill="#fff" stroke="none" stroke-width="1.0"/>
+<g clip-path="url(#win)"><rect x="716" y="44" width="264" height="14" fill="#efeee9"/></g>
+<line x1="716" y1="58" x2="980" y2="58" stroke="#dcdbd5" stroke-width="1"/>
+<circle cx="725" cy="51" r="2.3" fill="#c9c8c2"/>
+<circle cx="733" cy="51" r="2.3" fill="#c9c8c2"/>
+<circle cx="741" cy="51" r="2.3" fill="#c9c8c2"/>
+<rect x="716" y="44" width="264" height="184" rx="6" fill="none" stroke="#c4c3bd" stroke-width="1.0"/>
+<line x1="782" y1="58" x2="782" y2="228" stroke="#e6e5e0" stroke-width="1"/>
+<rect x="744" y="64" width="32" height="12" rx="4" fill="#e8f1fb" stroke="none" stroke-width="1.0"/>
+<rect x="722" y="82" width="50" height="24" rx="4" fill="#f2f1ec" stroke="none" stroke-width="1.0"/>
+<path d="M727,90 H766 M727,98 H754" stroke="#c4c3bd" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="736" y="112" width="40" height="13" rx="4" fill="#e8f1fb" stroke="none" stroke-width="1.0"/>
+<circle cx="742" cy="118.5" r="2.6" fill="#2a78d6"/>
+<path d="M748,118.5 H770" stroke="#2a78d6" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/>
+<rect x="722" y="131" width="50" height="20" rx="4" fill="#f2f1ec" stroke="none" stroke-width="1.0"/>
+<path d="M727,138 H766 M727,145 H748" stroke="#c4c3bd" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="722" y="208" width="54" height="14" rx="4" fill="#fff" stroke="#d6d5cf" stroke-width="0.9"/>
+<rect x="788" y="64" width="90" height="92" rx="4" fill="#fff" stroke="#dcdbd5" stroke-width="0.9"/>
+<path d="M788,74 V68 a4,4 0 0 1 4,-4 H874 a4,4 0 0 1 4,4 V74 Z" fill="#f3f2ee"/>
+<path d="M793,69 H824" stroke="#bdbcb6" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="884" y="64" width="90" height="92" rx="4" fill="#fff" stroke="#dcdbd5" stroke-width="0.9"/>
+<path d="M884,74 V68 a4,4 0 0 1 4,-4 H970 a4,4 0 0 1 4,4 V74 Z" fill="#f3f2ee"/>
+<path d="M889,69 H920" stroke="#bdbcb6" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="806" y1="90" x2="817" y2="81" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="817" y1="81" x2="822" y2="97" stroke="#2a78d6" stroke-width="1.3" opacity="1"/>
+<line x1="822" y1="97" x2="808" y2="106" stroke="#2a78d6" stroke-width="1.3" opacity="1"/>
+<line x1="808" y1="106" x2="797" y2="98" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="797" y1="98" x2="806" y2="90" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="806" y1="90" x2="822" y2="97" stroke="#2a78d6" stroke-width="1.3" opacity="1"/>
+<line x1="852" y1="126" x2="862" y2="114" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="862" y1="114" x2="866" y2="132" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="866" y1="132" x2="850" y2="142" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="850" y1="142" x2="840" y2="131" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="840" y1="131" x2="852" y2="126" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="852" y1="126" x2="866" y2="132" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="860" y1="92" x2="869" y2="101" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="869" y1="101" x2="853" y2="104" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="853" y1="104" x2="860" y2="92" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="822" y1="97" x2="853" y2="104" stroke="#2a78d6" stroke-width="1.3" opacity="1"/>
+<line x1="822" y1="97" x2="840" y2="131" stroke="#2a78d6" stroke-width="1.3" opacity="1"/>
+<line x1="853" y1="104" x2="862" y2="114" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<line x1="808" y1="106" x2="840" y2="131" stroke="#c4c3bd" stroke-width="0.9" opacity="0.6"/>
+<circle cx="806" cy="90" r="3.4" fill="#eb6834" stroke="#fff" stroke-width="0.8" opacity="1"/>
+<circle cx="817" cy="81" r="3.4" fill="#eb6834" stroke="#fff" stroke-width="0.8" opacity="1"/>
+<circle cx="822" cy="97" r="3.4" fill="#eb6834" stroke="#fff" stroke-width="0.8" opacity="1"/>
+<circle cx="808" cy="106" r="3.4" fill="#eb6834" stroke="#fff" stroke-width="0.8" opacity="1"/>
+<circle cx="797" cy="98" r="3.4" fill="#eb6834" stroke="#fff" stroke-width="0.8" opacity="0.35"/>
+<circle cx="852" cy="126" r="3.4" fill="#1baf7a" stroke="#fff" stroke-width="0.8" opacity="0.35"/>
+<circle cx="862" cy="114" r="3.4" fill="#1baf7a" stroke="#fff" stroke-width="0.8" opacity="0.35"/>
+<circle cx="866" cy="132" r="3.4" fill="#1baf7a" stroke="#fff" stroke-width="0.8" opacity="0.35"/>
+<circle cx="850" cy="142" r="3.4" fill="#1baf7a" stroke="#fff" stroke-width="0.8" opacity="0.35"/>
+<circle cx="840" cy="131" r="3.4" fill="#1baf7a" stroke="#fff" stroke-width="0.8" opacity="1"/>
+<circle cx="860" cy="92" r="3.4" fill="#eda100" stroke="#fff" stroke-width="0.8" opacity="0.35"/>
+<circle cx="869" cy="101" r="3.4" fill="#eda100" stroke="#fff" stroke-width="0.8" opacity="0.35"/>
+<circle cx="853" cy="104" r="3.4" fill="#eda100" stroke="#fff" stroke-width="0.8" opacity="1"/>
+<circle cx="822" cy="97" r="6" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="828" y="68" width="40" height="15" rx="2" fill="#1f2328"/>
+<path d="M831,83 L826,90 L837,83 Z" fill="#1f2328"/>
+<path d="M832,73 H860 M832,78.5 H850" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+<use href="#i-cursor" x="823" y="98.5" width="12" height="12" style="color:#1f2328"/>
+<path d="M924.3,78.3 A34,34 0 0 1 961.3,122.5" fill="none" stroke="#eb6834" stroke-width="3.2" stroke-linecap="round" opacity="0.85"/>
+<path d="M960.5,124.7 A34,34 0 0 1 903.7,134.8" fill="none" stroke="#1baf7a" stroke-width="3.2" stroke-linecap="round" opacity="0.85"/>
+<path d="M902.2,132.9 A34,34 0 0 1 921.9,78.7" fill="none" stroke="#eda100" stroke-width="3.2" stroke-linecap="round" opacity="0.85"/>
+<path d="M938.9,84.7 C935.9,106.2 930.6,120.9 938.9,139.3" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M954.1,97.5 C935.9,106.2 920.5,108.9 900.4,107.0" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M957.6,107.0 C935.9,106.2 920.5,108.9 903.9,97.5" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M929.0,83.0 C935.9,106.2 920.5,108.9 900.4,117.0" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M947.6,134.2 C930.6,120.9 920.5,108.9 910.4,89.8" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M919.1,139.3 C930.6,120.9 920.5,108.9 919.1,84.7" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M957.6,117.0 C935.9,106.2 920.5,108.9 903.9,126.5" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M910.4,134.2 C930.6,120.9 920.5,108.9 900.4,117.0" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M938.9,84.7 C942.0,101.1 942.0,101.1 957.6,107.0" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M938.9,139.3 C932.0,128.7 932.0,128.7 919.1,139.3" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M900.4,117.0 C913.0,106.2 913.0,106.2 910.4,89.8" fill="none" stroke="#b9b8b2" stroke-width="0.9" opacity="0.55"/>
+<path d="M947.6,89.8 C935.9,106.2 930.6,120.9 929.0,141.0" fill="none" stroke="#2a78d6" stroke-width="1.3" opacity="1"/>
+<path d="M947.6,89.8 C935.9,106.2 930.6,120.9 954.1,126.5" fill="none" stroke="#2a78d6" stroke-width="1.3" opacity="1"/>
+<path d="M947.6,89.8 C935.9,106.2 920.5,108.9 900.4,107.0" fill="none" stroke="#2a78d6" stroke-width="1.3" opacity="1"/>
+<circle cx="929.0" cy="83.0" r="2.6" fill="#eb6834" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="938.9" cy="84.7" r="2.6" fill="#eb6834" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="947.6" cy="89.8" r="2.6" fill="#eb6834" stroke="#fff" stroke-width="0.6" opacity="1"/>
+<circle cx="954.1" cy="97.5" r="2.6" fill="#eb6834" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="957.6" cy="107.0" r="2.6" fill="#eb6834" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="957.6" cy="117.0" r="2.6" fill="#eb6834" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="954.1" cy="126.5" r="2.6" fill="#1baf7a" stroke="#fff" stroke-width="0.6" opacity="1"/>
+<circle cx="947.6" cy="134.2" r="2.6" fill="#1baf7a" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="938.9" cy="139.3" r="2.6" fill="#1baf7a" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="929.0" cy="141.0" r="2.6" fill="#1baf7a" stroke="#fff" stroke-width="0.6" opacity="1"/>
+<circle cx="919.1" cy="139.3" r="2.6" fill="#1baf7a" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="910.4" cy="134.2" r="2.6" fill="#1baf7a" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="903.9" cy="126.5" r="2.6" fill="#eda100" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="900.4" cy="117.0" r="2.6" fill="#eda100" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="900.4" cy="107.0" r="2.6" fill="#eda100" stroke="#fff" stroke-width="0.6" opacity="1"/>
+<circle cx="903.9" cy="97.5" r="2.6" fill="#eda100" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="910.4" cy="89.8" r="2.6" fill="#eda100" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="919.1" cy="84.7" r="2.6" fill="#eda100" stroke="#fff" stroke-width="0.6" opacity="0.4"/>
+<circle cx="947.6" cy="89.8" r="5.2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="833" y="167" class="note" text-anchor="middle">force layout</text>
+<text x="929" y="167" class="note" text-anchor="middle">edge bundling</text>
+<path d="M794,182 H848" stroke="#d6d5cf" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M794,182 H826" stroke="#2a78d6" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="826" cy="182" r="4" fill="#fff" stroke="#2a78d6" stroke-width="1.4"/>
+<rect x="860" y="175" width="52" height="14" rx="3" fill="#fff" stroke="#c9c8c2" stroke-width="0.9"/>
+<path d="M865,182 H890" stroke="#bdbcb6" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M899,180 L902.5,184 L906,180" fill="none" stroke="#5c5b57" stroke-width="1.2"/>
+<rect x="922" y="176" width="22" height="12" rx="6" fill="#2a78d6" stroke="none" stroke-width="1.0"/>
+<circle cx="938" cy="182" r="4.2" fill="#fff"/>
+<text x="794" y="206" class="note">controls generated from <tspan class="mono">viz.json</tspan></text>
+<text x="848" y="243" class="small" text-anchor="middle">hover → details · click → select &amp; link</text>
+<text x="848" y="256" class="small" text-anchor="middle">versions · undo · side-by-side compare</text>
+<rect x="716" y="264" width="264" height="64" rx="6" fill="#fff" stroke="#c9c8c2" stroke-width="1.0"/>
+<text x="726" y="280" class="box-s">Generic view contract</text>
+<text x="972" y="280" class="small" text-anchor="end">sandboxed iframe</text>
+<text x="726" y="295" class="mono">render(el, ctx) →</text>
+<text x="738" y="308" class="mono">update · setSelection · highlight</text>
+<text x="726" y="322" class="small">marks carry data-id → hover, select, link</text>
+<path d="M150,92 C188,92 190,81 228,81" fill="none" stroke="#2a78d6" stroke-width="1.4" marker-end="url(#a-blue)" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="198" y="108" class="note" text-anchor="middle" style="fill:#1d5fae">question</text>
+<text x="198" y="120" class="note" text-anchor="middle" style="fill:#1d5fae">+ selection</text>
+<path d="M107,198 H174" fill="none" stroke="#6b6a66" stroke-width="1.2" marker-end="url(#a-grey)" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="140" y="192" class="note" text-anchor="middle">query</text>
+<path d="M455,70 H714" fill="none" stroke="#6b6a66" stroke-width="1.3" marker-end="url(#a-grey)" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="630" cy="70" r="2.6" fill="#2e8b43"/>
+<text x="540" y="63" class="note" text-anchor="middle">answer + approved views</text>
+<path d="M760,335 V352 H342 V331" fill="none" stroke="#2a78d6" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#a-blue)" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="436" y="345" width="230" height="14" rx="3" fill="#fff" stroke="none" stroke-width="1.0"/>
+<text x="551" y="355.5" class="note" text-anchor="middle" style="fill:#1d5fae">follow-up question + current selection</text>
+<rect x="10" y="370" width="980" height="82" rx="10" fill="#f1f0ec" stroke="#dcdbd5" stroke-width="1.0"/>
+<rect x="20" y="362" width="132" height="18" rx="5" fill="#1f2328" stroke="none" stroke-width="1.0"/>
+<text x="86" y="375" class="box-s" text-anchor="middle" style="fill:#fff">Harness services</text>
+<use href="#i-layers" x="32" y="392" width="22" height="22" style="color:#4a4945"/>
+<text x="60" y="400" class="box-s">Deep Agents</text>
+<text x="60" y="414.0" class="small">on LangGraph,</text>
+<text x="60" y="426.5" class="small">isolated contexts</text>
+<use href="#i-term" x="169" y="392" width="22" height="22" style="color:#4a4945"/>
+<text x="197" y="400" class="box-s">Python kernels</text>
+<text x="197" y="414.0" class="small">one per agent,</text>
+<text x="197" y="426.5" class="small">secrets stripped</text>
+<use href="#i-db" x="306" y="392" width="22" height="22" style="color:#4a4945"/>
+<text x="334" y="400" class="box-s">DuckDB SQL</text>
+<text x="334" y="414.0" class="small">read-only,</text>
+<text x="334" y="426.5" class="small">with timeout</text>
+<use href="#i-pkg" x="443" y="392" width="22" height="22" style="color:#4a4945"/>
+<text x="471" y="400" class="box-s">npm discovery</text>
+<text x="471" y="414.0" class="small">package docs,</text>
+<text x="471" y="426.5" class="small">pinned imports</text>
+<use href="#i-log" x="580" y="392" width="22" height="22" style="color:#4a4945"/>
+<text x="608" y="400" class="box-s">Event log</text>
+<text x="608" y="414.0" class="small">live trace</text>
+<text x="608" y="426.5" class="small">and replay</text>
+<use href="#i-retry" x="717" y="392" width="22" height="22" style="color:#4a4945"/>
+<text x="745" y="400" class="box-s">Recovery</text>
+<text x="745" y="414.0" class="small">checkpoints, retry,</text>
+<text x="745" y="426.5" class="small">model escalation</text>
+<use href="#i-coin" x="854" y="392" width="22" height="22" style="color:#4a4945"/>
+<text x="882" y="400" class="box-s">Budget</text>
+<text x="882" y="414.0" class="small">spend ledger,</text>
+<text x="882" y="426.5" class="small">call limits</text>
+</svg>
