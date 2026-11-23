@@ -27,7 +27,7 @@ def main(sid: str, text: str, selection: str | None) -> None:
             if st.get("question"):
                 print("QUESTION:", st["question"])
         evs = [json.loads(line[6:]) for line in c.get(f"{API}/api/sessions/{sid}/events",
-               params={"replay": True, "speed": 1e9}).text.splitlines() if line.startswith("data: {")]
+               params={"replay": True, "speed": 1e9}).text.splitlines() if line.startswith("data: {\"ts")]
     new = evs[n0:]
     for e in new:
         p = e["payload"]

@@ -275,7 +275,10 @@ def render_viz(module_code: str, data: dict[str, Any], out_dir: Path, *, params:
                     item["id"] = t["id"]
                 else:
                     item["key"] = json.loads(t["key"]) if t["key"] else None
-                page.evaluate("(it) => window.__sciviz.highlight([it])", item)
+                items = [item] + [({"type": x["type"] or "item", "id": x["id"]} if x["id"] is not None else
+                                   {"type": x["type"] or "group", "key": json.loads(x["key"]) if x["key"] else None})
+                                  for x in targets[1:]]
+                page.evaluate("(its) => window.__sciviz.highlight(its)", items)
                 page.wait_for_timeout(350)
                 hl = out_dir / f"{tag}highlight.png"
                 root.screenshot(path=str(hl))
@@ -284,6 +287,22 @@ def render_viz(module_code: str, data: dict[str, Any], out_dir: Path, *, params:
                               "detail": f"{r * 100:.2f}% of pixels changed after highlight([{expected}])"})
                 page.evaluate("window.__sciviz.highlight([])")
                 page.wait_for_timeout(250)
+                n_err = len(page.evaluate("window.__sciviz.errors"))
+                page.evaluate("(its) => window.__sciviz.setSelection(its)", items)
+                page.wait_for_timeout(300)
+                page.evaluate("window.__sciviz.setSelection([])")
+                state_ok, state_detail = True, "module keeps no state (getState not implemented)"
+                if page.evaluate("!!(window.__sciviz.instance && window.__sciviz.instance.getState)"):
+                    try:
+                        page.evaluate("() => { const st = window.__sciviz.getState(); window.__sciviz.setState(JSON.parse(JSON.stringify(st ?? null))); }")
+                        page.wait_for_timeout(300)
+                        state_detail = "getState/setState round trip"
+                    except Exception as e:
+                        state_ok, state_detail = False, f"getState/setState failed: {e}"
+                new_err = page.evaluate("window.__sciviz.errors").__len__() - n_err
+                tests.append({"name": "multi_item_and_state", "passed": state_ok and new_err == 0,
+                              "detail": f"selection/highlight with {len(items)} items and {state_detail}: {new_err} new errors"
+                                        + (f" ({page.evaluate('window.__sciviz.errors').pop()[:200]})" if new_err else "")})
             # parameters -> update without errors and with a visible change
             for name, sch in list(props.items())[:4]:
                 alt = _alt_value(sch, params.get(name))

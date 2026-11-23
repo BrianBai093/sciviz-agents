@@ -16,7 +16,11 @@ export default function ViewsArea() {
   const rows = views.length <= 2 ? "grid-rows-1" : "grid-rows-2";
   return (
     <div className={`grid h-full gap-3 p-3 ${cols} ${rows}`}>
-      {views.slice(-4).map((v) => <ViewPanel key={v.view_id} view={v} />)}
+      {views.slice(-4).map((v) => (
+        <div key={v.view_id} className={`min-h-0 ${v.compareWith && views.length > 1 ? "col-span-2" : ""}`}>
+          <ViewPanel view={v} />
+        </div>
+      ))}
     </div>
   );
 }
@@ -60,7 +64,7 @@ function ViewPanel({ view }: { view: ViewState }) {
   const approved = versions.filter((x) => x.status === "approved" || x.status === "approved_with_issues");
 
   return (
-    <section className="flex min-h-0 flex-col overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
+    <section className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
       <header className="flex items-center gap-2 border-b border-stone-100 px-3 py-2">
         <span className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-[11px] text-stone-600">{view.view_id}</span>
         <h2 className="min-w-0 flex-1 truncate text-sm font-medium" title={view.title}>{view.title}</h2>
@@ -152,8 +156,16 @@ function ViewFrame({ view, viz, w, h, secondary, onError }: {
   const selKey = JSON.stringify(selection?.items ?? []);
   useEffect(() => { if (ready.current) post({ cmd: "setSelection", items: selection?.items ?? [] }); }, [selKey]);
 
-  const src = `/runtime/view.html?session=${sessionId}&viz=${viz}&view=${secondary ? "" : view.view_id}&w=${w}&h=${h}&fresh=1`;
-  return <iframe ref={ref} title={`${view.view_id} ${viz}`} sandbox="allow-scripts" src={src} className="absolute inset-0 h-full w-full border-0" />;
+  // Views are designed (and reviewed) at desktop sizes: narrow panels render at a minimum width and scale down.
+  const MIN_W = 720;
+  const scale = w < MIN_W ? w / MIN_W : 1;
+  const rw = Math.round(w / scale), rh = Math.round(h / scale);
+  const src = `/runtime/view.html?session=${sessionId}&viz=${viz}&view=${secondary ? "" : view.view_id}&w=${rw}&h=${rh}&fresh=1`;
+  return (
+    <iframe ref={ref} title={`${view.view_id} ${viz}`} sandbox="allow-scripts" src={src}
+      style={{ width: rw, height: rh, transform: `scale(${scale})`, transformOrigin: "0 0" }}
+      className="absolute left-0 top-0 border-0" />
+  );
 }
 
 function ParamControls({ schema, values, onChange }: {

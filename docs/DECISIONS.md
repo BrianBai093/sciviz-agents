@@ -188,6 +188,11 @@ Each record states the context, the options considered, the decision, and why. R
 | D32 | `highlight()` and `setSelection()` take items, not bare ids | Accepted (refines PLAN §4.1) |
 | D33 | The Critic knows the host renders parameter controls | Accepted |
 | D34 | Viz agent at medium reasoning effort (user decision after M1) | Accepted (supersedes part of D27) |
+| D35 | Browser views load pinned CDN URLs directly; the disk cache serves the headless gate | Accepted (narrows D21) |
+| D36 | UI state is derived from the event stream; user actions are logged as events | Accepted |
+| D37 | View iframes start from manifest defaults; the UI pushes parameters derived from events | Accepted |
+| D38 | Gate adds a multi-item selection/highlight and state round-trip test | Accepted |
+| D39 | Narrow panels render views at ≥720 px and scale down; a compared view spans the full width | Accepted |
 
 ## D26. Kernel lifetime
 - **Decision:** One persistent kernel per (session, agent).
@@ -228,3 +233,28 @@ Each record states the context, the options considered, the decision, and why. R
 - **Context:** M1 review issue 1. Questions took 6.5–11.5 min, and the Viz agent accounted for about 70% of model calls and cost at high effort.
 - **Decision:** The user chose to run Viz at medium effort from M2 on. The Critic stays at high effort, and escalation to GPT-6.2 Astra stays on as the safety net. Supersedes the Viz part of D27.
 - **Status:** Accepted (user decision, 2026-11-23).
+
+## D35. Browser views load pinned CDN URLs directly
+- **Context:** PLAN §4.2 / D21 planned a local caching proxy for every JS library load. In the browser, esm.sh modules import further root-relative paths, so routing them through a same-origin proxy would mean rewriting module bodies plus an import map.
+- **Decision:** Views in the browser load their pinned, exact-version CDN URLs directly. The disk cache is still used by the headless gate. Pinning keeps results reproducible, because pinned CDN builds are immutable.
+- **Limitation:** viewing views in the UI needs internet access for the libraries.
+- **Status:** Accepted (narrows D21).
+
+## D36. The UI state is derived from the event stream
+- **Decision:** The React store is a pure function of the session's events: messages, views, parameters, highlights, selections, artifacts, plan, costs. User actions in the UI are posted to the API and logged as events (`user` / `view` / `select`): parameter changes, version switches and selections.
+- **Why:** Replay mode is then just a re-stream of `events.jsonl` with time scaling. It reproduces both the agents' work and the user's interactions, needs no API key, and makes no LLM calls.
+- **Status:** Accepted.
+
+## D37. View iframes start from manifest defaults
+- **Decision:** `view.html?fresh=1` starts a view from its manifest defaults, and the UI pushes the parameter values derived from events once the view reports `ready`. During a replay, a view therefore shows the parameters of the moment being replayed, not the final ones.
+- **Status:** Accepted.
+
+## D38. Gate: multi-item and state round-trip interaction test
+- **Context:** A view passed the gate but failed in the UI. Highlighting several items, or restoring zoom state after a version swap, called d3 transition methods that were never imported.
+- **Decision:** A new generic test, `multi_item_and_state`. It selects and highlights up to 3 items at once and, if the module implements `getState`, does a `getState` → `setState` round trip. Any error fails the gate.
+- **Status:** Accepted.
+
+## D39. View sizing in the UI
+- **Decision:** Panels narrower than 720 px render the view at 720 px wide and scale it down with a CSS transform. The browser maps pointer events correctly, so interaction still works. A view in compare mode spans the full grid width.
+- **Why:** Generated views are designed and reviewed at desktop size (1200×800). Squeezing them into 400 px broke their layouts.
+- **Status:** Accepted.

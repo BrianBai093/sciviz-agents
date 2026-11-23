@@ -156,3 +156,63 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
   - 690 s, $1.24. V1 stays available as view1 for comparison; V3 is view2.
 - **Harness fix (D33):** the Critic now gets the declared parameters and is told the host renders their controls. The V2 rejection showed that the Viz prompt and the Critic disagreed on this.
 - **M1 self-review:** written to `docs/reviews/M1.md`. Evidence (screenshots, CLI logs) is in `docs/reviews/m1/`. All exit criteria are met; ledger total $1.62.
+
+---
+
+## 2026-11-23: M2 build (web application and interaction)
+
+**User decision after M1:** Viz reasoning effort set to medium (D34).
+
+**Backend** (`backend/sciviz/runner.py`, `backend/sciviz/api/app.py`; start with `sciviz serve`)
+- `runner.run_turn`: one shared turn loop for the CLI and the API.
+  - Selections are turned into text the Lead can act on (dataset ids, labels, the source view and its entity types).
+  - Interrupts are answered through a callback.
+  - Emits `message`, `done` and `error` events.
+- FastAPI endpoints:
+  - sessions: list, create, state;
+  - messages (agent run in a thread, one turn at a time per session) and resume for interrupts;
+  - `GET /events`: SSE, either a live tail of `events.jsonl` or an accelerated replay;
+  - artifacts: meta, data, pinned module, manifest, screenshots, versions;
+  - user view updates (params, version switch) and selection, both logged as events;
+  - `/api/entity/{id}`: details-on-demand, resolved through catalog entity patterns (D23);
+  - `/runtime/view.html`: the host page with injected config;
+  - serves the built UI from `frontend/dist`.
+- CORS `*`: views run in sandboxed, opaque-origin iframes.
+- Without `OPENAI_API_KEY`, live questions return a clear 503 while replay still works (tested on port 8001).
+- Lead tools: `show_view(..., replace_view=...)` puts a new version in place of an existing view and keeps the old one for undo. The Lead's prompt lists each view's entity types, declared parameters and current values.
+
+**Frontend** (`frontend/`: React 19, Vite 8, TypeScript 7, Tailwind 4, zustand)
+- The store is derived only from events (D36), so live mode and replay share all code.
+- Layout follows D14:
+  - chat with Markdown answers and clickable artifact citations, a selection chip above the input, and interrupt question cards;
+  - up to 4 view panels with parameter controls generated from each manifest's JSON Schema, a version switcher, undo and compare (two versions side by side);
+  - a drawer with Details (entity record plus the view's own data rows), Trace (per-agent cost summary, expandable briefs, tool calls, gate verdicts with screenshots), Artifacts (summary, code, lineage, critic reviews) and Plan (todos, decisions).
+- Views run in `sandbox="allow-scripts"` iframes and talk to the host through `postMessage` (`setParams`, `setSelection`, `highlight`, `getState`/`setState`).
+  - Selections are linked across views by dataset id.
+  - Module state is polled and restored after version swaps.
+
+**Testing notes**
+- The Claude desktop browser pane blocks iframes (`net::ERR_BLOCKED_BY_CLIENT`), so UI tests run in our own headless Chromium: `tests/ui/ui_smoke.py`.
+- Smoke test on the recorded Q2/Q3 session: both views ready with no errors. Clicking "Jason Dennis Wright" (A5057686070) in view1 selected him in both views and showed the chat chip. A parameter change in view2 re-rendered the view.
+- Fixed: effects returned the promise from `scrollIntoView` in the current Chromium, which crashed React.
+- Replay on the no-key server (`?replay=1&speed=16`) rebuilt the Q1 session (view, answer, trace) in 24 s.
+
+**Live tests of the AI modification paths** (`tests/ui/ask.py`, through the API like the UI; session `s20261123-125649`)
+
+| Path | Message | Result | Time | Cost |
+|---|---|---|---:|---:|
+| Highlight | Selection = A5057686070 in view1, "Highlight this researcher's coauthors in both views." | Lead → analyst (neighbour ids, T9) → `highlight_view` on view1 and view2 with 5 coauthors. The answer also noted that view2 was filtered to cross-field ties. | 38.5 s | $0.065 |
+| Parameters | "In view2, show all ties again, but only for the largest connected group, and hide ties with fewer than 3 shared works." | `set_view_params(view2, {tieScope: "All ties", componentScope: "Largest component", minSharedWorks: 3})`, no delegation needed | 4.7 s | $0.032 |
+| Code change | "In view1, color the researchers by their field (same assignment as view2) … add a field legend. Keep everything else the same." | Lead → viz edits the existing module → V4 approved (5/5/4/4) → `show_view(V4, replace_view=view1)`. V1 is kept in history; the Lead re-applied the coauthor highlight. | 264 s | $0.34 |
+| Interrupt | New session, "Before doing anything else, ask me which publication years…" | `ask_user` fired after 3 s; resumed with "Only 2023 and 2024." Answer: 27,560 works (13,616 + 13,944) [T1]. | 27 s | $0.03 |
+| Typed in the UI | "Set the minimum shared works filter in view2 back to 1." (Playwright typing into the chat) | Parameter path; the iframe's params updated live | 8 s | ~$0.03 |
+
+**Bug found by UI testing.** V1 (built in M1) throws `TypeError: u.interrupt is not a function` in `setState`/highlight paths: it calls d3 transition methods without importing d3-transition. The gate's interaction tests had only highlighted one item and never round-tripped state. Generic hardening (D38): the gate now also highlights and selects several items and does a `getState`/`setState` round trip. Re-checking V1 with the new tests fails exactly this, so such views will now be sent back to the Viz agent.
+
+**UI layout** (D39). Narrow panels render the view at a minimum width of 720 px and scale it down, so the layout matches what the gate reviewed. A view in compare mode spans the full width.
+
+**Tests**
+- `tests/test_gate_escalation.py`: retry → escalate → stop and clearing of the escalation flag, deterministic, no browser or LLM. 9 unit tests pass.
+- Video: `demo/record_replay.py` recorded the UI replaying session `s20261123-125649` at 16× on the no-key server, then clicked a node. Output `docs/reviews/m2/m2_replay_demo.mp4` (97 s, 4 MB). Stills are in `docs/reviews/m2/`.
+
+**Spend:** ledger total $2.09 of $50 (M2 so far ≈ $0.47).

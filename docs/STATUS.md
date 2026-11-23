@@ -1,49 +1,58 @@
 # Status (handoff snapshot)
 
-_Last updated: 2026-11-23, M1 complete and waiting for the user's check-in._
+_Last updated: 2026-11-23, M2 complete and waiting for the user's check-in._
 
 ## Where we are
-- **Phase:** M1 (data and agent core, no UI). The plan was approved by the user.
-- **Done:**
-  - repo scaffold;
-  - day-0 spike;
-  - frozen snapshot and DuckDB;
-  - catalog and `DATA.md`;
-  - harness core (events, ledger, workspace, kernels, data tools);
-  - visualization runtime (host, pinning, CDN cache, headless renderer, interaction tests);
-  - gate with Critic and escalation;
-  - agents and prompts;
-  - CLI;
-  - unit tests including the no-hardcoding lint;
-  - CI workflow.
-- **M1 result:** all three demo questions ran end to end with approved views, at a total spend of $1.62. See `docs/reviews/M1.md`.
+- **M1 (data and agent core)** and **M2 (web app and interaction)** are done. Reviews: `docs/reviews/M1.md`, `docs/reviews/M2.md`.
+- **Next: M3.**
+  1. Regenerate the demo sessions with the current gate and prompts.
+  2. Run the 4-task evaluation (plus a single-agent comparison if the budget allows).
+  3. Write the README and ARCHITECTURE.
+  4. Make the replay + TTS video.
+  5. Push to GitHub after the user's OK.
 
 ## How to run
 ```bash
 uv sync && uv run playwright install chromium
-# data (already built locally; see docs/DATA.md "Rebuild")
-uv run sciviz ask "How has Columbia's publication output in each research field changed from 2021 to 2024?"
-uv run sciviz ask "<follow-up>" --session <session id printed by the first run>
-uv run sciviz cost      # spend ledger
-uv run pytest -q        # unit tests (no LLM calls)
+(cd frontend && npm install)
+uv run sciviz serve --port 8000          # API (+ the built UI at / if frontend/dist exists)
+(cd frontend && npx vite --port 5173)     # dev UI at http://localhost:5173 (proxies /api and /runtime to :8000)
+# replay-only server without an API key (serves the built UI):
+env -u OPENAI_API_KEY uv run sciviz serve --port 8001   # http://localhost:8001/?session=<id>&replay=1&speed=8
+uv run sciviz ask "<question>" [--session <id>]           # CLI
+uv run pytest -q                                          # unit tests (no LLM calls)
+uv run python tests/ui/ui_smoke.py <session>              # headless UI smoke test (needs the dev stack)
+uv run python demo/record_replay.py <session> <out_dir> --speed 16   # record a replay video
 ```
-
-Outputs per session are in `workspaces/<session>/`: artifacts with screenshots, `events.jsonl`, `views.json`, `decisions.jsonl`. The spend ledger is `workspaces/_ledger.json`.
+The Claude desktop browser pane blocks iframes, so use a regular browser.
 
 ## What works
-- The data pipeline end to end.
-- The tools (SQL, Python, catalog), checked by smoke tests.
-- The runtime and interaction tests, checked with a fixture chart.
-- The agent graph builds.
+- Data pipeline; agents; verification gate (render checks, interaction tests including multi-item selection and state round trip, Critic, escalation).
+- Web UI:
+  - chat with grounded answers;
+  - linked views;
+  - parameter controls;
+  - versions, undo and compare;
+  - details-on-demand;
+  - trace, artifacts and plan panels;
+  - interrupt questions.
+- The AI's three modification paths: parameters, highlight, code edit.
+- Replay without an API key.
 
-## Known issues / open questions
-- See `docs/reviews/M1.md` → Known issues. The main one is latency (6.5–11.5 min per question).
-- Repo name `sciviz-agents` is still tentative (D17).
+## Known issues
+See `docs/reviews/M2.md`. The main points:
+- the legacy M1 views have bugs (fixed going forward by D33/D38);
+- new full questions have not yet been timed at medium Viz effort.
 
-## Next steps
-1. User check-in for M1, including the latency decision (review issue 1).
-2. Then M2: FastAPI with SSE, the React UI, the iframe host, selection → chat, linked views, the three modification paths, replay mode.
+## Sessions worth knowing
+
+| Session | Contents |
+|---|---|
+| `s20261123-125430` | Q1 (field trends) |
+| `s20261123-125649` | Q2 network, Q3 edge bundling, plus the M2 highlight, parameter and code-edit tests |
+| `s20261123-135456` | interrupt test |
 
 ## Environment notes
-- Secrets: `~/Desktop/fsu/.env` (`OPENALEX_API_KEY`), `OPENAI_API_KEY` in the shell environment. Never commit or print them.
+- Secrets: `~/Desktop/fsu/.env` (`OPENALEX_API_KEY`); `OPENAI_API_KEY` in the shell environment. Never commit or print them.
 - Raw snapshot: `~/Desktop/fsu/data/openalex_columbia_2026-11-23/` (frozen). Processed DB: `data/columbia.duckdb` (gitignored).
+- Ledger: `workspaces/_ledger.json` ($2.09 of $50 at the end of M2).
