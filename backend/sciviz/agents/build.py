@@ -59,6 +59,38 @@ def lead_prompt(s: Session) -> str:
                                  dataset=s.dataset.overview())
 
 
+def _strip_report(text: str) -> str:
+    """Sub-agent prompts end with a 'Report' section for the Lead; a single agent answers the user directly."""
+    i = text.find("## Report")
+    return text[:i].rstrip() if i >= 0 else text
+
+
+def single_prompt(s: Session) -> str:
+    """Single-agent mode (ablation, DECISIONS D40): the same role knowledge, merged into one prompt."""
+    lead = lead_prompt(s)
+    how = lead[lead.find("## How to work"):]
+    how = how.replace("Delegate with complete briefs", "Work through the steps yourself")
+    return "\n\n".join([
+        prompt("single"),
+        "# Working with the data\n" + _strip_report(prompt("data")).split("\n", 1)[1],
+        "# Analysis\n" + _strip_report(prompt("analyst")).split("\n", 1)[1],
+        "# Visualization\n" + _strip_report(prompt("viz")).split("\n", 1)[1],
+        "# Overall process and answer\n" + how,
+    ])
+
+
+def build_single_agent(s: Session, checkpointer=None):
+    _register_profiles()
+    backend = FilesystemBackend(root_dir=s.ws.root, virtual_mode=True)
+    tools = [*catalog_tools(s, "single"), sql_tool(s, "single"), python_tool(s, "single"),
+             *artifact_tools(s, "single"), *discovery_tools(s, "single"), *viz_tools(s, "single"), *lead_tools(s)]
+    return create_deep_agent(
+        model=make_llm("single"), tools=tools, system_prompt=single_prompt(s), subagents=[],
+        middleware=[TodoListMiddleware(), *_limits(160), EscalationMiddleware(s, "single")],
+        backend=backend, checkpointer=checkpointer if checkpointer is not None else checkpointer_for(s), name="single",
+    )
+
+
 def checkpointer_for(s: Session) -> SqliteSaver:
     return SqliteSaver(sqlite3.connect(str(s.ws.root / "checkpoints.sqlite"), check_same_thread=False))
 

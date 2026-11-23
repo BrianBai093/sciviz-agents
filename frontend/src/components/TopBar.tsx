@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api";
 import { useStore } from "../store";
+import { DIRECTOR } from "../App";
 
 type SessionInfo = { id: string; first_question: string; cost: number; views: number };
 
@@ -58,7 +59,7 @@ export default function TopBar({ drawerOpen, toggleDrawer }: { drawerOpen: boole
             <select className="rounded-md border border-stone-300 px-1 py-1 text-xs" value={speed} onChange={(e) => setSpeed(+e.target.value)}>
               {[1, 2, 4, 8, 16].map((x) => <option key={x} value={x}>{x}×</option>)}
             </select>
-            {mode === "replay" && (
+            {mode === "replay" && !DIRECTOR && (
               <button className="rounded-md bg-amber-100 px-2 py-1 text-xs text-amber-800" onClick={() => sessionId && open(sessionId)}>
                 replaying · back to live
               </button>

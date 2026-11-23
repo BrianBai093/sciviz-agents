@@ -193,6 +193,8 @@ Each record states the context, the options considered, the decision, and why. R
 | D37 | View iframes start from manifest defaults; the UI pushes parameters derived from events | Accepted |
 | D38 | Gate adds a multi-item selection/highlight and state round-trip test | Accepted |
 | D39 | Narrow panels render views at ≥720 px and scale down; a compared view spans the full width | Accepted |
+| D40 | Single-agent ablation mode with the same tools and gate | Accepted |
+| D41 | Process-safe ledger; cost events are the source of truth | Accepted |
 
 ## D26. Kernel lifetime
 - **Decision:** One persistent kernel per (session, agent).
@@ -257,4 +259,17 @@ Each record states the context, the options considered, the decision, and why. R
 ## D39. View sizing in the UI
 - **Decision:** Panels narrower than 720 px render the view at 720 px wide and scale it down with a CSS transform. The browser maps pointer events correctly, so interaction still works. A view in compare mode spans the full grid width.
 - **Why:** Generated views are designed and reviewed at desktop size (1200×800). Squeezing them into 400 px broke their layouts.
+- **Status:** Accepted.
+
+## D40. Single-agent ablation mode
+- **Decision:** `build_single_agent` is one Deep Agent with all of the multi-agent system's tools, the same verification gate, and a prompt assembled from the same role prompts. It runs at medium effort. Only the architecture differs: no delegation, no context isolation, no Lead/worker split.
+- **Why:** To answer "why multi-agent?" with measurements (D13).
+- **Status:** Accepted.
+
+## D41. Process-safe spend ledger; events are the source of truth
+- **Context:** Two processes running in parallel corrupted `_ledger.json` through a shared temp file name (see DEVLOG M3).
+- **Decision:**
+  - An exclusive `fcntl` file lock around every read-modify-write, with unique temp files and an atomic replace.
+  - Each model call's `cost` event is written to the session's `events.jsonl` before the ledger is updated, and a damaged ledger is rebuilt from those events.
+  - Ledger failures can no longer break an agent run.
 - **Status:** Accepted.

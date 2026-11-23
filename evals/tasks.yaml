@@ -1,0 +1,14 @@
+# Evaluation tasks (DECISIONS D13). Two are open-ended (the agents choose the technique); two name a technique
+# that is not the project's demo default, to test discovery of algorithms/libraries.
+- id: t1_trend
+  kind: open-ended statistical chart
+  question: "How has Columbia's yearly publication output changed across its largest research fields from 2021 to 2024?"
+- id: t2_network
+  kind: named technique (algorithmic network layout)
+  question: "Show the collaboration network among Columbia's 80 most prolific researchers in 2021-2024 as a force-directed node-link diagram."
+- id: t3_bundling
+  kind: named technique (advanced network layout)
+  question: "Show the collaboration network among Columbia's 80 most prolific researchers in 2021-2024 with hierarchical edge bundling, grouping the researchers by field and subfield so that cross-field collaborations stand out."
+- id: t4_flows
+  kind: named technique, not used anywhere else in the project
+  question: "How do citations flow between research fields within Columbia's own papers (Columbia papers citing other Columbia papers)? Show the flows as a Sankey diagram."

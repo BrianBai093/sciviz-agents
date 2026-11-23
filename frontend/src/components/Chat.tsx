@@ -3,6 +3,7 @@ import DOMPurify from "dompurify";
 import { marked } from "marked";
 import { api } from "../api";
 import { useStore, type Msg, type Selection } from "../store";
+import { DIRECTOR } from "../App";
 
 const EXAMPLES = [
   "How has Columbia's publication output in each research field changed from 2021 to 2024?",
@@ -63,6 +64,7 @@ export default function Chat() {
   const send = async (t?: string) => {
     const body = (t ?? text).trim();
     if (!body || !sessionId) return;
+    if (DIRECTOR) { setText(""); return; }  // recording a replay: typing is only shown, never sent
     setErr("");
     try {
       await api.post(`/api/sessions/${sessionId}/messages`, { text: body, selection });
@@ -116,9 +118,9 @@ export default function Chat() {
           <textarea
             className="min-h-[44px] flex-1 resize-none rounded-md border border-stone-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none"
             rows={2}
-            placeholder={mode === "replay" ? "Replaying a recorded session" : selection ? "Ask about the selection…" : "Ask a question…"}
+            placeholder={mode === "replay" && !DIRECTOR ? "Replaying a recorded session" : selection ? "Ask about the selection…" : "Ask a question…"}
             value={text}
-            disabled={busy || mode === "replay"}
+            disabled={(busy || mode === "replay") && !DIRECTOR}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
           />

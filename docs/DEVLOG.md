@@ -216,3 +216,30 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
 - Video: `demo/record_replay.py` recorded the UI replaying session `s20261123-125649` at 16× on the no-key server, then clicked a node. Output `docs/reviews/m2/m2_replay_demo.mp4` (97 s, 4 MB). Stills are in `docs/reviews/m2/`.
 
 **Spend:** ledger total $2.09 of $50 (M2 so far ≈ $0.47).
+
+---
+
+## 2026-11-23: M3 (evaluation, documentation, delivery)
+
+**Single-agent mode (D40)** for the ablation: `build_single_agent`.
+- Same tools (catalog, SQL, Python, artifacts, discovery, viz, view tools) and the same verification gate. No sub-agents.
+- Its prompt is assembled from the same role prompts (data, analyst, viz, lead process), with the sub-agent report formats removed.
+- Reasoning effort is medium, the same as the multi-agent workers.
+
+**Evaluation runner**
+- `evals/tasks.yaml` has 4 tasks:
+  - t1: open-ended trend;
+  - t2: force-directed network;
+  - t3: hierarchical edge bundling (standalone);
+  - t4: citation flows between fields as a Sankey diagram, a technique used nowhere else in the project.
+- `evals/run_eval.py --mode multi|single` runs the tasks in parallel threads and records: success, gate rounds, escalation, time, cost, model calls per agent, critic scores, libraries, screenshot.
+
+**Demo session script.** `demo/make_demo_session.py` runs 5 turns: network → edge-bundling follow-up → (select the most prolific researcher) highlight coauthors → show only cross-field ties → recolour the first view by field.
+
+**Incident: corrupted spend ledger (D41).** The eval and the demo script ran in parallel as separate processes and both wrote `_ledger.json` through the same temp file name. The file was corrupted (`JSONDecodeError: Extra data`), and the demo script crashed on its first read. The eval kept running, but its cost callback failed on every call, so no cost events were written.
+- Both runs were stopped and their workspaces renamed to `_aborted-*` (hidden in the UI, still counted).
+- Fix: an exclusive `fcntl` lock around every read-modify-write, unique temp files with an atomic replace, automatic rebuild from the per-call `cost` events when the file is damaged, and the cost event emitted before the ledger update.
+- New tests `tests/test_ledger.py`: 4 processes × 25 writes, and rebuild from events. 11 unit tests pass.
+- Ledger rebuilt from events: $2.16.
+- **Untracked spend:** the aborted eval ran about 10 minutes with failing callbacks. Estimated $1–2 is not in the ledger.
+- The eval and the demo session were restarted.

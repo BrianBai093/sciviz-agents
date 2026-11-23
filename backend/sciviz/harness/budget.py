@@ -5,9 +5,12 @@ handler captures usage from every chat-model call, including calls made inside s
 """
 from __future__ import annotations
 
+import fcntl
 import json
+import os
 import threading
 import time
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 from uuid import UUID
@@ -33,15 +36,73 @@ def cost_of(model: str, usage: dict) -> float:
 
 
 class SpendLedger:
+    """Totals of all LLM spend. Safe across threads *and* processes (an exclusive file lock around every
+    read-modify-write; unique temp files + atomic replace). The per-call `cost` events in each session's
+    events.jsonl are the source of truth: a damaged ledger is rebuilt from them (DECISIONS D41)."""
+
+    EMPTY = {"total_usd": 0.0, "calls": 0, "by_model": {}, "by_session": {}}
+
     def __init__(self, path: Path | None = None):
         self.path = path or settings.workspaces_dir / "_ledger.json"
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self._lock = threading.Lock()
+        self.lock_path = self.path.with_suffix(".lock")
+        self._tlock = threading.Lock()
         if not self.path.exists():
-            self.path.write_text(json.dumps({"total_usd": 0.0, "calls": 0, "by_model": {}, "by_session": {}}))
+            with self._locked():
+                if not self.path.exists():
+                    self._write(self.rebuild_from_events())
+
+    @contextmanager
+    def _locked(self):
+        with self._tlock, open(self.lock_path, "a") as fd:
+            fcntl.flock(fd, fcntl.LOCK_EX)
+            try:
+                yield
+            finally:
+                fcntl.flock(fd, fcntl.LOCK_UN)
+
+    def _write(self, d: dict) -> None:
+        tmp = self.path.with_name(f"{self.path.name}.{os.getpid()}.{threading.get_ident()}.tmp")
+        tmp.write_text(json.dumps(d, indent=2))
+        os.replace(tmp, self.path)
 
     def _load(self) -> dict:
-        return json.loads(self.path.read_text())
+        try:
+            return json.loads(self.path.read_text())
+        except (json.JSONDecodeError, FileNotFoundError):
+            with self._locked():
+                d = self.rebuild_from_events()
+                self._write(d)
+                return d
+
+    def rebuild_from_events(self) -> dict:
+        d = json.loads(json.dumps(self.EMPTY))
+        for ev_file in self.path.parent.glob("*/events.jsonl"):
+            for line in ev_file.read_text(encoding="utf8").splitlines():
+                try:
+                    e = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if e.get("kind") != "cost":
+                    continue
+                p = e["payload"]
+                self._add(d, e["session"], p.get("model", "unknown"), p.get("usd", 0.0), p.get("input_tokens", 0),
+                          p.get("cached_tokens", 0) or 0, p.get("output_tokens", 0))
+        return d
+
+    @staticmethod
+    def _add(d: dict, session: str, model: str, usd: float, inp: int, cached: int, out: int) -> None:
+        d["total_usd"] = round(d["total_usd"] + usd, 6)
+        d["calls"] += 1
+        m = d["by_model"].setdefault(model, {"usd": 0.0, "input": 0, "cached": 0, "output": 0, "calls": 0})
+        m["usd"] = round(m["usd"] + usd, 6)
+        m["input"] += inp
+        m["cached"] += cached
+        m["output"] += out
+        m["calls"] += 1
+        s = d["by_session"].setdefault(session, {"usd": 0.0, "calls": 0})
+        s["usd"] = round(s["usd"] + usd, 6)
+        s["calls"] += 1
 
     @property
     def total(self) -> float:
@@ -53,24 +114,13 @@ class SpendLedger:
                 f"LLM budget exhausted: ${self.total:.2f} spent of ${settings.budget_usd:.2f}. Ask the user before continuing."
             )
 
-    def record(self, session: str, agent: str, model: str, usage: dict) -> float:
-        usd = cost_of(model, usage)
-        with self._lock:
+    def record(self, session: str, agent: str, model: str, usage: dict, usd: float | None = None) -> float:
+        usd = cost_of(model, usage) if usd is None else usd
+        with self._locked():
             d = self._load()
-            d["total_usd"] = round(d["total_usd"] + usd, 6)
-            d["calls"] += 1
-            m = d["by_model"].setdefault(model, {"usd": 0.0, "input": 0, "cached": 0, "output": 0, "calls": 0})
-            m["usd"] = round(m["usd"] + usd, 6)
-            m["input"] += usage.get("input_tokens", 0)
-            m["cached"] += (usage.get("input_token_details") or {}).get("cache_read", 0) or 0
-            m["output"] += usage.get("output_tokens", 0)
-            m["calls"] += 1
-            s = d["by_session"].setdefault(session, {"usd": 0.0, "calls": 0})
-            s["usd"] = round(s["usd"] + usd, 6)
-            s["calls"] += 1
-            tmp = self.path.with_suffix(".tmp")
-            tmp.write_text(json.dumps(d, indent=2))
-            tmp.replace(self.path)
+            self._add(d, session, model, usd, usage.get("input_tokens", 0),
+                      (usage.get("input_token_details") or {}).get("cache_read", 0) or 0, usage.get("output_tokens", 0))
+            self._write(d)
         return usd
 
     def session_total(self, session: str) -> float:
@@ -101,9 +151,13 @@ class UsageCallback(BaseCallbackHandler):
                     usage = dict(msg.usage_metadata)
         if not usage:
             return
-        usd = self.ledger.record(self.session_id, agent, model, usage)
+        usd = cost_of(model, usage)
         if self.events is not None:
-            self.events.emit(agent, "cost", model=model, usd=round(usd, 5), seconds=round(time.time() - t0, 2),
+            self.events.emit(agent, "cost", model=model, usd=round(usd, 6), seconds=round(time.time() - t0, 2),
                              input_tokens=usage.get("input_tokens", 0), output_tokens=usage.get("output_tokens", 0),
-                             cached_tokens=(usage.get("input_token_details") or {}).get("cache_read", 0),
-                             ledger_total=round(self.ledger.total, 4))
+                             cached_tokens=(usage.get("input_token_details") or {}).get("cache_read", 0))
+        try:
+            self.ledger.record(self.session_id, agent, model, usage, usd)
+        except Exception as e:  # spend tracking must never break an agent run; the event above is authoritative
+            if self.events is not None:
+                self.events.emit("system", "error", message=f"ledger update failed: {e}")

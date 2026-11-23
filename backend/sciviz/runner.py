@@ -12,7 +12,7 @@ from collections.abc import Callable
 
 from langgraph.types import Command
 
-from .agents.build import build_multi_agent
+from .agents.build import build_multi_agent, build_single_agent
 from .agents.models import TraceCallback
 from .session import Session
 
@@ -41,13 +41,14 @@ def format_selection(s: Session, selection: dict | None) -> str:
             + "; ".join(items) + more + "]")
 
 
-def run_turn(s: Session, text: str, selection: dict | None = None, answer_fn: AnswerFn | None = None) -> str:
+def run_turn(s: Session, text: str, selection: dict | None = None, answer_fn: AnswerFn | None = None,
+             mode: str = "multi") -> str:
     t0 = time.time()
     cost0 = s.ledger.session_total(s.id)
     s.user_question = text
     s.events.emit("user", "message", text=text, selection=selection)
     try:
-        agent = build_multi_agent(s)
+        agent = build_single_agent(s) if mode == "single" else build_multi_agent(s)
         cfg = {"configurable": {"thread_id": s.id}, "callbacks": [s.usage_callback, TraceCallback(s)],
                "recursion_limit": 300}
         inp = {"messages": [{"role": "user", "content": text + format_selection(s, selection)}]}
