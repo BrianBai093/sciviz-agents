@@ -49,7 +49,9 @@ Interaction rules:
 - Items are objects like `{type, id, label}` or `{type, key, label}`.
 - Give hover feedback (a tooltip or emphasis) showing the key values of the item.
 - Declare 1-4 meaningful parameters (filters, encodings, layout settings) in viz.json so users and the AI can
-  adjust the view without new code; `update(params)` must apply them.
+  adjust the view without new code; `update(params)` must apply them. The host application renders the controls
+  for declared parameters, so do not build duplicate widgets for them inside the view (in-view interactions that
+  are not parameters, such as zooming, panning or dragging, are fine).
 - Use `ctx.theme` for fonts and colors. Include the legends, axes and labels needed to read the view. Everything
   must fit inside width x height.
 

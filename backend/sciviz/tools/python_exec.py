@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import os
 import queue
+import subprocess
 import re
 import threading
 
@@ -86,7 +87,7 @@ class KernelPool:
         km = KernelManager(kernel_name="python3")
         km.start_kernel(cwd=self.workspace_root, env=clean_env({
             "SCIVIZ_WORKSPACE": self.workspace_root, "SCIVIZ_DB": self.db_path, "SCIVIZ_AGENT": agent,
-        }))
+        }), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)  # kernel chatter (e.g. transport warnings) is noise
         kc = km.client()
         kc.start_channels()
         kc.wait_for_ready(timeout=60)

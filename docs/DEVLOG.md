@@ -132,3 +132,21 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
 - `tools/lead_tools.py`: show/params/highlight views, `ask_user`.
 - `agents/build.py`: Deep Agents assembly with a harness profile that removes `execute` and the generic sub-agent (D31).
 - `cli.py`: `sciviz ask`, `sciviz cost`.
+
+**Demo runs (CLI)**
+
+| Question | Session | Result | Time | Cost |
+|---|---|---|---:|---:|
+| Q1 "How has Columbia's publication output in each research field changed from 2021 to 2024?" | `s20261123-125430` | V1 approved in one gate round | 387 s | $0.37 |
+| Q2 "Show the collaboration network among Columbia's 80 most prolific researchers in 2021-2024 as a force-directed node-link diagram." | `s20261123-125649` | V1 approved in one gate round | 464 s | $0.47 |
+
+- **Q1 flow:** lead (decisions) → data (T1 field × year counts, T2 totals, T3 reconciliation checks) → viz (several `render_preview` rounds) → gate.
+  - Critic: 5/5/4/4. The view is a diverging bar chart of the 2024−2021 change with the yearly counts alongside.
+  - Parameters: measure, domain, order. All interaction tests pass.
+  - The answer cites [T1, T2, T3, V1].
+  - Finding: total −1.6%; CS +178; Earth & Planetary −211.
+- **Q2 flow:** lead → data (author ranking, work-author incidence) → analyst (G1 graph: 80 nodes, 208 ties, components 57 / 8 / 15 isolates) → viz → gate.
+  - Critic: 5/5/4/4. The view is a force-directed network with components separated, top authors labelled, a legend, and filters.
+  - The answer cites G1 and T1–T6.
+- **Prompt fix (generic):** the Viz prompt now says the host renders controls for declared parameters, so modules should not duplicate them inside the view. Q1 had built in-view widgets.
+- Kernel process output (a transport warning) is now discarded, so it no longer clutters agent output.
