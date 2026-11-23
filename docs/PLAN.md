@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Draft, waiting for the user's approval |
+| Status | Approved and built (M1–M3 complete) |
 | Last updated | 2026-11-23 |
 | Related docs | [DECISIONS.md](DECISIONS.md) (why each choice was made), [DEVLOG.md](DEVLOG.md) (what was done, step by step), [STATUS.md](STATUS.md) (current state, for handoff) |
 
