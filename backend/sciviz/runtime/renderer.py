@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
+import numpy as np
 from PIL import Image, ImageChops, ImageStat
 from playwright.sync_api import sync_playwright
 
@@ -133,7 +134,7 @@ def _diff_ratio(a: Path, b: Path) -> float:
     if ia.size != ib.size:
         return 1.0
     d = ImageChops.difference(ia, ib).point(lambda v: 255 if v > 16 else 0)
-    return sum(d.histogram()[255:]) / (ia.size[0] * ia.size[1])
+    return float(np.count_nonzero(np.asarray(d))) / (ia.size[0] * ia.size[1])
 
 
 def _is_blank(p: Path) -> bool:
