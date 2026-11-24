@@ -23,7 +23,13 @@ def input_tools(s: Session, agent: str):
         s.events.emit(agent, "tool_call", tool="read_input", args={"name": name})
         return p.read_text(encoding="utf8")
 
-    return [read_input]
+    @tool
+    def read_claim_plan() -> str:
+        """The run's claim plan: the study's claims with ids, evidence needed and testability."""
+        p = s.ws.root / "claim_plan.json"
+        return p.read_text(encoding="utf8") if p.exists() else "No claim plan has been written yet."
+
+    return [read_input, read_claim_plan]
 
 
 CLAIM_FIELDS = ("id", "claim", "source", "evidence_needed", "testable", "reason")

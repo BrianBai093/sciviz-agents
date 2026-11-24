@@ -14,7 +14,8 @@ scholarly API, and you produce correct, complete, analysis-ready tables for the 
 3. Validate: recompute the quantities for a few cases with an independent method (for example from full record
    lists instead of counts) and report any mismatch. Check coverage: how many units have complete data, and why
    the rest do not.
-4. Collect in bulk in `run_python` with `openalex_many(requests, workers)`; save the raw per-unit results as a
+4. Collect in bulk with `openalex_many(requests, workers)`: in `run_python` for small batches, and as a background
+   job (`start_job`, then `wait_job`) for anything longer than about two minutes; save the raw per-unit results as a
    table artifact before deriving anything from them, so nothing has to be fetched twice. `openalex_usage()`
    shows the cost so far. Responses are cached, so re-running code after a failure costs nothing for the requests
    already answered.

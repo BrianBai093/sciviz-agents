@@ -21,7 +21,8 @@ from .session import Session
 
 app = typer.Typer(add_completion=False, help="sciviz: multi-agent analysis of scholarly data with interactive views")
 console = Console()
-COLORS = {"lead": "magenta", "data": "cyan", "analyst": "green", "viz": "yellow", "critic": "red", "gate": "red"}
+COLORS = {"lead": "magenta", "data": "cyan", "analyst": "green", "viz": "yellow", "critic": "red", "gate": "red",
+          "writer": "blue"}
 
 
 def _first_line(text: str, n: int = 140) -> str:
@@ -59,6 +60,12 @@ def _printer(ev: dict) -> None:
         console.print(f"  [{c}]{a} claim plan[/]")
         for line in p["claim_plan"]:
             console.print(f"    [dim]{_first_line(line, 160)}[/]")
+    elif k == "job":
+        extra = f"exit {p.get('returncode')} after {p.get('seconds')}s, created {p.get('created')}" \
+            if p.get("action") == "end" else p.get("name", "")
+        console.print(f"  [{c}]{a} job {p.get('action')}[/] {p.get('job')} {extra}")
+    elif k == "report":
+        console.print(f"  [bold blue]report {p.get('status')}[/] {p.get('pdf')}")
     elif k == "external_usage":
         console.print(f"  [dim]external API: {p.get('requests')} requests, {p.get('cache_hits')} cache hits, "
                       f"${p.get('usd', 0):.4f}[/]")
@@ -100,6 +107,8 @@ def reproduce(
     constraints: Path = typer.Option(None, exists=True, dir_okay=False,
                                      help="run constraints file (e.g. a pilot); default: a full reproduction"),
     external_budget: float = typer.Option(None, help="external API budget for this session in USD"),
+    extra_inputs: list[Path] = typer.Option(None, "--input", exists=True, dir_okay=False,
+                                            help="additional input file for the agents (repeatable)"),
     session: str = typer.Option(None, help="session id (default: a new one)"),
     quiet: bool = typer.Option(False, help="do not print agent events"),
 ):
@@ -113,6 +122,8 @@ def reproduce(
     limits = constraints.read_text(encoding="utf8").strip() if constraints else "None: a full reproduction."
     if constraints:
         shutil.copy(constraints, inputs / "run_constraints.md")
+    for f in extra_inputs or []:
+        shutil.copy(f, inputs / f.name)
     message = (f"RESEARCH QUESTION: {question}\n\n"
                f"RUN CONSTRAINTS (set by the user; they override defaults):\n{limits}\n\n"
                f"EXTERNAL API BUDGET FOR THIS RUN: ${s.openalex.usage['budget_usd']:.2f}\n\n"
@@ -130,6 +141,19 @@ def reproduce(
                       f"(report-mode ledger ${s.ledger.total:.2f} of ${s.ledger.budget_usd:.0f}); "
                       f"{s.openalex.usage_text()}[/]")
         s.close()
+
+
+@app.command("export-run")
+def export_run_cmd(session: str = typer.Option(..., help="report-mode session id"),
+                   out: Path = typer.Option(..., help="output folder, e.g. reproductions/wu2019")):
+    """Export a finished report-mode run: report, figures, data, frozen API responses, replayable scripts, trace."""
+    from .config import settings
+    from .harness.export import export_run
+    ws = settings.workspaces_dir / "reproduce" / session
+    if not ws.exists():
+        raise typer.BadParameter(f"no report-mode session {session} under {ws.parent}")
+    summary = export_run(ws, out, settings.openalex_cache)
+    console.print_json(json.dumps(summary))
 
 
 @app.command()

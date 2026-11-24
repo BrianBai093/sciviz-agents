@@ -14,6 +14,7 @@ This module is imported both by the harness and inside the Python kernels (prelu
 """
 from __future__ import annotations
 
+import fcntl
 import json
 import re
 import threading
@@ -23,7 +24,7 @@ from typing import Any
 
 import pandas as pd
 
-KINDS = ("table", "graph", "tree", "json", "finding", "viz")
+KINDS = ("table", "graph", "tree", "json", "finding", "viz", "figure")
 _lock = threading.Lock()
 _views_lock = threading.RLock()
 
@@ -45,12 +46,17 @@ class Workspace:
 
     # ---- ids -------------------------------------------------------------------------------
     def _next_id(self, prefix: str) -> str:
-        with _lock:
-            counter = self.root / ".counter.json"
-            d = json.loads(counter.read_text()) if counter.exists() else {}
-            d[prefix] = d.get(prefix, 0) + 1
-            counter.write_text(json.dumps(d))
-            return f"{prefix}{d[prefix]}"
+        """Thread- and process-safe: kernels and background jobs are separate processes."""
+        with _lock, open(self.root / ".counter.lock", "a") as fd:
+            fcntl.flock(fd, fcntl.LOCK_EX)
+            try:
+                counter = self.root / ".counter.json"
+                d = json.loads(counter.read_text()) if counter.exists() else {}
+                d[prefix] = d.get(prefix, 0) + 1
+                counter.write_text(json.dumps(d))
+                return f"{prefix}{d[prefix]}"
+            finally:
+                fcntl.flock(fd, fcntl.LOCK_UN)
 
     def artifact_dir(self, aid: str) -> Path:
         return self.root / "artifacts" / aid
@@ -107,6 +113,21 @@ class Workspace:
                 "reviews": [], "summary": f"visualization module ({len(module_code)} chars) bound to {inputs}"}
         return self._write_meta(aid, meta)
 
+    def register_figure(self, slug: str, title: str, caption: str, *, producer: str, inputs: list[str],
+                        claims: list[str], pdf: Path, png: Path, parent: str | None) -> dict:
+        """A static figure (report mode): copies of the submitted PDF and PNG plus its review history."""
+        aid = self._next_id("P")
+        d = self.artifact_dir(aid)
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "figure.pdf").write_bytes(Path(pdf).read_bytes())
+        (d / "figure.png").write_bytes(Path(png).read_bytes())
+        version = self.get(parent).get("version", 1) + 1 if parent else 1
+        meta = {"id": aid, "kind": "figure", "title": title, "description": caption, "producer": producer,
+                "inputs": inputs, "code": None, "created_at": _now(), "file": "figure.png", "slug": slug,
+                "claims": claims, "parent": parent, "version": version, "status": "draft", "reviews": [],
+                "summary": f"figure '{title}' (version {version}) for claims {claims}, from {inputs}"}
+        return self._write_meta(aid, meta)
+
     def update_meta(self, aid: str, **changes) -> dict:
         meta = self.get(aid)
         meta.update(changes)
@@ -126,6 +147,8 @@ class Workspace:
             return pd.read_parquet(f)
         if meta["kind"] == "viz":
             return f.read_text()
+        if meta["kind"] == "figure":
+            return str(f)
         return json.loads(f.read_text())
 
     def data_for_browser(self, aid: str) -> Any:
@@ -145,7 +168,7 @@ class Workspace:
     def index_text(self) -> str:
         rows = []
         for m in self.list():
-            status = f" [{m['status']}]" if m["kind"] == "viz" else ""
+            status = f" [{m['status']}]" if m["kind"] in ("viz", "figure") else ""
             lineage = f" <- {', '.join(m['inputs'])}" if m.get("inputs") else ""
             short = m["summary"] if isinstance(m["summary"], str) else m["summary"].get("one_line", "")
             rows.append(f"{m['id']} ({m['kind']}{status}) {m['title']}: {short}{lineage}")

@@ -93,9 +93,11 @@ class RateLimiter:
 class OpenAlexService:
     def __init__(self, key: str, cache_path: Path, budget_usd: float, rate_per_s: float = 10.0,
                  daily_reserve_usd: float = 0.02, usage_path: Path | None = None, events=None,
-                 transport: httpx.BaseTransport | None = None):
-        if not key:
+                 transport: httpx.BaseTransport | None = None, offline: bool = False):
+        """`offline=True`: serve only cached responses (replay of a finished run); a miss is an error."""
+        if not key and not offline:
             raise RuntimeError("OPENALEX_API_KEY is not set; external data access is unavailable.")
+        self.offline = offline
         self._key = key
         self.cache = ResponseCache(cache_path)
         self.limiter = RateLimiter(rate_per_s)
@@ -106,7 +108,9 @@ class OpenAlexService:
                                   headers={"User-Agent": "sciviz-agents (research reproduction)"})
         self._lock = threading.Lock()
         self.usage = {"requests": 0, "cache_hits": 0, "errors": 0, "usd": 0.0, "budget_usd": budget_usd,
-                      "daily_remaining_usd": None, "daily_limit_usd": None, "started_at": time.time()}
+                      "daily_remaining_usd": None, "daily_limit_usd": None, "prepaid_remaining_usd": None,
+                      "started_at": time.time()}
+        self.served_keys: set[str] = set()  # cache keys this session used (for exporting a frozen subset)
         self._proxy: OpenAlexProxy | None = None
 
     # ---- public ---------------------------------------------------------------------------
@@ -120,7 +124,10 @@ class OpenAlexService:
         if cached is not None:
             with self._lock:
                 self.usage["cache_hits"] += 1
+                self.served_keys.add(key)
             return cached
+        if self.offline:
+            raise OpenAlexError(404, f"not in the frozen response cache: {key[:200]}")
         self._check_budget()
         delay = 1.0
         for _ in range(7):
@@ -135,8 +142,8 @@ class OpenAlexService:
             self._account(r)
             if r.status_code == 429 or r.status_code >= 500:
                 last = f"HTTP {r.status_code}: {self._scrub(r.text[:300])}"
-                if r.status_code == 429 and self._daily_exhausted():
-                    raise ExternalBudgetExceeded("The API key's daily budget is used up; it resets at midnight UTC.")
+                if r.status_code == 429 and self._key_exhausted():
+                    raise ExternalBudgetExceeded("The API key's daily budget and prepaid credit are used up.")
                 retry_after = float(r.headers.get("retry-after", 0) or 0)
                 time.sleep(max(delay, retry_after))
                 delay = min(delay * 2, 60)
@@ -147,6 +154,8 @@ class OpenAlexService:
                 raise OpenAlexError(r.status_code, self._scrub(r.text[:600]))
             data = r.json()
             self.cache.put(key, data)
+            with self._lock:
+                self.served_keys.add(key)
             return data
         with self._lock:
             self.usage["errors"] += 1
@@ -161,7 +170,8 @@ class OpenAlexService:
 
     def usage_text(self) -> str:
         u = self.usage_snapshot()
-        daily = "unknown" if u["daily_remaining_usd"] is None else f"${u['daily_remaining_usd']:.4f}"
+        daily = "unknown" if u["daily_remaining_usd"] is None else (
+            f"${u['daily_remaining_usd']:.4f} daily + ${u['prepaid_remaining_usd'] or 0:.4f} prepaid")
         return (f"[external API this session: {u['requests']} paid-path requests, {u['cache_hits']} cache hits, "
                 f"${u['usd']:.4f} of ${u['budget_usd']:.2f} session budget; key's remaining daily budget {daily}]")
 
@@ -175,12 +185,16 @@ class OpenAlexService:
             self._proxy.stop()
             self._proxy = None
         self._save_usage()
+        if self.usage_path is not None:  # which cached responses this run used, for exporting a frozen subset
+            keys_file = self.usage_path.with_name("external_keys.json")
+            old = set(json.loads(keys_file.read_text())) if keys_file.exists() else set()
+            keys_file.write_text(json.dumps(sorted(old | self.served_keys)))
         self._http.close()
         self.cache.close()
 
     # ---- internals ------------------------------------------------------------------------
     def _scrub(self, text: str) -> str:
-        return text.replace(self._key, "***")
+        return text.replace(self._key, "***") if self._key else text
 
     def _check_budget(self) -> None:
         with self._lock:
@@ -189,13 +203,14 @@ class OpenAlexService:
                 raise ExternalBudgetExceeded(
                     f"External API session budget reached (${u['usd']:.4f} of ${u['budget_usd']:.2f}). "
                     "Cached requests still work; ask for a larger budget to fetch more.")
-            if u["daily_remaining_usd"] is not None and u["daily_remaining_usd"] <= self.daily_reserve_usd:
-                raise ExternalBudgetExceeded("The API key's daily budget is nearly used up; it resets at midnight UTC.")
+        if self._key_exhausted():
+            raise ExternalBudgetExceeded("The API key's daily budget and prepaid credit are nearly used up.")
 
-    def _daily_exhausted(self) -> bool:
+    def _key_exhausted(self) -> bool:
+        """Daily allowance plus prepaid credit, as reported by the API in its last response."""
         with self._lock:
-            rem = self.usage["daily_remaining_usd"]
-        return rem is not None and rem <= self.daily_reserve_usd
+            daily, prepaid = self.usage["daily_remaining_usd"], self.usage["prepaid_remaining_usd"]
+        return daily is not None and daily + (prepaid or 0.0) <= self.daily_reserve_usd
 
     def _account(self, r: httpx.Response) -> None:
         h = r.headers
@@ -207,6 +222,8 @@ class OpenAlexService:
                 self.usage["daily_remaining_usd"] = float(h["x-ratelimit-remaining-usd"])
             if h.get("x-ratelimit-limit-usd") is not None:
                 self.usage["daily_limit_usd"] = float(h["x-ratelimit-limit-usd"])
+            if h.get("x-ratelimit-prepaid-remaining-usd") is not None:
+                self.usage["prepaid_remaining_usd"] = float(h["x-ratelimit-prepaid-remaining-usd"])
             n = self.usage["requests"]
         if n % 200 == 0:
             self._save_usage()
@@ -262,3 +279,25 @@ class OpenAlexProxy:
     def stop(self) -> None:
         self._server.shutdown()
         self._server.server_close()
+
+
+def export_cache_subset(src: Path, dst: Path, keys: set[str]) -> int:
+    """Copy the cached responses for `keys` into a new SQLite file (a frozen, shareable subset)."""
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    if dst.exists():
+        dst.unlink()
+    out = sqlite3.connect(str(dst))
+    out.execute("CREATE TABLE responses (key TEXT PRIMARY KEY, body BLOB, fetched_at REAL)")
+    src_db = sqlite3.connect(f"file:{src}?mode=ro", uri=True)
+    n = 0
+    keys = sorted(keys)
+    for i in range(0, len(keys), 500):
+        chunk = keys[i:i + 500]
+        rows = src_db.execute(f"SELECT key, body, fetched_at FROM responses WHERE key IN ({','.join('?' * len(chunk))})",
+                              chunk).fetchall()
+        out.executemany("INSERT OR REPLACE INTO responses VALUES (?, ?, ?)", rows)
+        n += len(rows)
+    out.commit()
+    out.close()
+    src_db.close()
+    return n

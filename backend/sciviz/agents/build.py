@@ -22,7 +22,10 @@ from ..session import Session
 from ..tools.data_tools import artifact_tools, catalog_tools, python_tool, sql_tool
 from ..tools.discovery_tools import discovery_tools
 from ..tools.external_tools import openalex_tools
+from ..tools.figure_tools import figure_tools
+from ..tools.job_tools import job_tools
 from ..tools.lead_tools import lead_tools
+from ..tools.report_tools import report_tools
 from ..tools.reproduce_tools import claim_plan_tools, input_tools
 from ..tools.viz_tools import viz_tools
 from .models import EscalationMiddleware, make_llm
@@ -166,8 +169,8 @@ def reproduce_lead_prompt(s: Session) -> str:
 
 
 def build_reproduce_agent(s: Session, checkpointer=None):
-    """Report mode (Project 2, PLAN_P2 §3): a Lead with a claim plan, plus data and analyst specialists that
-    can use the external API. Figure and writing roles are added in later milestones."""
+    """Report mode (Project 2, PLAN_P2 §3): a Lead with a claim plan; data and analyst specialists (external
+    API, background jobs, figure gate); a writer whose report passes the report gate before it is rendered."""
     _register_profiles()
     backend = FilesystemBackend(root_dir=s.ws.root, virtual_mode=True)
 
@@ -182,9 +185,9 @@ def build_reproduce_agent(s: Session, checkpointer=None):
                        "validates data collection; saves analysis-ready tables with definitions and coverage.",
         "system_prompt": prompt("reproduce_data"),
         "tools": [*catalog_tools(s, "data"), sql_tool(s, "data"), kernel_tool("data"), *artifact_tools(s, "data"),
-                  *openalex_tools(s, "data"), *input_tools(s, "data")],
+                  *openalex_tools(s, "data"), *input_tools(s, "data"), *job_tools(s, "data")],
         "model": make_llm("data"),
-        "middleware": _limits(60),
+        "middleware": _limits(80),
     }
     analyst_agent = {
         "name": "analyst",
@@ -192,17 +195,27 @@ def build_reproduce_agent(s: Session, checkpointer=None):
                        "in Python; saves results and records findings with numbers and sample sizes.",
         "system_prompt": prompt("reproduce_analyst"),
         "tools": [*catalog_tools(s, "analyst"), sql_tool(s, "analyst"), kernel_tool("analyst"),
-                  *artifact_tools(s, "analyst"), *input_tools(s, "analyst")],
+                  *artifact_tools(s, "analyst"), *input_tools(s, "analyst"), *job_tools(s, "analyst"),
+                  *figure_tools(s, "analyst")],
         "model": make_llm("analyst"),
+        "middleware": _limits(100),
+    }
+    writer_agent = {
+        "name": "writer",
+        "description": "Writer: writes the reproduction report from findings, tables, approved figures and the claim "
+                       "plan; every number cites its artifact; the report must pass the independent report gate.",
+        "system_prompt": prompt("reproduce_writer"),
+        "tools": [*artifact_tools(s, "writer"), *input_tools(s, "writer"), *report_tools(s, "writer")],
+        "model": make_llm("writer"),
         "middleware": _limits(60),
     }
     return create_deep_agent(
         model=make_llm("lead"),
         tools=[*artifact_tools(s, "lead"), *claim_plan_tools(s), *input_tools(s, "lead")],
         system_prompt=reproduce_lead_prompt(s),
-        subagents=[data_agent, analyst_agent],
+        subagents=[data_agent, analyst_agent, writer_agent],
         middleware=[TodoListMiddleware(), FilesystemMiddleware(backend=backend, tools=["ls", "read_file"]),
-                    *_limits(40)],
+                    *_limits(60)],
         backend=backend,
         checkpointer=checkpointer if checkpointer is not None else checkpointer_for(s),
         name="lead",

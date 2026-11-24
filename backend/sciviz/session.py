@@ -47,6 +47,8 @@ class Session:
                 events=self.events)
             extra_env["SCIVIZ_OPENALEX_URL"] = self.openalex.start_proxy()
         self.kernels = KernelPool(self.ws.root, settings.db_path, extra_env)
+        from .harness.jobs import JobManager
+        self.jobs = JobManager(self)
         self.gates: dict[str, GateState] = {}
         self.escalate_agents: set[str] = set()
         self.user_question: str = ""
@@ -56,6 +58,7 @@ class Session:
         return self.gates.setdefault(slug, GateState())
 
     def close(self) -> None:
+        self.jobs.shutdown()
         self.kernels.shutdown()
         if self.openalex is not None:
             self.openalex.close()

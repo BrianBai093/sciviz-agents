@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import threading
+import time
 
 from langchain_core.tools import tool
 
@@ -84,6 +85,20 @@ def sql_tool(s: Session, agent: str, timeout_s: int = 60):
     return run_sql
 
 
+def log_cell(s: Session, agent: str, code: str, ok: bool, created: list[str], started: float,
+             job: str | None = None) -> None:
+    """Append one executed code cell to kernel_log.jsonl: the exact code, in order, with the artifacts it
+    created. Script export replays these cells (PLAN_P2 §3.3)."""
+    rec = {"ts": round(started, 3), "agent": agent, "ok": ok, "created": created, "code": code}
+    if job:
+        rec["job"] = job
+    with _log_lock, (s.ws.root / "kernel_log.jsonl").open("a", encoding="utf8") as f:
+        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+
+_log_lock = threading.Lock()
+
+
 def python_tool(s: Session, agent: str):
     @tool
     def run_python(code: str) -> str:
@@ -95,12 +110,16 @@ def python_tool(s: Session, agent: str):
         Print what you need to see; outputs are truncated."""
         _emit_call(s, agent, "run_python", {"code": code})
         before = {m["id"] for m in s.ws.list()}
+        t0 = time.time()
         ok, text = s.kernels.run(agent, code)
+        created = []
         for m in s.ws.list():
-            if m["id"] not in before and m["kind"] != "viz":
+            if m["id"] not in before and m["kind"] not in ("viz", "figure"):
                 prev = m.get("code") or ""
                 s.ws.update_meta(m["id"], code=(prev + "\n\n" if prev else "") + code)
                 s.events.emit(agent, "artifact", id=m["id"], artifact_kind=m["kind"], title=m["title"])
+                created.append(m["id"])
+        log_cell(s, agent, code, ok, created, t0)
         _emit_result(s, agent, "run_python", ok, text)
         return text
 

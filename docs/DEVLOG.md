@@ -335,3 +335,24 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
   - **Reviewer check (outside the agent run):** the same full-record method on 4 other pilot works matched n_i, n_j, n_k and D exactly.
   - D clusters near 0 (median −0.00025) because n_k is large (median 9,024). This is expected for this measure; the study reports percentiles.
 - **Projection for all 40,541 works:** 130k–189k list requests, which is $13–19, or 14–19 days of the free quota. Add about 14k requests ($1.40) for reference metadata. The scale of the full run is a decision for the user (STATUS).
+
+## 2026-11-23: Project 2, rest of M1 (jobs, figure gate, report gate, export)
+
+- **User decision after the pilot:** an 8,000-work sample stratified by team size, with $3 of OpenAlex prepaid credit (D50).
+- **Fixed** the OpenAlex service: it counts prepaid credit, not just the daily allowance, toward the key's remaining budget. It also records which cached responses each run used.
+- **Built** (D51):
+  - background jobs;
+  - the figure gate with a vision reviewer;
+  - the Writer agent (`prompts/reproduce_writer.md`) and the report gate with a reviewer;
+  - HTML and PDF rendering;
+  - the cell log;
+  - `sciviz export-run`, with an offline `run_all.py` replay.
+- `sciviz reproduce --input <file>` passes extra input files. The pilot's report and decisions go in as `pilot_report.md` and `pilot_decisions.md`.
+- Added matplotlib and markdown-it-py as dependencies.
+- **Tests:** 5 new in `tests/test_report_mode.py`:
+  - report checks;
+  - the HTML;
+  - figure file checks;
+  - a job plus the cell log, then export and offline replay (3 of 3 artifacts identical);
+  - PDF rendering (skipped when Chromium is missing).
+  All 23 pass.

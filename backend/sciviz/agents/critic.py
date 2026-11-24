@@ -78,3 +78,79 @@ def review(question: str, criteria: str, title: str, description: str, report_te
     llm = make_llm("critic").with_structured_output(Verdict)
     return llm.invoke([SystemMessage(CRITIC_PROMPT), HumanMessage(content=content)],
                       config={"callbacks": callbacks or [], "metadata": {"sciviz_agent": "critic"}})
+
+
+# ---- report mode (Project 2): static figures and report text --------------------------------------------
+FIGURE_CRITIC_PROMPT = """You are an independent reviewer of figures for a research report. You did not make the figure.
+Judge it from the image, its caption, the claims it is meant to support, and the summaries of the data behind it.
+
+Criteria (score each 1-5):
+1. supports_claims: the figure shows the evidence the listed claims need, at the right level (groups, measures,
+   comparisons) and without leaving out what a reader needs to judge the claim.
+2. truthfulness: axes, scales, baselines, units and labels are correct and not misleading; uncertainty (for example
+   confidence intervals) and sample sizes are shown or stated where the claim depends on them; values are plausible
+   given the data summaries.
+3. readability: legible at print size (two-column paper width), no overlapping text, legends and axis titles
+   present, sensible colors (distinguishable, also for color-blind readers), uncluttered.
+4. caption: the caption says what is plotted, the data and sample, and how uncertainty is shown.
+
+Return verdict "pass" when the figure could go into the report as is (list remaining polish items as minor issues).
+Return "revise" when any criterion scores 2 or lower or a major issue exists, and give concrete, actionable fixes.
+Do not ask for analyses beyond the figure's purpose."""
+
+
+class FigureVerdict(BaseModel):
+    verdict: Literal["pass", "revise"]
+    supports_claims: int = Field(ge=1, le=5)
+    truthfulness: int = Field(ge=1, le=5)
+    readability: int = Field(ge=1, le=5)
+    caption: int = Field(ge=1, le=5)
+    issues: list[Issue] = Field(default_factory=list)
+    summary: str
+
+
+def review_figure(question: str, claims_text: str, title: str, caption: str, data_summary: str, png: str,
+                  callbacks=None) -> FigureVerdict:
+    content: list[dict] = [{"type": "text", "text": (
+        f"RESEARCH QUESTION:\n{question}\n\nCLAIMS THIS FIGURE SUPPORTS:\n{claims_text}\n\n"
+        f"FIGURE TITLE: {title}\nCAPTION (by its author): {caption}\n\nDATA BEHIND THE FIGURE:\n{data_summary}\n\n"
+        "The figure follows.")}, _img(png)]
+    llm = make_llm("critic").with_structured_output(FigureVerdict)
+    return llm.invoke([SystemMessage(FIGURE_CRITIC_PROMPT), HumanMessage(content=content)],
+                      config={"callbacks": callbacks or [], "metadata": {"sciviz_agent": "critic"}})
+
+
+REPORT_REVIEWER_PROMPT = """You are an independent reviewer of a reproduction report. A team tried to reproduce a published
+study on a different dataset. You did not write the report. You get the paper brief (the study's claims), the team's
+claim plan, the report text, and the evidence: every finding the team recorded and a summary of every artifact.
+
+Check:
+1. support: every number and factual statement in the report is backed by the cited evidence, and the cited numbers
+   match the findings (allow rounding);
+2. coverage: every claim in the claim plan is addressed, with a clear status (reproduced / partly / not reproduced /
+   not testable) and the reason;
+3. honesty: conclusions follow from the evidence; no overclaiming (causal language, generalizing beyond the data,
+   hiding null or opposite results); deviations from the study's method and the data's limitations are stated;
+4. clarity: a reader can tell the question, the data, the method, the results and the answer.
+
+Return verdict "pass" when the report can be released as is (list remaining polish items as minor issues).
+Return "revise" for any unsupported or mismatched number, a missing claim, or overclaiming, with concrete fixes
+(quote the sentence to change)."""
+
+
+class ReportVerdict(BaseModel):
+    verdict: Literal["pass", "revise"]
+    support: int = Field(ge=1, le=5)
+    coverage: int = Field(ge=1, le=5)
+    honesty: int = Field(ge=1, le=5)
+    clarity: int = Field(ge=1, le=5)
+    issues: list[Issue] = Field(default_factory=list)
+    summary: str
+
+
+def review_report(brief: str, claim_plan: str, report_md: str, evidence: str, callbacks=None) -> ReportVerdict:
+    text = (f"PAPER BRIEF:\n{brief}\n\nCLAIM PLAN:\n{claim_plan}\n\nREPORT (Markdown):\n{report_md}\n\n"
+            f"EVIDENCE (findings and artifact summaries):\n{evidence}")
+    llm = make_llm("critic").with_structured_output(ReportVerdict)
+    return llm.invoke([SystemMessage(REPORT_REVIEWER_PROMPT), HumanMessage(content=text)],
+                      config={"callbacks": callbacks or [], "metadata": {"sciviz_agent": "reviewer"}})

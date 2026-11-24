@@ -334,3 +334,29 @@ Each record states the context, the options considered, the decision, and why. R
   - Prompts and harness code stay generic. A second lint list (`STUDY_DENYLIST` in `tests/test_no_hardcoding.py`) enforces this.
   - Run limits, such as the pilot, come from a constraints file the user passes to `sciviz reproduce`.
 - **Status:** Accepted.
+
+## D50. Full-run scale: an 8,000-work sample stratified by team size
+- **Decision (user, after the pilot):**
+  - About 8,000 eligible works, stratified by team size (1, 2, …, 10, 11–20, 21–50, 51–100 authors), allocated as equally as possible across strata, seed 42.
+  - Inclusion probabilities are kept; population-level estimates use sampling weights.
+  - The user bought $3 of OpenAlex prepaid credit. The run's external budget is $3.50.
+- **Why:** the full population (40,541 works) needs about 130k–189k paid requests ($13–19). The equal allocation also gives each team size enough works for confidence intervals, which a proportional sample would not give the rare large teams.
+- **Status:** Accepted.
+
+## D51. Remaining report-mode harness: jobs, figure gate, report gate, export with offline replay
+- **Background jobs** (`harness/jobs.py`): agent-written scripts run in their own process with the kernel's helpers. Artifacts they create are tagged with their code.
+- **Figure gate** (`submit_figure`):
+  - automated file checks (a vector PDF, a PNG that is not blank);
+  - then an independent vision review that scores support for the claims, truthfulness, readability and the caption;
+  - at most 3 rounds, then the figure is accepted with its issues flagged.
+- **Report gate** (`submit_report`):
+  - mechanical checks: cited ids exist, figures are approved, and every paragraph or table with a statistic cites an artifact;
+  - then an independent reviewer that scores support, coverage of the claim plan, honesty and clarity;
+  - at most 3 rounds; after that, the open issues are appended to the report;
+  - finally, HTML and a PDF rendered with Playwright, with an evidence index.
+- **Cell log and export** (`sciviz export-run`):
+  - Every code cell, including failed ones and background jobs, is logged in order with the artifacts it created.
+  - The export package holds the report, figures, all data artifacts, the frozen subset of API responses, the cells, and `run_all.py`.
+  - `run_all.py` replays every cell offline (with the same helpers, the original artifact ids, and API responses served from the frozen file) and compares the results with the original artifacts. A test covers this.
+- **Why:** PLAN_P2 asks for scripts, intermediate data and reproduction instructions. Replaying the agents' own cells is more faithful than a rewritten script, and the frozen API responses make it runnable without a key or network.
+- **Status:** Accepted.
