@@ -78,6 +78,11 @@ def report_tools(s: Session, agent: str):
             _emit_result(s, agent, "submit_report", False, text)
             return text
         gate = s.gate("report")
+        if md == gate.last_reviewed:  # a review of unchanged text would only repeat the last verdict
+            text = ("Not submitted: the report is unchanged since the last review. Fix the issues it raised, or, if "
+                    "your instructions do not allow the changes, stop and report the conflict to the lead.")
+            _emit_result(s, agent, "submit_report", False, text)
+            return text
         brief_file = s.ws.root / "inputs" / "paper_brief.md"
         brief = brief_file.read_text(encoding="utf8") if brief_file.exists() else "(no brief)"
         plan_file = s.ws.root / "claim_plan.json"
@@ -86,6 +91,7 @@ def report_tools(s: Session, agent: str):
         verdict = critic.review_report(brief, plan, md, rep.evidence_text(arts, s.ws.root, cited),
                                        callbacks=[s.usage_callback])
         reading = critic.review_readability(rep.reader_text(md, arts), callbacks=[s.usage_callback])
+        gate.last_reviewed = md
         passed = verdict.verdict == "pass" and reading.verdict == "pass"
         scores = {k: getattr(verdict, k) for k in ("support", "coverage", "honesty", "clarity")}
         scores["readability"] = reading.readability

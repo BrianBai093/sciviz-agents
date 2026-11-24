@@ -175,6 +175,9 @@ def test_report_gate_needs_both_the_reviewer_and_the_reader(session, monkeypatch
     first = submit.invoke({"title": "A report"})
     assert "needs revision (round 1 of 4)" in first and "(reader)" in first and "strict set" in first
     assert "Kept by mistake" not in reader_calls[0] and "The answer" in reader_calls[0]
+    assert "unchanged since the last review" in submit.invoke({"title": "A report"})  # no review spent
+    assert len(reader_calls) == 1
+    write.invoke({"position": 1, "name": "summary", "markdown": "## Summary\n\nThe answer, said plainly [brief]."})
     second = submit.invoke({"title": "A report"})
     assert "approved in round 2" in second
     reviews = [json.loads(x) for x in (session.ws.root / "report" / "reviews.jsonl").read_text().splitlines()]

@@ -23,6 +23,7 @@ class GateState:
     failures: int = 0
     escalated: bool = False
     last_artifact: str | None = None
+    last_reviewed: str | None = None  # the text the last review saw (report gate)
 
 
 class Session:
