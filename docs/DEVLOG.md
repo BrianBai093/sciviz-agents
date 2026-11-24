@@ -308,3 +308,30 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
   - a 300 dpi PNG.
 - Colors follow the app: the agent colors, and accent blue for user input and selection.
 - README §3 now opens with the figure and a caption. The Mermaid diagram stays as a collapsible text version.
+
+## 2026-11-23: Project 2, harness for report mode and the 100-work pilot
+
+- Planned with the user in two rounds (`docs/PLAN_P2.md`, D47). They asked for a 100-work pilot before anything else.
+- **Built** (all generic; no study terms, enforced by `STUDY_DENYLIST`, D49):
+  - `harness/openalex.py`: the external API service, with a key-holding proxy, SQLite cache, rate limit, retries, and a per-session USD budget read from the API's cost headers (D48);
+  - kernel helpers `openalex`, `openalex_many`, `openalex_usage`;
+  - tools `openalex_query`, `read_input`, `write_claim_plan`;
+  - `Session(mode="reproduce")`, with its own workspace folder and its own ledger ($30 cap);
+  - prompts `reproduce_lead`, `reproduce_data`, `reproduce_analyst`;
+  - the `sciviz reproduce` CLI;
+  - `inputs/wu2019/paper_brief.md` (our own summary) and `inputs/wu2019/pilot.md` (run constraints).
+- **Tests:** 7 new (the external API service with a mock transport; the study-term lint). All 18 pass.
+- **OpenAlex quota found with the key:**
+  - $1 per day;
+  - list and filter requests cost $0.0001 each, about 10k per day;
+  - single-record lookups are free;
+  - at most 30 requests per second.
+- **Pilot** (`workspaces/reproduce/r-pilot-100`, gitignored; command in STATUS). 13 min; LLM $0.48; OpenAlex $0.0825 (829 requests).
+  - The Lead wrote a 12-claim plan: 1 testable, 8 partly testable, 3 not testable.
+  - The Data agent designed the counts itself. For works with at most 99 references, three counts give the citing sets of f, of R, and of f ∪ R, all limited to works published after f and up to the snapshot day. n_i, n_j and n_k follow by set algebra. Longer reference lists use disjoint chunk counts built with negated filters, or deduplicated cursor ID sets.
+  - Eligibility: a usable reference list plus some citation evidence. 40,541 of 55,371 works qualify.
+  - 100 sampled works (seed 42): all complete. 99 have at least one later citation.
+  - The agent's own check (full citing records, classified by their reference lists) matched 3 of 3 works.
+  - **Reviewer check (outside the agent run):** the same full-record method on 4 other pilot works matched n_i, n_j, n_k and D exactly.
+  - D clusters near 0 (median −0.00025) because n_k is large (median 9,024). This is expected for this measure; the study reports percentiles.
+- **Projection for all 40,541 works:** 130k–189k list requests, which is $13–19, or 14–19 days of the free quota. Add about 14k requests ($1.40) for reference metadata. The scale of the full run is a decision for the user (STATUS).

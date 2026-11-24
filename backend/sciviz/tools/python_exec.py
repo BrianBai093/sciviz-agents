@@ -58,6 +58,38 @@ def save_graph(nodes, edges, title, description=""):
 def record_finding(text, value=None, title=None):
     """Record a factual finding (a claim with its numbers) so the final answer can cite it."""
     return save_json({"text": text, "value": value}, "finding", title or text[:60])
+
+_OA = _os.environ.get("SCIVIZ_OPENALEX_URL")
+if _OA:  # external API through the harness proxy (no key in this process)
+    import urllib.request as _ur, urllib.parse as _up, urllib.error as _ue
+    from concurrent.futures import ThreadPoolExecutor as _TPE
+    _oa_open = _ur.build_opener(_ur.ProxyHandler({})).open
+
+    def openalex(path, params=None):
+        """GET an OpenAlex API path ('works', 'works/W123', ...) with query params; returns the parsed JSON.
+        The harness adds the key, caches every response and charges the cost to this session's budget."""
+        q = _up.urlencode(params or {})
+        try:
+            with _oa_open(f"{_OA}/{path.strip('/')}" + (f"?{q}" if q else ""), timeout=900) as r:
+                return _json.loads(r.read())
+        except _ue.HTTPError as e:
+            raise RuntimeError(f"OpenAlex request failed (HTTP {e.code}): {e.read().decode()[:500]}") from None
+
+    def openalex_many(requests, workers=8):
+        """Run many (path, params) requests concurrently. Returns results in input order; a failed request
+        yields an Exception object instead of a dict (check with isinstance(x, Exception))."""
+        def _one(req):
+            try:
+                return openalex(*req)
+            except Exception as e:
+                return e
+        with _TPE(max_workers=max(1, min(int(workers), 16))) as ex:
+            return list(ex.map(_one, requests))
+
+    def openalex_usage():
+        """This session's external API usage: paid requests, cache hits, cost, budgets."""
+        with _oa_open(f"{_OA}/__usage", timeout=30) as r:
+            return _json.loads(r.read())
 '''
 
 
@@ -77,9 +109,10 @@ def truncate(text: str, limit: int = 8000) -> str:
 
 
 class KernelPool:
-    def __init__(self, workspace_root, db_path):
+    def __init__(self, workspace_root, db_path, extra_env: dict[str, str] | None = None):
         self.workspace_root = str(workspace_root)
         self.db_path = str(db_path)
+        self.extra_env = dict(extra_env or {})
         self._kernels: dict[str, tuple[KernelManager, object]] = {}
         self._lock = threading.Lock()
 
@@ -87,6 +120,7 @@ class KernelPool:
         km = KernelManager(kernel_name="python3")
         km.start_kernel(cwd=self.workspace_root, env=clean_env({
             "SCIVIZ_WORKSPACE": self.workspace_root, "SCIVIZ_DB": self.db_path, "SCIVIZ_AGENT": agent,
+            **self.extra_env,
         }), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)  # kernel chatter (e.g. transport warnings) is noise
         kc = km.client()
         kc.start_channels()

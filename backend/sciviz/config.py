@@ -31,6 +31,14 @@ class Settings:
     max_gate_revisions: int = int(os.getenv("SCIVIZ_MAX_GATE_REVISIONS", "3"))
     max_view_data_mb: float = float(os.getenv("SCIVIZ_MAX_VIEW_DATA_MB", "5"))
     viewport: tuple[int, int] = (1200, 800)
+    # Project 2 (report mode): separate LLM budget and ledger, external API access (PLAN_P2 §3.3, §8)
+    reproduce_budget_usd: float = float(os.getenv("SCIVIZ_REPRODUCE_BUDGET_USD", "30"))
+    reproduce_budget_warn_usd: float = float(os.getenv("SCIVIZ_REPRODUCE_BUDGET_WARN_USD", "20"))
+    openalex_cache: Path = field(
+        default_factory=lambda: Path(os.getenv("SCIVIZ_OPENALEX_CACHE", REPO_ROOT / "data" / "openalex_cache.sqlite"))
+    )
+    openalex_rate_per_s: float = float(os.getenv("SCIVIZ_OPENALEX_RATE", "10"))
+    openalex_session_budget_usd: float = float(os.getenv("SCIVIZ_OPENALEX_BUDGET_USD", "0.5"))
 
 
 settings = Settings()

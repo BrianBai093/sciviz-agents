@@ -1,13 +1,17 @@
 # Status (handoff snapshot)
 
-_Last updated: 2026-11-23. M3 complete and published._
+_Last updated: 2026-11-23. Project 1 complete and published. Project 2: pilot done._
 
 ## Where we are
 - **All three milestones are done.** Reviews: `docs/reviews/M1.md`, `M2.md`, `M3.md`.
 - **Published (D45):** public repo https://github.com/BrianBai093/sciviz-agents. The full database is the asset of release [v1.0.0](https://github.com/BrianBai093/sciviz-agents/releases/tag/v1.0.0); README §1 gives the download command and checksum. GitHub Actions runs lint and the unit tests on every push.
 - **Open (user decision):** where to host the video. For now it is in the repo (`demo/video/sciviz_demo.mp4`).
 - **Design Test (Option A):** done. The architecture figure is `docs/figures/sciviz_architecture.{pdf,png,svg}`, built by `docs/figures/build_architecture_figure.py` (D46), and it opens README §3.
-- **Next:** Project 2.
+- **Project 2** (reproduce Wu, Wang & Evans 2019; plan `docs/PLAN_P2.md`, D47–D49):
+  - Report-mode harness built: OpenAlex service and proxy, `sciviz reproduce`.
+  - 100-work pilot done and checked (`docs/reviews/P2-pilot.md`): D is correct on 7 hand-checked works; OpenAlex $0.08; LLM $0.48.
+  - **Waiting on the user:** the scale of the full run. All 40,541 eligible works need about 130k–189k OpenAlex list requests ($13–19). The free key allows $1 per day, so that is 14–19 days, unless the user buys prepaid credit or we use a sample.
+  - Still to build in P2-M1: background jobs, the figure gate, the report builder, script export.
 
 ## How to run
 See README §1. In short:
@@ -18,6 +22,9 @@ uv run sciviz serve --port 8000                                    # live mode (
 uv run pytest -q                                                   # unit tests (no LLM calls)
 uv run python evals/run_eval.py --mode multi                       # evaluation (live)
 uv run python demo/build_video.py demo/storyboard.yaml             # rebuild the narrated video from recordings
+# Project 2 pilot (needs OPENAI_API_KEY and OPENALEX_API_KEY):
+uv run sciviz reproduce --paper inputs/wu2019/paper_brief.md --constraints inputs/wu2019/pilot.md --external-budget 0.2 \
+  --question "How does team size influence the balance between disruptive innovation and developmental research in science and technology?"
 ```
 
 ## Key results
@@ -38,4 +45,5 @@ See README §6 and `docs/reviews/M3.md`:
 ## Environment notes
 - Secrets: `~/Desktop/fsu/.env` (`OPENALEX_API_KEY`); `OPENAI_API_KEY` in the shell environment. Never commit or print them.
 - Raw snapshot: `~/Desktop/fsu/data/openalex_columbia_2026-11-23/` (frozen). Processed DB: `data/columbia.duckdb` (gitignored; published as the release v1.0.0 asset).
-- Full live workspaces (with LangGraph checkpoints) are in `workspaces/` (gitignored). Curated copies are in `recordings/`.
+- Full live workspaces (with LangGraph checkpoints) are in `workspaces/` (gitignored). Curated copies are in `recordings/`. Project 2 sessions are under `workspaces/reproduce/`; their own ledger is `workspaces/reproduce/_ledger.json`.
+- OpenAlex response cache (Project 2): `data/openalex_cache.sqlite` (gitignored). Fetched data is frozen once it is cached.

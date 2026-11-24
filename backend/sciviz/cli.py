@@ -7,7 +7,9 @@
 from __future__ import annotations
 
 import json
+import shutil
 import time
+from pathlib import Path
 
 import typer
 from rich.console import Console
@@ -37,7 +39,8 @@ def _printer(ev: dict) -> None:
         console.print(f"[bold]report[/] {_first_line(p.get('text', ''))}")
     elif k == "tool_call" and p.get("tool") not in ("list_artifacts",):
         args = p.get("args", {})
-        brief = args.get("slug") or args.get("table") or args.get("query") or args.get("code") or ""
+        brief = (args.get("slug") or args.get("table") or args.get("query") or args.get("code")
+                 or " ".join(str(args[k]) for k in ("path", "params", "name") if args.get(k)) or "")
         console.print(f"  [{c}]{a}[/] {p['tool']} [dim]{_first_line(brief, 100)}[/]")
     elif k == "tool_result" and not p.get("ok"):
         console.print(f"    [red]✗ {p['tool']}[/] [dim]{_first_line(p.get('result', ''), 140)}[/]")
@@ -52,6 +55,13 @@ def _printer(ev: dict) -> None:
         console.print(f"  [bold magenta]view[/] {p.get('action')} {p.get('view_id')} {p.get('viz', '')} {p.get('title', '')}")
     elif k == "plan" and p.get("escalation"):
         console.print(f"  [bold red]escalation[/] {p['escalation']}")
+    elif k == "plan" and p.get("claim_plan"):
+        console.print(f"  [{c}]{a} claim plan[/]")
+        for line in p["claim_plan"]:
+            console.print(f"    [dim]{_first_line(line, 160)}[/]")
+    elif k == "external_usage":
+        console.print(f"  [dim]external API: {p.get('requests')} requests, {p.get('cache_hits')} cache hits, "
+                      f"${p.get('usd', 0):.4f}[/]")
     elif k == "plan" and p.get("decision"):
         console.print(f"  [{c}]{a} decided[/] {_first_line(p['decision'], 160)}")
 
@@ -80,6 +90,45 @@ def ask(question: str, session: str = typer.Option(None, help="continue an exist
     finally:
         spent = s.ledger.session_total(s.id)
         console.print(f"[dim]{time.time() - t0:.0f}s, session cost ${spent:.3f}, ledger total ${s.ledger.total:.2f}[/]")
+        s.close()
+
+
+@app.command()
+def reproduce(
+    paper: Path = typer.Option(..., exists=True, dir_okay=False, help="paper brief (Markdown)"),
+    question: str = typer.Option(..., help="the research question"),
+    constraints: Path = typer.Option(None, exists=True, dir_okay=False,
+                                     help="run constraints file (e.g. a pilot); default: a full reproduction"),
+    external_budget: float = typer.Option(None, help="external API budget for this session in USD"),
+    session: str = typer.Option(None, help="session id (default: a new one)"),
+    quiet: bool = typer.Option(False, help="do not print agent events"),
+):
+    """Report mode (Project 2): reproduce a study's findings on this dataset from a paper brief."""
+    s = Session(session, mode="reproduce", external_budget_usd=external_budget)
+    if not quiet:
+        s.events.subscribe(_printer)
+    inputs = s.ws.root / "inputs"
+    inputs.mkdir(exist_ok=True)
+    shutil.copy(paper, inputs / "paper_brief.md")
+    limits = constraints.read_text(encoding="utf8").strip() if constraints else "None: a full reproduction."
+    if constraints:
+        shutil.copy(constraints, inputs / "run_constraints.md")
+    message = (f"RESEARCH QUESTION: {question}\n\n"
+               f"RUN CONSTRAINTS (set by the user; they override defaults):\n{limits}\n\n"
+               f"EXTERNAL API BUDGET FOR THIS RUN: ${s.openalex.usage['budget_usd']:.2f}\n\n"
+               f"INPUT FILES (read with read_input): {', '.join(sorted(p.name for p in inputs.iterdir()))}")
+    console.print(f"[dim]session {s.id} ({s.ws.root})[/]")
+    t0 = time.time()
+    try:
+        final = run_turn(s, message, mode="reproduce")
+        (s.ws.root / "lead_report.md").write_text(final, encoding="utf8")
+        console.rule("lead report")
+        console.print(Markdown(final))
+        console.rule()
+    finally:
+        console.print(f"[dim]{time.time() - t0:.0f}s, LLM ${s.ledger.session_total(s.id):.3f} "
+                      f"(report-mode ledger ${s.ledger.total:.2f} of ${s.ledger.budget_usd:.0f}); "
+                      f"{s.openalex.usage_text()}[/]")
         s.close()
 
 

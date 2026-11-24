@@ -42,8 +42,9 @@ class SpendLedger:
 
     EMPTY = {"total_usd": 0.0, "calls": 0, "by_model": {}, "by_session": {}}
 
-    def __init__(self, path: Path | None = None):
+    def __init__(self, path: Path | None = None, budget_usd: float | None = None):
         self.path = path or settings.workspaces_dir / "_ledger.json"
+        self.budget_usd = settings.budget_usd if budget_usd is None else budget_usd
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.lock_path = self.path.with_suffix(".lock")
         self._tlock = threading.Lock()
@@ -109,9 +110,9 @@ class SpendLedger:
         return self._load()["total_usd"]
 
     def check(self) -> None:
-        if self.total >= settings.budget_usd:
+        if self.total >= self.budget_usd:
             raise BudgetExceeded(
-                f"LLM budget exhausted: ${self.total:.2f} spent of ${settings.budget_usd:.2f}. Ask the user before continuing."
+                f"LLM budget exhausted: ${self.total:.2f} spent of ${self.budget_usd:.2f}. Ask the user before continuing."
             )
 
     def record(self, session: str, agent: str, model: str, usage: dict, usd: float | None = None) -> float:

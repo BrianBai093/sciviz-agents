@@ -21,7 +21,9 @@ from ..config import settings
 from ..session import Session
 from ..tools.data_tools import artifact_tools, catalog_tools, python_tool, sql_tool
 from ..tools.discovery_tools import discovery_tools
+from ..tools.external_tools import openalex_tools
 from ..tools.lead_tools import lead_tools
+from ..tools.reproduce_tools import claim_plan_tools, input_tools
 from ..tools.viz_tools import viz_tools
 from .models import EscalationMiddleware, make_llm
 
@@ -142,6 +144,63 @@ def build_multi_agent(s: Session, checkpointer=None):
         tools=[*artifact_tools(s, "lead"), *lead_tools(s)],
         system_prompt=lead_prompt(s),
         subagents=[data_agent, analyst_agent, viz_agent],
+        middleware=[TodoListMiddleware(), FilesystemMiddleware(backend=backend, tools=["ls", "read_file"]),
+                    *_limits(40)],
+        backend=backend,
+        checkpointer=checkpointer if checkpointer is not None else checkpointer_for(s),
+        name="lead",
+    )
+
+
+KERNEL_API_DOC = (
+    "\nExternal API helpers (report mode): `openalex(path, params)` -> parsed JSON; "
+    "`openalex_many([(path, params), ...], workers=8)` -> results in order (Exception objects for failures); "
+    "`openalex_usage()` -> requests, cache hits and cost so far. The harness handles the key, caching, rate "
+    "limits and the budget."
+)
+
+
+def reproduce_lead_prompt(s: Session) -> str:
+    return prompt("reproduce_lead").format(artifacts=s.ws.index_text(), decisions=s.ws.decisions_text(),
+                                           dataset=s.dataset.overview())
+
+
+def build_reproduce_agent(s: Session, checkpointer=None):
+    """Report mode (Project 2, PLAN_P2 §3): a Lead with a claim plan, plus data and analyst specialists that
+    can use the external API. Figure and writing roles are added in later milestones."""
+    _register_profiles()
+    backend = FilesystemBackend(root_dir=s.ws.root, virtual_mode=True)
+
+    def kernel_tool(agent: str):
+        t = python_tool(s, agent)
+        t.description += KERNEL_API_DOC
+        return t
+
+    data_agent = {
+        "name": "data",
+        "description": "Data specialist: local dataset and external scholarly API. Designs, costs, pilots, runs and "
+                       "validates data collection; saves analysis-ready tables with definitions and coverage.",
+        "system_prompt": prompt("reproduce_data"),
+        "tools": [*catalog_tools(s, "data"), sql_tool(s, "data"), kernel_tool("data"), *artifact_tools(s, "data"),
+                  *openalex_tools(s, "data"), *input_tools(s, "data")],
+        "model": make_llm("data"),
+        "middleware": _limits(60),
+    }
+    analyst_agent = {
+        "name": "analyst",
+        "description": "Analysis specialist: computes the study's measures, statistics, models and robustness checks "
+                       "in Python; saves results and records findings with numbers and sample sizes.",
+        "system_prompt": prompt("reproduce_analyst"),
+        "tools": [*catalog_tools(s, "analyst"), sql_tool(s, "analyst"), kernel_tool("analyst"),
+                  *artifact_tools(s, "analyst"), *input_tools(s, "analyst")],
+        "model": make_llm("analyst"),
+        "middleware": _limits(60),
+    }
+    return create_deep_agent(
+        model=make_llm("lead"),
+        tools=[*artifact_tools(s, "lead"), *claim_plan_tools(s), *input_tools(s, "lead")],
+        system_prompt=reproduce_lead_prompt(s),
+        subagents=[data_agent, analyst_agent],
         middleware=[TodoListMiddleware(), FilesystemMiddleware(backend=backend, tools=["ls", "read_file"]),
                     *_limits(40)],
         backend=backend,

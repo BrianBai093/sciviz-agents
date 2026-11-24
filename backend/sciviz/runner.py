@@ -12,7 +12,7 @@ from collections.abc import Callable
 
 from langgraph.types import Command
 
-from .agents.build import build_multi_agent, build_single_agent
+from .agents.build import build_multi_agent, build_reproduce_agent, build_single_agent
 from .agents.models import TraceCallback
 from .session import Session
 
@@ -50,7 +50,8 @@ def run_turn(s: Session, text: str, selection: dict | None = None, answer_fn: An
     s.user_question = text
     s.events.emit("user", "message", text=text, selection=selection)
     try:
-        agent = build_single_agent(s) if mode == "single" else build_multi_agent(s)
+        builders = {"single": build_single_agent, "reproduce": build_reproduce_agent}
+        agent = builders.get(mode, build_multi_agent)(s)
         cfg = {"configurable": {"thread_id": s.id}, "callbacks": [s.usage_callback, TraceCallback(s)],
                "recursion_limit": 300}
         inp = {"messages": [{"role": "user", "content": text + format_selection(s, selection)}]}

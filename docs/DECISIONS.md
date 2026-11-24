@@ -303,3 +303,34 @@ Each record states the context, the options considered, the decision, and why. R
 ## D46. Architecture figure (Design Test, Option A)
 - **Decision:** the figure is an SVG drawn by a Python script (`docs/figures/build_architecture_figure.py`) and rendered to PDF and PNG with Playwright, not made in a drawing tool. This makes it reproducible and diffable, and it uses the same colors as the app. The layout and the level of detail were chosen with the user: three stages plus a feedback loop, concept names plus a few code names, and abstract icons.
 - **Status:** Accepted.
+
+## D47. Project 2 scope (agreed with the user)
+- **Decision:**
+  - Reproduce Wu, Wang & Evans (2019) on the Columbia OpenAlex snapshot only, covering the paper-level claims.
+  - Build it as a report mode of sciviz-agents.
+  - The agents fetch the missing citation data themselves through a harness tool.
+  - D uses all citations to date, with a fixed 2-year window as a check.
+  - The report has an explicit table of what could not be reproduced.
+  - The deliverable is a PDF; LLM spend is capped at $30, with its own ledger.
+  - The user asked for a **100-work pilot first**, before the rest of M1 (figure gate, report builder, background jobs).
+- **Why:** checks the data-collection design and its cost before building the parts that only the full run needs. Plan: `docs/PLAN_P2.md`.
+- **Status:** Accepted.
+
+## D48. External API access lives in the harness
+- **Decision:** `harness/openalex.py`.
+  - The key stays in the harness process.
+  - Kernels call a local proxy on 127.0.0.1 and have no secrets (D10 still holds).
+  - Every response is cached in SQLite, keyed by path plus sorted params, without the key (`data/openalex_cache.sqlite`). Fetched data is therefore frozen on first fetch, and reruns are free.
+  - Requests are rate-limited (10/s) and retried with backoff.
+  - Cost is charged to a per-session USD budget, using the `x-ratelimit-cost-usd` header that OpenAlex returns.
+  - Only entity paths are allowed; account endpoints are not.
+- **Why:** OpenAlex now meters usage per key. The free key has a **$1 daily budget**: list and filter requests cost $0.0001 each (about 10,000 per day), and single-record lookups are free. A runaway agent loop could burn the day's quota, so the harness must enforce the budget, not the prompt.
+- **Status:** Accepted.
+
+## D49. Study knowledge enters only through the paper brief
+- **Decision:**
+  - `inputs/wu2019/paper_brief.md` is our own summary of the study's public abstract and captions, not copied text.
+  - It is the only place that names the measure or the claims.
+  - Prompts and harness code stay generic. A second lint list (`STUDY_DENYLIST` in `tests/test_no_hardcoding.py`) enforces this.
+  - Run limits, such as the pilot, come from a constraints file the user passes to `sciviz reproduce`.
+- **Status:** Accepted.
