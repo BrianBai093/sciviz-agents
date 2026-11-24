@@ -141,3 +141,69 @@ def test_render_pdf(tmp_path):
         pytest.skip("Chromium is not installed")
     rep.render_pdf(rep.to_html("# T\n\n## A\n\nText [brief].\n", {}, tmp_path), tmp_path / "r.html", tmp_path / "r.pdf")
     assert (tmp_path / "r.pdf").read_bytes()[:5] == b"%PDF-"
+
+
+def test_reader_text_shows_figures_as_a_reader_sees_them():
+    md = "## Results\n\nFigure P1 shows the trend [F1].\n\n{{figure:P1}}\n"
+    text = rep.reader_text(md, ARTS)
+    assert "Figure 1 shows the trend" in text and "[Figure 1. Fig. cap]" in text and "{{figure" not in text
+
+
+def test_report_gate_needs_both_the_reviewer_and_the_reader(session, monkeypatch):
+    from sciviz.agents import critic
+    from sciviz.tools.report_tools import report_tools
+
+    reader_calls = []
+
+    def review_report(*a, **k):
+        return critic.ReportVerdict(verdict="pass", support=5, coverage=5, honesty=5, clarity=5, summary="ok")
+
+    def review_readability(text, **k):
+        reader_calls.append(text)
+        if len(reader_calls) == 1:
+            return critic.ReadabilityVerdict(verdict="revise", readability=2, summary="hard to follow", issues=[
+                critic.Issue(severity="major", problem='"the strict set" is never explained', fix="say which works")])
+        return critic.ReadabilityVerdict(verdict="pass", readability=5, summary="clear")
+
+    monkeypatch.setattr(critic, "review_report", review_report)
+    monkeypatch.setattr(critic, "review_readability", review_readability)
+    monkeypatch.setattr(rep, "render_pdf", lambda html_text, h, p: (h.write_text(html_text), p.write_bytes(b"%PDF")))
+    write, remove, _draft, submit = report_tools(session, "writer")
+    write.invoke({"position": 1, "name": "summary", "markdown": "## Summary\n\nThe answer [brief]."})
+    write.invoke({"position": 2, "name": "old notes", "markdown": "## Notes\n\nKept by mistake [brief]."})
+    assert remove.invoke({"name": "old notes"}) == "Removed 02_old-notes.md."
+    first = submit.invoke({"title": "A report"})
+    assert "needs revision (round 1 of 4)" in first and "(reader)" in first and "strict set" in first
+    assert "Kept by mistake" not in reader_calls[0] and "The answer" in reader_calls[0]
+    second = submit.invoke({"title": "A report"})
+    assert "approved in round 2" in second
+    reviews = [json.loads(x) for x in (session.ws.root / "report" / "reviews.jsonl").read_text().splitlines()]
+    assert [r["verdict"] for r in reviews] == ["revise", "pass"] and reviews[0]["reader"]["verdict"] == "revise"
+    assert json.loads((session.ws.root / "report" / "status.json").read_text())["scores"]["readability"] == 5
+
+
+def test_a_new_turn_archives_the_released_report(tmp_path):
+    from sciviz.cli import _archive_previous_turn
+    root = tmp_path
+    (root / "inputs").mkdir()
+    (root / "report").mkdir()
+    for name, text in [("lead_report.md", "lead"), ("inputs/run_constraints.md", "c"), ("external_usage.json", "{}"),
+                       ("report/report.md", "# R"), ("report/status.json", "{}"), ("report/reviews.jsonl", "{}\n")]:
+        (root / name).write_text(text)
+    _archive_previous_turn(root)
+    turn = root / "history" / "turn1"
+    assert (turn / "lead_report.md").exists() and (turn / "report" / "report.md").read_text() == "# R"
+    assert (root / "report" / "report.md").exists()  # still the current report until a new one passes the gate
+    assert (turn / "report" / "reviews.jsonl").exists() and not (root / "report" / "reviews.jsonl").exists()
+
+
+def test_exported_report_gets_the_harness_reproduction_section(tmp_path):
+    from sciviz.harness.export import _reproduce_note
+    ws, out = tmp_path / "ws", tmp_path / "pkg"
+    ws.mkdir()
+    out.mkdir()
+    (ws / "kernel_log.jsonl").write_text('{"a": 1}\n{"a": 2}\n')
+    (out / "REPRODUCE.md").write_text("x")
+    note = _reproduce_note(ws, out)
+    assert note.startswith("## How to reproduce this report") and "the 2 code steps" in note
+    assert "/scripts/run_all.py" in note and "REPRODUCE.md" in note and "api_responses" not in note

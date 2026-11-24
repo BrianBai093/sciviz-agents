@@ -178,13 +178,30 @@ def to_html(md: str, artifacts: dict[str, dict], root: Path, subtitle: str = "",
     cited = list(dict.fromkeys(cited + list(order)))
     rows = "".join(
         f"<tr><td>{c}</td><td>{html.escape(artifacts[c]['kind'])}</td><td>{html.escape(artifacts[c]['title'])}"
-        f"</td><td>{html.escape((artifacts[c].get('description') or '')[:220])}</td></tr>"
-        for c in cited if c in artifacts)
-    evidence = (f'<h2>Evidence index</h2><p>Every artifact cited above, with its kind and description. Code, data and '
-                f'lineage for each are in the run\'s workspace and in the exported scripts.</p><table class="evidence">'
-                f"<tr><th>ID</th><th>Kind</th><th>Title</th><th>Description</th></tr>{rows}</table>") if rows else ""
+        f"</td></tr>" for c in cited if c in artifacts)
+    evidence = (f'<h2>Evidence index</h2><p>The ids in square brackets point to the saved results behind each '
+                f'statement. This list gives each one under the title the agents gave it while working. The data, the '
+                f'code that produced it and its inputs are in the reproduction package, under '
+                f'<code>data/artifacts/&lt;id&gt;/</code>.</p><table class="evidence">'
+                f"<tr><th>ID</th><th>Kind</th><th>Title</th></tr>{rows}</table>") if rows else ""
     return (f"<!doctype html><html><head><meta charset='utf-8'><style>{CSS}</style></head>"
             f"<body>{body}{evidence}</body></html>")
+
+
+def reader_text(md: str, artifacts: dict[str, dict]) -> str:
+    """The report as a reader sees it: each figure placeholder becomes its numbered title and caption, and text
+    references such as "Figure P4" become "Figure 2" (input for the report gate's reader check)."""
+    order: dict[str, int] = {}
+
+    def fig(m: re.Match) -> str:
+        fid = m.group(1)
+        order.setdefault(fid, len(order) + 1)
+        meta = artifacts.get(fid, {})
+        return f"[Figure {order[fid]}. {meta.get('title', '')}. {meta.get('description', '')}]"
+
+    text = FIG.sub(fig, md)
+    return re.sub(r"\b(Fig(?:ure|\.)?)\s+([A-Z]\d+)\b",
+                  lambda m: f"{m.group(1)} {order[m.group(2)]}" if m.group(2) in order else m.group(0), text)
 
 
 def render_pdf(html_text: str, html_path: Path, pdf_path: Path) -> None:

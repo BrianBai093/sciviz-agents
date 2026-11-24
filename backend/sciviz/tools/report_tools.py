@@ -1,7 +1,9 @@
 """Report tools (report mode): the Writer writes sections; `submit_report` is the report gate.
 
-The gate is enforced here: mechanical evidence checks first, then an independent reviewer, then rendering.
-After `REPORT_ROUNDS` reviewed submissions the latest version is released with the open review issues appended.
+The gate is enforced here: mechanical evidence checks first, then two independent checks, then rendering. The
+reviewer compares the text with the evidence; the reader sees only the report (with figure titles and captions) and
+flags what a researcher who has not seen the run could not follow. Both must pass. After `REPORT_ROUNDS` reviewed
+submissions the latest version is released with the open review issues appended.
 """
 from __future__ import annotations
 
@@ -15,7 +17,7 @@ from ..harness import report as rep
 from ..session import Session
 from .data_tools import _emit_call, _emit_result
 
-REPORT_ROUNDS = 3
+REPORT_ROUNDS = 4
 
 
 def _artifacts(s: Session) -> dict[str, dict]:
@@ -40,6 +42,17 @@ def report_tools(s: Session, agent: str):
         problems = rep.check(markdown, _artifacts(s))
         note = ("\nChecks on this section:\n- " + "\n- ".join(problems)) if problems else " Checks passed."
         return f"Saved section {path.name} ({len(markdown)} characters).{note}"
+
+    @tool
+    def remove_section(name: str) -> str:
+        """Delete a report section by its name (the slug given to write_section), for example after merging or
+        renaming sections. `read_report_draft` lists the section files."""
+        slug = re.sub(r"[^a-z0-9_-]+", "-", name.lower()).strip("-")
+        gone = sorted(p.name for p in rep.sections_dir(s.ws.root).glob(f"*_{slug}.md")) if slug else []
+        for g in gone:
+            (rep.sections_dir(s.ws.root) / g).unlink()
+        s.events.emit(agent, "tool_call", tool="remove_section", args={"name": slug})
+        return f"Removed {', '.join(gone)}." if gone else f"No section named {name!r}."
 
     @tool
     def read_report_draft() -> str:
@@ -70,25 +83,34 @@ def report_tools(s: Session, agent: str):
         plan = plan_file.read_text(encoding="utf8") if plan_file.exists() else "(no claim plan)"
         verdict = critic.review_report(brief, plan, md, rep.evidence_text(arts, s.ws.root),
                                        callbacks=[s.usage_callback])
+        reading = critic.review_readability(rep.reader_text(md, arts), callbacks=[s.usage_callback])
+        passed = verdict.verdict == "pass" and reading.verdict == "pass"
         scores = {k: getattr(verdict, k) for k in ("support", "coverage", "honesty", "clarity")}
+        scores["readability"] = reading.readability
+        all_issues = [*verdict.issues, *(i.model_copy(update={"problem": f"(reader) {i.problem}"})
+                                         for i in reading.issues)]
+        summary = f"Reviewer: {verdict.summary} Reader: {reading.summary}"
         round_no = gate.failures + 1
-        issues = "\n".join(f"- [{i.severity}] {i.problem} -> fix: {i.fix}" for i in verdict.issues) or "- none"
+        issues = "\n".join(f"- [{i.severity}] {i.problem} -> fix: {i.fix}" for i in all_issues) or "- none"
         review_log = s.ws.root / "report" / "reviews.jsonl"
         with review_log.open("a", encoding="utf8") as f:
-            f.write(json.dumps({"round": round_no, "verdict": verdict.verdict, "scores": scores,
-                                "summary": verdict.summary, "issues": [i.model_dump() for i in verdict.issues]}) + "\n")
-        s.events.emit("critic", "gate", artifact="report", verdict=verdict.verdict, stage="report review",
-                      scores=scores, summary=verdict.summary,
-                      problems=[i.problem for i in verdict.issues if i.severity == "major"])
-        if verdict.verdict != "pass" and round_no < REPORT_ROUNDS:
+            f.write(json.dumps({"round": round_no, "verdict": "pass" if passed else "revise", "scores": scores,
+                                "reviewer": {"verdict": verdict.verdict, "summary": verdict.summary,
+                                             "issues": [i.model_dump() for i in verdict.issues]},
+                                "reader": {"verdict": reading.verdict, "summary": reading.summary,
+                                           "issues": [i.model_dump() for i in reading.issues]}}) + "\n")
+        s.events.emit("critic", "gate", artifact="report", verdict="pass" if passed else "revise",
+                      stage="report review", scores=scores, summary=summary,
+                      problems=[i.problem for i in all_issues if i.severity == "major"])
+        if not passed and round_no < REPORT_ROUNDS:
             gate.failures += 1
-            text = (f"Report needs revision (round {round_no} of {REPORT_ROUNDS}): {verdict.summary}\n{issues}\n"
+            text = (f"Report needs revision (round {round_no} of {REPORT_ROUNDS}): {summary}\n{issues}\n"
                     "Revise the sections, then submit again.")
             _emit_result(s, agent, "submit_report", False, text)
             return text
-        status = "approved" if verdict.verdict == "pass" else "approved_with_issues"
+        status = "approved" if passed else "approved_with_issues"
         if status == "approved_with_issues":
-            open_items = [i for i in verdict.issues if i.severity == "major"] or verdict.issues
+            open_items = [i for i in all_issues if i.severity == "major"] or all_issues
             md += ("\n## Open review issues\n\nThe independent review still raised these points after "
                    f"{REPORT_ROUNDS} rounds:\n\n" + "\n".join(f"- {i.problem}" for i in open_items) + "\n")
         out = s.ws.root / "report"
@@ -99,8 +121,8 @@ def report_tools(s: Session, agent: str):
                                                      "title": title, "subtitle": subtitle}))
         s.events.emit(agent, "report", status=status, pdf=str(out / "report.pdf"))
         text = (f"Report {status} in round {round_no} ({scores}); rendered to report/report.pdf.\n"
-                f"Reviewer summary: {verdict.summary}\nRemaining issues:\n{issues}")
+                f"{summary}\nRemaining issues:\n{issues}")
         _emit_result(s, agent, "submit_report", True, text)
         return text
 
-    return [write_section, read_report_draft, submit_report]
+    return [write_section, remove_section, read_report_draft, submit_report]

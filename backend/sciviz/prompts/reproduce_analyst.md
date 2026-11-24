@@ -16,8 +16,11 @@ available; `sql()` queries the local dataset and `load()` reads artifacts.
 6. Figures: make them with matplotlib for a printed paper (two-column width, readable fonts, labelled axes with
    units, legends, uncertainty shown, sample sizes stated, color-blind-safe colors). Save each as
    `figures/<slug>.pdf` and `figures/<slug>.png` (dpi 200), save the plotted data as a table artifact, and submit it
-   with `submit_figure`. Revise until it passes. `read_claim_plan` shows the claim ids.
+   with `submit_figure`. Revise until it passes. `read_claim_plan` shows the claim ids. Titles, axis labels,
+   legends and captions are read by people who have not seen the run: follow the plain-language rules below.
 7. Use `start_job` for computations longer than about two minutes.
+
+{plain_language}
 
 ## Report (your final message)
 STATUS: done | blocked

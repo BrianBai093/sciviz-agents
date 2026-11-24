@@ -48,7 +48,11 @@ def _register_profiles() -> None:
 
 
 def prompt(name: str) -> str:
-    return (PROMPTS / f"{name}.md").read_text()
+    """A prompt file; `{plain_language}` in it is replaced by the shared rules for reader-facing text."""
+    text = (PROMPTS / f"{name}.md").read_text()
+    if "{plain_language}" in text:
+        text = text.replace("{plain_language}", (PROMPTS / "plain_language.md").read_text().strip())
+    return text
 
 
 def lead_prompt(s: Session) -> str:
@@ -207,7 +211,8 @@ def build_reproduce_agent(s: Session, checkpointer=None):
         "system_prompt": prompt("reproduce_writer"),
         "tools": [*artifact_tools(s, "writer"), *input_tools(s, "writer"), *report_tools(s, "writer")],
         "model": make_llm("writer"),
-        "middleware": _limits(60),
+        # read-only file tools: report text goes through write_section, which checks every section
+        "middleware": [FilesystemMiddleware(backend=backend, tools=["ls", "read_file", "glob", "grep"]), *_limits(60)],
     }
     return create_deep_agent(
         model=make_llm("lead"),

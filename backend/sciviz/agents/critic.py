@@ -13,6 +13,9 @@ from pydantic import BaseModel, Field
 
 from .models import make_llm
 
+# The shared rules for reader-facing text (also given to the writer and the analyst).
+PLAIN_LANGUAGE = (Path(__file__).resolve().parent.parent / "prompts" / "plain_language.md").read_text().strip()
+
 CRITIC_PROMPT = """You are an independent reviewer of interactive data visualizations. You did not build the view you are
 reviewing. Judge it from the screenshots, the automated check results and the data summary.
 
@@ -92,11 +95,16 @@ Criteria (score each 1-5):
    given the data summaries.
 3. readability: legible at print size (two-column paper width), no overlapping text, legends and axis titles
    present, sensible colors (distinguishable, also for color-blind readers), uncluttered.
-4. caption: the caption says what is plotted, the data and sample, and how uncertainty is shown.
+4. caption: the title says in plain words what the figure shows; the caption says what is plotted, the data and
+   sample, how uncertainty is shown and what to look at. Title, caption, axis labels and legends follow the plain-
+   language rules below: a reader of the report sees only the figure and its caption, so labels, abbreviations,
+   symbols or version names that the authors made up are a major issue.
 
 Return verdict "pass" when the figure could go into the report as is (list remaining polish items as minor issues).
 Return "revise" when any criterion scores 2 or lower or a major issue exists, and give concrete, actionable fixes.
-Do not ask for analyses beyond the figure's purpose."""
+Do not ask for analyses beyond the figure's purpose.
+
+""" + PLAIN_LANGUAGE
 
 
 class FigureVerdict(BaseModel):
@@ -154,3 +162,39 @@ def review_report(brief: str, claim_plan: str, report_md: str, evidence: str, ca
     llm = make_llm("critic").with_structured_output(ReportVerdict)
     return llm.invoke([SystemMessage(REPORT_REVIEWER_PROMPT), HumanMessage(content=text)],
                       config={"callbacks": callbacks or [], "metadata": {"sciviz_agent": "reviewer"}})
+
+
+COLD_READER_PROMPT = """You are a careful reader of a research report: a researcher from a neighbouring field who has
+not seen the work behind it. You get only the report, with each figure's title and caption where the figure stands.
+Read it from start to finish and find every place you could not follow on a first reading:
+- words, labels, abbreviations, symbols or variable names that are not everyday English or standard terms of
+  research, or that the report uses before or without explaining them;
+- names that look made up by the authors for their own samples, groups, checks, stages or versions;
+- sentences you would have to read twice, or that pack several qualifications into one;
+- passages about the history of the work (earlier versions, stages, corrections) that a reader does not need;
+- figures or tables whose point the text does not explain.
+Citations in square brackets (for example [T3] or [brief]) point to the authors' evidence; ignore them.
+
+For each problem, quote the exact words and give plain wording that keeps the meaning and every number. Mark a
+problem "major" when it keeps a reader from understanding a method or a result, "minor" otherwise. Score
+readability 1-5 (5: a researcher from a neighbouring field follows everything on a first reading). Return "pass"
+only when no major problem remains and readability is at least 4.
+
+The authors were asked to follow these rules:
+
+""" + PLAIN_LANGUAGE
+
+
+class ReadabilityVerdict(BaseModel):
+    verdict: Literal["pass", "revise"]
+    readability: int = Field(ge=1, le=5)
+    issues: list[Issue] = Field(default_factory=list)
+    summary: str
+
+
+def review_readability(reader_text: str, callbacks=None) -> ReadabilityVerdict:
+    """The report gate's second check: a reader who sees only the report (not the evidence, the claim plan or the
+    team's vocabulary) lists what they cannot follow."""
+    llm = make_llm("critic").with_structured_output(ReadabilityVerdict)
+    return llm.invoke([SystemMessage(COLD_READER_PROMPT), HumanMessage(content=f"REPORT:\n{reader_text}")],
+                      config={"callbacks": callbacks or [], "metadata": {"sciviz_agent": "critic"}})

@@ -101,7 +101,8 @@ def ask(question: str, session: str = typer.Option(None, help="continue an exist
 
 
 def _archive_previous_turn(root: Path) -> None:
-    """A continued session keeps each earlier turn's constraints, lead report and API usage under history/turnN/."""
+    """A continued session keeps each earlier turn's constraints, lead report, API usage and released report (with
+    its gate reviews) under history/turnN/."""
     prev = [root / "lead_report.md", root / "inputs" / "run_constraints.md", root / "external_usage.json"]
     if not prev[0].exists():
         return
@@ -110,6 +111,14 @@ def _archive_previous_turn(root: Path) -> None:
     for p in prev:
         if p.exists():
             shutil.move(p, dest / p.name)
+    report = root / "report"
+    if (report / "report.md").exists():  # the released report stays current until a new one passes the gate
+        (dest / "report").mkdir()
+        for name in ("report.md", "report.pdf", "status.json"):
+            if (report / name).exists():
+                shutil.copy(report / name, dest / "report" / name)
+        if (report / "reviews.jsonl").exists():  # each turn's gate rounds stay with that turn
+            shutil.move(report / "reviews.jsonl", dest / "report" / "reviews.jsonl")
 
 
 @app.command()

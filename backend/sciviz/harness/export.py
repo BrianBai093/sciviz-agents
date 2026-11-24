@@ -1,7 +1,8 @@
 """Export a finished report-mode run as a self-contained reproduction package (PLAN_P2 §6).
 
 <out>/
-  report.pdf, report.md, report.html      the report released by the report gate, with the harness's run record
+  report.pdf, report.md, report.html      the report released by the report gate, with the harness's reproduction
+                                          instructions and run record
   figures/                                the report's figures (figure<n>_<id>_<slug>), PDF + PNG; figures/other/:
                                           every other figure that passed the figure gate
   data/artifacts/<id>/                    every artifact except interactive views (meta.json + parquet/json/figure)
@@ -248,13 +249,52 @@ def _job_instances(ws_root: Path) -> list[dict]:
     return sorted(found, key=lambda j: j["started"])
 
 
+def _reproduce_note(ws_root: Path, out: Path) -> str:
+    """Plain instructions for checking the report. The harness writes them, since it builds the package."""
+    try:
+        rel = out.resolve().relative_to(Path.cwd().resolve()).as_posix()
+    except ValueError:
+        rel = out.as_posix()
+    cells = len(_jsonl(ws_root / "kernel_log.jsonl"))
+    rows = [
+        "| `report.pdf`, `figures/` | this report, and its figures as PDF and PNG files |",
+        ("| `data/artifacts/<id>/` | every saved result the report cites (the ids in square brackets), with the code "
+         "that made it and its inputs |"),
+        *(["| `data/api_responses.sqlite.xz` | the responses of the external data service that the run used, frozen |"]
+          if (ws_root / "external_keys.json").exists() else []),
+        f"| `scripts/` | the {cells} code steps the agents ran, in order, and `run_all.py` |",
+        "| `trace/` | the run's inputs, plan, decisions, reviews and logs |",
+    ]
+    rerun = (f"To rerun the whole analysis offline, without API keys or network access, run "
+             f"`uv run python {rel}/scripts/run_all.py` from the repository. It repeats every code step on the frozen "
+             f"data and compares each result with the original.")
+    if (out / "REPRODUCE.md").exists():
+        rerun += " `REPRODUCE.md` in the package gives the full instructions."
+    return "\n".join([
+        "## How to reproduce this report",
+        "",
+        ("Added by the harness when the run was exported. A team of AI agents (a lead, a data agent, an analysis "
+         "agent and a writer) produced this report, and independent reviewers checked each figure and the text "
+         "before release. Everything needed to check the report is in the package that contains it:"),
+        "",
+        "| Path | Contents |",
+        "|---|---|",
+        *rows,
+        "",
+        rerun,
+        "",
+    ])
+
+
 def _export_report(ws_root: Path, out: Path, arts: dict[str, dict]) -> list[str]:
-    """The report as the report gate released it, plus the harness's run record, rendered again with its figures
-    in figures/ (figure<n>_<id>_<slug>.pdf/png, numbered as in the report), so the HTML works inside the package.
+    """The report as the report gate released it, plus the harness's reproduction instructions and run record,
+    rendered again with its figures in figures/ (figure<n>_<id>_<slug>.pdf/png, numbered as in the report), so the
+    HTML works inside the package.
     The released Markdown is kept in trace/report_released.md. Returns the ids of the figures the report places."""
     rep = ws_root / "report"
     shutil.copy(rep / "report.md", out / "trace" / "report_released.md")
-    md = (rep / "report.md").read_text(encoding="utf8").rstrip() + "\n\n" + run_record(ws_root)
+    md = "\n\n".join([(rep / "report.md").read_text(encoding="utf8").rstrip(), _reproduce_note(ws_root, out),
+                       run_record(ws_root)])
     placed = list(dict.fromkeys(FIG.findall(md)))
     names = {fid: f"figure{n}_{fid}_{arts[fid]['slug']}" for n, fid in enumerate(placed, 1)}
     for fid, name in names.items():

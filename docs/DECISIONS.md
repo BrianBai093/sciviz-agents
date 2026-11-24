@@ -396,3 +396,15 @@ Each record states the context, the options considered, the decision, and why. R
 - **Alternatives:** a GitHub release asset (one more publishing step, and the package is no longer self-contained); leaving the responses out (the replay then reuses the recorded artifacts of the collection cells instead of recomputing them).
 - **Why:** both files stay well under GitHub's 100 MB file limit, and the package runs offline right after a clone.
 - **Status:** Accepted.
+
+## D56. Reader-facing text must be plain; the report gate adds a reader who sees only the report
+- **Problem:** the user found the released Project 2 report hard to read. It used the team's working labels ("strict domain", "comparator", "proxy frame", "Stage 2", "F>0"), symbols in running text and long qualified sentences; the figure titles and captions did too. The report reviewer had passed it with clarity 4 of 5: it reads the claim plan and the evidence, which use the same labels, so they did not look like jargon to it.
+- **Decision:**
+  - One set of plain-language rules (`prompts/plain_language.md`) for everything a reader sees: everyday words and short sentences; no names the team made up (labels for samples, groups, checks, stages, versions; variable, code or file names); standard terms explained at first use; no symbols in running text, and at most one formula per measure, explained in words with a worked example; numbers rounded to what a reader needs; the final analysis, not the history of the work; plain figure titles and captions. The writer and the analyst get the rules; the figure gate checks titles, captions and labels against them.
+  - The report gate has a second, independent check: a reader who gets only the report, with each figure's title and caption in place (`rep.reader_text`), and lists every word, label or sentence a researcher from a neighbouring field could not follow, with plain wording. A report passes only when both the reviewer and the reader pass it. The gate allows 4 rounds (was 3), since it is stricter.
+  - The writer no longer writes a how-to-reproduce section or an account of the team's process. The export adds a plain "How to reproduce this report" section, written by the harness, which knows the package, next to the run record.
+  - The writer's file tools are read-only (`ls`, `read_file`, `glob`, `grep`); sections change only through `write_section` and the new `remove_section`. In stage 2 the writer had edited sections with `edit_file`, outside the section checks.
+  - When a session continues, the released report and its gate reviews are also archived under `history/turnN/report/`.
+  - The evidence index in the PDF lists each cited artifact under the title the agents gave it while working, and says so; the long working descriptions are left to the package.
+- **Why:** the user's instruction ("write it for people, in plain language, with no made-up terms"). A reviewer that shares the authors' vocabulary cannot judge readability; a reader without that context can. The rules are generic: they name no study, measure or technique.
+- **Status:** Accepted.
