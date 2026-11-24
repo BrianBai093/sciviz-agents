@@ -1,0 +1,30 @@
+{
+  "id": "T20",
+  "kind": "table",
+  "title": "Raw annual grouped counts",
+  "description": "One grouped request; annual sparse counts, request ID, total and integrity status.",
+  "producer": "data",
+  "inputs": [
+    "T2",
+    "T8",
+    "T9"
+  ],
+  "code": null,
+  "created_at": 1795489188.316,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "99 rows; columns: request_row, meta_count, year_counts_json, status, error, sample_id, series, part",
+    "text": "99 rows x 8 columns\nrequest_row: int64 [min 0, max 2.474e+04, mean 1.167e+04]\nmeta_count: object [0 distinct] (100% null)\nyear_counts_json: str [1 distinct]\nstatus: str [1 distinct]\nerror: str [99 distinct]\nsample_id: int64 [min 1, max 7890, mean 3752]\nseries: str [3 distinct]\npart: int64 [min 0, max 5, mean 0.1919]\nfirst rows:\n request_row meta_count year_counts_json         status                                    error  sample_id series  part\n           0       None                  request_failed OpenAlex request failed (HTTP 400): {...          1      F     0\n           1       None                  request_failed OpenAlex request failed (HTTP 400): {...          1      I     0\n           2       None                  request_failed OpenAlex request failed (HTTP 400): {...          1      U     0\n           3       None                  request_failed OpenAlex request failed (HTTP 400): {...          2      F     0\n           4       None                  request_failed OpenAlex request failed (HTTP 400): {...          2      I     0",
+    "rows": 99,
+    "columns": [
+      "request_row",
+      "meta_count",
+      "year_counts_json",
+      "status",
+      "error",
+      "sample_id",
+      "series",
+      "part"
+    ]
+  }
+}

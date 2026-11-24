@@ -1,0 +1,3 @@
+# cell 51 | agent: analyst | original run: ok | artifacts created: none
+for i,q,cols in [(67,"metric in ['KS distance','negative fraction difference'] and group=='10 vs 1'",[]),(71,"metric.str.contains('slope') and metric!='F rank slope'",[]),(72,"metric.str.contains('slope')",[]),(74,"metric=='larger minus solo' and group=='10 minus 1'",['target','metric_name','n_edges']),(73,"group=='All'",['metric_name','n_edges','n_works_covered']),(69,"level=='journal' and supported",[]),(77,"metric=='fitted parameter difference' and group=='10 minus 1'",['distribution'])]:
+ t=d[i].query(q,engine='python'); print(i,t[[c for c in ['domain','metric','group','estimate','lo','hi','n'] if c in t]+cols].round(6).to_string(index=False))

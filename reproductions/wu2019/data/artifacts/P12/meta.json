@@ -1,0 +1,53 @@
+{
+  "id": "P12",
+  "kind": "figure",
+  "title": "Fig. 4 analogue — Empirical distributions of reference age and popularity",
+  "description": "Empirical component of C5 only. Curves pool available focal-work–reference pairs, applying each focal work’s inverse inclusion weight to every edge, rather than giving equal total weight to each work. For teams of 1, 10 and 51–100 authors, respectively, A includes 22,564, 34,598 and 43,602 edges; B includes 22,714, 34,680 and 43,826. Focal n is above the panels. Pointwise 95% focal-work design ribbons have zero width for the 51–100 census stratum. Same-year ages are included and negative ages omitted. Current global citation totals are from the 23 November 2026 snapshot/live run; axis is linear from 0 to 1 and logarithmic above (no observed zeros). Both larger groups cite newer and generally more highly cited references than solo works; their popularity curves are close. Separate model evidence is in the C5 fit tables T60 and T65: the geometric age-decay rate contrast for 10 vs solo is positive, but the citation-tail exponent contrast for counts ≥50 includes zero and both models show sizeable empirical–fitted CDF gaps.",
+  "producer": "analyst",
+  "inputs": [
+    "T59",
+    "T60",
+    "T65"
+  ],
+  "code": null,
+  "created_at": 1795491251.411,
+  "file": "figure.png",
+  "slug": "fig4-empirical",
+  "claims": [
+    "C5"
+  ],
+  "parent": "P11",
+  "version": 2,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 2,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 4,
+        "truthfulness": 5,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The weighted curves support the empirical part of C5: the two larger-team groups cite newer and generally more highly cited references than solo works, while their popularity curves are close to each other. The figure states the sample sizes, weighting, and pointwise uncertainty and appropriately directs readers to the separate model-fit evidence.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The figure supports the empirical comparison for three selected team-size groups, not a trend across all team sizes or a difference in fitted popularity exponents.",
+          "fix": "Keep the caption’s empirical scope and table references. In the report, limit the visual conclusion to the groups shown and describe the popularity-exponent contrast as inconclusive."
+        },
+        {
+          "severity": "minor",
+          "problem": "The narrow uncertainty ribbons are hard to distinguish from the curves in panel B, especially where the two larger-team curves overlap.",
+          "fix": "Check the ribbons at final print size and modestly increase their contrast if needed, retaining the distinct line styles."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption gives edge counts but leaves the source and eligibility of the focal works implicit.",
+          "fix": "Add a short phrase identifying the data source and eligible focal-work cohort."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 4 analogue — Empirical distributions of reference age and popularity' (version 2) for claims ['C5'], from ['T59', 'T60', 'T65']"
+}

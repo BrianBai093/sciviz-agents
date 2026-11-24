@@ -1,0 +1,10 @@
+{
+  "id": "job1",
+  "name": "stage1_grouped_and_reference_bulk",
+  "agent": "data",
+  "started": 1795489131.1892512,
+  "ended": null,
+  "returncode": null,
+  "created": [],
+  "stopped": "by the agent before it ended (no end was recorded)"
+}

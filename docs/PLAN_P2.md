@@ -2,8 +2,8 @@
 
 | | |
 |---|---|
-| Status | Approved 2026-11-23, with a 100-work pilot first (D47). In progress: P2-M1 |
-| Last updated | 2026-11-23 |
+| Status | Approved 2026-11-23, with a 100-work pilot first (D47). P2-M1 and P2-M2 done; P2-M3: report and export done (2026-11-24), video and design-test figure open |
+| Last updated | 2026-11-24 |
 | Paper | L. Wu, D. Wang, J. A. Evans, "Large teams develop and small teams disrupt science and technology", *Nature* 566, 378–382 (2019) |
 | Related docs | [PLAN.md](PLAN.md) (Project 1), [DECISIONS.md](DECISIONS.md), [DEVLOG.md](DEVLOG.md), [STATUS.md](STATUS.md) |
 

@@ -1,0 +1,53 @@
+{
+  "id": "T86",
+  "kind": "table",
+  "title": "Stage 2 Stage 1 comparator point reconciliation",
+  "description": "Reproducibility audit; year 0 means all cohorts, All means all strata.",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "J9",
+    "T1",
+    "T2",
+    "T3",
+    "T32",
+    "T33",
+    "T45",
+    "T46",
+    "T47",
+    "T5",
+    "T50",
+    "T51",
+    "T52",
+    "T53",
+    "T54",
+    "T55",
+    "T56",
+    "T57",
+    "T58",
+    "T59",
+    "T60",
+    "T61",
+    "T62",
+    "T63",
+    "T64",
+    "T65"
+  ],
+  "code": "from pathlib import Path\nexec(compile(Path('analysis_stage2.py').read_text(),'analysis_stage2.py','exec'))",
+  "created_at": 1795496154.719,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "16 rows; columns: table, stage2, matched_rows, compared_numeric, max_abs_difference, unmatched_old_rows",
+    "text": "16 rows x 6 columns\ntable: str [16 distinct]\nstage2: str [16 distinct]\nmatched_rows: int64 [min 2, max 2857, mean 338.9]\ncompared_numeric: int64 [min 2, max 1506, mean 163.9]\nmax_abs_difference: float64 [min 0, max 8.882e-16, mean 5.551e-17]\nunmatched_old_rows: int64 [min 0, max 16, mean 1.25]\nfirst rows:\ntable stage2  matched_rows  compared_numeric  max_abs_difference  unmatched_old_rows\n  T50     c1            96                96                 0.0                   1\n  T51     c2           622               622                 0.0                   0\n  T52     c3            46                46                 0.0                   0\n  T53     c4          2857                56                 0.0                   0\n  T54    c4s             3                 3                 0.0                   0",
+    "rows": 16,
+    "columns": [
+      "table",
+      "stage2",
+      "matched_rows",
+      "compared_numeric",
+      "max_abs_difference",
+      "unmatched_old_rows"
+    ]
+  },
+  "job": "job3"
+}

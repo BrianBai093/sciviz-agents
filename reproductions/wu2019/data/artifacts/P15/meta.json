@@ -1,0 +1,47 @@
+{
+  "id": "P15",
+  "kind": "figure",
+  "title": "Fig. 2 analogue — Team size, disruption rank and citation counts (Stage 2)",
+  "description": "Design-weighted mean within-year disruption percentile (A) and median unique strictly postpublication citing works through 23 November 2026 (B), for 7,933 Columbia OpenAlex works with at least one such citer. Unweighted stratum n is below each team size; dotted line separates exact sizes from pooled bands. Error bars show pointwise 95% percentile bootstrap intervals from 1,000 focal-work replacement draws within each original stratum with original inverse-inclusion weights and reranking; no finite-population correction, including in the fully sampled 51–100 stratum. Trends are not strictly monotone. For 51–100 authors the median is 39 citing works [31,46], n=477.",
+  "producer": "analyst",
+  "inputs": [
+    "T66",
+    "P3"
+  ],
+  "code": null,
+  "created_at": 1795496194.865,
+  "file": "figure.png",
+  "slug": "fig2-team-stage2",
+  "claims": [
+    "C1"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 5,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "Both panels support C1 as an overall, nonmonotonic pattern: larger teams tend to have lower mean disruption percentiles and higher median citation counts, with both patterns extending into the pooled 51–100-author band. The displayed counts sum to 7,933, the visible singleton estimates match T66, and the fully sampled band has nonzero intervals under the stated no-FPC bootstrap.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The phrase “1,000 focal-work replacement draws” could be read as 1,000 individual works rather than 1,000 bootstrap replicates.",
+          "fix": "Say “1,000 bootstrap replicates, each resampling the original number of focal works with replacement within every stratum.” Retain the notes on weighting, reranking, and no finite-population correction."
+        },
+        {
+          "severity": "minor",
+          "problem": "The equally spaced categories include both exact team sizes and pooled bands, so the connecting slopes do not represent change per additional author.",
+          "fix": "Add a short caption note that the x-axis uses equally spaced categories and that the extension to 100 authors is represented by the pooled 51–100 band."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 2 analogue — Team size, disruption rank and citation counts (Stage 2)' (version 1) for claims ['C1'], from ['T66', 'P3']"
+}

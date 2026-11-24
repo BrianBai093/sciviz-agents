@@ -43,7 +43,7 @@ class JobManager:
 
     def start(self, agent: str, name: str, code: str) -> Job:
         with self._lock:
-            jid = f"job{len(self.jobs) + 1}"
+            jid = self._new_id()
             d = self.root / jid
             d.mkdir(parents=True, exist_ok=True)
             (d / "script.py").write_text(code, encoding="utf8")
@@ -89,12 +89,27 @@ class JobManager:
         return text
 
     def shutdown(self) -> None:
+        """Stop jobs that still run and record every job that has not been recorded yet (its code goes to the
+        cell log, so the run's export keeps it even if the job was stopped)."""
         for job in self.jobs.values():
-            if job.ended is None and job.proc.poll() is None:
+            if job.ended is not None:
+                continue
+            if job.proc.poll() is None:
                 try:
                     os.killpg(job.proc.pid, signal.SIGTERM)
+                    job.proc.wait(timeout=10)
                 except ProcessLookupError:
                     pass
+                except subprocess.TimeoutExpired:
+                    os.killpg(job.proc.pid, signal.SIGKILL)
+                    job.proc.wait()
+            self._finish(job)
+
+    def _new_id(self) -> str:
+        """Ids are unique within the workspace, also across turns of a continued session."""
+        used = {int(p.name[3:]) for p in self.root.glob("job*") if p.name[3:].isdigit()}
+        used |= {int(j[3:]) for j in self.jobs}
+        return f"job{max(used, default=0) + 1}"
 
     def _finish(self, job: Job) -> None:
         from ..tools.data_tools import log_cell
@@ -105,7 +120,10 @@ class JobManager:
                 self.s.ws.update_meta(m["id"], code=job.code, job=job.id)
                 self.s.events.emit(job.agent, "artifact", id=m["id"], artifact_kind=m["kind"], title=m["title"])
                 job.created.append(m["id"])
-        log_cell(self.s, job.agent, job.code, job.returncode == 0, job.created, job.started, job=job.id)
+        # A negative return code means the job was stopped by a signal: the export keeps its code but does not
+        # run it again.
+        log_cell(self.s, job.agent, job.code, job.returncode == 0, job.created, job.started, job=job.id,
+                 stopped=job.returncode is not None and job.returncode < 0)
         self._write_meta(job)
         self.s.events.emit(job.agent, "job", action="end", job=job.id, returncode=job.returncode,
                            seconds=round(job.ended - job.started, 1), created=job.created)

@@ -1,0 +1,205 @@
+                      metric   estimate         lo         hi    n   weighted_n              group
+adjacent median F difference  11.000000   3.000000  18.025000 1100  2814.742812 51–100 minus 21–50
+       D endpoint difference -14.890437 -18.231789 -11.615424 1224  4182.368131         10 minus 1
+median F endpoint difference  11.000000   9.000000  13.000000 1224  4182.368131         10 minus 1
+       D endpoint difference -11.339142 -14.467169  -8.119849 1101  2093.817891    51–100 minus 10
+median F endpoint difference  24.000000  16.975000  31.000000 1101  2093.817891    51–100 minus 10
+       D endpoint difference -26.229579 -29.630508 -22.733119 1077  3042.550239     51–100 minus 1
+median F endpoint difference  35.000000  27.000000  42.000000 1077  3042.550239     51–100 minus 1
+             log2 size slope  -3.476484  -4.274409  -2.702127 6210 31051.773764               1–10
+                      metric  estimate       lo       hi    n  weighted_n       group  threshold   n_1   n_2
+                 KS distance  0.294103 0.246588 0.347971 1224 4182.368131     10 vs 1        NaN 600.0 624.0
+negative fraction difference  0.293974 0.239754 0.344664 1224 4182.368131     10 vs 1        NaN 600.0 624.0
+                 KS distance  0.410084 0.365964 0.463328 1077 3042.550239 51–100 vs 1        NaN 600.0 477.0
+negative fraction difference  0.398836 0.347134 0.446636 1077 3042.550239 51–100 vs 1        NaN 600.0 477.0
+              metric  estimate        lo        hi    n   weighted_n                       group stratum  n_low  n_high
+     log2 size slope -2.504204 -3.389523 -1.636908 3277 16675.395601                  Bottom 50%     NaN    NaN     NaN
+share of rank domain  0.493714  0.490889  0.508915 3768 19850.243843                  Bottom 50%     NaN    NaN     NaN
+     log2 size slope -1.216050 -2.539760  0.477562 2476 12093.891542                  50th–<90th     NaN    NaN     NaN
+share of rank domain  0.406302  0.391175  0.409274 3278 16335.771734                  50th–<90th     NaN    NaN     NaN
+     log2 size slope  0.228685 -4.334392  3.366873  457  2282.486622                  90th–100th     NaN    NaN     NaN
+share of rank domain  0.099984  0.098949  0.101044  887  4019.973842                  90th–100th     NaN    NaN     NaN
+high minus low slope  2.732889 -1.885507  6.002925 3734 18957.882222 90th–100th minus bottom 50%     NaN 3277.0   457.0
+                               metric  estimate       lo       hi    n   weighted_n    level  n_supported  n_observed  n_nonmissing  n_missing  n_negative  n_positive  n_nominal_CI_negative  n_nominal_CI_positive
+fraction of supported slopes negative  0.700000 0.550000 0.800000 6074 30395.537006    field           20          25          6206          4          14           6                      5                      1
+fraction of supported slopes negative  0.705882 0.529412 0.764706 3601 18166.476757 subfield           34         224          6206          4          24          10                      5                      0
+fraction of supported slopes negative  1.000000 0.000000 1.000000   45   224.737245  journal            1        2591          5134       1076           1           0                      0                      0
+                     metric  estimate        lo        hi    n   weighted_n                       group stratum
+            Main rank slope -3.008040 -3.925862 -2.010170 4405 21969.876276                1–10, paired     NaN
+           Fixed rank slope -2.818246 -3.854288 -1.777743 4405 21969.876276                1–10, paired     NaN
+Fixed minus main rank slope  0.189795 -0.274334  0.653303 4405 21969.876276                1–10, paired     NaN
+Simplified ratio slope (pp) -4.285450 -5.212156 -3.400826 6210 31051.773764                        1–10     NaN
+               D rank slope -3.476484 -4.274409 -2.702127 6210 31051.773764 main standalone all cohorts     NaN
+                D rank mean 62.456372 59.994659 64.781362  600  2565.550239 main standalone all cohorts       1
+                D rank mean 53.813552 51.542020 56.014754  618  4141.684211 main standalone all cohorts       2
+                         metric  estimate        lo        hi    n   weighted_n                              group
+                   mean authors  5.326427  5.149447  5.530799 2415 13065.303081         No acknowledgment recorded
+              mean D percentile 57.716865 56.669690 58.860690 2415 13065.303081         No acknowledgment recorded
+                log2 size slope -3.745629 -4.919246 -2.645157 2200 11826.315861         No acknowledgment recorded
+                   mean authors 10.001026  9.868840 10.117933 5518 27140.686338            Acknowledgment recorded
+              mean D percentile 46.285165 45.713705 46.772393 5518 27140.686338            Acknowledgment recorded
+                log2 size slope  0.515387 -0.534724  1.596538 4010 19225.457903            Acknowledgment recorded
+acknowledgment minus none slope  4.261016  2.684365  5.826417 6210 31051.773764                           contrast
+                 recorded share  0.675041  0.664114  0.685471 7933 40205.989419                           eligible
+                 recorded share  0.671761  0.660962  0.681821 8000 40541.000000                        all sampled
+                   mean authors  5.287820  5.106067  5.487657 2462 13307.127271 all sampled without acknowledgment
+                   mean authors 10.002634  9.870598 10.116812 5538 27233.872729    all sampled with acknowledgment
+                                                               metric  estimate        lo       hi    n   weighted_n                       group  lag    n_a    n_b  cells
+                                          year +1 share contrast (pp)  2.817411 -1.755429 7.213967  804  2649.321553                  10 minus 1  NaN  468.0  336.0    NaN
+publication-year share contrast standardized by year and quarter (pp) -1.243955 -4.013458 1.128573  819  2711.775446                  10 minus 1  NaN  469.0  350.0   12.0
+                                          year +1 share contrast (pp)  5.234828  0.941125 9.381999  688  1788.708134              51–100 minus 1  NaN  352.0  336.0    NaN
+publication-year share contrast standardized by year and quarter (pp)  3.305548  0.448263 6.104325  705  1851.570973              51–100 minus 1  NaN  355.0  350.0   12.0
+                                          year +1 share contrast (pp)  1.851404 -0.201484 3.847081 5369 27267.036744 D negative minus D positive  NaN 4243.0 1126.0    NaN
+publication-year share contrast standardized by year and quarter (pp)  2.140506  1.035300 3.188877 5421 27539.876171 D negative minus D positive  NaN 4275.0 1146.0   12.0
+                  metric  estimate        lo        hi       se    n  n_authors  n_rows   weighted_n  residual_x_ss  cluster_fallback
+              Unadjusted -1.734922 -3.013024 -0.456819 0.651686 4107       1885    6838 20243.933565   13557.001283             False
+                 Year FE -1.752645 -3.032694 -0.472596 0.652678 4107       1885    6838 20243.933565   13539.229916             False
+         Year + topic FE -2.431937 -3.619411 -1.244463 0.605476 4107       1885    6838 20243.933565    7591.883988             False
+        Year + author FE -1.785874 -3.219914 -0.351834 0.731196 4107       1885    6838 20243.933565    6461.709463             False
+Year + topic + author FE -1.848257 -3.426097 -0.270418 0.804518 4107       1885    6838 20243.933565    3890.597948             False
+                    metric  estimate        lo        hi    n   weighted_n    group  n_size1_2  n_size5_10
+           log2 size slope -3.449318 -4.340839 -2.499865 4628 22437.035174  article      790.0      3005.0
+           log2 size slope -0.240321 -3.261259  2.878602  390  1952.486968   review       65.0       238.0
+review minus article slope  3.208997 -0.076832  6.521796 5018 24389.522143 contrast        NaN         NaN
+                                            metric  estimate        lo        hi    n  weighted_n                distribution          group  n_edges  threshold
+                                  fitted parameter  0.065378  0.061612  0.069490  597 2552.722488       reference age (years)              1    22001        1.0
+empirical minus fitted CDF at diagnostic threshold -0.039481 -0.050625 -0.027368  597 2552.722488       reference age (years)              1    22001        1.0
+                                  fitted parameter  0.096722  0.093645  0.099989  624 1616.817891       reference age (years)             10    34531        1.0
+empirical minus fitted CDF at diagnostic threshold -0.081013 -0.088625 -0.073129  624 1616.817891       reference age (years)             10    34531        1.0
+                                  fitted parameter  0.110689  0.105902  0.116040  477  477.000000       reference age (years)         51–100    43548        0.0
+empirical minus fitted CDF at diagnostic threshold -0.066916 -0.074755 -0.059158  477  477.000000       reference age (years)         51–100    43548        0.0
+                       fitted parameter difference  0.031344  0.025916  0.036343 1221 4169.540379       reference age (years)     10 minus 1    56532        NaN
+                       fitted parameter difference  0.045310  0.039610  0.052042 1074 3029.722488       reference age (years) 51–100 minus 1    65549        NaN
+                                  fitted parameter  1.533713  1.519851  1.548790  584 2497.135566 current reference citations              1    15134      123.0
+empirical minus fitted CDF at diagnostic threshold -0.086986 -0.095096 -0.078936  584 2497.135566 current reference citations              1    15134      123.0
+                                  fitted parameter  1.540946  1.530598  1.553202  620 1606.453674 current reference citations             10    26259      122.0
+empirical minus fitted CDF at diagnostic threshold -0.087536 -0.093995 -0.081049  620 1606.453674 current reference citations             10    26259      122.0
+                                  fitted parameter  1.528437  1.511111  1.547643  477  477.000000 current reference citations         51–100    33804      139.0
+empirical minus fitted CDF at diagnostic threshold -0.094779 -0.101845 -0.088413  477  477.000000 current reference citations         51–100    33804      139.0
+                       fitted parameter difference  0.007233 -0.011662  0.026099 1204 4103.589240 current reference citations     10 minus 1    41393        NaN
+                       fitted parameter difference -0.005275 -0.027094  0.018943 1061 2974.135566 current reference citations 51–100 minus 1    48938        NaN
+                      metric   estimate         lo         hi    n   weighted_n              group
+adjacent median F difference  10.000000   2.000000  17.000000 1107  2830.000000 51–100 minus 21–50
+       D endpoint difference -15.409324 -18.700253 -12.229919 1252  4298.724083         10 minus 1
+median F endpoint difference  11.000000   9.000000  13.000000 1252  4298.724083         10 minus 1
+       D endpoint difference -11.093208 -14.269681  -7.998101 1107  2103.000000    51–100 minus 10
+median F endpoint difference  23.000000  16.000000  30.000000 1107  2103.000000    51–100 minus 10
+       D endpoint difference -26.502532 -29.879956 -22.980984 1107  3157.724083     51–100 minus 1
+median F endpoint difference  34.000000  27.000000  41.000000 1107  3157.724083     51–100 minus 1
+             log2 size slope  -3.657314  -4.426710  -2.910391 6264 31324.130781               1–10
+                      metric  estimate       lo       hi    n  weighted_n       group  threshold   n_1   n_2
+                 KS distance  0.311502 0.261139 0.364217 1252 4298.724083     10 vs 1        NaN 626.0 626.0
+negative fraction difference  0.311502 0.259614 0.360133 1252 4298.724083     10 vs 1        NaN 626.0 626.0
+                 KS distance  0.420071 0.379755 0.472329 1107 3157.724083 51–100 vs 1        NaN 626.0 481.0
+negative fraction difference  0.411520 0.360916 0.458718 1107 3157.724083 51–100 vs 1        NaN 626.0 481.0
+              metric  estimate        lo        hi    n   weighted_n                       group stratum  n_low  n_high
+     log2 size slope -2.647352 -3.537739 -1.791064 3299 16781.899572                  Bottom 50%     NaN    NaN     NaN
+share of rank domain  0.492155  0.490880  0.508069 3793 19944.148774                  Bottom 50%     NaN    NaN     NaN
+     log2 size slope -1.304007 -2.616229  0.459092 2503 12236.382347                  50th–<90th     NaN    NaN     NaN
+share of rank domain  0.408069  0.391955  0.409256 3312 16536.645925                  50th–<90th     NaN    NaN     NaN
+     log2 size slope  0.179271 -4.546303  3.289317  462  2305.848862                  90th–100th     NaN    NaN     NaN
+share of rank domain  0.099776  0.098945  0.101009  892  4043.336082                  90th–100th     NaN    NaN     NaN
+high minus low slope  2.826624 -1.753539  5.997247 3761 19087.748434 90th–100th minus bottom 50%     NaN 3299.0   462.0
+                               metric  estimate       lo       hi    n   weighted_n    level  n_supported  n_observed  n_nonmissing  n_missing  n_negative  n_positive  n_nominal_CI_negative  n_nominal_CI_positive
+fraction of supported slopes negative  0.700000 0.550000 0.800000 6128 30667.894023    field           20          25          6260          4          14           6                      5                      1
+fraction of supported slopes negative  0.714286 0.571429 0.771429 3693 18659.923272 subfield           35         225          6260          4          25          10                      6                      0
+fraction of supported slopes negative  1.000000 0.000000 1.000000   45   224.737245  journal            1        2607          5160       1104           1           0                      0                      0
+                     metric  estimate        lo        hi    n   weighted_n                       group stratum
+            Main rank slope -3.845597 -4.734486 -2.997629 4721 23610.735420                1–10, paired     NaN
+           Fixed rank slope -4.033685 -4.940372 -3.145444 4721 23610.735420                1–10, paired     NaN
+Fixed minus main rank slope -0.188087 -0.675074  0.293725 4721 23610.735420                1–10, paired     NaN
+Simplified ratio slope (pp) -4.285450 -5.212156 -3.400826 6210 31051.773764                        1–10     NaN
+               D rank slope -3.657314 -4.426710 -2.910391 6264 31324.130781 main standalone all cohorts     NaN
+                D rank mean 62.852280 60.455638 65.137081  626  2676.724083 main standalone all cohorts       1
+                D rank mean 53.947735 51.686760 56.165140  627  4202.000000 main standalone all cohorts       2
+                         metric  estimate        lo        hi    n   weighted_n                              group
+                   mean authors  5.290218  5.109603  5.489114 2459 13290.258052         No acknowledgment recorded
+              mean D percentile 57.851316 56.799305 58.990394 2459 13290.258052         No acknowledgment recorded
+                log2 size slope -3.866989 -5.027398 -2.772303 2242 12040.095113         No acknowledgment recorded
+                   mean authors 10.002634  9.870598 10.116812 5538 27233.872729            Acknowledgment recorded
+              mean D percentile 46.168521 45.618009 46.673017 5538 27233.872729            Acknowledgment recorded
+                log2 size slope  0.401864 -0.620747  1.491904 4022 19284.035669            Acknowledgment recorded
+acknowledgment minus none slope  4.268853  2.721239  5.822984 6264 31324.130781                           contrast
+                 recorded share  0.672041  0.661119  0.682173 7997 40524.130781                           eligible
+                 recorded share  0.671761  0.660962  0.681821 8000 40541.000000                        all sampled
+                   mean authors  5.287820  5.106067  5.487657 2462 13307.127271 all sampled without acknowledgment
+                   mean authors 10.002634  9.870598 10.116812 5538 27233.872729    all sampled with acknowledgment
+                                                               metric  estimate        lo       hi    n   weighted_n                       group  lag    n_a    n_b  cells
+                                          year +1 share contrast (pp)  2.817411 -1.755429 7.213967  804  2649.321553                  10 minus 1  NaN  468.0  336.0    NaN
+publication-year share contrast standardized by year and quarter (pp) -1.243955 -4.013458 1.128573  819  2711.775446                  10 minus 1  NaN  469.0  350.0   12.0
+                                          year +1 share contrast (pp)  5.234828  0.941125 9.381999  688  1788.708134              51–100 minus 1  NaN  352.0  336.0    NaN
+publication-year share contrast standardized by year and quarter (pp)  3.305548  0.448263 6.104325  705  1851.570973              51–100 minus 1  NaN  355.0  350.0   12.0
+                                          year +1 share contrast (pp)  1.851404 -0.201484 3.847081 5369 27267.036744 D negative minus D positive  NaN 4243.0 1126.0    NaN
+publication-year share contrast standardized by year and quarter (pp)  2.140506  1.035300 3.188877 5421 27539.876171 D negative minus D positive  NaN 4275.0 1146.0   12.0
+                  metric  estimate        lo        hi       se    n  n_authors  n_rows   weighted_n  residual_x_ss  cluster_fallback
+              Unadjusted -1.800575 -3.069340 -0.531811 0.646926 4135       1892    6877 20400.511437   13719.118826             False
+                 Year FE -1.817794 -3.088807 -0.546781 0.648073 4135       1892    6877 20400.511437   13700.138139             False
+         Year + topic FE -2.531019 -3.712542 -1.349496 0.602443 4135       1892    6877 20400.511437    7679.712581             False
+        Year + author FE -1.782135 -3.210913 -0.353356 0.728516 4135       1892    6877 20400.511437    6543.493649             False
+Year + topic + author FE -1.949550 -3.520512 -0.378588 0.801013 4135       1892    6877 20400.511437    3925.595230             False
+                    metric  estimate        lo        hi    n   weighted_n    group  n_size1_2  n_size5_10
+           log2 size slope -3.588570 -4.470748 -2.661927 4657 22574.916913  article      806.0      3014.0
+           log2 size slope -0.248261 -3.266510  2.874387  390  1952.486968   review       65.0       238.0
+review minus article slope  3.340309  0.072751  6.641407 5047 24527.403881 contrast        NaN         NaN
+                                            metric  estimate        lo        hi    n  weighted_n                distribution          group  n_edges  threshold
+                                  fitted parameter  0.065008  0.061285  0.068829  622 2659.620415       reference age (years)              1    22562        1.0
+empirical minus fitted CDF at diagnostic threshold -0.039745 -0.050443 -0.028036  622 2659.620415       reference age (years)              1    22562        1.0
+                                  fitted parameter  0.096669  0.093598  0.099913  626 1622.000000       reference age (years)             10    34598        1.0
+empirical minus fitted CDF at diagnostic threshold -0.080935 -0.088472 -0.072979  626 1622.000000       reference age (years)             10    34598        1.0
+                                  fitted parameter  0.110615  0.105840  0.115915  481  481.000000       reference age (years)         51–100    43602        0.0
+empirical minus fitted CDF at diagnostic threshold -0.066897 -0.074702 -0.059164  481  481.000000       reference age (years)         51–100    43602        0.0
+                       fitted parameter difference  0.031661  0.026479  0.036552 1248 4281.620415       reference age (years)     10 minus 1    57160        NaN
+                       fitted parameter difference  0.045607  0.039949  0.052305 1103 3140.620415       reference age (years) 51–100 minus 1    66164        NaN
+                                  fitted parameter  1.533402  1.520306  1.548317  608 2599.757576 current reference citations              1    15491      123.0
+empirical minus fitted CDF at diagnostic threshold -0.087314 -0.095168 -0.079378  608 2599.757576 current reference citations              1    15491      123.0
+                                  fitted parameter  1.541380  1.531078  1.553816  622 1611.635783 current reference citations             10    26299      122.0
+empirical minus fitted CDF at diagnostic threshold -0.087283 -0.093664 -0.080776  622 1611.635783 current reference citations             10    26299      122.0
+                                  fitted parameter  1.528607  1.511424  1.547662  481  481.000000 current reference citations         51–100    33842      139.0
+empirical minus fitted CDF at diagnostic threshold -0.094716 -0.101823 -0.088365  481  481.000000 current reference citations         51–100    33842      139.0
+                       fitted parameter difference  0.007978 -0.010978  0.026837 1230 4211.393359 current reference citations     10 minus 1    41790        NaN
+                       fitted parameter difference -0.004795 -0.026870  0.019324 1089 3080.757576 current reference citations 51–100 minus 1    49333        NaN
+                                            metric  estimate        lo        hi    n  weighted_n                distribution          group  n_edges  threshold
+                                  fitted parameter  0.064988  0.061269  0.068804  623 2663.896332       reference age (years)              1    22564        1.0
+empirical minus fitted CDF at diagnostic threshold -0.039717 -0.050443 -0.028005  623 2663.896332       reference age (years)              1    22564        1.0
+                                  fitted parameter  0.096669  0.093598  0.099913  626 1622.000000       reference age (years)             10    34598        1.0
+empirical minus fitted CDF at diagnostic threshold -0.080935 -0.088472 -0.072979  626 1622.000000       reference age (years)             10    34598        1.0
+                                  fitted parameter  0.110615  0.105840  0.115915  481  481.000000       reference age (years)         51–100    43602        0.0
+empirical minus fitted CDF at diagnostic threshold -0.066897 -0.074702 -0.059164  481  481.000000       reference age (years)         51–100    43602        0.0
+                       fitted parameter difference  0.031681  0.026551  0.036572 1249 4285.896332       reference age (years)     10 minus 1    57162        NaN
+                       fitted parameter difference  0.045627  0.039954  0.052338 1104 3144.896332       reference age (years) 51–100 minus 1    66166        NaN
+                                  fitted parameter  1.533402  1.520306  1.548317  608 2599.757576 current reference citations              1    15491      123.0
+empirical minus fitted CDF at diagnostic threshold -0.087314 -0.095168 -0.079378  608 2599.757576 current reference citations              1    15491      123.0
+                                  fitted parameter  1.541380  1.531078  1.553816  622 1611.635783 current reference citations             10    26299      122.0
+empirical minus fitted CDF at diagnostic threshold -0.087283 -0.093664 -0.080776  622 1611.635783 current reference citations             10    26299      122.0
+                                  fitted parameter  1.528607  1.511424  1.547662  481  481.000000 current reference citations         51–100    33842      139.0
+empirical minus fitted CDF at diagnostic threshold -0.094716 -0.101823 -0.088365  481  481.000000 current reference citations         51–100    33842      139.0
+                       fitted parameter difference  0.007978 -0.010978  0.026837 1230 4211.393359 current reference citations     10 minus 1    41790        NaN
+                       fitted parameter difference -0.004795 -0.026870  0.019324 1089 3080.757576 current reference citations 51–100 minus 1    49333        NaN
+[saved T66: Stage 2 C1 team gradients and sign]
+[saved T67: Stage 2 C2 signed raw D quantiles and empirical CDF/KS]
+[saved T68: Stage 2 C3 reranked citation-impact contrasts]
+[saved T69: Stage 2 C4 field, subfield and journal support and slopes]
+[saved T70: Stage 2 C4 negative slopes among observed supported groups]
+[saved T71: Stage 2 C8 paired and standalone windows, simplified ratio]
+[saved T72: Stage 2 C9 recorded funder acknowledgment]
+[saved T73: Stage 2 C5 reference metadata coverage]
+[saved T74: Stage 2 C5 reference means and contrasts (edge and work targets)]
+[saved T75: Stage 2 C5 P12 update curves (edge and work targets)]
+[saved T76: Stage 2 C5 separate fit diagnostics]
+[saved T77: Stage 2 C5 separate fit intervals]
+[saved T78: Stage 2 C6 early citation timing and standardized contrasts]
+[saved T79: Stage 2 C7 comparable-sample clustered models]
+[saved T80: Stage 2 C7 bootstrap baselines]
+[saved T81: Stage 2 C7 article and review contrasts]
+[saved T82: Stage 2 Window and original stratum coverage and weights]
+[saved T83: Stage 2 Frame exclusions and local positive citation evidence]
+[saved T84: Stage 2 Work-level recalculated main/fixed/paired ranks]
+[saved T85: Stage 2 Reference denominator and metadata audit]
+[saved T86: Stage 2 Stage 1 comparator point reconciliation]
+STAGE2_IDS {'c1': 'T66', 'c2': 'T67', 'c3': 'T68', 'c4': 'T69', 'c4s': 'T70', 'c8': 'T71', 'c9': 'T72', 'c5cov': 'T73', 'c5': 'T74', 'c5p': 'T75', 'c5f': 'T76', 'c5fi': 'T77', 'c6': 'T78', 'c7m': 'T79', 'c7w': 'T80', 'c7d': 'T81', 'coverage': 'T82', 'frame': 'T83', 'ranks': 'T84', 'refaudit': 'T85', 'reconcile': 'T86'}
+TOTALS stratum  publication_year  main_pos  main_pos_weighted  main_zero_ref_only  main_zero_ref_only_weighted  main_zero_union  main_zero_union_weighted  fixed_complete  fixed_complete_weighted  fixed_pos  fixed_pos_weighted  fixed_zero_ref_only  fixed_zero_ref_only_weighted  fixed_zero_union  fixed_zero_union_weighted  fixed_incomplete  fixed_incomplete_weighted  paired_pos  paired_pos_weighted  paired_U  paired_U_weighted  main_pos_complete_cohorts  main_pos_complete_cohorts_weighted  draws  weighted_draws  N_h  n_h  pi  weight
+    All                 0      7933       40205.989419                  64                   318.141362                3                 16.869219            6012             30559.370612       5671        28787.964135                  339                   1762.036461                 2                   9.370016              1988                9981.629388        5671         28787.964135      6010       30550.000596                       5966                        30334.089849   8000         40541.0  NaN  NaN NaN     NaN
+SCREEN         frame_status                                            reason     n  snapshot_positive  later_year_positive  local_dated_positive
+            eligible                                          eligible 40541              40541                40003                 13960
+no_citation_evidence                              no_citation_evidence  4110                  0                    0                     0
+      no_usable_refs no recorded edge; registered reference count zero 10720               3507                 3188                   482

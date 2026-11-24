@@ -1,0 +1,39 @@
+{
+  "id": "T35",
+  "kind": "table",
+  "title": "Analysis-ready deduplicated reference metadata",
+  "description": "One sampled reference ID; year, global lifetime citations and exact-match/missing statuses. Join T3 on reference_id.",
+  "producer": "data",
+  "inputs": [
+    "T10",
+    "T2",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T3",
+    "T30",
+    "T31",
+    "T6",
+    "T8"
+  ],
+  "code": "print(load('T29').status.value_counts().to_dict()); print(load('T30').status.value_counts().to_dict()); print(load('T29').query(\"status!='ok'\").to_string(index=False)); print(load('T31').groupby('kind').sum(numeric_only=True).to_string())\nexec(compile(Path('stage1_derive.py').read_text(),'stage1_derive.py','exec')); D,meta,coverage,refworks=derive('T29','T30','T26','T27')",
+  "created_at": 1795490697.66,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "375,502 rows; columns: reference_id, publication_year, cited_by_count, source, status, batch, error, matched, true_zero",
+    "text": "375,502 rows x 9 columns\nreference_id: str [375502 distinct]\npublication_year: Int64 [min 1400, max 2026, mean 2012] (2% null)\ncited_by_count: Int64 [min 1, max 3.576e+05, mean 527.1] (2% null)\nsource: str [3 distinct]\nstatus: str [4 distinct]\nbatch: object [3588 distinct] (1% null)\nerror: str [2 distinct]\nmatched: bool [min 0, max 1, mean 0.9817]\ntrue_zero: bool [min 0, max 0, mean 0]\nfirst rows:\nreference_id  publication_year  cited_by_count         source   status batch error  matched  true_zero\n W2291288242              2022             150 local_snapshot returned  <NA>           True      False\n W2524275590              2021              28 local_snapshot returned  <NA>           True      False\n W2531499355              2021             434 local_snapshot returned  <NA>           True      False\n W2560470842              2022              33 local_snapshot returned  <NA>           True      False\n W2568496315              2021             312 local_snapshot returned  <NA>           True      False",
+    "rows": 375502,
+    "columns": [
+      "reference_id",
+      "publication_year",
+      "cited_by_count",
+      "source",
+      "status",
+      "batch",
+      "error",
+      "matched",
+      "true_zero"
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "id": "P4",
+  "kind": "figure",
+  "title": "Fig. 4 analogue — Reference age and current popularity distributions",
+  "description": "Design-weighted edge survival curves for solo, 10-author and 51–100-author works (623, 626 and 481 focal works respectively for each metric; edge n in legends). Bands are pointwise 95% design intervals with focal-work resampling. Age is focal minus reference year (nonnegative including zero; display through 100 years), and popularity is current OpenAlex citations, not historical. Both panels use available-case edges; repeated reference IDs may occur across focal works. Fits assessed separately in T60.",
+  "producer": "analyst",
+  "inputs": [
+    "T59",
+    "T60"
+  ],
+  "code": null,
+  "created_at": 1795491069.299,
+  "file": "figure.png",
+  "slug": "fig4-references",
+  "claims": [
+    "C5"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 2,
+        "truthfulness": 3,
+        "readability": 3,
+        "caption": 4
+      },
+      "summary": "The age panel clearly shows that the selected larger-team groups cite newer references than solo works. The popularity panel shows a more modest separation from solo works and little separation between the two larger-team groups. Clarify the citation scale and either show the fitted-parameter evidence or narrow the figure's stated role to the empirical distributions.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The figure shows empirical distributions but does not show the fitted parameters needed for the second part of C5. The caption's reference to T60 does not tell readers what was fitted, how the estimates differ, or how closely the models fit.",
+          "fix": "Either limit this figure's stated role to the empirical comparisons and explicitly assign the parameter evidence to a report table, or add a compact fit summary with the model, fitted parameter by group, popularity-tail cutoff, and fit diagnostic. Describe parameter differences as descriptive unless design-based uncertainty is reported."
+        },
+        {
+          "severity": "minor",
+          "problem": "The three selected strata show a clear ordering for reference age, but the two larger-team popularity curves are close. These comparisons do not establish a steady increase in popularity across team sizes.",
+          "fix": "Describe the result for the groups shown: both larger-team groups generally cite newer and more highly cited references than solo works, while their popularity curves are close to each other."
+        },
+        {
+          "severity": "minor",
+          "problem": "Panel B has decade ticks but does not name the scale or explain the unlabeled region to the left of one citation.",
+          "fix": "Name the citation-axis transformation and explicitly label or explain how zero-citation references are handled."
+        },
+        {
+          "severity": "minor",
+          "problem": "The legend in panel B covers part of the upper curves, and several uncertainty bands are hard to distinguish from their lines at print size.",
+          "fix": "Move the legend to an empty part of the panel or outside the plotting area, and increase band contrast while retaining the distinct line styles."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 4 analogue — Reference age and current popularity distributions' (version 1) for claims ['C5'], from ['T59', 'T60']"
+}

@@ -1,0 +1,47 @@
+{
+  "id": "P5",
+  "kind": "figure",
+  "title": "Fig. 3 analogue — Team-size gradients across supported fields",
+  "description": "Design-weighted slopes of within-year D percentile on log2 team size, restricted to size 1–10 (6,128 works across 20 displayed fields, per-field n shown). Eligibility: n≥30, ≥5 at sizes 1–2 and 5–10, and ≥4 distinct team sizes. Lines show pointwise 95% stratified design replicate intervals without multiple-comparison adjustment; no claims about unsupported fields.",
+  "producer": "analyst",
+  "inputs": [
+    "T53",
+    "T54"
+  ],
+  "code": null,
+  "created_at": 1795491069.304,
+  "file": "figure.png",
+  "slug": "fig3-fields",
+  "claims": [
+    "C4"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 2,
+        "truthfulness": 5,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The forest plot accurately displays the weighted field slopes, sample counts, and pointwise uncertainty. It supports a qualified field-level finding, not the full cross-field, subfield, and journal claim.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The plot shows fields only, but C4 also claims the gradient holds across subfields and within most journals. Even among the 20 displayed fields, 14 slopes are negative and six are positive; six pointwise intervals lie entirely below zero and one lies entirely above zero. Only 1 of 2,607 observed journals met the support criteria, so the data cannot establish a pattern within most journals.",
+          "fix": "Keep the field forest plot and add a compact panel or companion table using the existing results. For fields, subfields, and journals, show the number of groups meeting the support criteria out of those observed, the fraction of supported slopes that are negative, and its replicate interval. Revise C4 to say that negative estimates predominate among supported fields (14/20) and subfields (25/35) for teams of 1–10 authors, while evidence is insufficient to assess whether the gradient holds within most journals."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption does not identify the citation window used to compute D, and the eligibility wording could be read as requiring five works across both size bands combined.",
+          "fix": "Name the citation window, define D as the disruption index, identify the displayed n values as unweighted sample counts, and specify that eligibility requires at least five sampled works in each of the 1–2 and 5–10 author bands."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 3 analogue — Team-size gradients across supported fields' (version 1) for claims ['C4'], from ['T53', 'T54']"
+}

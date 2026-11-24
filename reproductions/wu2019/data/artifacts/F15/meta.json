@@ -1,0 +1,38 @@
+{
+  "id": "F15",
+  "kind": "finding",
+  "title": "C5 — partly reproduced: empirical age/popularity and age-dec",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.781,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[24] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[24] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"metric_name\\\": \\\"...\\\", \\\"group\\\": \\\"...\\\", \\\"n_edges\\\": \\\"...\\\", \\\"n_all_edges\\\": \\\"...\\\", \\\"n_works_covered\\\": \\\"...\\\", \\\"distinct_refs\\\": \\\"...\\\", \\\"target\\\": \\\"...\\\", \\\"domain\\\": \\\"...\\\", \\\"source\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"C5 \\u2014 partly reproduced: empirical age/popularity and age-decay direction supported; popularity exponent inconclusive and fits imperfect. All intervals 95%. F>0 larger minus solo 10 minus 1 (reference age (years); work): -5.19895 [-6.05171, -4.41477], n=1,221 (T74); F>0 larger minus solo 10 minus 1 (reference age (years); edge): -4.95408 [-5.95196, -3.97272], n=1,221 (T74); F>0 larger minus solo 10 minus 1 (current reference citations; work): 0.391435 [0.245494, 0.529586], n=1,221 (T74); F>0 larger minus solo 10 minus 1 (current reference citations; edge): 0.362349 [0.234103, 0.480742], n=1,221 (T74); U>0 larger minus solo 10 minus 1 (reference age (years); work): -5.29857 [-6.081, -4.50986], n=1,248 (T74); U>0 larger minus solo 10 minus 1 (reference age (years); edge): -5.03552 [-6.02387, -4.08666], n=1,248 (T74); U>0 larger minus solo 10 minus 1 (current reference citations; work): 0.391888 [0.248091, 0.525704], n=1,248 (T74); U>0 larger minus solo 10 minus 1 (current reference citations; edge): 0.366318 [0.237314, 0.486266], n=1,248 (T74); all draws (original C5 target) larger minus solo 10 minus 1 (reference age (years); work): -5.38363 [-6.23865, -4.57721], n=1,249 (T74); all draws (original C5 target) larger minus solo 10 minus 1 (reference age (years); edge): -5.04019 [-6.02805, -4.09176], n=1,249 (T74); all draws (original C5 target) larger minus solo 10 minus 1 (current reference citations; work): 0.397731 [0.254094, 0.534565], n=1,249 (T74); all draws "
+  }
+}

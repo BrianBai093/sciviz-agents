@@ -1,0 +1,48 @@
+{
+  "id": "P11",
+  "kind": "figure",
+  "title": "Fig. 4 analogue — Empirical distributions of reference age and popularity",
+  "description": "This figure addresses the empirical component of C5 only. Curves pool available focal-work–reference pairs, applying each focal work’s inverse inclusion weight to each edge, rather than giving equal total weight to each work. For teams of 1, 10 and 51–100 authors, respectively, A includes 22,564, 34,598 and 43,602 edges, B includes 22,683, 34,711 and 43,857; focal counts are above the panels. Pointwise 95% focal-work design ribbons have zero width for the 51–100 census stratum. Same-year ages are included; negative ages are omitted. Current global citation totals are from the 23 November 2026 snapshot/live run; the symmetric-log scale is linear from 0 to 1; zeros were eligible but none were observed. Both larger groups cite newer and generally more highly cited references than solo works, not necessarily more popular than each other. Separately, T60/T65 report model diagnostics and parameter intervals: for 10 vs solo, geometric decay rate differs by +0.03168 [0.02741, 0.03572], but the fitted CDF misses observed age shares by up to 8.1 percentage points in the selected groups; the count ≥50 power-law exponent differs by +0.00798 [−0.00829, 0.02373], with CDF gaps of 8.7–9.5 points. These fits do not establish either distributional law.",
+  "producer": "analyst",
+  "inputs": [
+    "T59",
+    "T60",
+    "T65"
+  ],
+  "code": null,
+  "created_at": 1795491218.135,
+  "file": "figure.png",
+  "slug": "fig4-empirical",
+  "claims": [
+    "C5"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 4,
+        "truthfulness": 5,
+        "readability": 2,
+        "caption": 4
+      },
+      "summary": "The weighted curves support the descriptive finding that the two selected larger-team groups cite newer and generally more highly cited references than solo works. The axes, weighting, and pointwise uncertainty are appropriately described. Fix the title–legend overlap before publication and keep the fitted-model evidence separate from the empirical comparison.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The figure title overlaps the shared legend, obscuring the team-size labels and focal-work counts needed to interpret both panels.",
+          "fix": "Remove the redundant in-image title or place it on a separate line above the legend. Check that all three legend entries and counts are legible at final two-column width."
+        },
+        {
+          "severity": "minor",
+          "problem": "The curves show empirical distributions for three selected team-size groups, not a trend across all team sizes or differences in fitted parameters. The caption makes this distinction, but readers need a usable reference to the separate fit results.",
+          "fix": "Keep the caption's empirical-only scope and replace T60/T65 with the final report table references. State that the age-decay contrast is positive for 10-author versus solo works, while the popularity-exponent interval includes zero."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 4 analogue — Empirical distributions of reference age and popularity' (version 1) for claims ['C5'], from ['T59', 'T60', 'T65']"
+}

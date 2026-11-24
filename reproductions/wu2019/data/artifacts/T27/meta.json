@@ -1,0 +1,31 @@
+{
+  "id": "T27",
+  "kind": "table",
+  "title": "Raw overflow cursor records",
+  "description": "One citing ID per overflow stream with date; focal streams classify outgoing edges.",
+  "producer": "data",
+  "inputs": [
+    "T12",
+    "T2",
+    "T3",
+    "T8"
+  ],
+  "code": "from pathlib import Path\nexec(compile(Path('stage1_cursors.py').read_text(),'stage1_cursors.py','exec'))",
+  "created_at": 1795489316.164,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "38,267 rows; columns: request_row, sample_id, series, part, citing_work_id, publication_date, cites_reference_if_focal",
+    "text": "38,267 rows x 7 columns\nrequest_row: int64 [min 1838, max 2.492e+04, mean 1.982e+04]\nsample_id: int64 [min 599, max 7938, mean 6341]\nseries: str [2 distinct]\npart: int64 [min 0, max 10, mean 1.382]\nciting_work_id: str [35813 distinct]\npublication_date: str [2059 distinct]\ncites_reference_if_focal: object [2 distinct] (91% null)\nfirst rows:\n request_row  sample_id series  part citing_work_id publication_date cites_reference_if_focal\n        1838        599      F     0    W4403537346       2025-01-01                     True\n        1838        599      F     0    W7165947533       2026-01-01                     True\n        1838        599      F     0    W7171351684       2026-05-01                     True\n        1838        599      F     0    W7203671898       2026-08-18                     True\n        1838        599      F     0    W7221824320       2026-01-01                     True",
+    "rows": 38267,
+    "columns": [
+      "request_row",
+      "sample_id",
+      "series",
+      "part",
+      "citing_work_id",
+      "publication_date",
+      "cites_reference_if_focal"
+    ]
+  },
+  "job": "job3"
+}

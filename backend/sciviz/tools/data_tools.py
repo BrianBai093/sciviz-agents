@@ -86,12 +86,14 @@ def sql_tool(s: Session, agent: str, timeout_s: int = 60):
 
 
 def log_cell(s: Session, agent: str, code: str, ok: bool, created: list[str], started: float,
-             job: str | None = None) -> None:
+             job: str | None = None, stopped: bool = False) -> None:
     """Append one executed code cell to kernel_log.jsonl: the exact code, in order, with the artifacts it
     created. Script export replays these cells (PLAN_P2 §3.3)."""
     rec = {"ts": round(started, 3), "agent": agent, "ok": ok, "created": created, "code": code}
     if job:
         rec["job"] = job
+    if stopped:
+        rec["stopped"] = True
     with _log_lock, (s.ws.root / "kernel_log.jsonl").open("a", encoding="utf8") as f:
         f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 

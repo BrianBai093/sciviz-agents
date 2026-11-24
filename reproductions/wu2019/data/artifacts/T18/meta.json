@@ -1,0 +1,30 @@
+{
+  "id": "T18",
+  "kind": "table",
+  "title": "Raw overflow cursor records",
+  "description": "One citing ID per overflow stream with date; focal streams classify outgoing edges.",
+  "producer": "data",
+  "inputs": [
+    "T12",
+    "T2",
+    "T3",
+    "T8"
+  ],
+  "code": null,
+  "created_at": 1795489187.646,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "0 rows; columns: request_row, sample_id, series, part, citing_work_id, publication_date, cites_reference_if_focal",
+    "text": "0 rows x 7 columns\nrequest_row: object\nsample_id: object\nseries: object\npart: object\nciting_work_id: object\npublication_date: object\ncites_reference_if_focal: object\nfirst rows:\nEmpty DataFrame\nColumns: [request_row, sample_id, series, part, citing_work_id, publication_date, cites_reference_if_focal]\nIndex: []",
+    "rows": 0,
+    "columns": [
+      "request_row",
+      "sample_id",
+      "series",
+      "part",
+      "citing_work_id",
+      "publication_date",
+      "cites_reference_if_focal"
+    ]
+  }
+}

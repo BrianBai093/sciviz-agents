@@ -1,0 +1,47 @@
+{
+  "id": "P10",
+  "kind": "figure",
+  "title": "Fig. 3 analogue — Negative slopes predominate in supported fields and subfields (partial C4 support)",
+  "description": "Team-size-stratified Columbia OpenAlex sample, 1–10 authors; unique citing works strictly postpublication through 23 November 2026. D is the disruption index. Dots and bars show design-weighted slopes of within-year D percentile per doubling and pointwise 95% design intervals. Counts n are unweighted. Support requires n≥30, ≥5 works in each of the 1–2 and 5–10 author bands, and ≥4 distinct sizes. The table gives each group equal weight and holds the supported set fixed for replicate sign-fraction intervals. Estimates are negative in 14/20 supported fields and 25/35 supported subfields; not universal. Only one journal meets support, so a claim about most journals cannot be assessed.",
+  "producer": "analyst",
+  "inputs": [
+    "T53",
+    "T54"
+  ],
+  "code": null,
+  "created_at": 1795491172.993,
+  "file": "figure.png",
+  "slug": "fig3-fields",
+  "claims": [
+    "C4"
+  ],
+  "parent": "P7",
+  "version": 3,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 4,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure provides credible partial support for C4: negative slope estimates predominate among supported fields and subfields for teams of 1–10 authors, but the pattern is not universal. The field plot and summary table agree with the supplied data, and the caption correctly states that one supported journal cannot establish a pattern across most journals.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The caption reports the fraction of negative estimates but could more clearly distinguish that fraction from the number of groups whose individual intervals lie entirely below zero.",
+          "fix": "Note that the pointwise 95% intervals lie entirely below zero in 6 of 20 supported fields and 7 of 35 supported subfields."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption explains that the supported set is held fixed but leaves the implication for unsupported groups implicit.",
+          "fix": "State that the sign fractions and their intervals describe only the observed groups that met the support rule and do not generalize to unsupported groups."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 3 analogue — Negative slopes predominate in supported fields and subfields (partial C4 support)' (version 3) for claims ['C4'], from ['T53', 'T54']"
+}

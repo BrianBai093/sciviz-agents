@@ -1,0 +1,38 @@
+{
+  "id": "F16",
+  "kind": "finding",
+  "title": "C6 — partly reproduced: 51–100 earlier than solo on a comple",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.783,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[12] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[12] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"group\\\": \\\"...\\\", \\\"lag\\\": \\\"...\\\", \\\"n_a\\\": \\\"...\\\", \\\"n_b\\\": \\\"...\\\", \\\"cells\\\": \\\"...\\\", \\\"domain\\\": \\\"...\\\", \\\"source\\\": \\\"...\\\", \\\"claim\\\": \\\"...\\\", \\\"status\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"C6 \\u2014 partly reproduced: 51\\u2013100 earlier than solo on a complete-year share; small/disruptive long-delay not testable. All intervals 95%. F>0 year +1 share contrast (pp) 10 minus 1: 2.81741 [-1.75543, 7.21397], n=804 (T78); F>0 publication-year share contrast standardized by year and quarter (pp) 10 minus 1: -1.24396 [-4.01346, 1.12857], n=819 (T78); F>0 year +1 share contrast (pp) 51\\u2013100 minus 1: 5.23483 [0.941125, 9.382], n=688 (T78); F>0 publication-year share contrast standardized by year and quarter (pp) 51\\u2013100 minus 1: 3.30555 [0.448263, 6.10433], n=705 (T78); F>0 year +1 share contrast (pp) D negative minus D positive: 1.8514 [-0.201484, 3.84708], n=5,369 (T78); F>0 publication-year share contrast standardized by year and quarter (pp) D negative minus D positive: 2.14051 [1.0353, 3.18888], n=5,421 (T78); U>0 year +1 share contrast (pp) 10 minus 1: 2.81741 [-1.75543, 7.21397], n=804 (T78); U>0 publication-year share contrast standardized by year and quarter (pp) 10 minus 1: -1.24396 [-4.01346, 1.12857], n=819 (T78); U>0 year +1 share contrast (pp) 51\\u2013100 minus 1: 5.23483 [0.941125, 9.382], n=688 (T78); U>0 publication-year share contrast standardized by year and quarter (pp) 51\\u2013100 minus 1: 3.30555 [0.448263, 6.10433], n=705 (T78); U>0 year +1 share contrast (pp) D negative minus D positive: 1.8514 [-0.201484, 3.84708], n=5,369 (T78); U>0 publication-year share contrast standardized by year and quarter (pp) D negative minus D positi"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "F11",
+  "kind": "finding",
+  "title": "C1 — partly reproduced: overall, not monotone; single instit",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.77,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[16] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[16] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"group\\\": \\\"...\\\", \\\"domain\\\": \\\"...\\\", \\\"source\\\": \\\"...\\\", \\\"claim\\\": \\\"...\\\", \\\"status\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"C1 \\u2014 partly reproduced: overall, not monotone; single institution. All intervals 95%. F>0 D percentile 1: 62.4564 [59.9947, 64.7814], n=600 (T66); F>0 median F 1: 4 [3, 4], n=600 (T66); F>0 D percentile 10: 47.5659 [45.2949, 49.7724], n=624 (T66); F>0 median F 10: 15 [13, 17], n=624 (T66); F>0 D percentile 51\\u2013100: 36.2268 [33.9674, 38.5377], n=477 (T66); F>0 median F 51\\u2013100: 39 [31, 46], n=477 (T66); F>0 D endpoint difference 51\\u2013100 minus 10: -11.3391 [-14.4672, -8.11985], n=1,101 (T66); F>0 log2 size slope 1\\u201310: -3.47648 [-4.27441, -2.70213], n=6,210 (T66); U>0 D percentile 1: 62.8523 [60.4556, 65.1371], n=626 (T66); U>0 median F 1: 4 [3, 4], n=626 (T66); U>0 D percentile 10: 47.443 [45.201, 49.6747], n=626 (T66); U>0 median F 10: 15 [13, 17], n=626 (T66); U>0 D percentile 51\\u2013100: 36.3497 [34.0856, 38.6496], n=481 (T66); U>0 median F 51\\u2013100: 38 [31, 44], n=481 (T66); U>0 D endpoint difference 51\\u2013100 minus 10: -11.0932 [-14.2697, -7.9981], n=1,107 (T66); U>0 log2 size slope 1\\u201310: -3.65731 [-4.42671, -2.91039], n=6,264 (T66)\", \"value\": [{\"metric\": \"D percentile\", \"estimate\": 62.4563723926, \"lo\": 59.9946592849, \"hi\": 64.7813619975, \"n\": 600, \"weighted_n\": 2565.5502392344, \"group\": \"1\", \"domain\": \"F>0\", \"source\": \"T66\", \"claim\": \"C1\", \"status\": \"partly reproduced: overall, not monotone; single institution\"}, {\"metric\": \"median F\", \"estimate\": 4.0, \"lo\": 3.0, \"hi\": 4.0, \"n\": 600, \"weighted_n\": 2565.5502392344, \"group\": \"1\", \""
+  }
+}

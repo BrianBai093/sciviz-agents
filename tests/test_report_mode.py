@@ -14,6 +14,7 @@ import sciviz.harness.budget as budget_mod
 import sciviz.session as session_mod
 from sciviz.harness import report as rep
 from sciviz.harness.export import export_run
+from sciviz.harness.file_log import LoggedFilesystemBackend
 from sciviz.tools.data_tools import python_tool
 from sciviz.tools.figure_tools import check_files
 
@@ -75,17 +76,59 @@ def test_job_cells_export_and_offline_replay(session, tmp_path):
     job = session.jobs.wait(job.id, 60)
     assert job.returncode == 0 and job.created == ["T2"]
     assert session.ws.get("T2")["code"].startswith("t = load('T1')")
+    # a later cell reads the job's script, as agents do when they build on an earlier job
+    run_python.invoke({"code": "from pathlib import Path\nsave_json({'n': len(Path('jobs/job1/script.py').read_text())}, "
+                               "'json', 'script length')"})
+    # a file written with the agents' file tool, then run by a cell
+    backend = LoggedFilesystemBackend(session.ws.root)
+    backend.write("/helper.py", "def plus(x):\n    return x + 1\n")
+    backend.edit("/helper.py", "x + 1", "x + 2")
+    run_python.invoke({"code": "exec(open('helper.py').read()); save_json({'v': plus(1)}, 'json', 'plus')"})
+    # a cell that depends on the original environment: in the replay it fails and its artifact is taken over
+    run_python.invoke({"code": "import os\nassert os.environ['SCIVIZ_WORKSPACE'].endswith('report-test')\n"
+                               "save_json({'ws': 1}, 'json', 'environment check')"})
+    run_python.invoke({"code": "save_json({'again': load('J4')['ws']}, 'json', 'uses the check')"})
     log = [json.loads(x) for x in (session.ws.root / "kernel_log.jsonl").read_text().splitlines()]
-    assert [c["ok"] for c in log] == [True, True, False, True, True] and log[-1]["job"] == "job1"
+    assert [c["ok"] for c in log] == [True, True, False, True, True, True, True, True, True]
+    assert log[4]["job"] == "job1"
+    assert [json.loads(x)["op"] for x in (session.ws.root / "file_log.jsonl").read_text().splitlines()] == [
+        "write", "edit"]
 
     out = tmp_path / "pkg"
     summary = export_run(session.ws.root, out, tmp_path / "no_cache.sqlite")
-    assert summary["cells"] == 5 and summary["artifacts"] == 3
+    assert summary["cells"] == 9 and summary["artifacts"] == 7 and summary["file_writes"] == 2 and summary["jobs"] == 1
     r = subprocess.run([sys.executable, str(out / "scripts" / "run_all.py"), "--db", str(SAMPLE_DB)],
                        capture_output=True, text=True, timeout=300, cwd=REPO)
     assert r.returncode == 0, r.stderr[-2000:]
-    assert "Artifacts identical: 3; different: 0 []; not recreated: 0 []" in r.stdout, r.stdout[-2000:]
-    assert "differs from the original run" not in r.stdout
+    assert ("Artifacts recomputed and identical: 6; identical up to row order: 0 []; recomputed and different: 0 []; "
+            "taken from the original run: 1 ['J4']; not recreated: 0 []") in r.stdout, r.stdout[-2000:]
+    assert r.stdout.count("differs from the original run") == 1
+
+
+def test_job_ids_stay_unique_and_stopped_jobs_are_recorded(session):
+    (session.ws.root / "jobs" / "job3").mkdir(parents=True)  # a job folder from an earlier turn
+    job = session.jobs.start("analyst", "slow", "import time\ntime.sleep(60)")
+    assert job.id == "job4"
+    session.jobs.shutdown()
+    rec = json.loads((session.ws.root / "kernel_log.jsonl").read_text().splitlines()[-1])
+    assert rec["job"] == "job4" and rec["stopped"] is True and rec["ok"] is False
+
+
+def test_run_record_summarizes_turns_from_the_event_log(tmp_path):
+    ev = [{"ts": 1000.0, "agent": "user", "kind": "message", "payload": {"text": "go"}},
+          {"ts": 1001.0, "agent": "analyst", "kind": "cost", "payload": {"model": "m", "usd": 0.25}},
+          {"ts": 1002.0, "agent": "critic", "kind": "gate", "payload": {"artifact": "P1", "verdict": "pass"}},
+          {"ts": 1003.0, "agent": "system", "kind": "done", "payload": {"seconds": 120}},
+          {"ts": 2000.0, "agent": "user", "kind": "message", "payload": {"text": "write"}},
+          {"ts": 2001.0, "agent": "writer", "kind": "cost", "payload": {"model": "m", "usd": 0.5}},
+          {"ts": 2002.0, "agent": "critic", "kind": "gate", "payload": {"artifact": "report", "verdict": "pass"}}]
+    (tmp_path / "events.jsonl").write_text("".join(json.dumps(e) + "\n" for e in ev))
+    (tmp_path / "history" / "turn1").mkdir(parents=True)
+    (tmp_path / "history" / "turn1" / "external_usage.json").write_text(json.dumps({"requests": 1234, "usd": 0.12}))
+    text = rep.run_record(tmp_path)
+    assert "| 1 | 1970-01-01 00:16 | 2 min | 1 | $0.25 | 1,234 | $0.12 |" in text
+    assert "| 0 | 1, 1 passed | 0 |" in text and "| 0 | 0 | 1: pass |" in text
+    assert "| writer | $0.00 | $0.50 | $0.50 |" in text and "| all | $0.25 | $0.50 | $0.75 |" in text
 
 
 def test_render_pdf(tmp_path):

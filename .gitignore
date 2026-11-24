@@ -31,6 +31,13 @@ frontend/dist/
 # run logs
 logs/
 
+# reproduction packages: keep their data/ (the rule above ignores every data/), but not the unpacked API
+# responses or the replay output
+!reproductions/*/data/
+reproductions/*/data/api_responses.sqlite
+reproductions/*/data/api_responses.sqlite-*
+reproductions/*/replay/
+
 # replay server artifacts
 recordings/_ledger.*
 demo/video/_raw/

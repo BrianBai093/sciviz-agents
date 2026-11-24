@@ -1,0 +1,38 @@
+{
+  "id": "F14",
+  "kind": "finding",
+  "title": "C4 — partly reproduced: majority of supported fields/subfiel",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.777,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[8] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"l",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[8] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"level\\\": \\\"...\\\", \\\"n_supported\\\": \\\"...\\\", \\\"n_observed\\\": \\\"...\\\", \\\"n_nonmissing\\\": \\\"...\\\", \\\"n_missing\\\": \\\"...\\\", \\\"n_negative\\\": \\\"...\\\", \\\"n_positive\\\": \\\"...\\\", \\\"n_nominal_CI_negative\\\": \\\"...\\\", \\\"n_nominal_CI_positive\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"C4 \\u2014 partly reproduced: majority of supported fields/subfields, not universal; across journals not testable. All intervals 95%. F>0 fraction of supported slopes negative field: 0.7 [0.55, 0.8], n=6,074 (T70); F>0 fraction of supported slopes negative subfield: 0.705882 [0.529412, 0.764706], n=3,601 (T70); F>0 fraction of supported slopes negative journal: 1 [0, 1], n=45 (T70); U>0 fraction of supported slopes negative field: 0.7 [0.55, 0.8], n=6,128 (T70); U>0 fraction of supported slopes negative subfield: 0.714286 [0.571429, 0.771429], n=3,693 (T70); U>0 fraction of supported slopes negative journal: 1 [0, 1], n=45 (T70); F>0 nan Proceedings of the National Academy of Sciences: -2.11076 [-12.2167, 7.72704], n=45 (T69); U>0 nan Proceedings of the National Academy of Sciences: -2.04173 [-12.094, 7.76107], n=45 (T69)\", \"value\": [{\"metric\": \"fraction of supported slopes negative\", \"estimate\": 0.7, \"lo\": 0.55, \"hi\": 0.8, \"n\": 6074, \"weighted_n\": 30395.5370061809, \"level\": \"field\", \"n_supported\": 20.0, \"n_observed\": 25.0, \"n_nonmissing\": 6206.0, \"n_missing\": 4.0, \"n_negative\": 14.0, \"n_positive\": 6.0, \"n_nominal_CI_negative\": 5.0, \"n_nominal_CI_positive\": 1.0, \"domain\": \"F>0\", \"source\": \"T70\", \"claim\": \"C4\", \"status\": \"partly reproduced: majority of supported fields/subfields, not universal; across journals not testable\", \"group\": null, \"id\": null, \"n_size1_2\": null, \"n_size5_10\": null, \"supported\": null}, {\"metric\": \"fraction of supported slopes negative\", \"estima"
+  }
+}

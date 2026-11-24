@@ -110,6 +110,9 @@ class OpenAlexService:
         self.usage = {"requests": 0, "cache_hits": 0, "errors": 0, "usd": 0.0, "budget_usd": budget_usd,
                       "daily_remaining_usd": None, "daily_limit_usd": None, "prepaid_remaining_usd": None,
                       "started_at": time.time()}
+        if offline:  # replay: every response comes from the frozen cache at no cost, so no budget can run out
+            self.usage.update(budget_usd=1e6, daily_remaining_usd=1e6, daily_limit_usd=1e6,
+                              prepaid_remaining_usd=0.0, offline=True)
         self.served_keys: set[str] = set()  # cache keys this session used (for exporting a frozen subset)
         self._proxy: OpenAlexProxy | None = None
 

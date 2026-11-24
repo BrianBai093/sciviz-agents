@@ -379,3 +379,27 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
 - **Figures:** 5 approved, after 12 submissions to the gate (7 sent back for revision).
 - **Fixed:** the proxy's connection backlog (connection resets under 24 concurrent workers; the jobs retried them).
 - **For stage 2:** the confidence intervals treat the 51–100 stratum as a census (near-zero width), and the main estimates include 64 works without focal citations. See `docs/reviews/P2-M2.md`.
+
+## 2026-11-24: Project 2, stage 2 (corrections and report), export and replay
+
+- **Run:** stage 2 continued session `r-full-8k` with `inputs/wu2019/full_stage2.md`: the user's two corrections (D52), then the report. 15 min; LLM $1.68 (report-mode ledger $3.41 of $30); no API requests (everything came from the cache).
+- **Corrections (analyst):**
+  - Main population: 7,933 works with at least one citing work (6,210 with 1–10 authors).
+  - Intervals: 1,000 bootstrap replicates within strata, without a finite-population correction.
+  - Figures redrawn and gated again: 7 reviews, 6 passed.
+  - C1 per doubling (1–10 authors): −3.48 (95% CI −4.27 to −2.70) in the main population, −3.66 (−4.43 to −2.91) for the stage-1 population. The 51–100 stratum now has a real interval (median citations 39, CI 31–46).
+  - The other claims keep their direction. C3 is still not reproduced: the top-minus-bottom slope contrast is +2.73 (CI −1.89 to 6.00).
+- **Report (writer + report gate):** 8 sections, 5 figures, a claim-by-claim comparison table and a side-by-side robustness table. The reviewer asked for revisions in round 1 (honesty and clarity 4 of 5) and passed it in round 2 (support 5, coverage 5, honesty 5, clarity 4).
+- **Statuses in the report:** C2 reproduced; C1, C4, C5, C6, C7 and C8 partly; C3 not reproduced as stated; C9 not testable.
+  - C1 is only "partly" because the decline is not monotone between 3 and 9 authors, and the study's patent and software comparisons are out of scope.
+- **Reviewer checks of the report:** the report's numbers for C1, C3, C5, C7, C8 and C9 equal the recorded findings. The C1 means and medians equal my independent recomputation from stage 1.
+- **Problems found while exporting, and fixes (D53, D54):**
+  - Job ids restarted at `job1` in the continued session and overwrote the folders of stage-1 jobs 1–3. Ids are now unique within a workspace. The stage-1 scripts were rebuilt and checked against the event log, and job 4's folder was saved before it could be overwritten.
+  - The agents also wrote scripts with the Deep Agents file tools, which the cell log does not see. A logging file backend now records them, and this session's writes were rebuilt from its checkpoints.
+  - The replay also needs what the harness wrote (job scripts and logs, the cell log, gated figures). The export carries them, and `run_all.py` restores them in time order.
+  - Cells that checked live API usage cannot pass offline. The replay now reports them and continues with their recorded artifacts.
+  - Continued sessions archive each turn's constraints, lead report and API usage under `history/turnN/`. The export appends a harness-written run record to the report.
+  - The frozen API responses ship xz-compressed (D55).
+- **Replay of the exported package** (`reproductions/wu2019/scripts/run_all.py`, offline): 52 cells in 77 s. 98 of the 109 recomputed artifacts are identical (3 up to row order). 11 differ by design: they record timings, retries or live usage, or are tables made before a retry of failed requests. Two cells check live usage or figure file bytes and cannot pass offline; their 5 artifacts are taken from the run. 8 artifacts come from stopped jobs. All 10 figures are rendered again with identical pixels.
+- **Tests:** 25 pass. New tests cover unique job ids and stopped-job records, file-tool writes in the replay, the fallback for divergent cells, and the run record.
+- **Seen in the run:** the writer revised four sections with the generic `edit_file` tool rather than `write_section`. The report gate still checks the assembled report, so this is harmless.

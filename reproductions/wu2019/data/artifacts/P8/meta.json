@@ -1,0 +1,52 @@
+{
+  "id": "P8",
+  "kind": "figure",
+  "title": "Fig. 4 analogue — Empirical reference-age and current-popularity distributions",
+  "description": "Design-weighted available-case edge survival curves for solo, 10-author and 51–100-author groups (623, 626 and 481 focal works for each metric; edge n in legends). Ribbons are pointwise 95% design intervals from focal-work replicates. Age includes zero and excludes negative ages; display through 100 years. The current-citations axis is symmetric-log with a linear 0–1 segment; zeros were eligible, but none were observed. Both larger groups cite newer and generally more highly cited references than solo works; the two larger groups’ popularity curves are close. This figure addresses only empirical distributions; separate model fits and misfit diagnostics are tabulated in T60.",
+  "producer": "analyst",
+  "inputs": [
+    "T59",
+    "T60"
+  ],
+  "code": null,
+  "created_at": 1795491124.574,
+  "file": "figure.png",
+  "slug": "fig4-references",
+  "claims": [
+    "C5"
+  ],
+  "parent": "P4",
+  "version": 2,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 2,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 4,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The empirical comparison is clear and consistent with the supplied data. It supports a solo-versus-larger-team contrast for the groups shown, not a steady rise in reference popularity with team size. The fitted-parameter part of C5 needs separate support or narrower wording.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The curves support the empirical part of C5 for the three groups shown: both larger-team groups cite newer and generally more highly cited references than solo works. They do not establish that fitted parameters differ by team size. T60 reports point estimates and fit diagnostics, but no uncertainty for the parameter comparisons.",
+          "fix": "Keep the figure focused on the empirical distributions. If C5 retains the parameter-difference claim, report design-based uncertainty for the relevant contrasts in T60 and interpret those contrasts alongside the fit diagnostics. Otherwise, describe the fitted parameters as descriptive estimates rather than established differences."
+        },
+        {
+          "severity": "minor",
+          "problem": "The pointwise intervals are hard to distinguish from the curves, especially where the two larger-team curves overlap in panel B.",
+          "fix": "Check the figure at final print size and make the ribbons easier to see by increasing their contrast or thinning the curves while preserving the distinct line styles."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption does not date the current citation counts or define a reference edge.",
+          "fix": "State the citation-count snapshot date and define an edge as one focal work citing one reference, so readers do not mistake the legend counts for counts of distinct references."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 4 analogue — Empirical reference-age and current-popularity distributions' (version 2) for claims ['C5'], from ['T59', 'T60']"
+}

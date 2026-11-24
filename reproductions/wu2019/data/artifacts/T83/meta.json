@@ -1,0 +1,53 @@
+{
+  "id": "T83",
+  "kind": "table",
+  "title": "Stage 2 Frame exclusions and local positive citation evidence",
+  "description": "Reproducibility audit; year 0 means all cohorts, All means all strata.",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "J9",
+    "T1",
+    "T2",
+    "T3",
+    "T32",
+    "T33",
+    "T45",
+    "T46",
+    "T47",
+    "T5",
+    "T50",
+    "T51",
+    "T52",
+    "T53",
+    "T54",
+    "T55",
+    "T56",
+    "T57",
+    "T58",
+    "T59",
+    "T60",
+    "T61",
+    "T62",
+    "T63",
+    "T64",
+    "T65"
+  ],
+  "code": "from pathlib import Path\nexec(compile(Path('analysis_stage2.py').read_text(),'analysis_stage2.py','exec'))",
+  "created_at": 1795496154.711,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "3 rows; columns: frame_status, reason, n, snapshot_positive, later_year_positive, local_dated_positive",
+    "text": "3 rows x 6 columns\nframe_status: str [3 distinct]\nreason: str [3 distinct]\nn: int64 [min 4110, max 4.054e+04, mean 1.846e+04]\nsnapshot_positive: int64 [min 0, max 4.054e+04, mean 1.468e+04]\nlater_year_positive: int64 [min 0, max 4e+04, mean 1.44e+04]\nlocal_dated_positive: int64 [min 0, max 1.396e+04, mean 4814]\nfirst rows:\n        frame_status                                   reason     n  snapshot_positive  later_year_positive  local_dated_positive\n            eligible                                 eligible 40541              40541                40003                 13960\nno_citation_evidence                     no_citation_evidence  4110                  0                    0                     0\n      no_usable_refs no recorded edge; registered referenc... 10720               3507                 3188                   482",
+    "rows": 3,
+    "columns": [
+      "frame_status",
+      "reason",
+      "n",
+      "snapshot_positive",
+      "later_year_positive",
+      "local_dated_positive"
+    ]
+  },
+  "job": "job3"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "P18",
+  "kind": "figure",
+  "title": "Fig. 3 analogue — Team size and disruption across citation impact (Stage 2)",
+  "description": "Inverse-inclusion-weighted mean within-year disruption percentile for 7,933 Columbia OpenAlex works with at least one distinct strictly postpublication citing work through 23 November 2026. Higher D percentiles indicate greater disruption; the horizontal line marks percentile 50, the vertical line separates exact sizes and grouped sizes. Impact bands use weighted midranks; unweighted n are in the legend. Pointwise 95% percentile bootstrap intervals: in each of 1,000 replicates resample the original number of focal works with replacement in each original stratum, including 51–100, with no finite-population correction; recompute D and impact ranks and bins jointly. For teams of 1–10, slopes in percentile points per author doubling: bottom half −2.50 [−3.39, −1.64], n=3,277; middle band −1.22 [−2.54, 0.48], n=2,476; top decile +0.23 [−4.33, 3.37], n=457. Top-minus-bottom +2.73 [−1.89, 6.00], n=3,734. The bottom-half decline is supported, but not a decline at every impact level or a stronger decline at high impact. Larger-team bands are descriptive. Source: T68.",
+  "producer": "analyst",
+  "inputs": [
+    "T68",
+    "P6"
+  ],
+  "code": null,
+  "created_at": 1795496248.763,
+  "file": "figure.png",
+  "slug": "fig3-impact-stage2",
+  "claims": [
+    "C3"
+  ],
+  "parent": "P14",
+  "version": 2,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 2,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 5,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure clearly evaluates C3 without overstating the result. Among teams of 1–10 authors, only the bottom impact band shows a clear decline in disruption with team size. The top-minus-bottom slope contrast is imprecise and does not support a stronger decline at high impact. The caption documents the cited-work restriction and the within-stratum bootstrap without a finite-population correction, including for the fully sampled stratum.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The caption specifies weighted midranks but does not explicitly say which citation measure is ranked to define impact.",
+          "fix": "State that impact bands are based on within-publication-year weighted midranks of the number of distinct strictly postpublication citing works observed through 23 November 2026."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 3 analogue — Team size and disruption across citation impact (Stage 2)' (version 2) for claims ['C3'], from ['T68', 'P6']"
+}

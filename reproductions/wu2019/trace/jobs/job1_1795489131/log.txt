@@ -1,0 +1,1 @@
+(The original log of this job was overwritten in stage 2, when job ids restarted at job1 in the continued session; see DEVLOG 2026-11-24. Script and timing were recovered: script rebuilt from artifact J3 by undoing the edits of cells 12 and 13; it matches the event log's copy (length, first 500 and last 1,000 characters).)

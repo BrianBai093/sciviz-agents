@@ -1,0 +1,30 @@
+{
+  "id": "T22",
+  "kind": "table",
+  "title": "Group and metadata API batch timing and billing",
+  "description": "One completed API batch; actual incremental spend and elapsed active time.",
+  "producer": "data",
+  "inputs": [
+    "T2",
+    "T8",
+    "T9"
+  ],
+  "code": null,
+  "created_at": 1795489188.33,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "2 rows; columns: kind, submitted, retried, backend_requests, cache_hits, errors, usd, active_seconds",
+    "text": "2 rows x 8 columns\nkind: str [2 distinct]\nsubmitted: int64 [min 20, max 99, mean 59.5]\nretried: int64 [min 6, max 99, mean 52.5]\nbackend_requests: int64 [min 20, max 198, mean 109]\ncache_hits: int64 [min 0, max 0, mean 0]\nerrors: int64 [min 0, max 198, mean 99]\nusd: float64 [min 0, max 0.002, mean 0.001]\nactive_seconds: float64 [min 1.267, max 10.03, mean 5.649]\nfirst rows:\n                kind  submitted  retried  backend_requests  cache_hits  errors   usd  active_seconds\nrepresentative_group         99       99               198           0     198 0.000       10.031526\n           reference         20        6                20           0       0 0.002        1.267055",
+    "rows": 2,
+    "columns": [
+      "kind",
+      "submitted",
+      "retried",
+      "backend_requests",
+      "cache_hits",
+      "errors",
+      "usd",
+      "active_seconds"
+    ]
+  }
+}

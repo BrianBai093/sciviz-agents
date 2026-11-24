@@ -1,0 +1,38 @@
+{
+  "id": "F20",
+  "kind": "finding",
+  "title": "Stage 2 audit (counts, not confidence limits). T82: 8,000 dr",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.799,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": {\"coverage\": \"list[70] of \\\"...\\\"\", \"screen\": \"list[3] of \\\"...\\\"\", \"references\": \"list[3] of \\\"...\\\"\", \"requests\": \"int\", \"usd\": \"floa",
+    "text": "structure: {\"text\": \"str\", \"value\": {\"coverage\": \"list[70] of \\\"...\\\"\", \"screen\": \"list[3] of \\\"...\\\"\", \"references\": \"list[3] of \\\"...\\\"\", \"requests\": \"int\", \"usd\": \"float\"}}\npreview: {\"text\": \"Stage 2 audit (counts, not confidence limits). T82: 8,000 draws; main 7,933 F>0, 64 refs-only and 3 union-zero; 2021\\u201323 fixed 5,671 F>0, 339 refs-only, 2 union-zero among 6,012 complete, with 1,988 incomplete 2024 draws. The 5,671 also have main F>0; 5,966 have main F>0 in 2021\\u201323. T83: 55,371 snapshot works; 10,720 with no recorded reference edge and registered count zero (3,507 snapshot-cited, 3,188 with later-year and 482 with dated local evidence; criteria overlap); 4,110 with refs but no positive local proxy; 40,541 kept. T85: strict C5 has 446,323 deduplicated pairs, 373,977 distinct IDs, 7,547 missing reference year, 1,742 negative ages, 10,732 same-year ages, 7,230 missing popularity, and no observed zero popularity. No Stage-2 API calls or spend.\", \"value\": {\"coverage\": [{\"stratum\": \"1\", \"publication_year\": 0, \"main_pos\": 600, \"main_pos_weighted\": 2565.5502392344, \"main_zero_ref_only\": 26, \"main_zero_ref_only_weighted\": 111.1738437002, \"main_zero_union\": 1, \"main_zero_union_weighted\": 4.2759170654, \"fixed_complete\": 461, \"fixed_complete_weighted\": 1971.1977671451, \"fixed_pos\": 350, \"fixed_pos_weighted\": 1496.5709728868, \"fixed_zero_ref_only\": 110, \"fixed_zero_ref_only_weighted\": 470.350877193, \"fixed_zero_union\": 1, \"fixed_zero_union_weighted\": 4.2759170654, \"fixed_incomplete\": 166, \"fixed_incomplete_weighted\": 709.8022328549, \"paired_pos\": 350, \"paired_pos_weighted\": 1496.5709728868, \"paired_U\": 460, \"paired_U_weighted\": 1966.9218500797, \"main_po"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "P2",
+  "kind": "figure",
+  "title": "Fig. 3 analogue — Disruption across levels of citation impact",
+  "description": "Mean weighted within-year D percentile by team size and within-year citation impact, n=7,997 (impact groups n=3,793, 3,312, and 892; cell sizes in T52). Error bars are pointwise 95% stratified design intervals with both rank outcomes and impact grouping recomputed. Curves are descriptive; the direct high-minus-low slope interval in T52 includes zero.",
+  "producer": "analyst",
+  "inputs": [
+    "T52"
+  ],
+  "code": null,
+  "created_at": 1795491069.28,
+  "file": "figure.png",
+  "slug": "fig3-impact",
+  "claims": [
+    "C3"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 2,
+        "truthfulness": 4,
+        "readability": 3,
+        "caption": 4
+      },
+      "summary": "The figure is useful as a descriptive comparison across impact groups, but it does not support the claim that the gradient is strongest at high impact. Show the direct comparison already available in T52, qualify the claim, and move the legend so all uncertainty intervals are visible.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The curves show mean disruption percentiles by team size and impact group, but they do not establish that the team-size gradient is strongest at high impact. The high-impact curve is nonmonotonic, and the pointwise intervals do not test differences in slopes. The caption notes that the direct high-minus-low slope interval includes zero but does not report the estimate or interval.",
+          "fix": "Report the existing T52 slopes for all three impact groups and the high-minus-low slope contrast, with 95% intervals and the team-size range and sample sizes used for the slope estimates. Put these in a compact panel or the caption. Revise C3 to distinguish the evidence for a gradient within each group from the inconclusive evidence that it is stronger at high impact."
+        },
+        {
+          "severity": "major",
+          "problem": "The legend overlaps the lower error bars for the high-impact group, obscuring uncertainty that readers need to assess the claim.",
+          "fix": "Move the legend outside the plotting area and verify that all interval caps and team-size labels remain legible at two-column width."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption does not identify the citation window, explain that higher D percentiles indicate greater disruption, or define the dashed and dotted guides.",
+          "fix": "Name the citation window used, state how to interpret higher D percentiles, and explain that the horizontal guide marks the 50th percentile and the vertical guide separates exact team sizes from grouped bins."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 3 analogue — Disruption across levels of citation impact' (version 1) for claims ['C3'], from ['T52']"
+}

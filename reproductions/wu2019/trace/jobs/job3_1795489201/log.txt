@@ -1,0 +1,1 @@
+(The original log of this job was overwritten in stage 2, when job ids restarted at job1 in the continued session; see DEVLOG 2026-11-24. Script and timing were recovered: script from the cell log; timing from the event log.)

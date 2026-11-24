@@ -1,0 +1,15 @@
+{
+  "id": "J3",
+  "kind": "json",
+  "title": "Executable stage-1 collection code",
+  "description": "Bulk and overflow collectors with exact manifest and budget guard.",
+  "producer": "data",
+  "inputs": [],
+  "code": "k1=k1.replace('start=time.monotonic();',\"start=time.monotonic();\").replace(\"fails=[i for i,r in enumerate(res) if isinstance(r,Exception)]; reqs+=len(pp)\",\"fails=[i for i,r in enumerate(res) if isinstance(r,Exception)]; reqs+=len(pp)\\n if fails:print('first error',str(res[fails[0]])[:220],flush=True)\").replace(\"if fails:\\n  rr=\",\"if fails:\\n  time.sleep(.3)\\n  rr=\"); Path('stage1_bulk.py').write_text(k1); print(save_json({'bulk':k1,'overflow':k2,'dependencies':['T2','T3','T8','T9','T12']},'json','Executable stage-1 collection code','Bulk and overflow collectors with exact manifest and budget guard.'))",
+  "created_at": 1795489198.562,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"bulk\": \"str\", \"overflow\": \"str\", \"dependencies\": \"list[5] of \\\"str\\\"\"}",
+    "text": "structure: {\"bulk\": \"str\", \"overflow\": \"str\", \"dependencies\": \"list[5] of \\\"str\\\"\"}\npreview: {\"bulk\": \"import time, os, json, traceback\\nfrom math import ceil\\nfrom urllib.parse import urlencode\\nstart=time.monotonic(); started_epoch=time.time(); b=openalex_usage(); print('START',b,flush=True)\\nplan=load('T8'); ids=load('T9').reference_id.tolist(); samp=load('T2')\\ngrp=plan[plan.method=='group'].copy(); batches=[ids[i:i+100] for i in range(0,len(ids),100)]\\ndef gp(f):return {'filter':f,'group_by':'publication_year','per_page':200}\\ndef mp(ids):return {'filter':'ids.openalex:'+'|'.join(ids),'per_page':100,'select':'id,publication_year,cited_by_count'}\\ndef checkguard(k):\\n u=openalex_usage(); available=min(u['remaining_session_budget_usd'],u['daily_remaining_usd']+u.get('prepaid_remaining_usd',0)); assert available+1e-8>=max(.0001*k,.01),u\\nreqs=0; logs=[]; outg=[]; outm=[]\\ndef batch(seq,kind):\\n global reqs\\n if not seq:return\\n pp=[('works',x[1]) for x in seq]; checkguard(2*len(pp)); before=openalex_usage(); t=time.monotonic()\\n res=openalex_many(pp,workers=24); fails=[i for i,r in enumerate(res) if isinstance(r,Exception)]; reqs+=len(pp)\\n if fails:print('first error',str(res[fails[0]])[:220],flush=True)\\n if fails:\\n  time.sleep(.3)\\n  rr=openalex_many([pp[i] for i in fails],workers=12); reqs+=len(rr)\\n  for i,r in zip(fails,rr): res[i]=r\\n after=openalex_usage(); logs.append((kind,len(pp),len(fails),after['requests']-before['requests'],after['cache_hits']-before['cache_hits'],after['errors']-before['errors'],after['usd']-before['usd'],time.monotonic()-t)); print"
+  }
+}

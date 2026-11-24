@@ -13,6 +13,8 @@ from __future__ import annotations
 import html
 import json
 import re
+from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
 
 from markdown_it import MarkdownIt
@@ -134,6 +136,7 @@ h1 { font-size: 19pt; line-height: 1.2; margin: 0 0 4pt; }
 .subtitle { color: #555; font-size: 9.5pt; margin-bottom: 18pt; }
 h2 { font-size: 13pt; margin: 18pt 0 6pt; border-bottom: 0.6pt solid #bbb; padding-bottom: 2pt; }
 h3 { font-size: 11pt; margin: 12pt 0 4pt; }
+h2, h3 { break-after: avoid; page-break-after: avoid; }
 p { margin: 0 0 7pt; text-align: justify; hyphens: auto; }
 table { border-collapse: collapse; margin: 8pt 0 10pt; font-size: 8.8pt; width: 100%; page-break-inside: avoid; }
 th, td { border-bottom: 0.5pt solid #ccc; padding: 3pt 5pt; text-align: left; vertical-align: top; }
@@ -148,14 +151,15 @@ pre { background: #f5f5f5; padding: 6pt; white-space: pre-wrap; }
 """
 
 
-def to_html(md: str, artifacts: dict[str, dict], root: Path, subtitle: str = "") -> str:
+def to_html(md: str, artifacts: dict[str, dict], root: Path, subtitle: str = "", img_src=None) -> str:
+    """`img_src(figure_id) -> str` sets the image URL (default: the figure's file in the workspace)."""
     order: dict[str, int] = {}
 
     def fig_html(m: re.Match) -> str:
         fid = m.group(1)
         order.setdefault(fid, len(order) + 1)
         meta = artifacts[fid]
-        src = (root / "artifacts" / fid / "figure.png").resolve().as_uri()
+        src = img_src(fid) if img_src else (root / "artifacts" / fid / "figure.png").resolve().as_uri()
         cap = html.escape(meta.get("description", ""))
         return (f'\n<figure><img src="{src}"><figcaption><b>Figure {order[fid]}.</b> '
                 f'<b>{html.escape(meta["title"])}.</b> {cap} <span class="cite">[{fid}]</span></figcaption></figure>\n')
@@ -215,3 +219,89 @@ def evidence_text(artifacts: dict[str, dict], root: Path, limit: int = 60000) ->
             parts.append(f"{aid} ({m['kind']}{status}) {m['title']}: {m.get('description', '')[:400]}\n{short}")
     text = "\n\n".join(parts)
     return text if len(text) <= limit else text[:limit] + "\n... [evidence truncated]"
+
+
+def _jsonl(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
+    return [json.loads(line) for line in path.read_text(encoding="utf8").splitlines() if line.strip()]
+
+
+def run_record(root: Path) -> str:
+    """The run's own record, from the harness's files (event log, usage files, cell log, artifacts), as Markdown.
+    It is added to the report when the run is exported; the agents do not write it."""
+    ev = _jsonl(root / "events.jsonl")
+    starts = [e["ts"] for e in ev if e["agent"] == "user" and e["kind"] == "message"
+              and not e["payload"].get("answer_to")]
+    if not starts:
+        return ""
+    bounds = [*starts, float("inf")]
+    rows, by_agent, models = [], {}, set()
+    for i, t0 in enumerate(starts):
+        seg = [e for e in ev if t0 <= e["ts"] < bounds[i + 1]]
+        done = [e["payload"].get("seconds") for e in seg if e["kind"] == "done"]
+        secs = done[-1] if done else seg[-1]["ts"] - t0
+        costs = [e for e in seg if e["kind"] == "cost"]
+        for e in costs:
+            by_agent.setdefault(e["agent"], Counter())[i] += e["payload"].get("usd", 0.0)
+            models.add(e["payload"].get("model", "?"))
+        archived = root / "history" / f"turn{i + 1}" / "external_usage.json"
+        current = root / "external_usage.json"
+        ufile = archived if archived.exists() else (current if i == len(starts) - 1 else None)
+        usage = json.loads(ufile.read_text()) if ufile is not None and ufile.exists() else {}
+        jobs = [e["payload"] for e in seg if e["kind"] == "job" and e["payload"].get("action") == "end"]
+        gates = [e["payload"] for e in seg if e["kind"] == "gate"]
+        fig = [g for g in gates if g.get("artifact") != "report"]
+        rep_ = [g for g in gates if g.get("artifact") == "report"]
+        started = sum(1 for e in seg if e["kind"] == "job" and e["payload"].get("action") == "start")
+        jobs_text = f"{started} started, {sum(1 for j in jobs if j.get('returncode') == 0)} succeeded" if started else "0"
+        fig_text = f"{len(fig)}, {sum(g.get('verdict') == 'pass' for g in fig)} passed" if fig else "0"
+        rep_text = f"{len(rep_)}: {', '.join(g.get('verdict', '?') for g in rep_)}" if rep_ else "0"
+        rows.append(
+            f"| {i + 1} | {datetime.fromtimestamp(t0, timezone.utc):%Y-%m-%d %H:%M} | {secs / 60:.0f} min | "
+            f"{len(costs)} | ${sum(e['payload'].get('usd', 0.0) for e in costs):.2f} | "
+            f"{usage.get('requests', 0):,} | ${usage.get('usd', 0.0):.2f} | {jobs_text} | {fig_text} | {rep_text} |")
+    n = len(starts)
+    agent_rows = [f"| {a} | " + " | ".join(f"${c[i]:.2f}" for i in range(n)) + f" | ${sum(c.values()):.2f} |"
+                  for a, c in sorted(by_agent.items(), key=lambda kv: -sum(kv[1].values()))]
+    total = sum(sum(c.values()) for c in by_agent.values())
+    cells = _jsonl(root / "kernel_log.jsonl")
+    per_agent = Counter(c["agent"] for c in cells)
+    failed = Counter(c["agent"] for c in cells if not c["ok"])
+    metas = [json.loads(p.read_text()) for p in sorted((root / "artifacts").glob("*/meta.json"))]
+    figs = [m for m in metas if m["kind"] == "figure"]
+    status = Counter(m.get("status") for m in figs)
+    kinds = Counter(m["kind"] for m in metas if m["kind"] != "figure")
+    report_status = root / "report" / "status.json"
+    rs = json.loads(report_status.read_text()) if report_status.exists() else {}
+    return "\n".join([
+        "## Appendix: run record",
+        "",
+        "Generated by the harness from the run's event log, usage files, cell log and artifact store when the "
+        "run was exported. The agents did not write this section. A turn is one instruction from the user to the "
+        f"lead agent; this run had {n}. Model: {', '.join(sorted(models)) or 'unknown'}.",
+        "",
+        "| Turn | Started (UTC) | Wall time | LLM calls | LLM spend | API requests | API spend | Background jobs "
+        "| Figure reviews | Report reviews |",
+        "|---|---|---|---|---|---|---|---|---|---|",
+        *rows,
+        "",
+        "LLM spend by agent (the critic does the independent figure and report reviews):",
+        "",
+        "| Agent | " + " | ".join(f"Turn {i + 1}" for i in range(n)) + " | Total |",
+        "|---|" + "---|" * (n + 1),
+        *agent_rows,
+        "| all | " + " | ".join(f"${sum(c[i] for c in by_agent.values()):.2f}" for i in range(n))
+        + f" | ${total:.2f} |",
+        "",
+        " ".join(part for part in [
+            f"Code cells run by the agents (background jobs included): {len(cells)} "
+            f"({', '.join(f'{a} {k}' for a, k in per_agent.most_common())}), of which {sum(failed.values())} "
+            "failed (an agent reads the error and runs a corrected cell)." if cells else "",
+            f"Artifacts: {', '.join(f'{v} {k}' for k, v in sorted(kinds.items()))}." if kinds else "",
+            f"Figure versions submitted to the figure gate: {len(figs)} "
+            f"({', '.join(f'{v} {k}' for k, v in sorted(status.items(), key=lambda kv: str(kv[0])))})."
+            if figs else "",
+            f"Report gate: {rs.get('status')} in round {rs.get('round')}." if rs else ""] if part),
+        "",
+    ])

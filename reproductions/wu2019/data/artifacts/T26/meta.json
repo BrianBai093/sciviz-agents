@@ -1,0 +1,33 @@
+{
+  "id": "T26",
+  "kind": "table",
+  "title": "Residual and focal cursor stream checks",
+  "description": "One overflow cursor stream; independent count, distinct date-bearing IDs and status.",
+  "producer": "data",
+  "inputs": [
+    "T12",
+    "T2",
+    "T3",
+    "T8"
+  ],
+  "code": "from pathlib import Path\nexec(compile(Path('stage1_cursors.py').read_text(),'stage1_cursors.py','exec'))",
+  "created_at": 1795489316.146,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "79 rows; columns: request_row, sample_id, series, part, expected_count, unique_citers, pages, complete, error",
+    "text": "79 rows x 9 columns\nrequest_row: int64 [min 1838, max 2.492e+04, mean 2.025e+04]\nsample_id: int64 [min 599, max 7938, mean 6478]\nseries: str [2 distinct]\npart: int64 [min 0, max 10, mean 2.139]\nexpected_count: int64 [min 1, max 3301, mean 484.4]\nunique_citers: int64 [min 1, max 3301, mean 484.4]\npages: int64 [min 1, max 17, mean 2.975]\ncomplete: bool [min 1, max 1, mean 1]\nerror: str [1 distinct]\nfirst rows:\n request_row  sample_id series  part  expected_count  unique_citers  pages  complete error\n        1838        599      F     0               5              5      1      True      \n        1844        599      T     0             211            211      2      True      \n        1845        599      T     1            1850           1850     10      True      \n        1846        599      T     2            1836           1836     10      True      \n       10373       3345      F     0               1              1      1      True      ",
+    "rows": 79,
+    "columns": [
+      "request_row",
+      "sample_id",
+      "series",
+      "part",
+      "expected_count",
+      "unique_citers",
+      "pages",
+      "complete",
+      "error"
+    ]
+  },
+  "job": "job3"
+}

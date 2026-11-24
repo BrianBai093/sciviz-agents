@@ -1,0 +1,42 @@
+{
+  "id": "T42",
+  "kind": "table",
+  "title": "Reference match coverage by stratum and source",
+  "description": "One focal team-size stratum/metadata source/status; pair and distinct-ID denominators.",
+  "producer": "data",
+  "inputs": [
+    "T10",
+    "T2",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T3",
+    "T30",
+    "T31",
+    "T39",
+    "T6",
+    "T8"
+  ],
+  "code": "dp=Path('stage1_derive.py').read_text().replace('def derive(gid,mid,cid,rid):','def derive(gid,mid,cid,rid,write_disruption=True):').replace('    if len(annual): print(save_table','    if write_disruption and len(annual): print(save_table').replace(\"    print(save_table(d,'Validated main\", \"    if write_disruption: print(save_table(d,'Validated main\").replace(\"    print(save_table(d.groupby(\",\"    if write_disruption: print(save_table(d.groupby(\"); Path('stage1_derive.py').write_text(dp); exec(compile(dp,'stage1_derive.py','exec')); D,meta,coverage,refworks=derive('T29','T39','T26','T27',write_disruption=False)\nprint('counts for artifacts',[(z,len(load(z))) for z in ['T29','T31','T32','T33','T34','T38','T39','T40']]); print('by stratum edge coverage',coverage.groupby('stratum').agg(matched=('matched_edges','sum'),edges=('focal_reference_edges','sum')).assign(rate=lambda z:z.matched/z.edges).to_string()); print('returned any metric',int(meta.cited_by_count.notna().sum()),'both',int(meta.matched.sum())); print(openalex_usage()); print(os.listdir('artifacts/J8'))",
+  "created_at": 1795490729.557,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "76 rows; columns: stratum, source, status, focal_reference_edges, distinct_reference_ids, matched_edges, zero_edges, stratum_edges, share_of_stratum_edges, distinct_ids_in_stratum, share_of_distinct_ids_in_stratum",
+    "text": "76 rows x 11 columns\nstratum: str [13 distinct]\nsource: str [3 distinct]\nstatus: str [3 distinct]\nfocal_reference_edges: int64 [min 1, max 4.134e+04, mean 5897]\ndistinct_reference_ids: int64 [min 1, max 3.822e+04, mean 5618]\nmatched_edges: int64 [min 0, max 4.134e+04, mean 5797]\nzero_edges: int64 [min 0, max 0, mean 0]\nstratum_edges: int64 [min 2.365e+04, max 4.516e+04, mean 3.449e+04]\nshare_of_stratum_edges: float64 [min 2.805e-05, max 0.9648, mean 0.1711]\ndistinct_ids_in_stratum: int64 [min 2.296e+04, max 4.186e+04, mean 3.285e+04]\nshare_of_distinct_ids_in_stratum: float64 [min 2.937e-05, max 0.9658, mean 0.1711]\nfirst rows:\nstratum              source           status  focal_reference_edges  distinct_reference_ids  matched_edges  zero_edges  stratum_edges  share_of_stratum_edges  distinct_ids_in_stratum  share_of_distinct_ids_in_stratum\n      1  live_openalex_bulk partial_metadata                     22                      22              0           0          23652                0.000930                    22958                          0.000958\n      1  live_openalex_bulk         returned                  21607                   20990          21607           0          23652                0.913538                    22958                          0.914278\n      1  live_openalex_bulk        unmatched                    870                     843              0           0          23652                0.036783                    22958                          0.036719\n      1 live_openalex_pilot         returned                    729                     702            729           0          23652                0.030822                    22958                          0.030578\n      1 live_openalex_pilot        unmatched                     68                      66              0           0          23652                0.002875                    22958                          0.002875",
+    "rows": 76,
+    "columns": [
+      "stratum",
+      "source",
+      "status",
+      "focal_reference_edges",
+      "distinct_reference_ids",
+      "matched_edges",
+      "zero_edges",
+      "stratum_edges",
+      "share_of_stratum_edges",
+      "distinct_ids_in_stratum",
+      "share_of_distinct_ids_in_stratum"
+    ]
+  }
+}

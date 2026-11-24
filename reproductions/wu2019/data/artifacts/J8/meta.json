@@ -1,0 +1,20 @@
+{
+  "id": "J8",
+  "kind": "json",
+  "title": "Group and reference collector timing",
+  "description": "Background job wall time and audit billing snapshots.",
+  "producer": "data",
+  "inputs": [
+    "T2",
+    "T8",
+    "T9"
+  ],
+  "code": "from pathlib import Path\nexec(compile(Path('stage1_bulk.py').read_text(),'stage1_bulk.py','exec'))",
+  "created_at": 1795490690.087,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"started_epoch\": \"float\", \"finished_epoch\": \"float\", \"wall_seconds\": \"float\", \"start_usage\": {\"requests\": \"int\", \"cache_hits\": \"int\", \"errors\": \"int\", \"usd\": \"",
+    "text": "structure: {\"started_epoch\": \"float\", \"finished_epoch\": \"float\", \"wall_seconds\": \"float\", \"start_usage\": {\"requests\": \"int\", \"cache_hits\": \"int\", \"errors\": \"int\", \"usd\": \"float\", \"budget_usd\": \"float\", \"daily_remaining_usd\": \"float\", \"daily_limit_usd\": \"float\", \"prepaid_remaining_usd\": \"float\", \"started_at\": \"float\", \"remaining_session_budget_usd\": \"float\"}, \"end_usage\": {\"requests\": \"int\", \"cache_hits\": \"int\", \"errors\": \"int\", \"usd\": \"float\", \"budget_usd\": \"float\", \"daily_remaining_usd\": \"float\", \"daily_limit_usd\": \"float\", \"prepaid_remaining_usd\": \"float\", \"started_at\": \"float\", \"remaining_session_budget_usd\": \"float\"}, \"submissions\": \"int\"}\npreview: {\"started_epoch\": 1795489202.474079, \"finished_epoch\": 1795490690.085852, \"wall_seconds\": 1487.6107404170325, \"start_usage\": {\"requests\": 1365, \"cache_hits\": 0, \"errors\": 1086, \"usd\": 0.0279, \"budget_usd\": 3.5, \"daily_remaining_usd\": 0.8878, \"daily_limit_usd\": 1.0, \"prepaid_remaining_usd\": 3.0, \"started_at\": 1795488877.667499, \"remaining_session_budget_usd\": 3.4721}, \"end_usage\": {\"requests\": 30207, \"cache_hits\": 38, \"errors\": 1086, \"usd\": 2.912, \"budget_usd\": 3.5, \"daily_remaining_usd\": 0.0, \"daily_limit_usd\": 1.0, \"prepaid_remaining_usd\": 1.0602, \"started_at\": 1795488877.667499, \"remaining_session_budget_usd\": 0.588}, \"submissions\": 28744}"
+  },
+  "job": "job4"
+}

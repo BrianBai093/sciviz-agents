@@ -10,7 +10,9 @@ through parameters, highlights or new code.
 
 The data is an OpenAlex snapshot of **Columbia University's 55,371 works published 2021–2024** (see [docs/DATA.md](docs/DATA.md)).
 
-This repository is Project 1 (tasks T1–T3) of the WHALES Lab coding test.
+This repository is Project 1 (tasks T1–T3) of the WHALES Lab coding test. It also holds **Project 2**: the same
+harness, in a backend-only report mode, reproduces a published science-of-science study and writes a PDF report
+([§9](#project2)).
 
 ![The web app: chat, two linked views, trace](docs/reviews/m2/linked_selection.png)
 
@@ -27,6 +29,7 @@ This repository is Project 1 (tasks T1–T3) of the WHALES Lab coding test.
 6. [What works, what is incomplete](#status)
 7. [Main technical decisions](#decisions)
 8. [Repository layout and development docs](#layout)
+9. [Project 2: reproducing Wu, Wang & Evans (2019)](#project2)
 
 ---
 
@@ -271,7 +274,9 @@ evals/            tasks.yaml, run_eval.py, results/
 demo/             demo session script, storyboard, video builder, slides
 tests/            unit tests (no LLM), UI smoke scripts
 docs/             PLAN, DECISIONS, DEVLOG, STATUS, ARCHITECTURE, DATA, milestone reviews
-workspaces/       recorded sessions (artifacts, screenshots, events) used by replay mode
+inputs/           Project 2 run inputs: paper brief, run constraints, pilot results
+reproductions/    Project 2 exported runs: report, figures, artifacts, frozen API responses, replayable scripts
+recordings/       recorded Project 1 sessions (artifacts, screenshots, events) used by replay mode
 ```
 
 The project was built following a written plan with three milestones. Each milestone ended in a self-review: [docs/reviews/](docs/reviews/).
@@ -280,3 +285,75 @@ The project was built following a written plan with three milestones. Each miles
 - [Decisions](docs/DECISIONS.md)
 - [Status / handoff](docs/STATUS.md)
 - [Developer architecture guide](docs/ARCHITECTURE.md)
+
+<a id="project2"></a>
+## 9. Project 2: reproducing Wu, Wang & Evans (2019)
+
+The agents reproduce L. Wu, D. Wang and J. A. Evans, "Large teams develop and small teams disrupt science and
+technology" (*Nature* 566, 378–382, 2019) on the Columbia snapshot. The input is a research question and a paper brief
+(our own summary of the study's claims and of its disruption measure D). The output is a PDF report with figures,
+plus every intermediate artifact, the agents' code, the frozen API responses and an offline replay:
+[`reproductions/wu2019/`](reproductions/wu2019/), starting with [report.pdf](reproductions/wu2019/report.pdf) and
+[REPRODUCE.md](reproductions/wu2019/REPRODUCE.md).
+
+![Mean disruption percentile and median citations by team size, Columbia 2021–2024](reproductions/wu2019/figures/figure1_P15_fig2-team-stage2.png)
+
+**Figure 2.** The agents' analogue of the study's Fig. 2. It covers 7,933 Columbia works from 2021–2024 that have at least one citing work, out of a sample of 8,000 stratified by team size. Error bars are 95% bootstrap intervals.
+
+**Result.** The central pattern holds on this data, one claim does not, and the rest hold in part:
+
+| Claim of the study | Status in the report | Our estimate (95% interval) |
+|---|---|---|
+| Disruption falls and citations rise with team size | Partly: the decline is clear, but flat between 3 and 9 authors | −3.48 percentile points per doubling of team size, 1–10 authors (−4.27 to −2.70); median citations 4 (solo), 15 (10 authors), 39 (51–100) |
+| The whole distribution of D shifts | Reproduced | Share of works with D < 0: 48% solo, 78% ten authors |
+| The decline is stronger for highly cited work | **Not reproduced** | Top-decile slope +0.23 (−4.33 to 3.37); top minus bottom +2.73 (−1.89 to 6.00) |
+| It holds across fields | Partly | Negative in 14 of 20 supported fields and 24 of 34 subfields; only 1 journal had enough works |
+| Larger teams cite newer and more popular work | Partly | References 5.2 years newer for ten authors than for solo works (4.4 to 6.1) |
+| Early attention for large teams | Partly | Larger share of early citations for 51–100 authors than solo (+5.2 points, 0.9 to 9.4) |
+| It holds within author | Partly | −1.85 per doubling with year, topic and author fixed effects (−3.43 to −0.27) |
+| It holds for another citation window | Partly | Fixed 2-year window −2.82 per doubling, paired with the main window −3.01 |
+| Funding, history, patents, Nobel | Not testable | A funding acknowledgment proxy only |
+
+**How the agents worked.**
+- The Lead turned the brief into a claim plan.
+- The Data agent designed the data collection:
+  - it counted D's three citer sets through the OpenAlex API, grouped by year, so one request serves both windows;
+  - it piloted the design on 100 works, then collected 30k requests for 8,000 works in background jobs;
+  - it checked its counts 62 times against independent counts.
+- The Analyst computed percentiles, bootstrap intervals and regressions, and drew the figures. Each figure passed a vision review.
+- The Writer wrote the report. A reviewer checked it against the claim plan and every recorded finding, and passed it in the second round.
+
+The user made the scale and method decisions at the check-ins: the pilot, the sample size, and two corrections before writing ([D47–D55](docs/DECISIONS.md)).
+
+**What the harness adds for report mode** (all generic: the study enters only through the brief, and a lint test keeps study terms out of prompts and code):
+- an OpenAlex tool and a local proxy for kernels, with a response cache, a rate limit and a spend budget; the key never reaches the agents;
+- background jobs;
+- a figure gate (file checks plus a vision review);
+- a report gate: cited artifact ids must exist, figures must be approved, and every statistic must cite its artifact; then an independent reviewer;
+- PDF rendering;
+- `sciviz export-run`, which writes the reproduction package with a harness-written run record and a replay of every cell, job and file write in order.
+
+**Reproduce.**
+```bash
+uv run python reproductions/wu2019/scripts/run_all.py      # offline, no keys, about 2 minutes
+```
+The replay reruns all 52 code cells from the frozen API responses: 98 of the 109 recomputed artifacts are identical (3 of them up to row order). The 11 others record timings, retries or live API usage, or were made before a retry of failed requests. All 10 figures are rendered again with identical pixels. Rerunning the agents themselves takes three commands ([REPRODUCE.md](reproductions/wu2019/REPRODUCE.md)).
+
+**Cost and time** (GPT-6.2 Sol for all agents):
+
+| Run | Time | LLM | OpenAlex |
+|---|---:|---:|---:|
+| Pilot | 13 min | $0.48 | $0.08 |
+| Stage 1 | 42 min | $1.25 | $2.91 |
+| Stage 2 | 15 min | $1.68 | $0 |
+| Total | 70 min | $3.41 | $3.00 |
+
+The $30 LLM cap was never approached.
+
+**Limitations.**
+- One institution and four publication years, so citation windows are short and late recognition cannot be tested.
+- A stratified sample of 8,000 works, not all 40,541 eligible ones.
+- OpenAlex coverage and metadata errors.
+- The report is accurate but dense.
+
+Plan and reviews: [PLAN_P2](docs/PLAN_P2.md), [pilot review](docs/reviews/P2-pilot.md), [stage-1 review](docs/reviews/P2-M2.md), [final review](docs/reviews/P2-M3.md).

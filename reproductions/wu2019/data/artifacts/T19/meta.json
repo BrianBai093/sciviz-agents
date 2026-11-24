@@ -1,0 +1,27 @@
+{
+  "id": "T19",
+  "kind": "table",
+  "title": "Cursor waves and timing",
+  "description": "One parallel cursor wave; initial submissions, retries and elapsed active time.",
+  "producer": "data",
+  "inputs": [
+    "T12",
+    "T2",
+    "T3",
+    "T8"
+  ],
+  "code": null,
+  "created_at": 1795489187.649,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "0 rows; columns: submitted, retried, retained_errors, active_seconds",
+    "text": "0 rows x 4 columns\nsubmitted: object\nretried: object\nretained_errors: object\nactive_seconds: object\nfirst rows:\nEmpty DataFrame\nColumns: [submitted, retried, retained_errors, active_seconds]\nIndex: []",
+    "rows": 0,
+    "columns": [
+      "submitted",
+      "retried",
+      "retained_errors",
+      "active_seconds"
+    ]
+  }
+}

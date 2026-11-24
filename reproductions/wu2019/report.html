@@ -1,0 +1,507 @@
+<!doctype html><html><head><meta charset='utf-8'><style>
+@page { size: Letter; margin: 0.9in 0.85in; }
+body { font-family: 'Charter', 'Georgia', serif; font-size: 10.5pt; line-height: 1.42; color: #111; }
+h1 { font-size: 19pt; line-height: 1.2; margin: 0 0 4pt; }
+.subtitle { color: #555; font-size: 9.5pt; margin-bottom: 18pt; }
+h2 { font-size: 13pt; margin: 18pt 0 6pt; border-bottom: 0.6pt solid #bbb; padding-bottom: 2pt; }
+h3 { font-size: 11pt; margin: 12pt 0 4pt; }
+h2, h3 { break-after: avoid; page-break-after: avoid; }
+p { margin: 0 0 7pt; text-align: justify; hyphens: auto; }
+table { border-collapse: collapse; margin: 8pt 0 10pt; font-size: 8.8pt; width: 100%; page-break-inside: avoid; }
+th, td { border-bottom: 0.5pt solid #ccc; padding: 3pt 5pt; text-align: left; vertical-align: top; }
+th { border-bottom: 1pt solid #333; }
+figure { margin: 10pt 0 12pt; page-break-inside: avoid; text-align: center; }
+figure img { max-width: 100%; max-height: 6.2in; }
+figcaption { font-size: 9pt; color: #222; text-align: left; margin-top: 4pt; }
+.cite { color: #2a5d9f; font-size: 8.5pt; white-space: nowrap; }
+code, pre { font-family: Menlo, monospace; font-size: 8.5pt; }
+pre { background: #f5f5f5; padding: 6pt; white-space: pre-wrap; }
+.evidence td:first-child { white-space: nowrap; font-family: Menlo, monospace; }
+</style></head><body><h1>Team size and disruption in Columbia research</h1>
+<div class="subtitle">Stage 2 reproduction of Wu, Wang &amp; Evans using frozen OpenAlex evidence</div>
+<h2>Summary</h2>
+<p><strong>In the eligible Columbia sample, larger teams generally had more citing works and were more likely to have negative disruption scores.</strong> Among 7,933 OpenAlex works published in 2021–2024 with at least one strictly later citing work by the cutoff, each doubling of team size among works with 1–10 authors was associated with a 3.48-point lower within-year disruption percentile (95% interval −4.27 to −2.70; n=6,210). The median citing-work count rose from 4 [3, 4] for solo works to 15 [13, 17] for ten-author works and 39 [31, 46] for the 51–100 band (n=600, 624 and 477). Neither trend was strictly monotone <span class="cite">[T1, T82, T87, F11, P15]</span>.</p>
+<p>A negative score means more later works cited the focal work together with a recorded reference than cited the focal work alone <span class="cite">[brief]</span> <span class="cite">[T32, T33]</span>. Negative scores accounted for 48.2% of solo work [44.3%, 52.3%], versus 77.6% [74.1%, 81.0%] for ten authors and 88.1% [85.0%, 90.8%] for 51–100 authors (same group sizes). Solo work ranked higher without being predominantly positive <span class="cite">[T66, F12]</span>. The slope was negative in the bottom half of citation impact; estimates for the middle and top groups were inconclusive, and the data did not establish a stronger decline at the top <span class="cite">[T68, F13]</span>. Most supported fields and subfields had negative slopes, but the pattern was not uniform. Larger teams cited newer and more currently cited references <span class="cite">[T70, T74, F14, F15]</span>.</p>
+<p>Stage 2 requires positive focal citation separately in each window and replaces finite-population intervals with inference that resamples even the fully sampled stratum. Keeping works with a defined score but no focal citation gives much the same headline gradient; the tables below show where point estimates or uncertainty differ. These are local, observational associations, not effects of assigning team size or evidence for patents and software <span class="cite">[T66, T82, T86, T87, J15]</span> <span class="cite">[brief]</span>.</p>
+<h2>Data and methods</h2>
+<p><strong>Frame and sample.</strong> The Columbia OpenAlex snapshot contains 55,371 works from 2021–2024 with 1–100 listed authors. Team size uses the snapshot authorship count, including unresolved byline positions; no additional document-type filter was applied. The screen required at least one distinct, syntactically valid OpenAlex work ID as a recorded reference, excluding the focal work's own ID. It removed 10,720 works with no recorded reference edge and a registered reference count of zero. A further 4,110 works had usable references but no positive snapshot citation total, later-calendar-year count through the snapshot year, or strictly later local inbound edge. The 40,541 remaining works form a proxy frame, not a census of works with positive date-filtered global inbound counts. Among the reference exclusions, 3,507 had positive snapshot totals, 3,188 had positive later-year counts and 482 had dated local inbound evidence; these criteria overlap <span class="cite">[T1, T3, T83, F20, J5]</span>.</p>
+<p>The prespecified draw was stratified simple random sampling without replacement from sorted IDs (PCG64 seed 42), with near-equal allocation across exact sizes 1–10 and pooled 11–20, 21–50 and 51–100 bands, subject to stratum capacity. Each draw retained weight N_h/n_h (the inverse selection probability); weights were not reset after eligibility filtering. The 51–100 band was fully sampled. The exact frame sizes, weights and both windows' counts by stratum and cohort are in the audit <span class="cite">[T2, T5, T82, J5]</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Authors</th>
+<th style="text-align:right">Drawn</th>
+<th style="text-align:right">Main F&gt;0</th>
+<th>Authors</th>
+<th style="text-align:right">Drawn</th>
+<th style="text-align:right">Main F&gt;0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td style="text-align:right">627</td>
+<td style="text-align:right">600</td>
+<td>8</td>
+<td style="text-align:right">626</td>
+<td style="text-align:right">623</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align:right">627</td>
+<td style="text-align:right">618</td>
+<td>9</td>
+<td style="text-align:right">626</td>
+<td style="text-align:right">625</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align:right">627</td>
+<td style="text-align:right">623</td>
+<td>10</td>
+<td style="text-align:right">626</td>
+<td style="text-align:right">624</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align:right">627</td>
+<td style="text-align:right">623</td>
+<td>11–20</td>
+<td style="text-align:right">626</td>
+<td style="text-align:right">623</td>
+</tr>
+<tr>
+<td>5</td>
+<td style="text-align:right">627</td>
+<td style="text-align:right">624</td>
+<td>21–50</td>
+<td style="text-align:right">626</td>
+<td style="text-align:right">623</td>
+</tr>
+<tr>
+<td>6</td>
+<td style="text-align:right">627</td>
+<td style="text-align:right">625</td>
+<td>51–100</td>
+<td style="text-align:right">481</td>
+<td style="text-align:right">477</td>
+</tr>
+<tr>
+<td>7</td>
+<td style="text-align:right">627</td>
+<td style="text-align:right">625</td>
+<td>All</td>
+<td style="text-align:right">8,000</td>
+<td style="text-align:right">7,933</td>
+</tr>
+</tbody>
+</table>
+<p><em>Original sample sizes and main analysis eligibility by team stratum; weight range 1.00–10.18 <span class="cite">[T5, T82, F20, P15]</span>.</em></p>
+<p><strong>Counting disruption.</strong> Let f be a focal work and R its recorded references. Among distinct later works, n_i counts those citing f but nothing in R; n_j those citing f and at least one member of R; and n_k those citing at least one member of R but not f. F = n_i + n_j, U = n_i + n_j + n_k, and D = (n_i − n_j) / U. Negative D means that co-citation of prior work outweighs focal-only citation; positive D means the reverse. The rank measures relative position, not this sign. F = 0 and U &gt; 0 implies D = 0, but it is not evidence of focal uptake [brief; T32, T33, T84].</p>
+<p>Focal dates and reference lists came from the local snapshot; citing works were counted in the global OpenAlex graph by publication date, not ingestion date. The frozen API inputs contain annual grouped counts for focal, focal-only and union sets. Long unions used disjoint partitions; overflow used dated cursor IDs with deduplication and outbound-edge classification of focal citers, not sums of overlapping counts. Grouped counts matched all 62 independent checks; 122 checked overflow-tail citers satisfied tail membership and prefix exclusion; reversing partition order gave identical totals in seven checks. All 79 overflow streams were complete. These tests validate counting on the observed graph, not its completeness <span class="cite">[T3, T15, T24, T25, T26, T27, T28, T29, T32, T33, J10]</span>.</p>
+<p><strong>Windows and eligibility.</strong> Both windows begin the day after the focal publication date. The main window ends November 23, 2026, inclusive. The true fixed window ends December 31 of the publication year plus two, inclusive, not two years after the publication date. It is complete only for 2021–2023: 6,012 complete draws, with 1,988 from 2024 excluded as incomplete. In the main window, 7,933 focal works had at least one later citer; for 64, later works cited their references but not the focal work; and three had no later works citing either. The complete fixed window had 5,671 focal works with at least one later citer, 339 whose references were cited but not the focal work, and two for which neither was cited. Among the complete cohorts, 5,966 meet main F&gt;0; the 5,671 fixed-positive works also meet main F&gt;0 and form the strict paired sample before restricting team sizes. The comparator requires U&gt;0 in each window (7,997 main; 6,010 fixed and paired). The domains are applied after sampling, without replacements for ineligible works <span class="cite">[T2, T33, T82, T84, F20]</span>.</p>
+<p><strong>Estimation and intervals.</strong> Percentiles are inverse-inclusion-weighted midranks within publication year and the applicable domain; ties share a midrank. Slopes use log2(author count), reported in disruption percentile points per author doubling unless otherwise specified. Ranks are computed over the eligible domain before subgroup analyses. In each of 1,000 replicates (seed 20261123), resample the original number of focal works with replacement within every original team stratum, including the fully sampled band. Keep original inverse-inclusion weights, apply domain restrictions, then recalculate weighted D and F midranks and citation-impact bins jointly. All bootstrap intervals are pointwise 95% percentile intervals, with no finite-population correction (FPC) and conditional on the observed graph. Fixed-effects model intervals instead use two-way author/work clustering on a fixed rank outcome, also without FPC <span class="cite">[T66, T68, T71, T79, T80, T84, J12, J15]</span>.</p>
+<h2>Results: disruption, impact and references</h2>
+<h3>C1 · Team size and disruption</h3>
+<p>Figure 1 shows the overall decline in mean disruption rank and rise in median citing works, with reversals or plateaus within the small-team range. Relative to solo works (62.46 [59.99, 64.78]; n=600), the ten-author mean rank was lower (47.57 [45.29, 49.77]; n=624). The pooled 51–100 band was lower still (36.23 [33.97, 38.54]; n=477), a difference from ten authors of −11.34 points [−14.47, −8.12] across 1,101 works. The pooled result does not establish a smooth decline at every author count <span class="cite">[F11, T66, P15]</span>.</p>
+<figure><img src="figures/figure1_P15_fig2-team-stage2.png"><figcaption><b>Figure 1.</b> <b>Fig. 2 analogue — Team size, disruption rank and citation counts (Stage 2).</b> Design-weighted mean within-year disruption percentile (A) and median unique strictly postpublication citing works through 23 November 2026 (B), for 7,933 Columbia OpenAlex works with at least one such citer. Unweighted stratum n is below each team size; dotted line separates exact sizes from pooled bands. Error bars show pointwise 95% percentile bootstrap intervals from 1,000 focal-work replacement draws within each original stratum with original inverse-inclusion weights and reranking; no finite-population correction, including in the fully sampled 51–100 stratum. Trends are not strictly monotone. For 51–100 authors the median is 39 citing works [31,46], n=477. <span class="cite"><span class="cite">[P15]</span></span></figcaption></figure>
+<h3>C2 · Signed disruption distributions</h3>
+<p>Figure 2 shows separation around zero despite small absolute scores. Median D was 0 [−0.000056, 0] for solo works, −0.000420 [−0.000523, −0.000289] for ten authors and −0.001158 [−0.001384, −0.000982] for 51–100 authors (n=600, 624 and 477). The share below zero was 29.4 percentage points higher [24.0, 34.5] for ten authors than solo (n=1,224). That interval supports a difference at zero. The weighted empirical CDF distance describes how far apart the curves are; it is not an iid KS test <span class="cite">[T66, T67, F12, P19]</span>.</p>
+<figure><img src="figures/figure2_P19_ext-raw-disruption-stage2.png"><figcaption><b>Figure 2.</b> <b>Extended figure — Signed raw disruption distributions (Stage 2).</b> Inverse-inclusion-weighted empirical CDF of signed raw D for one, ten and 51–100 authors (600, 624 and 477 Columbia OpenAlex works with at least one distinct citing work in the postpublication window ending 23 November 2026). Display range is −0.1 to 0.1 on a symmetric log scale; zero is the sign boundary between development (negative) and disruption (positive). Pointwise 95% percentile bootstrap bands: in each of 1,000 replicates resample the original number of focal works with replacement within each original stratum, including 51–100, without a finite-population correction. The raw score for most works is close to zero; the curves differ around zero. Source: T67. <span class="cite"><span class="cite">[P19]</span></span></figcaption></figure>
+<h3>C3 · Does the gradient strengthen at high citation impact?</h3>
+<p><strong>Partly reproduced locally: the bottom-half decline was supported, but the full cross-impact claim was not reproduced.</strong> In Figure 3 and the side-by-side table, the middle and top intervals include zero. The top-minus-bottom difference points toward a <em>less</em> negative slope at high impact, opposite the study's stronger-decline prediction, but the contrast is inconclusive. This is neither evidence of a reversed moderation effect nor a test that top-ranked works necessarily have positive raw D <span class="cite">[brief]</span> <span class="cite">[T68, F13, P18, T87]</span>.</p>
+<figure><img src="figures/figure3_P18_fig3-impact-stage2.png"><figcaption><b>Figure 3.</b> <b>Fig. 3 analogue — Team size and disruption across citation impact (Stage 2).</b> Inverse-inclusion-weighted mean within-year disruption percentile for 7,933 Columbia OpenAlex works with at least one distinct strictly postpublication citing work through 23 November 2026. Higher D percentiles indicate greater disruption; the horizontal line marks percentile 50, the vertical line separates exact sizes and grouped sizes. Impact bands use weighted midranks; unweighted n are in the legend. Pointwise 95% percentile bootstrap intervals: in each of 1,000 replicates resample the original number of focal works with replacement in each original stratum, including 51–100, with no finite-population correction; recompute D and impact ranks and bins jointly. For teams of 1–10, slopes in percentile points per author doubling: bottom half −2.50 [−3.39, −1.64], n=3,277; middle band −1.22 [−2.54, 0.48], n=2,476; top decile +0.23 [−4.33, 3.37], n=457. Top-minus-bottom +2.73 [−1.89, 6.00], n=3,734. The bottom-half decline is supported, but not a decline at every impact level or a stronger decline at high impact. Larger-team bands are descriptive. Source: T68. <span class="cite"><span class="cite">[P18]</span></span></figcaption></figure>
+<h3>C4 · Fields, subfields and journals</h3>
+<p>Figure 4 shows a predominance of negative, not universal, slopes. Of 25 observed fields and 224 observed subfields, 20 and 34 were supported under the sample-size and team-size coverage rules in the caption. The bootstrap fraction holds the supported group set fixed and weights groups equally. Of 2,591 observed journals, only <em>Proceedings of the National Academy of Sciences</em> met the rules, with an imprecise slope of −2.11 [−12.22, 7.73] (n=45). A claim about most journals is not testable here <span class="cite">[T69, T70, F14, P16]</span>.</p>
+<figure><img src="figures/figure4_P16_fig3-fields-stage2.png"><figcaption><b>Figure 4.</b> <b>Fig. 3 analogue — Negative slopes predominate in supported fields and subfields (Stage 2).</b> Within-year D percentile slopes per doubling of team size for Columbia OpenAlex works with 1–10 authors and at least one unique strictly postpublication citing work through 23 November 2026. Dots and bars are inverse-inclusion-weighted slopes and pointwise 95% percentile bootstrap intervals; resample focal works with replacement within original strata (1,000 replicates), rerank and apply no finite-population correction, including the fully sampled stratum. Unweighted n shown for each field. Support requires n≥30, ≥5 in each of the 1–2 and 5–10 author bands and ≥4 distinct sizes. Table weights groups equally and holds each domain’s observed supported set fixed in resamples. Slopes are negative in 14/20 fields and 24/34 subfields; only one journal meets support, so no generalization to most journals. <span class="cite"><span class="cite">[P16]</span></span></figcaption></figure>
+<h3>C5 · Age and current popularity of references</h3>
+<p>Figure 5 is the corrected rendering of P12: it retains the empirical layout, uses the strict domain and replaces the old finite-population ribbons. The curves pool deduplicated focal–reference pairs, applying the focal work's weight to every edge; long reference lists therefore contribute more. The companion work target first averages available references within each work, then applies the design weight to that mean. Both targets show newer and more currently cited references for ten-author versus solo works; the side-by-side table reports age and log2(1 + current citations). The original all-draw target also agrees: the work-mean age difference is −5.38 years [−6.24, −4.58] (n=1,249) <span class="cite">[P12, P17, T74, T75, F15]</span>.</p>
+<figure><img src="figures/figure5_P17_fig4-empirical.png"><figcaption><b>Figure 5.</b> <b>Fig. 4 analogue — Empirical distributions of reference age and popularity (Stage 2).</b> Stage-2 update of P12, preserving its empirical panels and geometry. Among Columbia OpenAlex works with at least one unique postpublication citing work through 23 November 2026, the curves pool deduplicated focal–reference pairs, applying the focal inverse-inclusion weight to every edge. For 1, 10 and 51–100 authors, respectively, A uses 22,001/34,531/43,548 edges and B uses 22,149/34,613/43,772 edges; both use 597/624/477 focal works with available metadata. Ribbons are pointwise 95% percentile bootstrap intervals from 1,000 focal-work replacement samples within the original team-size strata, including 51–100, with no finite-population correction. A includes same-year ages, excludes negative ages and displays thresholds through 100 years. B uses current global citation totals, not counts at focal publication; the axis is linear up to one and logarithmic above (no observed zeros). Both larger groups cite newer and generally more highly cited references than solo works; their popularity curves are close. These are empirical comparisons of the groups shown, not fitted curves. Separate updated fit evidence (T76/T77) shows positive geometric age-decay contrast for 10 versus solo, inconclusive citation-tail exponent contrast at counts ≥50, and notable empirical–fitted CDF gaps. <span class="cite"><span class="cite">[P17]</span></span></figcaption></figure>
+<p>Of 446,323 strict-domain pairs (373,977 distinct reference IDs), 7,547 lacked a reference year and 1,742 had negative age; these pairs do not contribute to age estimates. The 10,732 same-year pairs remain eligible. Popularity uses global lifetime counts available from the snapshot or frozen collection, not counts at focal publication: 7,230 pairs lack this measure, and no observed counts are zero. These are separate available-case denominators, not imputations <span class="cite">[T45, T73, T85, F20]</span>.</p>
+<p>Separate weighted fits favor a steeper geometric age decay for ten authors versus solo, but the exponent difference for a discrete power-law tail above or at 50 citations is inconclusive. Fit is imperfect: for ten-author work the maximum empirical–fitted CDF gaps are about 0.081 for age (n=624; 34,531 pairs) and 0.088 for the popularity tail (n=620; 26,259 pairs). These are descriptive fit checks, not iid tests or fitted curves in the figure <span class="cite">[T76, T77, F15, P17]</span>.</p>
+<h2>Results: timing, controls, robustness and funding</h2>
+<h3>C6 · Early attention, not late recognition</h3>
+<p>See C6 rows in the side-by-side table. Using complete 2021–2023 cohorts, the largest team band received a higher share of its year +1/+2 citing works in year +1 than solo works. This share is averaged over focal works with citations in those two years <span class="cite">[T78, F16]</span>. Publication-year shares instead require positive total citations in the focal year through year +2 and are standardized to common publication-year and quarter cells. The 51–100 versus solo contrast is positive under both definitions, but the ten-versus-solo contrasts are inconclusive <span class="cite">[T78, F16]</span>. Negative-D works have a higher standardized publication-year share than positive-D works; the year +1 contrast is inconclusive. Sign uses main-window D and therefore overlaps the timing data. Share conditioning explains why the displayed contrasts are identical across domains; count and zero-citation profiles need not match <span class="cite">[T32, T78, F16, J15]</span>. Late recognition or sleeping beauties are not testable with this follow-up <span class="cite">[T32, T78]</span> <span class="cite">[brief]</span>.</p>
+<h3>C7 · Like-for-like fixed effects and work types</h3>
+<p>See C7 rows in the side-by-side table. The comparable sample retains works by identified Columbia authors observed on works of differing team sizes; the work weight is split across qualifying authors. The strict fit uses 4,107 works from 1,885 supported authors (6,838 author–work rows) <span class="cite">[T79, F17, J12]</span>. The fully adjusted slope remains negative relative to the same-sample unadjusted estimate; that sample already shows a substantially weaker baseline than the full small-team sample <span class="cite">[T66, T79, T80]</span>. The review slope and primary review-minus-article contrast are inconclusive. The latter excludes zero only in the broader comparator, so the type result is sensitive to domain; theory versus empirical work is not classified. The within-author association is not causal <span class="cite">[T79, T81, F17, J12]</span> <span class="cite">[brief]</span>.</p>
+<h3>C8 · Short-window and simplified-score checks</h3>
+<p>See C8 rows in the side-by-side table. The paired estimates rerank each window on the same intersection of eligible works; they do not compare all main-window works with fixed-window survivors. The standalone analyses rank each eligible domain separately. Strict standalone fixed and paired fixed coincide because fixed-positive works are also main-positive, but standalone main for the complete cohorts is larger. Both paired slopes remain negative, and their difference is inconclusive in either domain. The focal-only share n_i/F also declines with size; by construction it cannot use F=0 works, even under U&gt;0 <span class="cite">[T71, T82, T84, F18]</span>. The study's long windows and its self-citation, popular-reference and citation-edge variants were not reproduced here <span class="cite">[T71, F18]</span> <span class="cite">[brief]</span>.</p>
+<h3>C9 · Recorded funding acknowledgments</h3>
+<p>See C9 rows in the side-by-side table. Among small teams, the slope is negative without an acknowledgment on record; with a record, it is near zero and imprecise. The difference is descriptive: absence of a funding record is not absence of funding, and the result does not estimate an effect of funding <span class="cite">[T72, F19]</span>. Historical trends, corporate-patent comparisons and Nobel-winning papers are not testable in this snapshot <span class="cite">[T1, F19]</span> <span class="cite">[brief]</span>.</p>
+<h2>Side-by-side robustness: strict versus defined disruption</h2>
+<p>Each cell gives estimate [95% interval]; n is the number of focal works. Both columns use the revised no-FPC inference: pointwise focal-work bootstrap intervals except the two clustered C7 model rows. Rank slopes and slope contrasts are percentile points per author doubling; pp denotes percentage points. C4 fractions count supported groups equally; their n counts works in those groups. Rows cite the full tables underlying the headline extract <span class="cite">[T87, T66, T70, T79]</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Claim and estimate</th>
+<th>Stage 2 primary: F&gt;0</th>
+<th>Stage 1 domain: U&gt;0, revised intervals</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1 Rank slope, 1–10 authors <span class="cite">[T66, F11]</span></td>
+<td>−3.48 [−4.27, −2.70]; n=6,210</td>
+<td>−3.66 [−4.43, −2.91]; n=6,264</td>
+</tr>
+<tr>
+<td>C1 Mean rank, solo <span class="cite">[T66, F11]</span></td>
+<td>62.46 [59.99, 64.78]; n=600</td>
+<td>62.85 [60.46, 65.14]; n=626</td>
+</tr>
+<tr>
+<td>C1 Mean rank, ten <span class="cite">[T66, F11]</span></td>
+<td>47.57 [45.29, 49.77]; n=624</td>
+<td>47.44 [45.20, 49.67]; n=626</td>
+</tr>
+<tr>
+<td>C1 Mean rank, 51–100 <span class="cite">[T66, F11]</span></td>
+<td>36.23 [33.97, 38.54]; n=477</td>
+<td>36.35 [34.09, 38.65]; n=481</td>
+</tr>
+<tr>
+<td>C1 Median F, solo / ten / 51–100 <span class="cite">[T66, F11]</span></td>
+<td>4 [3, 4] / 15 [13, 17] / 39 [31, 46]; n as above</td>
+<td>4 [3, 4] / 15 [13, 17] / 38 [31, 44]; n as above</td>
+</tr>
+<tr>
+<td>C2 Weighted CDF distance, ten vs solo <span class="cite">[T67, F12]</span></td>
+<td>0.294 [0.247, 0.348]; n=1,224</td>
+<td>0.312 [0.261, 0.364]; n=1,252</td>
+</tr>
+<tr>
+<td>C2 Negative D share, ten minus solo (pp) <span class="cite">[T67, F12]</span></td>
+<td>+29.4 [24.0, 34.5]; n=1,224</td>
+<td>+31.2 [26.0, 36.0]; n=1,252</td>
+</tr>
+<tr>
+<td>C3 Bottom-half slope <span class="cite">[T68, F13]</span></td>
+<td>−2.50 [−3.39, −1.64]; n=3,277</td>
+<td>−2.65 [−3.54, −1.79]; n=3,299</td>
+</tr>
+<tr>
+<td>C3 Middle-band slope <span class="cite">[T68, F13]</span></td>
+<td>−1.22 [−2.54, 0.48]; n=2,476</td>
+<td>−1.30 [−2.62, 0.46]; n=2,503</td>
+</tr>
+<tr>
+<td>C3 Top-decile slope <span class="cite">[T68, F13]</span></td>
+<td>+0.23 [−4.33, 3.37]; n=457</td>
+<td>+0.18 [−4.55, 3.29]; n=462</td>
+</tr>
+<tr>
+<td>C3 Top minus bottom slope <span class="cite">[T68, F13]</span></td>
+<td>+2.73 [−1.89, 6.00]; n=3,734</td>
+<td>+2.83 [−1.75, 6.00]; n=3,761</td>
+</tr>
+<tr>
+<td>C4 Negative field slopes <span class="cite">[T70, F14]</span></td>
+<td>14/20; 70% [55%, 80%]; n=6,074</td>
+<td>14/20; 70% [55%, 80%]; n=6,128</td>
+</tr>
+<tr>
+<td>C4 Negative subfield slopes <span class="cite">[T70, F14]</span></td>
+<td>24/34; 71% [53%, 76%]; n=3,601</td>
+<td>25/35; 71% [57%, 77%]; n=3,693</td>
+</tr>
+<tr>
+<td>C5 Age, ten minus solo, pooled edges (years) <span class="cite">[T74, F15]</span></td>
+<td>−4.95 [−5.95, −3.97]; n=1,221</td>
+<td>−5.04 [−6.02, −4.09]; n=1,248</td>
+</tr>
+<tr>
+<td>C5 Age, work means (years) <span class="cite">[T74, F15]</span></td>
+<td>−5.20 [−6.05, −4.41]; n=1,221</td>
+<td>−5.30 [−6.08, −4.51]; n=1,248</td>
+</tr>
+<tr>
+<td>C5 Log popularity, ten minus solo, pooled edges <span class="cite">[T74, F15]</span></td>
+<td>+0.36 [0.23, 0.48]; n=1,221</td>
+<td>+0.37 [0.24, 0.49]; n=1,248</td>
+</tr>
+<tr>
+<td>C5 Log popularity, work means <span class="cite">[T74, F15]</span></td>
+<td>+0.39 [0.25, 0.53]; n=1,221</td>
+<td>+0.39 [0.25, 0.53]; n=1,248</td>
+</tr>
+</tbody>
+</table>
+<h3>Side-by-side robustness (continued)</h3>
+<table>
+<thead>
+<tr>
+<th>Claim and estimate</th>
+<th>Stage 2 primary: F&gt;0</th>
+<th>Stage 1 domain: U&gt;0, revised intervals</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C6 Year +1 share, 51–100 minus solo (pp) <span class="cite">[T78, F16]</span></td>
+<td>+5.23 [0.94, 9.38]; n=688</td>
+<td>+5.23 [0.94, 9.38]; n=688</td>
+</tr>
+<tr>
+<td>C6 Standardized publication-year share, 51–100 minus solo (pp) <span class="cite">[T78, F16]</span></td>
+<td>+3.31 [0.45, 6.10]; n=705</td>
+<td>+3.31 [0.45, 6.10]; n=705</td>
+</tr>
+<tr>
+<td>C6 Year +1 share, ten minus solo (pp) <span class="cite">[T78, F16]</span></td>
+<td>+2.82 [−1.76, 7.21]; n=804</td>
+<td>+2.82 [−1.76, 7.21]; n=804</td>
+</tr>
+<tr>
+<td>C6 Standardized publication-year share, ten minus solo (pp) <span class="cite">[T78, F16]</span></td>
+<td>−1.24 [−4.01, 1.13]; n=819</td>
+<td>−1.24 [−4.01, 1.13]; n=819</td>
+</tr>
+<tr>
+<td>C6 Year +1 share, negative minus positive D (pp) <span class="cite">[T78, F16]</span></td>
+<td>+1.85 [−0.20, 3.85]; n=5,369</td>
+<td>+1.85 [−0.20, 3.85]; n=5,369</td>
+</tr>
+<tr>
+<td>C6 Standardized publication-year share, negative minus positive D (pp) <span class="cite">[T78, F16]</span></td>
+<td>+2.14 [1.04, 3.19]; n=5,421</td>
+<td>+2.14 [1.04, 3.19]; n=5,421</td>
+</tr>
+<tr>
+<td>C7 Same-sample unadjusted slope (clustered) <span class="cite">[T79, F17]</span></td>
+<td>−1.73 [−3.01, −0.46]; n=4,107</td>
+<td>−1.80 [−3.07, −0.53]; n=4,135</td>
+</tr>
+<tr>
+<td>C7 Year, topic and author fixed effects (clustered) <span class="cite">[T79, F17]</span></td>
+<td>−1.85 [−3.43, −0.27]; n=4,107</td>
+<td>−1.95 [−3.52, −0.38]; n=4,135</td>
+</tr>
+<tr>
+<td>C7 Article slope <span class="cite">[T81, F17]</span></td>
+<td>−3.45 [−4.34, −2.50]; n=4,628</td>
+<td>−3.59 [−4.47, −2.66]; n=4,657</td>
+</tr>
+<tr>
+<td>C7 Review slope <span class="cite">[T81, F17]</span></td>
+<td>−0.24 [−3.26, 2.88]; n=390</td>
+<td>−0.25 [−3.27, 2.87]; n=390</td>
+</tr>
+<tr>
+<td>C7 Review minus article slope <span class="cite">[T81, F17]</span></td>
+<td>+3.21 [−0.08, 6.52]; n=5,018</td>
+<td>+3.34 [0.07, 6.64]; n=5,047</td>
+</tr>
+<tr>
+<td>C8 Main standalone, complete cohorts <span class="cite">[T71, F18]</span></td>
+<td>−3.65 [−4.53, −2.75]; n=4,685</td>
+<td>−3.85 [−4.73, −3.00]; n=4,721</td>
+</tr>
+<tr>
+<td>C8 Main, paired <span class="cite">[T71, F18]</span></td>
+<td>−3.01 [−3.93, −2.01]; n=4,405</td>
+<td>−3.85 [−4.73, −3.00]; n=4,721</td>
+</tr>
+<tr>
+<td>C8 Fixed, paired and standalone <span class="cite">[T71, F18]</span></td>
+<td>−2.82 [−3.85, −1.78]; n=4,405</td>
+<td>−4.03 [−4.94, −3.15]; n=4,721</td>
+</tr>
+<tr>
+<td>C8 Fixed minus main, paired <span class="cite">[T71, F18]</span></td>
+<td>+0.19 [−0.27, 0.65]; n=4,405</td>
+<td>−0.19 [−0.68, 0.29]; n=4,721</td>
+</tr>
+<tr>
+<td>C8 Simplified focal-only share slope (pp per doubling) <span class="cite">[T71, F18]</span></td>
+<td>−4.29 [−5.21, −3.40]; n=6,210</td>
+<td>−4.29 [−5.21, −3.40]; n=6,210</td>
+</tr>
+<tr>
+<td>C9 No acknowledgment recorded, slope <span class="cite">[T72, F19]</span></td>
+<td>−3.75 [−4.92, −2.65]; n=2,200</td>
+<td>−3.87 [−5.03, −2.77]; n=2,242</td>
+</tr>
+<tr>
+<td>C9 Acknowledgment recorded, slope <span class="cite">[T72, F19]</span></td>
+<td>+0.52 [−0.53, 1.60]; n=4,010</td>
+<td>+0.40 [−0.62, 1.49]; n=4,022</td>
+</tr>
+<tr>
+<td>C9 Recorded minus none, slope <span class="cite">[T72, F19]</span></td>
+<td>+4.26 [2.68, 5.83]; n=6,210</td>
+<td>+4.27 [2.72, 5.82]; n=6,264</td>
+</tr>
+</tbody>
+</table>
+<p>Matched Stage 1 point estimates agree with the rebuilt comparator to rounding; the reconciliation distinguishes unmatched rows and does not assert that the superseded FPC intervals match. C5’s original all-draw target was rebuilt separately, not relabeled as the U&gt;0 estimate <span class="cite">[T74, T86, F15, J15]</span>.</p>
+<h2>Comparison with Wu, Wang &amp; Evans</h2>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Original study</th>
+<th>Stage 2 local result</th>
+<th>Status and reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1 · Team size</td>
+<td>Disruption rank fell and citations rose steadily with team size; the disruption gradient extended to large teams <span class="cite">[brief]</span>.</td>
+<td>Lower rank and higher median citations overall, including the pooled largest band <span class="cite">[T66, F11, P15]</span>.</td>
+<td><strong>Partly.</strong> Not monotone; Columbia works do not replicate the paper, patent and software comparison <span class="cite">[T1, P15]</span>.</td>
+</tr>
+<tr>
+<td>C2 · Distribution</td>
+<td>Team-size differences extended beyond the mean <span class="cite">[brief]</span>.</td>
+<td>Signed score distributions differ, especially around zero <span class="cite">[T66, T67, P19]</span>.</td>
+<td><strong>Reproduced</strong> locally using weighted CDFs and sign contrasts, not the original iid tests <span class="cite">[F12]</span>.</td>
+</tr>
+<tr>
+<td>C3 · Impact</td>
+<td>The decline appeared at every citation-impact level and was stronger at high impact <span class="cite">[brief]</span>.</td>
+<td>Decline clear in the bottom half; middle and top inconclusive; estimated top-minus-bottom contrast in the opposite direction and inconclusive <span class="cite">[T68, F13, P18]</span>.</td>
+<td><strong>Not reproduced as stated.</strong> Partly reproduced locally: the bottom-half decline was supported, but the full cross-impact claim was not established <span class="cite">[T68, F13]</span>.</td>
+</tr>
+<tr>
+<td>C4 · Fields and journals</td>
+<td>Negative gradients across fields and subfields and in most journals <span class="cite">[brief]</span>.</td>
+<td>Negative slopes predominate among supported fields and subfields, but not uniformly <span class="cite">[T69, T70, P16]</span>.</td>
+<td><strong>Partly.</strong> Only one journal meets support; generalization across journals is not testable <span class="cite">[F14]</span>.</td>
+</tr>
+<tr>
+<td>C5 · References</td>
+<td>Larger teams cited newer, more popular work; age and popularity distribution parameters varied with team size <span class="cite">[brief]</span>.</td>
+<td>Newer and more currently cited references, with steeper age decay in ten-author versus solo works <span class="cite">[T74, T76, T77, P17]</span>.</td>
+<td><strong>Partly.</strong> Popularity exponent contrast inconclusive; fits imperfect; current counts are not historical popularity <span class="cite">[F15, T45]</span>.</td>
+</tr>
+<tr>
+<td>C6 · Timing</td>
+<td>Large teams drew early attention; smaller or disruptive works were more often recognized late <span class="cite">[brief]</span>.</td>
+<td>Earlier relative attention for the largest band versus solo in the complete-year share; less clear for ten authors and disruption sign <span class="cite">[T78, F16]</span>.</td>
+<td><strong>Partly.</strong> Early conditional shares are observable; late recognition is not testable <span class="cite">[T32, T78]</span>.</td>
+</tr>
+<tr>
+<td>C7 · Controls and design</td>
+<td>The relationship mostly survived year, topic and author controls and appeared across research types <span class="cite">[brief]</span>.</td>
+<td>Gradient persists after adjustment on a comparable sample with a weaker baseline; reviews imprecise <span class="cite">[T79, T80, T81, F17]</span>.</td>
+<td><strong>Partly.</strong> Limited author support; theory/empirical labels unavailable; type comparisons do not establish a common gradient <span class="cite">[T79, T81, J12]</span>.</td>
+</tr>
+<tr>
+<td>C8 · Robustness</td>
+<td>Direction held across long citation windows and alternative disruption measures <span class="cite">[brief]</span>.</td>
+<td>Negative paired short-window and simplified-score slopes <span class="cite">[T71, T82, F18]</span>.</td>
+<td><strong>Partly.</strong> Original long horizons and the other variants were not implemented <span class="cite">[T33, T71]</span>.</td>
+</tr>
+<tr>
+<td>C9 · Context</td>
+<td>Team sizes rose historically; the study also compared funded work and corporate patents and examined Nobel-winning papers <span class="cite">[brief]</span>.</td>
+<td>Local slopes differ descriptively by acknowledgment record; no direct test of the historical, patent or prize comparisons <span class="cite">[T1, T72, F19]</span>.</td>
+<td><strong>Not testable</strong> as the original contextual claim. Acknowledgment is a proxy, not verified funding <span class="cite">[T72, F19]</span>.</td>
+</tr>
+</tbody>
+</table>
+<h2>Deviations and limitations</h2>
+<p>This is a reproduction of the association in a recent, single-institution OpenAlex frame, not a rerun of the study's historical paper, patent and software corpus. The study's overall disruption percentiles are replaced with weighted within-publication-year ranks to reduce comparability problems from unequal cohort exposure, not to equalize follow-up within a year. OpenAlex primary topic and venue metadata are practical proxies for field and journal comparisons, and its article and review labels cannot establish research design. Groups with sparse team-size support are not representative tests of the corresponding fields or venues <span class="cite">[brief]</span> <span class="cite">[T1, T33, T68, T69, T70, T81, T84]</span>.</p>
+<p>The local reference/citation screen and positive-window citation condition select which works enter the analysis. The date filters truncate citing publications, not the underlying graph as it existed at an earlier date. Missing references, errors in dates or authorships, and later index changes can affect measured D and eligibility; validation on the same graph does not address such errors. Counting a large union of works citing recorded references can yield scores very close to zero even where the sign distributions differ. Intervals do not cover graph error, shared-citation dependence across works, or uncertainty when extrapolating across institutions; they are pointwise, not simultaneous. No analysis rules out unmeasured composition or project selection as explanations for the associations <span class="cite">[T1, T15, T24, T25, T32, T33, T67, T79, T82, T83, J15]</span>.</p>
+<p><strong>Original study:</strong> Wu, L., Wang, D. &amp; Evans, J. A. <em>Nature</em> <strong>566</strong>, 378–382 (2019). DOI: 10.1038/s41586-019-0941-9 <span class="cite">[brief]</span>.</p>
+<h2>How to reproduce the run</h2>
+<p>Use the full frozen run export, including the local snapshot and joins, cached API responses, artifacts and scripts, in the harness environment with its <code>load</code>, <code>sql</code> and artifact-writing helpers. Do not substitute today's OpenAlex responses. The saved frame/sample and manifest code is in J5; J3 documents the grouped and cursor collectors. For a replay from collection inputs, use the frozen response tables (including grouped counts, cursor completeness and records, and final reference metadata responses) with the recorded derivation in J10. Do not invoke the live collectors or metadata recovery requests. The Stage 2 starting point is the complete validated annual/window tables and final reference metadata, not the report's rounded values or artifact previews <span class="cite">[J5, J3, T26, T27, T29, J10, T32, T33, T45, J15]</span>.</p>
+<p>In the exported harness kernel, restore <code>analysis_stage1.py</code> from J12 and <code>analysis_stage2.py</code> and <code>stage2_handoff.py</code> from J15, preserving their contents and working directory. Execute <code>exec(Path('analysis_stage2.py').read_text())</code> for estimates and figures, then <code>exec(Path('stage2_handoff.py').read_text())</code> for the evidence handoff after the figures are staged and approved. J15 also gives the saved-tables-only rendering entry point: set <code>STAGE2_RUN=False</code>, execute the correction script, then call <code>render_saved_stage2()</code>. The scripts regenerate evidence and graphics; approvals are separate harness actions. Preserve the final gated figure index and the report section source when rendering this deliverable. The export automatically includes the run record for time, spend, API requests and gate rounds. The Stage 2 correction made no external requests <span class="cite">[J12, J14, J15, F20]</span>.</p>
+<h3>Team workflow</h3>
+<p>The data agent recorded the proxy frame, sampling design, frozen responses and independent count checks. The analysis agent rebuilt eligible domains, intervals and figures offline and recorded the findings and reconciliation. The writer assembled the report from that evidence without recomputing estimates. Figure approval and report review were separate from authoring <span class="cite">[J5, J10, T15, T86, T87, J14, J15]</span>.</p>
+<h2>Appendix: run record</h2>
+<p>Generated by the harness from the run's event log, usage files, cell log and artifact store when the run was exported. The agents did not write this section. A turn is one instruction from the user to the lead agent; this run had 2. Model: gpt-6.2-sol.</p>
+<table>
+<thead>
+<tr>
+<th>Turn</th>
+<th>Started (UTC)</th>
+<th>Wall time</th>
+<th>LLM calls</th>
+<th>LLM spend</th>
+<th>API requests</th>
+<th>API spend</th>
+<th>Background jobs</th>
+<th>Figure reviews</th>
+<th>Report reviews</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2026-11-24 02:54</td>
+<td>42 min</td>
+<td>96</td>
+<td>$1.25</td>
+<td>30,213</td>
+<td>$2.91</td>
+<td>4 started, 2 succeeded</td>
+<td>12, 5 passed</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2026-11-24 04:52</td>
+<td>15 min</td>
+<td>83</td>
+<td>$1.68</td>
+<td>0</td>
+<td>$0.00</td>
+<td>3 started, 1 succeeded</td>
+<td>7, 6 passed</td>
+<td>2: revise, pass</td>
+</tr>
+</tbody>
+</table>
+<p>LLM spend by agent (the critic does the independent figure and report reviews):</p>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>Turn 1</th>
+<th>Turn 2</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>analyst</td>
+<td>$0.40</td>
+<td>$0.63</td>
+<td>$1.03</td>
+</tr>
+<tr>
+<td>writer</td>
+<td>$0.00</td>
+<td>$0.57</td>
+<td>$0.57</td>
+</tr>
+<tr>
+<td>critic</td>
+<td>$0.23</td>
+<td>$0.32</td>
+<td>$0.55</td>
+</tr>
+<tr>
+<td>data</td>
+<td>$0.49</td>
+<td>$0.00</td>
+<td>$0.49</td>
+</tr>
+<tr>
+<td>lead</td>
+<td>$0.13</td>
+<td>$0.16</td>
+<td>$0.29</td>
+</tr>
+<tr>
+<td>all</td>
+<td>$1.25</td>
+<td>$1.68</td>
+<td>$2.93</td>
+</tr>
+</tbody>
+</table>
+<p>Code cells run by the agents (background jobs included): 52 (data 28, analyst 24), of which 5 failed (an agent reads the error and runs a corrected cell). Artifacts: 20 finding, 15 json, 87 table. Figure versions submitted to the figure gate: 19 (11 approved, 1 approved_with_issues, 7 rejected). Report gate: approved in round 2.</p>
+<h2>Evidence index</h2><p>Every artifact cited above, with its kind and description. Code, data and lineage for each are in the run's workspace and in the exported scripts.</p><table class="evidence"><tr><th>ID</th><th>Kind</th><th>Title</th><th>Description</th></tr><tr><td>T1</td><td>table</td><td>Local proxy frame</td><td>One snapshot work; screen and local covariates.</td></tr><tr><td>T82</td><td>table</td><td>Stage 2 Window and original stratum coverage and weights</td><td>Reproducibility audit; year 0 means all cohorts, All means all strata.</td></tr><tr><td>T87</td><td>table</td><td>Stage 2 side-by-side headline evidence for C1–C9</td><td>T66–T81 carry full results. U&gt;0 uses revised no-FPC intervals, except C7 model estimates use no-FPC clustered intervals. C5 also reconstructs the original all-draw target.</td></tr><tr><td>F11</td><td>finding</td><td>C1 — partly reproduced: overall, not monotone; single instit</td><td></td></tr><tr><td>P15</td><td>figure</td><td>Fig. 2 analogue — Team size, disruption rank and citation counts (Stage 2)</td><td>Design-weighted mean within-year disruption percentile (A) and median unique strictly postpublication citing works through 23 November 2026 (B), for 7,933 Columbia OpenAlex works with at least one such citer. Unweighted </td></tr><tr><td>T32</td><td>table</td><td>Validated annual D inputs</td><td>One fully measured focal and citing publication year under strict main-date filter; missing year within range is represented by zero.</td></tr><tr><td>T33</td><td>table</td><td>Validated main and fixed disruption inputs with focal coverage</td><td>One sampled focal; exact date-window counts where valid, D and strict eligibility, truncation status and reasons.</td></tr><tr><td>T66</td><td>table</td><td>Stage 2 C1 team gradients and sign</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F12</td><td>finding</td><td>C2 — reproduced locally: distributions differ, not an iid KS</td><td></td></tr><tr><td>T68</td><td>table</td><td>Stage 2 C3 reranked citation-impact contrasts</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F13</td><td>finding</td><td>C3 — partly reproduced: bottom-half only; stronger top gradi</td><td></td></tr><tr><td>T70</td><td>table</td><td>Stage 2 C4 negative slopes among observed supported groups</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T74</td><td>table</td><td>Stage 2 C5 reference means and contrasts (edge and work targets)</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F14</td><td>finding</td><td>C4 — partly reproduced: majority of supported fields/subfiel</td><td></td></tr><tr><td>F15</td><td>finding</td><td>C5 — partly reproduced: empirical age/popularity and age-dec</td><td></td></tr><tr><td>T86</td><td>table</td><td>Stage 2 Stage 1 comparator point reconciliation</td><td>Reproducibility audit; year 0 means all cohorts, All means all strata.</td></tr><tr><td>J15</td><td>json</td><td>Stage 2 executable offline correction and handoff code</td><td>Frozen T32/T33 and T45 plus local snapshot joins; no external calls. Figure gate approvals are harness actions on the staged PDF/PNG, not generated by code.</td></tr><tr><td>T3</td><td>table</td><td>Sample reference edges</td><td>One focal work and distinct valid nonself reference.</td></tr><tr><td>T83</td><td>table</td><td>Stage 2 Frame exclusions and local positive citation evidence</td><td>Reproducibility audit; year 0 means all cohorts, All means all strata.</td></tr><tr><td>F20</td><td>finding</td><td>Stage 2 audit (counts, not confidence limits). T82: 8,000 dr</td><td></td></tr><tr><td>J5</td><td>json</td><td>Complete frame, sample, manifest and validation code</td><td>Exact local screen, sampling, preflight tests, request manifests, and budget projection.</td></tr><tr><td>T2</td><td>table</td><td>Prespecified 8000-work sample</td><td>One sampled work; stratified SRSWOR and window endpoints.</td></tr><tr><td>T5</td><td>table</td><td>Stratum allocation</td><td>One stratum; population and sample sizes and design weights.</td></tr><tr><td>T15</td><td>table</td><td>Independent grouped-count validation results</td><td>One exact grouped-versus-plain or cursor-classification comparison.</td></tr><tr><td>T24</td><td>table</td><td>Independent overflow-tail outbound check</td><td>One residual citer; classifier verifies tail membership and exclusion of assigned prefix.</td></tr><tr><td>T25</td><td>table</td><td>Long partition order invariance checks</td><td>One focal/year; verifies union totals after reversing the chunk assignment order.</td></tr><tr><td>T26</td><td>table</td><td>Residual and focal cursor stream checks</td><td>One overflow cursor stream; independent count, distinct date-bearing IDs and status.</td></tr><tr><td>T27</td><td>table</td><td>Raw overflow cursor records</td><td>One citing ID per overflow stream with date; focal streams classify outgoing edges.</td></tr><tr><td>T28</td><td>table</td><td>Cursor waves and timing</td><td>One parallel cursor wave; initial submissions, retries and elapsed active time.</td></tr><tr><td>T29</td><td>table</td><td>Raw annual grouped counts</td><td>One grouped request; annual sparse counts, request ID, total and integrity status.</td></tr><tr><td>J10</td><td>json</td><td>Final derivation, metadata recovery, and status code</td><td>Executable derivation with partial-reference normalization and preserved targeted recovery checks.</td></tr><tr><td>T84</td><td>table</td><td>Stage 2 Work-level recalculated main/fixed/paired ranks</td><td>Reproducibility audit; year 0 means all cohorts, All means all strata.</td></tr><tr><td>T71</td><td>table</td><td>Stage 2 C8 paired and standalone windows, simplified ratio</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T79</td><td>table</td><td>Stage 2 C7 comparable-sample clustered models</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T80</td><td>table</td><td>Stage 2 C7 bootstrap baselines</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>J12</td><td>json</td><td>Stage 1 executable analysis and figure code</td><td>Executable Python using the persistent harness helpers; no network calls or API spend.</td></tr><tr><td>T67</td><td>table</td><td>Stage 2 C2 signed raw D quantiles and empirical CDF/KS</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>P19</td><td>figure</td><td>Extended figure — Signed raw disruption distributions (Stage 2)</td><td>Inverse-inclusion-weighted empirical CDF of signed raw D for one, ten and 51–100 authors (600, 624 and 477 Columbia OpenAlex works with at least one distinct citing work in the postpublication window ending 23 November 2</td></tr><tr><td>P18</td><td>figure</td><td>Fig. 3 analogue — Team size and disruption across citation impact (Stage 2)</td><td>Inverse-inclusion-weighted mean within-year disruption percentile for 7,933 Columbia OpenAlex works with at least one distinct strictly postpublication citing work through 23 November 2026. Higher D percentiles indicate </td></tr><tr><td>T69</td><td>table</td><td>Stage 2 C4 field, subfield and journal support and slopes</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>P16</td><td>figure</td><td>Fig. 3 analogue — Negative slopes predominate in supported fields and subfields (Stage 2)</td><td>Within-year D percentile slopes per doubling of team size for Columbia OpenAlex works with 1–10 authors and at least one unique strictly postpublication citing work through 23 November 2026. Dots and bars are inverse-inc</td></tr><tr><td>P12</td><td>figure</td><td>Fig. 4 analogue — Empirical distributions of reference age and popularity</td><td>Empirical component of C5 only. Curves pool available focal-work–reference pairs, applying each focal work’s inverse inclusion weight to every edge, rather than giving equal total weight to each work. For teams of 1, 10 </td></tr><tr><td>P17</td><td>figure</td><td>Fig. 4 analogue — Empirical distributions of reference age and popularity (Stage 2)</td><td>Stage-2 update of P12, preserving its empirical panels and geometry. Among Columbia OpenAlex works with at least one unique postpublication citing work through 23 November 2026, the curves pool deduplicated focal–referen</td></tr><tr><td>T75</td><td>table</td><td>Stage 2 C5 P12 update curves (edge and work targets)</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T45</td><td>table</td><td>Analysis-ready deduplicated reference metadata</td><td>One sampled reference ID; year, global lifetime citations and exact-match/missing statuses. Join T3 on reference_id.</td></tr><tr><td>T73</td><td>table</td><td>Stage 2 C5 reference metadata coverage</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T85</td><td>table</td><td>Stage 2 Reference denominator and metadata audit</td><td>Reproducibility audit; year 0 means all cohorts, All means all strata.</td></tr><tr><td>T76</td><td>table</td><td>Stage 2 C5 separate fit diagnostics</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T77</td><td>table</td><td>Stage 2 C5 separate fit intervals</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T78</td><td>table</td><td>Stage 2 C6 early citation timing and standardized contrasts</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F16</td><td>finding</td><td>C6 — partly reproduced: 51–100 earlier than solo on a comple</td><td></td></tr><tr><td>F17</td><td>finding</td><td>C7 — partly reproduced: comparable-sample FE gradient persis</td><td></td></tr><tr><td>T81</td><td>table</td><td>Stage 2 C7 article and review contrasts</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F18</td><td>finding</td><td>C8 — partly reproduced: short windows and simplified ratio o</td><td></td></tr><tr><td>T72</td><td>table</td><td>Stage 2 C9 recorded funder acknowledgment</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F19</td><td>finding</td><td>C9 — partly testable: descriptive acknowledgment differences</td><td></td></tr><tr><td>J3</td><td>json</td><td>Executable stage-1 collection code</td><td>Bulk and overflow collectors with exact manifest and budget guard.</td></tr><tr><td>J14</td><td>json</td><td>Stage 2 gate and writer handoff index</td><td>Exact captions, review outcomes, file paths, provenance, and findings. No report generated.</td></tr></table></body></html>

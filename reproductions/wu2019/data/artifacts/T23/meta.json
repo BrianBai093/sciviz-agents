@@ -1,0 +1,22 @@
+{
+  "id": "T23",
+  "kind": "table",
+  "title": "Stage-1 validation and preflight timing",
+  "description": "One measured pilot batch; separate from historical pilot and failed dispatch.",
+  "producer": "data",
+  "inputs": [],
+  "code": "kl=[json.loads(x) for x in ks]; print([(i,z['created'],z['code'][:85]) for i,z in enumerate(kl)]); pre_times=pd.DataFrame([('group and plain validation',perf['submitted'],perf['elapsed_s'],perf['usd']),('long metadata',mpperf['submitted'],mpperf['elapsed_s'],mpperf['usd']),('tail preflight',lperf['submitted'],lperf['elapsed_s'],lperf['usd']),('local / live comparison',audperf['submitted'],audperf['elapsed_s'],audperf['usd']),('date, edge and focal checks',eperf['submitted'],eperf['elapsed_s'],eperf['usd'])],columns=['phase','submitted','active_seconds','usd']); print(pre_times.sum(numeric_only=True)); print(save_table(pre_times,'Stage-1 validation and preflight timing','One measured pilot batch; separate from historical pilot and failed dispatch.')); print(save_json({'scripts':[z['code'] for z in kl if set(z['created'])&{'T1','T4','T6','T8','T12','T16'}],'note':'Execute scripts in order in run_python; grouped count endpoint discovery and record_decision entries are separate. Code is preserved with original output calls.'},'json','Frame, sample, manifest and validation code','Exact SQL, sampling algorithm, tested filter rules and budget projection.'))",
+  "created_at": 1795489226.359,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "5 rows; columns: phase, submitted, active_seconds, usd",
+    "text": "5 rows x 4 columns\nphase: str [5 distinct]\nsubmitted: int64 [min 1, max 112, mean 51.6]\nactive_seconds: float64 [min 0.2629, max 18.13, mean 6.543]\nusd: float64 [min 0.0001, max 0.0112, mean 0.00516]\nfirst rows:\n                      phase  submitted  active_seconds    usd\n group and plain validation         55        6.893265 0.0055\n              long metadata        112        5.742063 0.0112\n             tail preflight         65       18.131935 0.0065\n    local / live comparison          1        0.262908 0.0001\ndate, edge and focal checks         25        1.683366 0.0025",
+    "rows": 5,
+    "columns": [
+      "phase",
+      "submitted",
+      "active_seconds",
+      "usd"
+    ]
+  }
+}

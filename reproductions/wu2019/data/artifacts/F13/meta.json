@@ -1,0 +1,38 @@
+{
+  "id": "F13",
+  "kind": "finding",
+  "title": "C3 — partly reproduced: bottom-half only; stronger top gradi",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.775,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[8] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"g",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[8] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"group\\\": \\\"...\\\", \\\"stratum\\\": \\\"...\\\", \\\"n_low\\\": \\\"...\\\", \\\"n_high\\\": \\\"...\\\", \\\"domain\\\": \\\"...\\\", \\\"source\\\": \\\"...\\\", \\\"claim\\\": \\\"...\\\", \\\"status\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"C3 \\u2014 partly reproduced: bottom-half only; stronger top gradient not supported. All intervals 95%. F>0 log2 size slope Bottom 50%: -2.5042 [-3.38952, -1.63691], n=3,277 (T68); F>0 log2 size slope 50th\\u2013<90th: -1.21605 [-2.53976, 0.477562], n=2,476 (T68); F>0 log2 size slope 90th\\u2013100th: 0.228685 [-4.33439, 3.36687], n=457 (T68); F>0 high minus low slope 90th\\u2013100th minus bottom 50%: 2.73289 [-1.88551, 6.00293], n=3,734 (T68); U>0 log2 size slope Bottom 50%: -2.64735 [-3.53774, -1.79106], n=3,299 (T68); U>0 log2 size slope 50th\\u2013<90th: -1.30401 [-2.61623, 0.459092], n=2,503 (T68); U>0 log2 size slope 90th\\u2013100th: 0.179271 [-4.5463, 3.28932], n=462 (T68); U>0 high minus low slope 90th\\u2013100th minus bottom 50%: 2.82662 [-1.75354, 5.99725], n=3,761 (T68)\", \"value\": [{\"metric\": \"log2 size slope\", \"estimate\": -2.5042044068, \"lo\": -3.3895226665, \"hi\": -1.6369075873, \"n\": 3277, \"weighted_n\": 16675.395600532, \"group\": \"Bottom 50%\", \"stratum\": null, \"n_low\": null, \"n_high\": null, \"domain\": \"F>0\", \"source\": \"T68\", \"claim\": \"C3\", \"status\": \"partly reproduced: bottom-half only; stronger top gradient not supported\"}, {\"metric\": \"log2 size slope\", \"estimate\": -1.2160496163, \"lo\": -2.5397596046, \"hi\": 0.4775620412, \"n\": 2476, \"weighted_n\": 12093.8915419539, \"group\": \"50th\\u2013<90th\", \"stratum\": null, \"n_low\": null, \"n_high\": null, \"domain\": \"F>0\", \"source\": \"T68\", \"claim\": \"C3\", \"status\": \"partly reproduced: bottom-half only; stronger top gradient not su"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "T47",
+  "kind": "table",
+  "title": "Reference metadata coverage by focal",
+  "description": "One focal; edge-level match counts with denominators.",
+  "producer": "data",
+  "inputs": [
+    "T10",
+    "T2",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T3",
+    "T30",
+    "T31",
+    "T32",
+    "T33",
+    "T34",
+    "T38",
+    "T39",
+    "T40",
+    "T6",
+    "T8"
+  ],
+  "code": "t6=load('T6'); q9=t6[t6.status.eq('returned') & t6.publication_year.isna()]; print(len(q9)); qo,qop=request_many([dict(metapar(q9.reference_id.tolist()),select='id,publication_year,publication_date,cited_by_count')]); print(qop); print([(z['id'].rsplit('/',1)[-1],z.get('publication_year'),z.get('publication_date')) for z in qo[0]['results']]); qdf=pd.DataFrame([(z['id'].rsplit('/',1)[-1],z.get('publication_year'),z.get('publication_date'),z.get('cited_by_count')) for z in qo[0]['results']],columns=['reference_id','publication_year','publication_date','cited_by_count']); print(save_table(pd.concat([load('T40'),qdf],ignore_index=True),'Complete missing publication-year audit','One live-matched reference with missing year; alternate publication date also checked.')); dp=dp.replace(\"meta['matched']=meta.status.eq('returned')\", \"meta.loc[meta.status.eq('returned') & (meta.publication_year.isna() | meta.cited_by_count.isna()),'status']='partial_metadata'; meta['matched']=meta.status.eq('returned')\"); Path('stage1_derive.py').write_text(dp); exec(compile(dp,'stage1_derive.py','exec')); D,meta,coverage,refworks=derive('T29','T39','T26','T27',write_disruption=False); print('metadata final',meta.status.value_counts().to_dict(),len(coverage),368818/375502,440558/448173); print('wall timing',json.loads(Path('artifacts/J8/data.json').read_text()),json.loads(Path('artifacts/J6/data.json').read_text())['wall_seconds'])",
+  "created_at": 1795490747.953,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "8,000 rows; columns: work_id, reference_edges, matched_reference_edges, true_zero_edges, matched_fraction",
+    "text": "8,000 rows x 5 columns\nwork_id: str [8000 distinct]\nreference_edges: int64 [min 1, max 1454, mean 56.02]\nmatched_reference_edges: int64 [min 0, max 1447, mean 55.07]\ntrue_zero_edges: int64 [min 0, max 0, mean 0]\nmatched_fraction: float64 [min 0, max 1, mean 0.981]\nfirst rows:\n    work_id  reference_edges  matched_reference_edges  true_zero_edges  matched_fraction\nW2108324945                5                        5                0          1.000000\nW2122784827               35                       33                0          0.942857\nW2148910424               41                       36                0          0.878049\nW2185789549               13                       13                0          1.000000\nW2524275590               39                       38                0          0.974359",
+    "rows": 8000,
+    "columns": [
+      "work_id",
+      "reference_edges",
+      "matched_reference_edges",
+      "true_zero_edges",
+      "matched_fraction"
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+# cell 22 | agent: data | original run: ok | artifacts created: none
+cc=load('T26'); rr=load('T27'); print(cc.complete.value_counts().to_dict(),cc.expected_count.sum(),len(rr),cc.pages.sum(),cc[~cc.complete].to_string(index=False)); print(len(rr[rr.series=='T']),rr[rr.series=='T'][['sample_id','citing_work_id']].drop_duplicates().shape[0]); print(load('T28').sum().to_dict()); print('by F',rr[rr.series=='F'].cites_reference_if_focal.value_counts().to_dict())

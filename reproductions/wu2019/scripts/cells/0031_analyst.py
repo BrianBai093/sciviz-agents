@@ -1,0 +1,51 @@
+# cell 31 | agent: analyst | original run: ok | artifacts created: T57, T58, T59, T60, T61
+scripts['claims56']=r'''
+E=edges.merge(meta[['reference_id','publication_year','cited_by_count','matched']],on='reference_id',validate='many_to_one').merge(s[['work_id','sample_id','publication_year','stratum']],on=['work_id','stratum'],validate='many_to_one',suffixes=('_ref','_foc')); ei=E.sample_id.to_numpy()-1; age=(E.publication_year_foc-E.publication_year_ref).to_numpy(dtype=float,na_value=np.nan); pop=E.cited_by_count.to_numpy(dtype=float,na_value=np.nan); ag=np.isfinite(age)&(age>=0); pp=np.isfinite(pop)&(pop>=0)
+assert E.matched.sum()==rf.matched_reference_edges.sum()==rc.matched_edges.sum() and np.array_equal(np.bincount(ei[E.matched],minlength=N),rf.set_index('work_id').matched_reference_edges.reindex(s.work_id))
+def binwork(mask,values=None):return np.bincount(ei[mask],weights=None if values is None else values[mask],minlength=N)
+allcount=binwork(np.ones(len(E),bool)); C5cov=[]; C5=[]; C5plot=[]; fit=[]
+for key,vv,ok,ticks,tr in [('reference age (years)',age,ag,np.arange(0,101),age),('current reference citations',pop,pp,np.unique(np.r_[0,1,5,10,20,49,50,51,np.round(np.geomspace(2,360000,160))]),np.log2(1+pop))]:
+ cnt=binwork(ok); sums=binwork(ok,tr); vals=sums/np.maximum(cnt,1); agg=np.array([binwork(ok&(vv<=q)) for q in ticks]).T; elig=cnt>0; variants=[('All',np.ones(N,bool))]+list(zip(H,groups)); cmap={}
+ for gg,mm in variants:
+  jj=mm&elig; ww=W[:,jj]; den=ww@cnt[jj]; cov=(W[:,mm]@cnt[mm])/(W[:,mm]@allcount[mm]); cmb=dict(n_edges=int(cnt[mm].sum()),n_all_edges=int(allcount[mm].sum()),n_works_covered=int(jj.sum()),distinct_refs=int(E.loc[ok&mm[ei],'reference_id'].nunique())); C5cov.append(row('available edge share',cov,mm,metric_name=key,group=gg,**cmb)); C5.append(row('mean across work means',stat(vals,jj),jj,metric_name=key,group=gg,**cmb)); C5.append(row('mean across edges',ww@sums[jj]/den,jj,metric_name=key,group=gg,**cmb))
+  if gg in ['1','10','51–100']:
+   a=ww@agg[jj]; ec=a/den[:,None]; wc=(ww@(agg[jj]/cnt[jj,None]))/ww.sum(1)[:,None]
+   for target,curves in [('edge',ec),('work',wc)]:
+    for b,t in enumerate(ticks):C5plot.append(row('CCDF',1-curves[:,b],jj,metric_name=key,target=target,group=gg,threshold=float(t),**cmb))
+   keep=ok&mm[ei]; xs=vv[keep]; ew=w[ei[keep]]
+   if key.startswith('reference age'):
+    mu=np.average(xs,weights=ew); pr=1/(1+mu); xx=np.arange(int(xs.max())+1); obs=np.cumsum(np.bincount(xs.astype(int),weights=ew,minlength=len(xx)))/ew.sum(); fitted=1-(1-pr)**(xx+1); kk=np.argmax(abs(obs-fitted)); fit.append(dict(metric=key,group=gg,model='discrete exponential (geometric)',parameter=-np.log1p(-pr),n_works=int(jj.sum()),n_edges=len(xs),tail_share=1.,max_CDF_gap=abs(obs-fitted)[kk],gap_threshold=int(xx[kk]),empirical_CDF=obs[kk],fitted_CDF=fitted[kk]))
+   else:
+    xt=xs[xs>=50]; wt=ew[xs>=50]; meanlog=np.average(np.log(xt),weights=wt); al=minimize_scalar(lambda a:a*meanlog+np.log(zeta(a,50)),bounds=(1.005,6),method='bounded').x; xx=np.arange(50,int(xt.max())+1); obs=np.cumsum(np.bincount(xt.astype(int)-50,weights=wt,minlength=len(xx)))/wt.sum(); fitted=1-zeta(al,xx+1)/zeta(al,50); kk=np.argmax(abs(obs-fitted)); fit.append(dict(metric=key,group=gg,model='discrete power law, count ≥ 50',parameter=al,n_works=int(np.unique(ei[keep][xs>=50]).size),n_edges=len(xt),tail_share=wt.sum()/ew.sum(),max_CDF_gap=abs(obs-fitted)[kk],gap_threshold=int(xx[kk]),empirical_CDF=obs[kk],fitted_CDF=fitted[kk]))
+  cmap[gg]=(stat(vals,jj),ww@sums[jj]/den)
+ for gg in ['10','51–100']:
+  mm=(groups[0]|groups[H.index(gg)])&elig
+  for j,target in enumerate(['work','edge']):C5.append(row('larger minus solo',cmap[gg][j]-cmap['1'][j],mm,metric_name=key,group=gg+' minus 1',target=target,n_edges=int(cnt[mm].sum())))
+c5cov=table(C5cov,'C5 reference metadata coverage by metric and team size','Age excludes future-dated references; popularity is independent of age validity.')
+c5=table(C5,'C5 age and popularity contrasts, work and edge targets','Available-case, focal-work stratified replicates; popularity means use log2(1+current citations).')
+c5p=table(C5plot,'C5 reference CCDF plotting data','Edge and equal-focal-work targets. Pointwise 95% design intervals, focal-work resampling.')
+c5f=table(fit,'C5 reference distribution diagnostics','Weighted discrete MLE; supremum empirical–fitted CDF gap as descriptive calibration, not an iid null p-value.')
+print('coverage checks',dict(missing_year=int((~np.isfinite(age)).sum()),future_age=int((age<0).sum()),same_year=int((age==0).sum()),missing_pop=int((~pp).sum()),zero_pop=int((pop==0).sum()),shared_ref_ids=int((E.reference_id.value_counts()>1).sum()))); print(c5[c5.metric.eq('larger minus solo')].to_string(index=False));print(c5f.to_string(index=False))
+lag=aa.pivot(index='sample_id',columns='lag',values='F').reindex(s.sample_id); L=lag[[0,1,2]].to_numpy(float); total=L.sum(axis=1); tbase=(y<=2023)&valid; assert np.array_equal(total[tbase],FF[tbase]); timing=[]; comp=[]
+for nm,m in list(zip(H,groups))+[('D negative',D<0),('D zero',(D==0)&valid),('D positive',D>0)]:
+ k=tbase&m; z=k&(total>0); gap=(L[:,1]-L[:,2])/np.where(L[:,1]+L[:,2]>0,L[:,1]+L[:,2],np.nan); full=k&np.isfinite(gap)
+ comp.append((nm,k,full,100*stat((1+gap)/2,full)))
+ for j in range(3):
+  timing.append(row('mean citing works',stat(L[:,j],k),k,group=nm,lag=j)); timing.append(row('mean within-work citation share (%)',100*stat(L[:,j]/np.where(total>0,total,np.nan),z),z,group=nm,lag=j))
+ timing.extend([row('no citations in three observed periods (%)',100*stat(total==0,k),k,group=nm),row('year +1 share of years +1 and +2 (%, per work)',comp[-1][-1],full,group=nm)])
+lookup={v[0]:v[1:] for v in comp}
+for a,b in [('10','1'),('51–100','1'),('D negative','D positive')]:
+ k1,j1,v1=lookup[a];k2,j2,v2=lookup[b];timing.append(row('year +1 share contrast (pp)',v1-v2,j1|j2,group=a+' minus '+b,n_a=int(j1.sum()),n_b=int(j2.sum())))
+ # Publication quarter and cohort standardization for publication-year shares, common target across two groups.
+ j=(k1|k2)&(total>0); q=s.publication_date.dt.quarter.to_numpy(); vv=100*L[:,0]/np.where(total>0,total,np.nan); part=[]; supp=[]
+ for yr in [2021,2022,2023]:
+  for qq in [1,2,3,4]:
+   m=j&(y==yr)&(q==qq); ma=m&k1;mb=m&k2
+   if min(ma.sum(),mb.sum())>=5: part.append((W[:,m].sum(1),stat(vv,ma)-stat(vv,mb)));supp.append(m)
+ if part:
+  jw=np.any(supp,axis=0); pnum,pdiff=map(np.asarray,zip(*part));timing.append(row('publication-year share contrast standardized by year and quarter (pp)',(pnum*pdiff).sum(0)/pnum.sum(0),jw,group=a+' minus '+b,n_a=int((jw&k1).sum()),n_b=int((jw&k2).sum()),cells=len(part)))
+c6=table(timing,'C6 early citation timing and standardized contrasts','2021–2023 focal cohorts; focal calendar year from day after publication and full years +1 and +2. Conditional shares average work-level shares; timing and D use overlapping citation graph.')
+print(c6[c6.metric.str.contains('contrast')].to_string(index=False))
+'''
+from threadpoolctl import threadpool_limits
+with threadpool_limits(3): exec(scripts['claims56'])

@@ -1,0 +1,46 @@
+{
+  "id": "P6",
+  "kind": "figure",
+  "title": "Fig. 3 analogue — Lower disruption with team size is clearest in the bottom citation-impact half",
+  "description": "Within-year D percentile (higher means greater disruption) by team size and within-year impact, n=7,997 Columbia works. Citations are strictly postpublication through 23 November 2026. Pointwise 95% design intervals rerank both measures; horizontal line is the 50th percentile, vertical line separates exact sizes and bins. For sizes 1–10, change in mean D percentile per author doubling: bottom half −2.65 [−3.46, −1.88], n=3,299; middle −1.30 [−2.44, 0.27], n=2,503; top tenth +0.18 [−4.05, 2.84], n=462. Top-minus-bottom slope +2.83 [−1.42, 5.66], n=3,761: no support for a stronger decline at high impact.",
+  "producer": "analyst",
+  "inputs": [
+    "T52"
+  ],
+  "code": null,
+  "created_at": 1795491124.566,
+  "file": "figure.png",
+  "slug": "fig3-impact",
+  "claims": [
+    "C3"
+  ],
+  "parent": "P2",
+  "version": 2,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 2,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 4,
+        "truthfulness": 4,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure is legible and provides a direct test of C3, but it does not substantiate the claim as written. Among teams of 1–10 authors, the decline is clearest in the bottom citation-impact half. The middle and top-group slope intervals include zero, and the top-minus-bottom contrast is too uncertain to conclude that the decline is stronger at high impact.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The title does not distinguish the fitted comparison for teams of 1–10 authors from the descriptive means for larger team-size bins.",
+          "fix": "Qualify the title with ‘among teams of 1–10 authors’ or state in the caption that the larger bins are shown descriptively and are not included in the slope comparison."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption explains that both measures are reranked but does not say how sampling weights enter the ranks, plotted means, and slopes. The legend gives impact-group totals but not the counts behind individual points.",
+          "fix": "State which estimates use sampling weights, label the reported n values as observed counts, and point readers to T52 for counts by team size and impact group."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 3 analogue — Lower disruption with team size is clearest in the bottom citation-impact half' (version 2) for claims ['C3'], from ['T52']"
+}

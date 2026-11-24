@@ -1,0 +1,14 @@
+{
+  "id": "job4",
+  "name": "stage1_bulk_corrected",
+  "agent": "data",
+  "started": 1795489201.646739,
+  "ended": 1795490691.4921432,
+  "returncode": 0,
+  "created": [
+    "T29",
+    "T30",
+    "T31",
+    "J8"
+  ]
+}

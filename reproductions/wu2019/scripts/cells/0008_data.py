@@ -1,0 +1,5 @@
+# cell 8 | agent: data | original run: ok | artifacts created: T16
+import os
+print(os.getcwd(),os.listdir('.')[:35]); print('tail pages',int(np.maximum(1,lcheck.pages).sum())); print(openalex_usage())
+# Include 18 groups in the exact pilot cache reuse calculation.
+pg=sum(1 for t in tags if t[2]=='group'); g=len(plan[plan.method=='group'])-pg; c=int(np.maximum(1,lcheck.pages).sum()+np.maximum(1,np.ceil(foc_ct.expected_count/200)).sum()); m=ceil(len(cover_meta)/100); retry=ceil((g+c+m)*.1); vals=[('spend_already_incurred',openalex_usage()['requests'],openalex_usage()['usd']),('uncached annual groups',g,g*.0001),('long-route cursor pages',c,c*.0001),('remaining metadata',m,m*.0001),('retry / drift reserve',retry+300,(retry+300)*.0001)]; pproj=pd.DataFrame(vals,columns=['component','requests','usd']); print(pproj,pproj.usd.sum()); print(save_table(pproj,'Stage-1 production budget authorization check','One measured or projected request/spend component; 10% paid retry/drift reserve plus 300 requests.'))

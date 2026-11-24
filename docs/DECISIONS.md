@@ -360,3 +360,39 @@ Each record states the context, the options considered, the decision, and why. R
   - `run_all.py` replays every cell offline (with the same helpers, the original artifact ids, and API responses served from the frozen file) and compares the results with the original artifacts. A test covers this.
 - **Why:** PLAN_P2 asks for scripts, intermediate data and reproduction instructions. Replaying the agents' own cells is more faithful than a rewritten script, and the frozen API responses make it runnable without a key or network.
 - **Status:** Accepted.
+
+## D52. Stage-2 corrections before the report (user, 2026-11-24)
+- **Decision:**
+  - Main analysis population: works with at least one citing work in the window, in each window separately, as in the study. The stage-1 population (every work with a defined score, including 64 with no citing work) is kept as a robustness column next to every headline estimate.
+  - Intervals: a bootstrap that resamples works within every team-size stratum, the fully sampled 51–100 stratum included, without a finite-population correction. The intervals describe uncertainty about the pattern, not only about this finite set of works.
+  - For the claim on reference age and popularity, the empirical layout (P12) replaces P9; stage 2 redrew it as P17.
+- **Why:** the stage-1 design-based intervals were near zero for the census stratum, and the stage-1 main estimates mixed in works the study would exclude. Both were found in the M2 review (`docs/reviews/P2-M2.md`).
+- **Status:** Accepted.
+
+## D53. Faithful offline replay: everything a cell can read is restored in time order
+- **Problem:** the first replay of the full run failed from cell 10 on. The agents' cells read files that no cell had written: background-job scripts and logs, the harness's cell log, figure files registered by the figure gate, and scripts the agents had written with their file tools (`write_file`, `edit_file`). In addition, a continued session restarted job ids at `job1` and overwrote the stage-1 job folders.
+- **Decision:**
+  - Job ids are unique within a workspace, also across turns. At shutdown, jobs that still run are stopped and every unrecorded job goes to the cell log, marked `stopped` when a signal ended it; the replay restores its files but does not run it.
+  - Files written with the agents' file tools are logged with their full content (`file_log.jsonl`, `harness/file_log.py`).
+  - The export includes job folders, the file log and the figure artifacts. `run_all.py` restores them, and the cell log, at the time they appeared, interleaved with the cells.
+  - A cell that fails in the replay but succeeded in the run (for example a check against the live API's usage counter) is reported, and the replay continues with the artifacts that cell made in the run.
+  - Tables count as identical when only their row order differs (parallel requests return rows in any order). The offline API service reports an unlimited budget, since it spends nothing.
+- **For session `r-full-8k`, recorded before these fixes:**
+  - The scripts of the two stage-1 jobs the agent had stopped were rebuilt from artifact J3 by undoing the agent's two edits. They match the event log's truncated copy: the length, the first 500 and the last 1,000 characters.
+  - The file-tool writes were rebuilt from the LangGraph checkpoints (`backfill_from_checkpoints`). The rebuilt final contents match the files on disk.
+- **Why:** a replay that diverges for bookkeeping reasons hides whether the analysis itself reproduces. With these fixes every remaining difference has a reason that can be read from the artifact titles.
+- **Status:** Accepted.
+
+## D54. The harness writes the run record; continued sessions keep each turn's record
+- **Decision:**
+  - `sciviz export-run` appends a run record to the released report: one row per turn (start, wall time, LLM calls and spend, API requests and spend, background jobs, figure and report reviews), LLM spend by agent, and counts of cells, artifacts and figure versions. It is computed from the event log, the usage files, the cell log and the artifact store. The report is then rendered again, with its figures inside the package.
+  - The Writer was told not to estimate times or costs.
+  - When a session continues, the CLI first moves the previous turn's constraints, lead report and API usage to `history/turnN/`.
+- **Why:** the agents cannot know the run's cost or wall time, and a model would guess them. The harness has the exact numbers. Before this, the second turn overwrote the first turn's lead report and usage file.
+- **Status:** Accepted.
+
+## D55. The reproduction package keeps the frozen API responses in the repository, compressed
+- **Decision:** `reproductions/wu2019/data/api_responses.sqlite.xz` (37 MB; 126 MB unpacked) is committed with the package, and `run_all.py` unpacks it on first use. The data artifacts add 36 MB.
+- **Alternatives:** a GitHub release asset (one more publishing step, and the package is no longer self-contained); leaving the responses out (the replay then reuses the recorded artifacts of the collection cells instead of recomputing them).
+- **Why:** both files stay well under GitHub's 100 MB file limit, and the package runs offline right after a clone.
+- **Status:** Accepted.

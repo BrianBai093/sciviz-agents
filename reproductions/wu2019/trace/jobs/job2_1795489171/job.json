@@ -1,0 +1,10 @@
+{
+  "id": "job2",
+  "name": "stage1_validated_overflow_cursors",
+  "agent": "data",
+  "started": 1795489171.523056,
+  "ended": null,
+  "returncode": null,
+  "created": [],
+  "stopped": "by the agent before it ended (no end was recorded)"
+}

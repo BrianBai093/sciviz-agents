@@ -1,0 +1,38 @@
+{
+  "id": "J14",
+  "kind": "json",
+  "title": "Stage 2 gate and writer handoff index",
+  "description": "Exact captions, review outcomes, file paths, provenance, and findings. No report generated.",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.804,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"figures\": \"list[5] of {\\\"id\\\": \\\"...\\\", \\\"kind\\\": \\\"...\\\", \\\"title\\\": \\\"...\\\", \\\"description\\\": \\\"...\\\", \\\"producer\\\": \\\"...\\\", \\\"inputs\\\": \\\"...\\\", \\\"code\\\":",
+    "text": "structure: {\"figures\": \"list[5] of {\\\"id\\\": \\\"...\\\", \\\"kind\\\": \\\"...\\\", \\\"title\\\": \\\"...\\\", \\\"description\\\": \\\"...\\\", \\\"producer\\\": \\\"...\\\", \\\"inputs\\\": \\\"...\\\", \\\"code\\\": \\\"...\\\", \\\"created_at\\\": \\\"...\\\", \\\"file\\\": \\\"...\\\", \\\"slug\\\": \\\"...\\\", \\\"claims\\\": \\\"...\\\", \\\"parent\\\": \\\"...\\\", \\\"version\\\": \\\"...\\\", \\\"status\\\": \\\"...\\\", \\\"reviews\\\": \\\"...\\\"}\", \"earlier_stage2\": {\"P13\": \"str\", \"P14\": \"str\"}, \"P12_usage\": \"str\", \"findings\": {\"C1\": \"str\", \"C2\": \"str\", \"C3\": \"str\", \"C4\": \"str\", \"C5\": \"str\", \"C6\": \"str\", \"C7\": \"str\", \"C8\": \"str\", \"C9\": \"str\"}, \"headlines\": \"str\", \"audit\": \"str\"}\npreview: {\"figures\": [{\"id\": \"P15\", \"kind\": \"figure\", \"title\": \"Fig. 2 analogue \\u2014 Team size, disruption rank and citation counts (Stage 2)\", \"description\": \"Design-weighted mean within-year disruption percentile (A) and median unique strictly postpublication citing works through 23 November 2026 (B), for 7,933 Columbia OpenAlex works with at least one such citer. Unweighted stratum n is below each team size; dotted line separates exact sizes from pooled bands. Error bars show pointwise 95% percentile bootstrap intervals from 1,000 focal-work replacement draws within each original stratum with original inverse-inclusion weights and reranking; no finite-population correction, including in the fully sampled 51\\u2013100 stratum. Trends are not strictly monotone. For 51\\u2013100 authors the median is 39 citing works [31,46], n=477.\", \"producer\": \"analyst\", \"inputs\": [\"T66\", \"P3\"], \"code\": null, \"created_at\": 1795496194.865, \"file\": \"figure.png\", \"slug\": \"fig2-team-stage2\", \"claims\": [\"C1\"], \"parent\": null, \"version\": 1, \"status\": \"approved\", \"reviews\": [{\"round\": 1, \"verdict\": \"pass\", \"scores\": {\"supports_claims\": 5, \"truthfulness\": 5, \"readability\": 5, \"caption\": 4}, \"summary\": \"Both panels support C1 as an overall, nonmonotonic pattern: larger teams tend to have lower mean disruption percentiles and higher median citation counts, with both patterns extending into the pooled 51\\u2013100-author band. The displayed counts sum to 7,933, the visible singleton estimates match T66, and the"
+  }
+}

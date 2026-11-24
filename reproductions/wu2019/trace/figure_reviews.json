@@ -1,0 +1,502 @@
+{
+ "P1": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 4,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The CDFs support C2 for the three displayed team-size strata: they show differences in the shares of works with negative, zero, and positive disruption scores, not just differences in means. The sign boundary, sample sizes, and pointwise uncertainty are visible, and the caption discloses the restricted display range.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The caption gives sample sizes and the uncertainty method but does not identify the eligible-work population or the citation window used to compute D.",
+     "fix": "Identify the study dataset and state the citation window used for these curves. Name the 51\u2013100-author group as the census stratum and say that the shaded ribbons are pointwise 95% design intervals."
+    },
+    {
+     "severity": "minor",
+     "problem": "The legend says \u201c1 authors,\u201d and the y-axis label does not make clear that the percentages are weighted.",
+     "fix": "Change the legend entry to \u201c1 author (n=626)\u201d and label the y-axis \u201cWeighted share of works at or below D (%).\u201d"
+    }
+   ]
+  }
+ ],
+ "P10": [
+  {
+   "round": 3,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 4,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure provides credible partial support for C4: negative slope estimates predominate among supported fields and subfields for teams of 1\u201310 authors, but the pattern is not universal. The field plot and summary table agree with the supplied data, and the caption correctly states that one supported journal cannot establish a pattern across most journals.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The caption reports the fraction of negative estimates but could more clearly distinguish that fraction from the number of groups whose individual intervals lie entirely below zero.",
+     "fix": "Note that the pointwise 95% intervals lie entirely below zero in 6 of 20 supported fields and 7 of 35 supported subfields."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption explains that the supported set is held fixed but leaves the implication for unsupported groups implicit.",
+     "fix": "State that the sign fractions and their intervals describe only the observed groups that met the support rule and do not generalize to unsupported groups."
+    }
+   ]
+  }
+ ],
+ "P11": [
+  {
+   "round": 1,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 4,
+    "truthfulness": 5,
+    "readability": 2,
+    "caption": 4
+   },
+   "summary": "The weighted curves support the descriptive finding that the two selected larger-team groups cite newer and generally more highly cited references than solo works. The axes, weighting, and pointwise uncertainty are appropriately described. Fix the title\u2013legend overlap before publication and keep the fitted-model evidence separate from the empirical comparison.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure title overlaps the shared legend, obscuring the team-size labels and focal-work counts needed to interpret both panels.",
+     "fix": "Remove the redundant in-image title or place it on a separate line above the legend. Check that all three legend entries and counts are legible at final two-column width."
+    },
+    {
+     "severity": "minor",
+     "problem": "The curves show empirical distributions for three selected team-size groups, not a trend across all team sizes or differences in fitted parameters. The caption makes this distinction, but readers need a usable reference to the separate fit results.",
+     "fix": "Keep the caption's empirical-only scope and replace T60/T65 with the final report table references. State that the age-decay contrast is positive for 10-author versus solo works, while the popularity-exponent interval includes zero."
+    }
+   ]
+  }
+ ],
+ "P12": [
+  {
+   "round": 2,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 4,
+    "truthfulness": 5,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The weighted curves support the empirical part of C5: the two larger-team groups cite newer and generally more highly cited references than solo works, while their popularity curves are close to each other. The figure states the sample sizes, weighting, and pointwise uncertainty and appropriately directs readers to the separate model-fit evidence.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The figure supports the empirical comparison for three selected team-size groups, not a trend across all team sizes or a difference in fitted popularity exponents.",
+     "fix": "Keep the caption\u2019s empirical scope and table references. In the report, limit the visual conclusion to the groups shown and describe the popularity-exponent contrast as inconclusive."
+    },
+    {
+     "severity": "minor",
+     "problem": "The narrow uncertainty ribbons are hard to distinguish from the curves in panel B, especially where the two larger-team curves overlap.",
+     "fix": "Check the ribbons at final print size and modestly increase their contrast if needed, retaining the distinct line styles."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption gives edge counts but leaves the source and eligibility of the focal works implicit.",
+     "fix": "Add a short phrase identifying the data source and eligible focal-work cohort."
+    }
+   ]
+  }
+ ],
+ "P13": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 5,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The weighted CDFs support C2 for the three displayed team sizes: the share of works with negative or zero disruption scores differs clearly across groups, a comparison that means alone do not show. The caption states the restricted display range and identifies the intervals as pointwise bootstrap bands, with no finite-population correction even for the fully sampled stratum.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The phrase \u201cwith a unique postpublication citer\u201d could be read as restricting the sample to works with exactly one citer.",
+     "fix": "Say \u201cwith at least one distinct citing work in the postpublication window ending 23 November 2026.\u201d"
+    },
+    {
+     "severity": "minor",
+     "problem": "The legend says \u201c1 authors.\u201d",
+     "fix": "Change the label to \u201c1 author (n=600).\u201d"
+    }
+   ]
+  }
+ ],
+ "P14": [
+  {
+   "round": 1,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 4,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The Stage 2 figure is legible, and the three band counts sum to the stated 7,933 eligible works. It shows a decline in the bottom impact half, but the reported contrast does not establish a stronger decline at high impact. Report the middle-band and top-decile slopes with their intervals so readers can also judge whether the gradient holds across impact levels.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "C3 asks two things: whether disruption declines with team size in each impact band, and whether it declines most at high impact. The caption reports the bottom-half slope and the top-minus-bottom contrast, but not the middle-band or top-decile slopes. The pointwise intervals on the plotted means do not quantify uncertainty in those trends.",
+     "fix": "Add the existing Stage 2 slope estimates, 95% intervals, and unweighted sample sizes from T68 for the middle band and top decile. Keep the top-minus-bottom contrast, and make clear that the slope comparisons cover teams of 1\u201310 authors; the larger-team bins are descriptive. State which parts of C3 the estimates support."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption does not explain the direction of the D percentile or the two reference lines. Its bootstrap wording could also be read as 1,000 individual work draws rather than 1,000 replicates.",
+     "fix": "Say that higher D percentiles indicate greater disruption, the horizontal line marks the 50th percentile, and the vertical line separates exact team sizes from grouped sizes. Specify that each of the 1,000 replicates resamples the original number of works within each stratum with replacement, including the fully sampled stratum, without a finite-population correction."
+    }
+   ]
+  }
+ ],
+ "P15": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 5,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "Both panels support C1 as an overall, nonmonotonic pattern: larger teams tend to have lower mean disruption percentiles and higher median citation counts, with both patterns extending into the pooled 51\u2013100-author band. The displayed counts sum to 7,933, the visible singleton estimates match T66, and the fully sampled band has nonzero intervals under the stated no-FPC bootstrap.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The phrase \u201c1,000 focal-work replacement draws\u201d could be read as 1,000 individual works rather than 1,000 bootstrap replicates.",
+     "fix": "Say \u201c1,000 bootstrap replicates, each resampling the original number of focal works with replacement within every stratum.\u201d Retain the notes on weighting, reranking, and no finite-population correction."
+    },
+    {
+     "severity": "minor",
+     "problem": "The equally spaced categories include both exact team sizes and pooled bands, so the connecting slopes do not represent change per additional author.",
+     "fix": "Add a short caption note that the x-axis uses equally spaced categories and that the extension to 100 authors is represented by the pooled 51\u2013100 band."
+    }
+   ]
+  }
+ ],
+ "P16": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 5,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The Stage 2 figure matches the cited-work analysis in T69 and T70 and reports the within-stratum bootstrap without a finite-population correction. It supports C4 only in part: estimated slopes are negative in 14 of 20 supported fields and 24 of 34 supported subfields, but the pattern is not universal, and the single supported journal cannot establish a pattern across most journals.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The caption uses D without defining it or explaining what a negative slope means.",
+     "fix": "Define D as the disruption index and state that a negative slope means larger teams rank lower on disruption within publication year."
+    },
+    {
+     "severity": "minor",
+     "problem": "The journal row's \u201c100%\u201d gives visual prominence to a result based on one supported journal, even though the caption correctly rules out generalization.",
+     "fix": "Show \u201c1 of 1\u201d without the percentage and keep the 0%\u2013100% interval."
+    }
+   ]
+  }
+ ],
+ "P17": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 4,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The revised P12 clearly shows that both larger-team groups cite newer and generally more highly cited references than solo works, while the two larger groups have similar popularity curves. The caption documents the citation eligibility rule, edge weighting, and focal-work bootstrap without a finite-population correction. The figure is ready for the report as the empirical component of C5.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The curves support the empirical part of C5 for the three groups shown, but do not establish differences in fitted distribution parameters. The caption flags this distinction, but the results text could still overstate the evidence.",
+     "fix": "Present T76/T77 alongside the figure in the C5 subsection. Distinguish the supported age-decay contrast for 10-author versus solo works from the inconclusive citation-tail exponent contrast."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption names the fit artifacts but does not cite the updated source for the empirical curves, intervals, and sample counts.",
+     "fix": "Cite T75 in the caption for the plotted estimates, ribbons, and counts."
+    }
+   ]
+  }
+ ],
+ "P18": [
+  {
+   "round": 2,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 5,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure clearly evaluates C3 without overstating the result. Among teams of 1\u201310 authors, only the bottom impact band shows a clear decline in disruption with team size. The top-minus-bottom slope contrast is imprecise and does not support a stronger decline at high impact. The caption documents the cited-work restriction and the within-stratum bootstrap without a finite-population correction, including for the fully sampled stratum.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The caption specifies weighted midranks but does not explicitly say which citation measure is ranked to define impact.",
+     "fix": "State that impact bands are based on within-publication-year weighted midranks of the number of distinct strictly postpublication citing works observed through 23 November 2026."
+    }
+   ]
+  }
+ ],
+ "P19": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 5,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The weighted CDFs support C2 by showing how the share of works on either side of zero differs across the three team-size groups, rather than reporting only mean scores. The plotted counts match the revised eligibility rule, and all three groups, including the fully sampled stratum, have visible pointwise bootstrap bands.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The caption notes that the curves differ near zero but leaves the main comparison implicit. Because the CDF includes zero, its height at zero is not the share of works with negative scores.",
+     "fix": "State that the weighted share with D \u2264 0 rises from about 56% for solo authors to 82% for ten authors and 91% for 51\u2013100 authors. Note that each jump at zero represents works with D = 0."
+    },
+    {
+     "severity": "minor",
+     "problem": "The accompanying P1 version 1 record describes the superseded sample and variance method, which could be mistaken for the provenance of the displayed figure.",
+     "fix": "Label P1 version 1 as superseded and make sure the exported Stage 2 figure record points to T67 and the no-FPC bootstrap."
+    }
+   ]
+  }
+ ],
+ "P2": [
+  {
+   "round": 1,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 4,
+    "readability": 3,
+    "caption": 4
+   },
+   "summary": "The figure is useful as a descriptive comparison across impact groups, but it does not support the claim that the gradient is strongest at high impact. Show the direct comparison already available in T52, qualify the claim, and move the legend so all uncertainty intervals are visible.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The curves show mean disruption percentiles by team size and impact group, but they do not establish that the team-size gradient is strongest at high impact. The high-impact curve is nonmonotonic, and the pointwise intervals do not test differences in slopes. The caption notes that the direct high-minus-low slope interval includes zero but does not report the estimate or interval.",
+     "fix": "Report the existing T52 slopes for all three impact groups and the high-minus-low slope contrast, with 95% intervals and the team-size range and sample sizes used for the slope estimates. Put these in a compact panel or the caption. Revise C3 to distinguish the evidence for a gradient within each group from the inconclusive evidence that it is stronger at high impact."
+    },
+    {
+     "severity": "major",
+     "problem": "The legend overlaps the lower error bars for the high-impact group, obscuring uncertainty that readers need to assess the claim.",
+     "fix": "Move the legend outside the plotting area and verify that all interval caps and team-size labels remain legible at two-column width."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption does not identify the citation window, explain that higher D percentiles indicate greater disruption, or define the dashed and dotted guides.",
+     "fix": "Name the citation window used, state how to interpret higher D percentiles, and explain that the horizontal guide marks the 50th percentile and the vertical guide separates exact team sizes from grouped bins."
+    }
+   ]
+  }
+ ],
+ "P3": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 4,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure supports the overall C1 pattern through the 51\u2013100-author stratum. Both outcomes, stratum sample sizes, and pointwise 95% design-based intervals are easy to read. The caption explains why the largest stratum's citation median has no visible interval while its disruption rank still does.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "C1 could be read as claiming a monotonic change or a separate estimate for exactly 100 authors. Both series show local reversals or plateaus, and the largest teams are pooled in the 51\u2013100-author stratum.",
+     "fix": "Describe the finding as an overall association across team-size strata: mean disruption percentile generally falls and median citations generally rise, with the pattern extending to the pooled 51\u2013100-author group."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption explains the vertical separator but not the horizontal dashed line in panel A.",
+     "fix": "Identify the horizontal dashed line as the 50th-percentile reference."
+    }
+   ]
+  }
+ ],
+ "P4": [
+  {
+   "round": 1,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 3,
+    "readability": 3,
+    "caption": 4
+   },
+   "summary": "The age panel clearly shows that the selected larger-team groups cite newer references than solo works. The popularity panel shows a more modest separation from solo works and little separation between the two larger-team groups. Clarify the citation scale and either show the fitted-parameter evidence or narrow the figure's stated role to the empirical distributions.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure shows empirical distributions but does not show the fitted parameters needed for the second part of C5. The caption's reference to T60 does not tell readers what was fitted, how the estimates differ, or how closely the models fit.",
+     "fix": "Either limit this figure's stated role to the empirical comparisons and explicitly assign the parameter evidence to a report table, or add a compact fit summary with the model, fitted parameter by group, popularity-tail cutoff, and fit diagnostic. Describe parameter differences as descriptive unless design-based uncertainty is reported."
+    },
+    {
+     "severity": "minor",
+     "problem": "The three selected strata show a clear ordering for reference age, but the two larger-team popularity curves are close. These comparisons do not establish a steady increase in popularity across team sizes.",
+     "fix": "Describe the result for the groups shown: both larger-team groups generally cite newer and more highly cited references than solo works, while their popularity curves are close to each other."
+    },
+    {
+     "severity": "minor",
+     "problem": "Panel B has decade ticks but does not name the scale or explain the unlabeled region to the left of one citation.",
+     "fix": "Name the citation-axis transformation and explicitly label or explain how zero-citation references are handled."
+    },
+    {
+     "severity": "minor",
+     "problem": "The legend in panel B covers part of the upper curves, and several uncertainty bands are hard to distinguish from their lines at print size.",
+     "fix": "Move the legend to an empty part of the panel or outside the plotting area, and increase band contrast while retaining the distinct line styles."
+    }
+   ]
+  }
+ ],
+ "P5": [
+  {
+   "round": 1,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 5,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The forest plot accurately displays the weighted field slopes, sample counts, and pointwise uncertainty. It supports a qualified field-level finding, not the full cross-field, subfield, and journal claim.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The plot shows fields only, but C4 also claims the gradient holds across subfields and within most journals. Even among the 20 displayed fields, 14 slopes are negative and six are positive; six pointwise intervals lie entirely below zero and one lies entirely above zero. Only 1 of 2,607 observed journals met the support criteria, so the data cannot establish a pattern within most journals.",
+     "fix": "Keep the field forest plot and add a compact panel or companion table using the existing results. For fields, subfields, and journals, show the number of groups meeting the support criteria out of those observed, the fraction of supported slopes that are negative, and its replicate interval. Revise C4 to say that negative estimates predominate among supported fields (14/20) and subfields (25/35) for teams of 1\u201310 authors, while evidence is insufficient to assess whether the gradient holds within most journals."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption does not identify the citation window used to compute D, and the eligibility wording could be read as requiring five works across both size bands combined.",
+     "fix": "Name the citation window, define D as the disruption index, identify the displayed n values as unweighted sample counts, and specify that eligibility requires at least five sampled works in each of the 1\u20132 and 5\u201310 author bands."
+    }
+   ]
+  }
+ ],
+ "P6": [
+  {
+   "round": 2,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 4,
+    "truthfulness": 4,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure is legible and provides a direct test of C3, but it does not substantiate the claim as written. Among teams of 1\u201310 authors, the decline is clearest in the bottom citation-impact half. The middle and top-group slope intervals include zero, and the top-minus-bottom contrast is too uncertain to conclude that the decline is stronger at high impact.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The title does not distinguish the fitted comparison for teams of 1\u201310 authors from the descriptive means for larger team-size bins.",
+     "fix": "Qualify the title with \u2018among teams of 1\u201310 authors\u2019 or state in the caption that the larger bins are shown descriptively and are not included in the slope comparison."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption explains that both measures are reranked but does not say how sampling weights enter the ranks, plotted means, and slopes. The legend gives impact-group totals but not the counts behind individual points.",
+     "fix": "State which estimates use sampling weights, label the reported n values as observed counts, and point readers to T52 for counts by team size and impact group."
+    }
+   ]
+  }
+ ],
+ "P7": [
+  {
+   "round": 2,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 4,
+    "readability": 2,
+    "caption": 4
+   },
+   "summary": "The plotted field estimates and table agree with the supplied summaries. The figure shows that negative slopes predominate among supported fields and subfields, not that the gradient is universal or holds within most journals. Fix the overlapping table headers and make that distinction explicit.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure supports a narrower conclusion than C4: negative point estimates predominate among groups that meet the sample criteria, but the pattern is not uniform. Only 35 of 225 observed subfields meet those criteria, and one supported journal cannot establish what happens within most journals.",
+     "fix": "Mark C4 as partially supported wherever this figure is cited. State the result as 14 of 20 supported fields and 25 of 35 supported subfields having negative point estimates, and state that the claim about most journals could not be assessed. Keep those limits explicit in the caption."
+    },
+    {
+     "severity": "major",
+     "problem": "The table headers run into one another, making the column labels hard to distinguish even before the figure is reduced to print size.",
+     "fix": "Use the full figure width for the table, allocate more space to the longer headers, and wrap them onto two lines. Check the exported figure at its intended two-column width."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption explains the slope weights and work counts but does not explicitly distinguish the weighted slopes from the equal-per-group sign fractions or explain that the fraction intervals keep the set of supported groups fixed.",
+     "fix": "Identify the data as the team-size-stratified OpenAlex sample restricted to works with 1\u201310 authors. State that dots and bars show design-weighted slopes and pointwise 95% design intervals, and that the table counts each supported group once, holding the supported set fixed when calculating the fraction intervals."
+    }
+   ]
+  }
+ ],
+ "P8": [
+  {
+   "round": 2,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 4,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The empirical comparison is clear and consistent with the supplied data. It supports a solo-versus-larger-team contrast for the groups shown, not a steady rise in reference popularity with team size. The fitted-parameter part of C5 needs separate support or narrower wording.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The curves support the empirical part of C5 for the three groups shown: both larger-team groups cite newer and generally more highly cited references than solo works. They do not establish that fitted parameters differ by team size. T60 reports point estimates and fit diagnostics, but no uncertainty for the parameter comparisons.",
+     "fix": "Keep the figure focused on the empirical distributions. If C5 retains the parameter-difference claim, report design-based uncertainty for the relevant contrasts in T60 and interpret those contrasts alongside the fit diagnostics. Otherwise, describe the fitted parameters as descriptive estimates rather than established differences."
+    },
+    {
+     "severity": "minor",
+     "problem": "The pointwise intervals are hard to distinguish from the curves, especially where the two larger-team curves overlap in panel B.",
+     "fix": "Check the figure at final print size and make the ribbons easier to see by increasing their contrast or thinning the curves while preserving the distinct line styles."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption does not date the current citation counts or define a reference edge.",
+     "fix": "State the citation-count snapshot date and define an edge as one focal work citing one reference, so readers do not mistake the legend counts for counts of distinct references."
+    }
+   ]
+  }
+ ],
+ "P9": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 4,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The panels clearly show that the two selected larger-team strata cite newer and generally more highly cited references than solo works. The popularity curves for those two strata are close. Keep the empirical figure and assign the fitted-parameter part of C5 to the companion tables.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure supports the empirical part of C5 for the three selected strata, but it does not show whether fitted distribution parameters vary with team size. In particular, the higher popularity curves for the two larger groups do not establish a difference in their fitted power-law exponents.",
+     "fix": "In the claim-to-evidence mapping, cite this figure for the empirical comparisons only and cite T60 and T65 for the parameter results. Qualify the parameter claim according to the reported intervals and fit diagnostics, and state that the popularity fit applies only to references with at least 50 citations. No new analysis is needed."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption defines an edge but does not explicitly distinguish the plotted edge-level estimate from the equal-focal-work estimate also present in T59. The 51\u2013100-author ribbon is not discernible.",
+     "fix": "Say that the curves pool available citation edges, applying each focal work's sampling weight to its edges, rather than weighting focal works equally. If the largest stratum has zero-width design intervals because all eligible works were sampled, state that in the caption."
+    }
+   ]
+  }
+ ]
+}

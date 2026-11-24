@@ -1,0 +1,77 @@
+{
+  "updated_at": 1795488900.257212,
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "Mean disruption percentile decreases and median citations increase with team size, including the extension to 100 authors.",
+      "source": "Fig. 2",
+      "evidence_needed": "Design-weighted within-year ranks, stratum means and medians, uncertainty and counts.",
+      "testable": "partly",
+      "reason": "Recent single-institution OpenAlex works, not the historical multi-population corpus."
+    },
+    {
+      "id": "C2",
+      "claim": "The disruption distribution differs by team size, beyond mean differences.",
+      "source": "Extended Data",
+      "evidence_needed": "Distribution plots and contrasts with t and KS tests or design-aware analogues.",
+      "testable": "yes",
+      "reason": "Testable within the Columbia sampling frame where both counts and D are available."
+    },
+    {
+      "id": "C3",
+      "claim": "The disruption gradient holds across impact levels and is strongest at high impact.",
+      "source": "Fig. 3",
+      "evidence_needed": "Weighted within-year citation rank groups; stratum curves, slope/interaction, counts and intervals.",
+      "testable": "partly",
+      "reason": "Unequal/short follow-up and sample precision limit impact comparisons."
+    },
+    {
+      "id": "C4",
+      "claim": "The disruption gradient holds across fields and subfields and within most journals.",
+      "source": "Fig. 3 and Extended Data",
+      "evidence_needed": "OpenAlex primary topic hierarchy and venue gradients with uncertainty, group sizes and ascertainment rules.",
+      "testable": "partly",
+      "reason": "Alternate classifications, one institutional cohort and limited journal/group coverage."
+    },
+    {
+      "id": "C5",
+      "claim": "Larger teams cite newer and more highly cited references; age and popularity distribution parameters vary with team size.",
+      "source": "Fig. 4",
+      "evidence_needed": "Deduplicated focal-reference pairs with year/current citation totals; compare distributions, assess exponential and power-law fits and quantify coverage.",
+      "testable": "partly",
+      "reason": "Current citations proxy popularity rather than historical popularity; metadata may be missing."
+    },
+    {
+      "id": "C6",
+      "claim": "Large-team work attracts earlier attention; small-team and disruptive work receive delayed recognition.",
+      "source": "Extended Data",
+      "evidence_needed": "Annual attention profiles on comparable complete follow-up, by team size and disruption, with uncertainty.",
+      "testable": "partly",
+      "reason": "Only early timing; no long-term sleeping-beauty assessment."
+    },
+    {
+      "id": "C7",
+      "claim": "Team-size association mostly remains with year, topic and author fixed effects and across paper designs/types.",
+      "source": "Text and Extended Data",
+      "evidence_needed": "Comparable-sample fixed-effect gradients and review/non-review contrasts where labelled.",
+      "testable": "partly",
+      "reason": "Limited within-author support; theory/empirical labels not established; not causal."
+    },
+    {
+      "id": "C8",
+      "claim": "Team-size association persists across citation windows and disruption variants.",
+      "source": "Robustness and Extended Data",
+      "evidence_needed": "Fixed two-year-window versus main on a common sample, and simplified ratio; assess other variants only if input/budget permits.",
+      "testable": "partly",
+      "reason": "No historical 5–40-year follow-up; variants may need additional graph data."
+    },
+    {
+      "id": "C9",
+      "claim": "Historical team-size growth, funding/company comparisons, and Nobel disruptiveness provide context.",
+      "source": "Extended Data",
+      "evidence_needed": "Descriptive gradient by recorded funding acknowledgment; no extrapolation to historical, company-patent or Nobel comparisons.",
+      "testable": "partly",
+      "reason": "Local funder data exist; historical corpus, requisite company patents and prize labels absent."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "P19",
+  "kind": "figure",
+  "title": "Extended figure — Signed raw disruption distributions (Stage 2)",
+  "description": "Inverse-inclusion-weighted empirical CDF of signed raw D for one, ten and 51–100 authors (600, 624 and 477 Columbia OpenAlex works with at least one distinct citing work in the postpublication window ending 23 November 2026). Display range is −0.1 to 0.1 on a symmetric log scale; zero is the sign boundary between development (negative) and disruption (positive). Pointwise 95% percentile bootstrap bands: in each of 1,000 replicates resample the original number of focal works with replacement within each original stratum, including 51–100, without a finite-population correction. The raw score for most works is close to zero; the curves differ around zero. Source: T67.",
+  "producer": "analyst",
+  "inputs": [
+    "T67",
+    "P1"
+  ],
+  "code": null,
+  "created_at": 1795496248.763,
+  "file": "figure.png",
+  "slug": "ext-raw-disruption-stage2",
+  "claims": [
+    "C2"
+  ],
+  "parent": "P13",
+  "version": 2,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 5,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The weighted CDFs support C2 by showing how the share of works on either side of zero differs across the three team-size groups, rather than reporting only mean scores. The plotted counts match the revised eligibility rule, and all three groups, including the fully sampled stratum, have visible pointwise bootstrap bands.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The caption notes that the curves differ near zero but leaves the main comparison implicit. Because the CDF includes zero, its height at zero is not the share of works with negative scores.",
+          "fix": "State that the weighted share with D ≤ 0 rises from about 56% for solo authors to 82% for ten authors and 91% for 51–100 authors. Note that each jump at zero represents works with D = 0."
+        },
+        {
+          "severity": "minor",
+          "problem": "The accompanying P1 version 1 record describes the superseded sample and variance method, which could be mistaken for the provenance of the displayed figure.",
+          "fix": "Label P1 version 1 as superseded and make sure the exported Stage 2 figure record points to T67 and the no-FPC bootstrap."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Extended figure — Signed raw disruption distributions (Stage 2)' (version 2) for claims ['C2'], from ['T67', 'P1']"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "T39",
+  "kind": "table",
+  "title": "Final bulk reference metadata responses",
+  "description": "One nonlocal reference requested at bulk stage including two recovered batches; unsuccessful exact matches and null fields retained.",
+  "producer": "data",
+  "inputs": [
+    "T10",
+    "T2",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T3",
+    "T30",
+    "T31",
+    "T6",
+    "T8"
+  ],
+  "code": "failure_batches={int(k):v.reference_id.tolist() for k,v in mb[mb.status.eq('request_failed')].groupby('batch')}; partial_batches=chunks(mb[mb.status.eq('partial_metadata')].reference_id.tolist()); rescue_requests=[metapar(ids) for ids in failure_batches.values()]+[dict(metapar(ids),select='id,publication_year,publication_date,cited_by_count') for ids in partial_batches]; resc,rt=request_many(rescue_requests,workers=5); print(rt); print([(str(o)[:180] if isinstance(o,Exception) else (o['meta']['count'],len(o['results']),sum(bool(z.get('publication_year')) for z in o['results']),sum(bool(z.get('publication_date')) for z in o['results']))) for o in resc]);\nrecover=[]\nfor (ib,ids),o in zip(failure_batches.items(),resc):\n if isinstance(o,Exception):continue\n by={z['id'].rsplit('/',1)[-1]:z for z in o['results']}; assert len(by)==len(o['results'])==o['meta']['count'] and set(by)<=set(ids)\n for rid in ids:\n  z=by.get(rid,{}); y=z.get('publication_year'); c=z.get('cited_by_count'); recover.append((rid,ib,y,c,'returned' if z and y is not None and c is not None else ('partial_metadata' if z else 'unmatched'),''))\nrc=pd.DataFrame(recover,columns=mb.columns); print(rc.status.value_counts().to_dict()); patch=pd.concat([mb[~mb.reference_id.isin(rc.reference_id)],rc],ignore_index=True); print(patch.status.value_counts().to_dict()); print(save_table(rc,'Recovered metadata request responses','One ID from two transiently failed reference lookup batches.')); print(save_table(patch,'Final bulk reference metadata responses','One nonlocal reference requested at bulk stage including two recovered batches; unsuccessful exact matches and null fields retained.'))\npa=[]\nfor r in resc[len(failure_batches):]:\n if isinstance(r,Exception):continue\n for z in r['results']:pa.append((z['id'].rsplit('/',1)[-1],z.get('publication_year'),z.get('publication_date'),z.get('cited_by_count')))\nprint(save_table(pd.DataFrame(pa,columns=['reference_id','publication_year','publication_date','cited_by_count']),'Missing reference publication-year audit','One returned reference missing year in primary metadata batch; checked alternate date field.'))",
+  "created_at": 1795490717.803,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "358,747 rows; columns: reference_id, batch, publication_year, cited_by_count, status, error",
+    "text": "358,747 rows x 6 columns\nreference_id: str [358747 distinct]\nbatch: int64 [min 0, max 3587, mean 1793]\npublication_year: float64 [min 1400, max 2026, mean 2012] (2% null)\ncited_by_count: float64 [min 1, max 3.576e+05, mean 530.7] (2% null)\nstatus: str [3 distinct]\nerror: str [1 distinct]\nfirst rows:\nreference_id  batch  publication_year  cited_by_count   status error\n W1018855955      0            2015.0           409.0 returned      \n W1018951375      0            2015.0            29.0 returned      \n  W101915678      0            2012.0            53.0 returned      \n W1019367131      0            2015.0            57.0 returned      \n   W10196906      0            1999.0            63.0 returned      ",
+    "rows": 358747,
+    "columns": [
+      "reference_id",
+      "batch",
+      "publication_year",
+      "cited_by_count",
+      "status",
+      "error"
+    ]
+  }
+}

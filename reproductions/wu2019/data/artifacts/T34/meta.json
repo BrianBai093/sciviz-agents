@@ -1,0 +1,33 @@
+{
+  "id": "T34",
+  "kind": "table",
+  "title": "Focal D coverage by stratum and focal year",
+  "description": "One stratum/cohort/status combination.",
+  "producer": "data",
+  "inputs": [
+    "T2",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T3",
+    "T30",
+    "T31",
+    "T8"
+  ],
+  "code": "print(load('T29').status.value_counts().to_dict()); print(load('T30').status.value_counts().to_dict()); print(load('T29').query(\"status!='ok'\").to_string(index=False)); print(load('T31').groupby('kind').sum(numeric_only=True).to_string())\nexec(compile(Path('stage1_derive.py').read_text(),'stage1_derive.py','exec')); D,meta,coverage,refworks=derive('T29','T30','T26','T27')",
+  "created_at": 1795490697.247,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "122 rows; columns: stratum, publication_year, main_status, fixed_status, works",
+    "text": "122 rows x 5 columns\nstratum: str [13 distinct]\npublication_year: int64 [min 2021, max 2024, mean 2022]\nmain_status: str [3 distinct]\nfixed_status: str [4 distinct]\nworks: int64 [min 1, max 190, mean 65.57]\nfirst rows:\nstratum  publication_year         main_status        fixed_status  works\n      1              2021            complete            complete    131\n      1              2021            complete complete_focal_zero     41\n      1              2021 complete_focal_zero complete_focal_zero      8\n      1              2021 complete_zero_union complete_zero_union      1\n      1              2022            complete            complete    103",
+    "rows": 122,
+    "columns": [
+      "stratum",
+      "publication_year",
+      "main_status",
+      "fixed_status",
+      "works"
+    ]
+  }
+}

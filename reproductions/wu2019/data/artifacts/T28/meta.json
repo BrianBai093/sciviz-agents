@@ -1,0 +1,28 @@
+{
+  "id": "T28",
+  "kind": "table",
+  "title": "Cursor waves and timing",
+  "description": "One parallel cursor wave; initial submissions, retries and elapsed active time.",
+  "producer": "data",
+  "inputs": [
+    "T12",
+    "T2",
+    "T3",
+    "T8"
+  ],
+  "code": "from pathlib import Path\nexec(compile(Path('stage1_cursors.py').read_text(),'stage1_cursors.py','exec'))",
+  "created_at": 1795489316.168,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "17 rows; columns: submitted, retried, retained_errors, active_seconds",
+    "text": "17 rows x 4 columns\nsubmitted: int64 [min 1, max 79, mean 13.82]\nretried: int64 [min 0, max 1, mean 0.05882]\nretained_errors: int64 [min 0, max 0, mean 0]\nactive_seconds: float64 [min 1.303, max 21.63, mean 6.657]\nfirst rows:\n submitted  retried  retained_errors  active_seconds\n        79        1                0       21.634976\n        48        0                0       16.099594\n        33        0                0       10.274433\n        21        0                0        7.754083\n        18        0                0        5.361810",
+    "rows": 17,
+    "columns": [
+      "submitted",
+      "retried",
+      "retained_errors",
+      "active_seconds"
+    ]
+  },
+  "job": "job3"
+}

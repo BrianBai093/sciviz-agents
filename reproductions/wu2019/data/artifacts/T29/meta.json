@@ -1,0 +1,31 @@
+{
+  "id": "T29",
+  "kind": "table",
+  "title": "Raw annual grouped counts",
+  "description": "One grouped request; annual sparse counts, request ID, total and integrity status.",
+  "producer": "data",
+  "inputs": [
+    "T2",
+    "T8",
+    "T9"
+  ],
+  "code": "from pathlib import Path\nexec(compile(Path('stage1_bulk.py').read_text(),'stage1_bulk.py','exec'))",
+  "created_at": 1795490689.925,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "25,049 rows; columns: request_row, meta_count, year_counts_json, status, error, sample_id, series, part",
+    "text": "25,049 rows x 8 columns\nrequest_row: int64 [min 0, max 2.513e+04, mean 1.254e+04]\nmeta_count: int64 [min 0, max 7.058e+05, mean 8886]\nyear_counts_json: str [15578 distinct]\nstatus: str [1 distinct]\nerror: str [1 distinct]\nsample_id: int64 [min 1, max 8000, mean 4033]\nseries: str [3 distinct]\npart: int64 [min 0, max 5, mean 0.05693]\nfirst rows:\n request_row  meta_count                         year_counts_json status error  sample_id series  part\n           0           1                              {\"2024\": 1}     ok                1      F     0\n           1           0                                       {}     ok                1      I     0\n           2        4355 {\"2022\": 621, \"2023\": 762, \"2024\": 77...     ok                1      U     0\n           3         119 {\"2022\": 16, \"2023\": 17, \"2024\": 21, ...     ok                2      F     0\n           4          12 {\"2022\": 1, \"2023\": 2, \"2024\": 2, \"20...     ok                2      I     0",
+    "rows": 25049,
+    "columns": [
+      "request_row",
+      "meta_count",
+      "year_counts_json",
+      "status",
+      "error",
+      "sample_id",
+      "series",
+      "part"
+    ]
+  },
+  "job": "job4"
+}

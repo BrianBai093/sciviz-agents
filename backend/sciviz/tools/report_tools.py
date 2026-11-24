@@ -95,7 +95,8 @@ def report_tools(s: Session, agent: str):
         (out / "report.md").write_text(md, encoding="utf8")
         html_text = rep.to_html(md, arts, s.ws.root, subtitle)
         rep.render_pdf(html_text, out / "report.html", out / "report.pdf")
-        (out / "status.json").write_text(json.dumps({"status": status, "round": round_no, "scores": scores}))
+        (out / "status.json").write_text(json.dumps({"status": status, "round": round_no, "scores": scores,
+                                                     "title": title, "subtitle": subtitle}))
         s.events.emit(agent, "report", status=status, pdf=str(out / "report.pdf"))
         text = (f"Report {status} in round {round_no} ({scores}); rendered to report/report.pdf.\n"
                 f"Reviewer summary: {verdict.summary}\nRemaining issues:\n{issues}")

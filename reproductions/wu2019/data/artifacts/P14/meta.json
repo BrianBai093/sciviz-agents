@@ -1,0 +1,47 @@
+{
+  "id": "P14",
+  "kind": "figure",
+  "title": "Fig. 3 analogue — Team size and disruption across citation impact (Stage 2)",
+  "description": "Weighted mean within-year D percentile for 7,933 Columbia OpenAlex works with at least one unique strictly postpublication citing work through 23 November 2026. Legend gives unweighted n for each impact band; cutoffs use weighted midranks. Error bars are pointwise 95% percentile bootstrap intervals from 1,000 with-replacement focal-work draws within original strata, no finite-population correction including the fully sampled stratum; D and impact ranks and bins are recalculated jointly. Among teams of 1–10, the bottom-half slope is −2.50 [−3.39, −1.64] percentile points per author doubling, n=3,277; the top-minus-bottom slope contrast is +2.73 [−1.89, 6.00], n=3,734. This does not demonstrate a stronger decline at high impact.",
+  "producer": "analyst",
+  "inputs": [
+    "T68",
+    "P6"
+  ],
+  "code": null,
+  "created_at": 1795496194.864,
+  "file": "figure.png",
+  "slug": "fig3-impact-stage2",
+  "claims": [
+    "C3"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 4,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The Stage 2 figure is legible, and the three band counts sum to the stated 7,933 eligible works. It shows a decline in the bottom impact half, but the reported contrast does not establish a stronger decline at high impact. Report the middle-band and top-decile slopes with their intervals so readers can also judge whether the gradient holds across impact levels.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "C3 asks two things: whether disruption declines with team size in each impact band, and whether it declines most at high impact. The caption reports the bottom-half slope and the top-minus-bottom contrast, but not the middle-band or top-decile slopes. The pointwise intervals on the plotted means do not quantify uncertainty in those trends.",
+          "fix": "Add the existing Stage 2 slope estimates, 95% intervals, and unweighted sample sizes from T68 for the middle band and top decile. Keep the top-minus-bottom contrast, and make clear that the slope comparisons cover teams of 1–10 authors; the larger-team bins are descriptive. State which parts of C3 the estimates support."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption does not explain the direction of the D percentile or the two reference lines. Its bootstrap wording could also be read as 1,000 individual work draws rather than 1,000 replicates.",
+          "fix": "Say that higher D percentiles indicate greater disruption, the horizontal line marks the 50th percentile, and the vertical line separates exact team sizes from grouped sizes. Specify that each of the 1,000 replicates resamples the original number of works within each stratum with replacement, including the fully sampled stratum, without a finite-population correction."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 3 analogue — Team size and disruption across citation impact (Stage 2)' (version 1) for claims ['C3'], from ['T68', 'P6']"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "J2",
+  "kind": "json",
+  "title": "Group and reference collector timing",
+  "description": "Background job wall time and audit billing snapshots.",
+  "producer": "data",
+  "inputs": [
+    "T2",
+    "T8",
+    "T9"
+  ],
+  "code": null,
+  "created_at": 1795489188.333,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"started_epoch\": \"float\", \"finished_epoch\": \"float\", \"wall_seconds\": \"float\", \"start_usage\": {\"requests\": \"int\", \"cache_hits\": \"int\", \"errors\": \"int\", \"usd\": \"",
+    "text": "structure: {\"started_epoch\": \"float\", \"finished_epoch\": \"float\", \"wall_seconds\": \"float\", \"start_usage\": {\"requests\": \"int\", \"cache_hits\": \"int\", \"errors\": \"int\", \"usd\": \"float\", \"budget_usd\": \"float\", \"daily_remaining_usd\": \"float\", \"daily_limit_usd\": \"float\", \"prepaid_remaining_usd\": \"float\", \"started_at\": \"float\", \"remaining_session_budget_usd\": \"float\"}, \"end_usage\": {\"requests\": \"int\", \"cache_hits\": \"int\", \"errors\": \"int\", \"usd\": \"float\", \"budget_usd\": \"float\", \"daily_remaining_usd\": \"float\", \"daily_limit_usd\": \"float\", \"prepaid_remaining_usd\": \"float\", \"started_at\": \"float\", \"remaining_session_budget_usd\": \"float\"}, \"submissions\": \"int\"}\npreview: {\"started_epoch\": 1795489132.0568671, \"finished_epoch\": 1795489188.3318248, \"wall_seconds\": 56.27494941605255, \"start_usage\": {\"requests\": 260, \"cache_hits\": 0, \"errors\": 1, \"usd\": 0.0259, \"budget_usd\": 3.5, \"daily_remaining_usd\": 0.8899, \"daily_limit_usd\": 1.0, \"prepaid_remaining_usd\": 3.0, \"started_at\": 1795488877.667499, \"remaining_session_budget_usd\": 3.4741}, \"end_usage\": {\"requests\": 1365, \"cache_hits\": 0, \"errors\": 1086, \"usd\": 0.0279, \"budget_usd\": 3.5, \"daily_remaining_usd\": 0.8878, \"daily_limit_usd\": 1.0, \"prepaid_remaining_usd\": 3.0, \"started_at\": 1795488877.667499, \"remaining_session_budget_usd\": 3.4721}, \"submissions\": 724}"
+  }
+}

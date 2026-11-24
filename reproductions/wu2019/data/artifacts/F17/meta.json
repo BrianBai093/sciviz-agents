@@ -1,0 +1,38 @@
+{
+  "id": "F17",
+  "kind": "finding",
+  "title": "C7 — partly reproduced: comparable-sample FE gradient persis",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.784,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[10] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"se\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"n_author",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[10] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"se\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"n_authors\\\": \\\"...\\\", \\\"n_rows\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"residual_x_ss\\\": \\\"...\\\", \\\"cluster_fallback\\\": \\\"...\\\", \\\"domain\\\": \\\"...\\\", \\\"source\\\": \\\"...\\\", \\\"claim\\\": \\\"...\\\", \\\"status\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"C7 \\u2014 partly reproduced: comparable-sample FE gradient persists; review contrast imprecise in main; no theory/empirical classification. All intervals 95%. F>0 Unadjusted : -1.73492 [-3.01302, -0.456819], n=4,107 (T79); F>0 Year + topic + author FE : -1.84826 [-3.4261, -0.270418], n=4,107 (T79); U>0 Unadjusted : -1.80058 [-3.06934, -0.531811], n=4,135 (T79); U>0 Year + topic + author FE : -1.94955 [-3.52051, -0.378588], n=4,135 (T79); F>0 log2 size slope article: -3.44932 [-4.34084, -2.49987], n=4,628 (T81); F>0 log2 size slope review: -0.240321 [-3.26126, 2.8786], n=390 (T81); F>0 review minus article slope contrast: 3.209 [-0.0768318, 6.5218], n=5,018 (T81); U>0 log2 size slope article: -3.58857 [-4.47075, -2.66193], n=4,657 (T81); U>0 log2 size slope review: -0.248261 [-3.26651, 2.87439], n=390 (T81); U>0 review minus article slope contrast: 3.34031 [0.0727514, 6.64141], n=5,047 (T81)\", \"value\": [{\"metric\": \"Unadjusted\", \"estimate\": -1.73492165, \"lo\": -3.0130241988, \"hi\": -0.4568191012, \"se\": 0.6516861832, \"n\": 4107, \"n_authors\": 1885.0, \"n_rows\": 6838.0, \"weighted_n\": 20243.9335646697, \"residual_x_ss\": 13557.0012829312, \"cluster_fallback\": false, \"domain\": \"F>0\", \"source\": \"T79\", \"claim\": \"C7\", \"status\": \"partly reproduced: comparable-sample FE gradient persists; review contrast imprecise in main; no theory/empirical classification\", \"group\": null, \"n_size1_2\": null, \"n_size5_10\": null}, {\"metric\": \"Year + topic + author FE\", \"estimate\": -1.8482573406, \"lo\": "
+  }
+}

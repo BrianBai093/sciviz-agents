@@ -1,0 +1,9 @@
+[Download the Stage 2 reproduction report (PDF)](/report/report.pdf). The independent report gate **approved release after revision** [gate log](/report/reviews.jsonl). The released PDF is **19 pages**, including a four-page evidence index, so it exceeds the requested 8–12 pages.
+
+**The main conclusion held after both corrections.** Among works with 1–10 authors and at least one later citing work, doubling team size was associated with a **3.48-point lower disruption percentile** (95% interval: −4.27 to −2.70; \(n=6{,}210\)). Larger teams generally received more citations, but neither trend was strictly monotonic. The disruption decline was clear in the bottom half of citation impact; the data did not establish a stronger decline at the top [F11, F13, T87].
+
+- **Eligibility:** The primary analysis now requires at least one focal citing work in each window separately. The report presents the broader Stage 1 eligibility rule alongside the corrected estimates as a robustness check [T82, T87].
+- **Uncertainty:** The bootstrap resamples works within every team-size stratum, including the fully sampled one, without a finite-population correction. For the 51–100-author group, the corrected median is **39 citing works**, with a 95% interval of **31–46** [F11, J14].
+- **Figures and replay:** All redrawn figures passed independent review. The report uses **P17**, the corrected version of **P12**, for reference age and popularity. The corrections made no new API requests, and the report documents offline replay [J14, J15, F20].
+
+No release-blocking issues remain. The single-institution cohort cannot establish causality or test long-delayed recognition, long citation windows, or the original patent and software comparisons.

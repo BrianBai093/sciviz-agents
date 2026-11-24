@@ -1,0 +1,2 @@
+# cell 39 | agent: analyst | original run: ok | artifacts created: none
+print(c1[c1.metric.isin(['D percentile','median F']) & c1.group.isin(['1','10','51–100'])].to_string(index=False));print(c4[(c4.level=='journal')&c4.supported].to_string(index=False)); print(c6[(c6.group.isin(['1','10','51–100','D negative','D positive']))&(c6.metric=='mean citing works')].to_string(index=False)); print(c6[c6.metric.str.startswith('no citations') & c6.group.isin(['1','51–100'])].to_string(index=False))

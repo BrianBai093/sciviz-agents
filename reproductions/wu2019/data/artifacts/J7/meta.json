@@ -1,0 +1,15 @@
+{
+  "id": "J7",
+  "kind": "json",
+  "title": "Analysis-ready derivation and coverage code",
+  "description": "Annual aggregation, window identities, ratios, and metadata coverage with explicit missingness.",
+  "producer": "data",
+  "inputs": [],
+  "code": "dp=Path('stage1_derive.py').read_text().replace('    for sw in s.itertuples(index=False):\\n        pass\\n','').replace('from collections import Counter','from collections import Counter'); compile(dp,'stage1_derive.py','exec'); Path('stage1_derive.py').write_text(dp)\nprint(save_json({'derive':dp,'usage':'Exec in run_python; call derive(grouped_artifact_id, metadata_bulk_artifact_id, cursor_status_artifact_id, cursor_records_artifact_id) after production. All inputs are persisted raw before derivation.'},'json','Analysis-ready derivation and coverage code','Annual aggregation, window identities, ratios, and metadata coverage with explicit missingness.'))",
+  "created_at": 1795489324.391,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"derive\": \"str\", \"usage\": \"str\"}",
+    "text": "structure: {\"derive\": \"str\", \"usage\": \"str\"}\npreview: {\"derive\": \"import json, math\\nfrom collections import Counter\\n\\ndef derive(gid,mid,cid,rid):\\n    s=load('T2'); p=load('T8'); g=load(gid); cr=load(cid); rr=load(rid); edges=load('T3')\\n    assert g.request_row.is_unique and cr.request_row.is_unique\\n    assert set(g.request_row)<=set(p[p.method.eq('group')].index)\\n    assert set(cr.request_row)<=set(p[p.method.ne('group')].index)\\n    groups=g.set_index('request_row').to_dict('index'); cursor=cr.set_index('request_row').to_dict('index'); records={int(i):z for i,z in rr.groupby('sample_id')}; out=[]; strata=[]\\n    years=range(2021,2027); count_names=['F','I','U','n_i','n_j','n_k']\\n    windows=['main','observed_fixed','fixed']\\n    def make(F,I,U):\\n        n_i=I; n_j=F-I; n_k=U-F\\n        assert 0<=I<=F<=U and n_i+n_j+n_k==U\\n        D=(n_i-n_j)/U if U else None\\n        assert D is None or -1<=D<=1\\n        return dict(zip(count_names+['D','strict_positive_F','simplified_ratio'],[F,I,U,n_i,n_j,n_k,D,F>0,n_i/F if F else None]))\\n    grouped=p.groupby('sample_id',sort=False)\\n    annual=[]; outputs=[]\\n    for sw in s.itertuples(index=False):\\n        issues=[]; prog={k:Counter() for k in ['F','I','U']}; z=grouped.get_group(sw.sample_id); route='grouped_disjoint' if z.method.eq('group').all() else 'grouped_prefix_plus_cursors'; res={'sample_id':sw.sample_id,'work_id':sw.work_id,'stratum':sw.stratum,'publication_year':sw.publication_year,'authors_count':sw.authors_count,'weight':sw.weight,'pi':sw.pi,'main_end':sw.main_end,'"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "J10",
+  "kind": "json",
+  "title": "Final derivation, metadata recovery, and status code",
+  "description": "Executable derivation with partial-reference normalization and preserved targeted recovery checks.",
+  "producer": "data",
+  "inputs": [
+    "T10",
+    "T2",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T3",
+    "T30",
+    "T31",
+    "T32",
+    "T33",
+    "T34",
+    "T38",
+    "T39",
+    "T40",
+    "T6",
+    "T8"
+  ],
+  "code": "import decimal\nu=openalex_usage(); glog=load('T31'); cursorlog=load('T28'); main=load('T33'); assert len(main)==8000 and main.sample_id.is_unique and main.work_id.is_unique and main.reason.eq('').all(); nr=['F','I','U','n_i','n_j','n_k']; assert all((main.loc[main.fixed_snapshot_supported,'fixed_'+k]<=main.loc[main.fixed_snapshot_supported,'main_'+k]).all() for k in nr); assert all((main.loc[~main.fixed_snapshot_supported,'observed_fixed_'+k]==main.loc[~main.fixed_snapshot_supported,'main_'+k]).all() and main.loc[~main.fixed_snapshot_supported,'fixed_'+k].isna().all() for k in nr)\nprint(main.groupby('publication_year').agg(n=('sample_id','size'),main_D=('main_D','count'),fixed_D=('fixed_D','count')).to_string());\nall_components=[('preflight, independent checks and date-null audits',None,.0272,pre_times.active_seconds.sum()+aaperf['elapsed_s']+rt['elapsed_s']+qop['elapsed_s']),('production annual group requests (excluding reused checks)',25031,2.5031,glog[glog.kind.ne('reference')].active_seconds.sum()),('production disjoint-residual and focal cursor pages',235,.0235,cursorlog.active_seconds.sum()),('production remaining reference ID batches',3588,.3588,glog[glog.kind.eq('reference')].active_seconds.sum()),('session total',u['requests'],u['usd'],None)]; aud_table=pd.DataFrame(all_components,columns=['component','request_count','usd','active_seconds']); print(aud_table.to_string(index=False)); assert abs(aud_table.usd.iloc[:-1].sum()-u['usd'])<1e-8\nprint(save_table(aud_table,'Final billing and active API timing by component','One stage-1 spend component; exact total from usage. Components overlap in wall time; preflight active clock includes only timed batches and alternate checks.'))\nj8=json.loads(Path('artifacts/J8/data.json').read_text()); j6=json.loads(Path('artifacts/J6/data.json').read_text()); end_epoch=time.time(); a={'usage':u,'stage1_wall_seconds_from_harness_start':end_epoch-u['started_at'],'group_and_reference_job_wall_seconds':j8['wall_seconds'],'overflow_cursor_job_wall_seconds':j6['wall_seconds'],'unit_usd_per_sampled_work':u['usd']/8000,'production_group_reference_active_seconds_per_work':glog.active_seconds.sum()/8000,'preflight_projected_usd_including_reserve':3.2299,'sample_N':8000,'frame_N':40541,'frame_no_paging_scenario_usd':14.0817,'frame_paging_at_sample_rate_usd':14.0817+235/8000*40541*.0001,'projection_note':'Indicative frame scenario assumes similar URL-overflow page burden; sample strata are disproportionate, not a frame-wide measured page count. No full-frame collection proposed.','before_corrected_dispatch':j8['start_usage'],'group_and_reference_end':j8['end_usage'],'final_after_metadata_recovery':u}; print(a); print(save_json(a,'json','Stage-1 final spend, wall time, and projection audit','Single run audit; budget and elapsed evidence, rate per sampled work, and indicative full-frame projection.'))\nlogs=[json.loads(z) for z in Path('kernel_log.jsonl').read_text().splitlines()]; repair=[x['code'] for x in logs if 'T38' in x['created'] or 'T44' in x['created']]; print(save_json({'derive':dp,'metadata_recovery':repair,'entry':\"derive('T29','T39','T26','T27')\",'note':'Final join uses T45/T46/T47; T38 patches the two failed batches in T30. T44 verifies missing year and date.'},'json','Final derivation, metadata recovery, and status code','Executable derivation with partial-reference normalization and preserved targeted recovery checks.'))",
+  "created_at": 1795490772.491,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"derive\": \"str\", \"metadata_recovery\": \"list[2] of \\\"str\\\"\", \"entry\": \"str\", \"note\": \"str\"}",
+    "text": "structure: {\"derive\": \"str\", \"metadata_recovery\": \"list[2] of \\\"str\\\"\", \"entry\": \"str\", \"note\": \"str\"}\npreview: {\"derive\": \"import json, math\\nfrom collections import Counter\\n\\ndef derive(gid,mid,cid,rid,write_disruption=True):\\n    s=load('T2'); p=load('T8'); g=load(gid); cr=load(cid); rr=load(rid); edges=load('T3')\\n    assert g.request_row.is_unique and cr.request_row.is_unique\\n    assert set(g.request_row)<=set(p[p.method.eq('group')].index)\\n    assert set(cr.request_row)<=set(p[p.method.ne('group')].index)\\n    groups=g.set_index('request_row').to_dict('index'); cursor=cr.set_index('request_row').to_dict('index'); records={int(i):z for i,z in rr.groupby('sample_id')}; out=[]; strata=[]\\n    years=range(2021,2027); count_names=['F','I','U','n_i','n_j','n_k']\\n    windows=['main','observed_fixed','fixed']\\n    def make(F,I,U):\\n        n_i=I; n_j=F-I; n_k=U-F\\n        assert 0<=I<=F<=U and n_i+n_j+n_k==U\\n        D=(n_i-n_j)/U if U else None\\n        assert D is None or -1<=D<=1\\n        return dict(zip(count_names+['D','strict_positive_F','simplified_ratio'],[F,I,U,n_i,n_j,n_k,D,F>0,n_i/F if F else None]))\\n    grouped=p.groupby('sample_id',sort=False)\\n    annual=[]; outputs=[]\\n    for sw in s.itertuples(index=False):\\n        issues=[]; prog={k:Counter() for k in ['F','I','U']}; z=grouped.get_group(sw.sample_id); route='grouped_disjoint' if z.method.eq('group').all() else 'grouped_prefix_plus_cursors'; res={'sample_id':sw.sample_id,'work_id':sw.work_id,'stratum':sw.stratum,'publication_year':sw.publication_year,'authors_count':sw.authors_count,'weight':sw.weight,'pi':sw.pi,'m"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "J4",
+  "kind": "json",
+  "title": "Frame, sample, manifest and validation code",
+  "description": "Exact SQL, sampling algorithm, tested filter rules and budget projection.",
+  "producer": "data",
+  "inputs": [],
+  "code": "kl=[json.loads(x) for x in ks]; print([(i,z['created'],z['code'][:85]) for i,z in enumerate(kl)]); pre_times=pd.DataFrame([('group and plain validation',perf['submitted'],perf['elapsed_s'],perf['usd']),('long metadata',mpperf['submitted'],mpperf['elapsed_s'],mpperf['usd']),('tail preflight',lperf['submitted'],lperf['elapsed_s'],lperf['usd']),('local / live comparison',audperf['submitted'],audperf['elapsed_s'],audperf['usd']),('date, edge and focal checks',eperf['submitted'],eperf['elapsed_s'],eperf['usd'])],columns=['phase','submitted','active_seconds','usd']); print(pre_times.sum(numeric_only=True)); print(save_table(pre_times,'Stage-1 validation and preflight timing','One measured pilot batch; separate from historical pilot and failed dispatch.')); print(save_json({'scripts':[z['code'] for z in kl if set(z['created'])&{'T1','T4','T6','T8','T12','T16'}],'note':'Execute scripts in order in run_python; grouped count endpoint discovery and record_decision entries are separate. Code is preserved with original output calls.'},'json','Frame, sample, manifest and validation code','Exact SQL, sampling algorithm, tested filter rules and budget projection.'))",
+  "created_at": 1795489226.362,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"scripts\": \"list[6] of \\\"str\\\"\", \"note\": \"str\"}",
+    "text": "structure: {\"scripts\": \"list[6] of \\\"str\\\"\", \"note\": \"str\"}\npreview: {\"scripts\": [\"frame_sql='''WITH r AS (SELECT citing_work_id AS work_id, list(DISTINCT cited_work_id ORDER BY cited_work_id) AS refs FROM citations WHERE regexp_full_match(cited_work_id,'W[0-9]+') AND citing_work_id<>cited_work_id GROUP BY 1), y AS (SELECT w.work_id, sum(y.cited_by_count) later_year_citations FROM works w JOIN work_citations_by_year y ON y.work_id=w.work_id AND y.year>w.publication_year AND y.year<=2026 GROUP BY 1), l AS (SELECT w.work_id, count(DISTINCT c.citing_work_id) local_later_citations FROM citations c JOIN works w ON c.cited_work_id=w.work_id JOIN works s ON c.citing_work_id=s.work_id AND s.publication_date>w.publication_date GROUP BY 1) SELECT w.work_id, w.publication_date, w.publication_year, w.authors_count, w.cited_by_count AS snapshot_cited_by_count, w.type, w.primary_topic_id, w.primary_field, w.primary_subfield, w.source_id, w.referenced_works_count, coalesce(len(r.refs),0) AS usable_refs, coalesce(y.later_year_citations,0) AS later_year_citations,coalesce(l.local_later_citations,0) AS local_later_citations, r.refs FROM works w LEFT JOIN r USING(work_id) LEFT JOIN y USING(work_id) LEFT JOIN l USING(work_id) ORDER BY work_id'''\\nfrom datetime import date, timedelta\\nframe=sql(frame_sql); frame['frame_status']=np.select([frame.usable_refs.eq(0),frame[['snapshot_cited_by_count','later_year_citations','local_later_citations']].max(axis=1).le(0)],['no_usable_refs','no_citation_evidence'],default='eligible'); labels=[str(i) for i in range(1,11)]+['11"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "F12",
+  "kind": "finding",
+  "title": "C2 — reproduced locally: distributions differ, not an iid KS",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.774,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[22] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[22] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"group\\\": \\\"...\\\", \\\"threshold\\\": \\\"...\\\", \\\"n_1\\\": \\\"...\\\", \\\"n_2\\\": \\\"...\\\", \\\"domain\\\": \\\"...\\\", \\\"source\\\": \\\"...\\\", \\\"claim\\\": \\\"...\\\", \\\"status\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"C2 \\u2014 reproduced locally: distributions differ, not an iid KS test. All intervals 95%. F>0 raw D quantile 0.5 1: 0 [-5.5517e-05, 0], n=600 (T67); F>0 raw D quantile 0.5 10: -0.000419664 [-0.000523013, -0.000289412], n=624 (T67); F>0 raw D quantile 0.5 51\\u2013100: -0.00115789 [-0.00138446, -0.000981842], n=477 (T67); F>0 KS distance 10 vs 1: 0.294103 [0.246588, 0.347971], n=1,224 (T67); F>0 negative fraction difference 10 vs 1: 0.293974 [0.239754, 0.344664], n=1,224 (T67); U>0 raw D quantile 0.5 1: 0 [-1.06647e-05, 0], n=626 (T67); U>0 raw D quantile 0.5 10: -0.000415628 [-0.000521241, -0.000289412], n=626 (T67); U>0 raw D quantile 0.5 51\\u2013100: -0.00112237 [-0.00134409, -0.000879597], n=481 (T67); U>0 KS distance 10 vs 1: 0.311502 [0.261139, 0.364217], n=1,252 (T67); U>0 negative fraction difference 10 vs 1: 0.311502 [0.259614, 0.360133], n=1,252 (T67); F>0 fraction negative 1: 0.481667 [0.443494, 0.523032], n=600 (T66); F>0 fraction positive 1: 0.443333 [0.403388, 0.480398], n=600 (T66); F>0 fraction negative 10: 0.775641 [0.74079, 0.809904], n=624 (T66); F>0 fraction positive 10: 0.179487 [0.149033, 0.209936], n=624 (T66); F>0 fraction negative 51\\u2013100: 0.880503 [0.849679, 0.907563], n=477 (T66); F>0 fraction positive 51\\u2013100: 0.0922432 [0.0676533, 0.118762], n=477 (T66); U>0 fraction negative 1: 0.461661 [0.424409, 0.501597], n=626 (T66); U>0 fraction positive 1: 0.42492 [0.3856, 0.460925], n=626 (T66); U>0 fraction negative 10: 0.773163 [0.738019"
+  }
+}

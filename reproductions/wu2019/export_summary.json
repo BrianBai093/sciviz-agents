@@ -1,0 +1,21 @@
+{
+ "figures": [
+  "figure 1: P15",
+  "figure 2: P19",
+  "figure 3: P18",
+  "figure 4: P16",
+  "figure 5: P17",
+  "P1",
+  "P3",
+  "P6",
+  "P9",
+  "P10",
+  "P12",
+  "P13"
+ ],
+ "artifacts": 141,
+ "cells": 52,
+ "api_responses": 29126,
+ "file_writes": 11,
+ "jobs": 7
+}

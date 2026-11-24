@@ -1,0 +1,147 @@
+START {'requests': 1365, 'cache_hits': 0, 'errors': 1086, 'usd': 0.0279, 'budget_usd': 3.5, 'daily_remaining_usd': 0.8878, 'daily_limit_usd': 1.0, 'prepaid_remaining_usd': 3.0, 'started_at': 1795488877.667499, 'remaining_session_budget_usd': 3.4721}
+first error <urlopen error [Errno 54] Connection reset by peer>
+representative_group 99 initial_failed 9 usd 0.0377 sec 5.66
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 20 initial_failed 4 usd 0.0378 sec 0.33
+group 500 initial_failed 0 usd 0.0981 sec 29.72
+reference 75 initial_failed 0 usd 0.1063 sec 4.76
+group 500 initial_failed 0 usd 0.1653 sec 29.13
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 2 usd 0.1735 sec 5.03
+first error <urlopen error [Errno 54] Connection reset by peer>
+group 500 initial_failed 1 usd 0.2251 sec 26.24
+reference 75 initial_failed 0 usd 0.2327 sec 4.03
+group 500 initial_failed 0 usd 0.2829 sec 25.1
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 3 usd 0.2904 sec 5.1
+group 500 initial_failed 0 usd 0.3404 sec 25.08
+reference 75 initial_failed 0 usd 0.3479 sec 3.93
+group 500 initial_failed 0 usd 0.3979 sec 25.05
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 4 usd 0.4054 sec 4.79
+first error <urlopen error [Errno 54] Connection reset by peer>
+group 500 initial_failed 1 usd 0.4554 sec 25.42
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 2 usd 0.4629 sec 4.39
+group 500 initial_failed 0 usd 0.5129 sec 25.04
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 2 usd 0.5204 sec 4.34
+group 500 initial_failed 0 usd 0.5704 sec 25.07
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 2 usd 0.5779 sec 4.33
+group 500 initial_failed 0 usd 0.6279 sec 25.62
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 2 usd 0.6354 sec 4.39
+group 500 initial_failed 0 usd 0.6854 sec 25.16
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 3 usd 0.6929 sec 4.4
+group 500 initial_failed 0 usd 0.7429 sec 25.12
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 1 usd 0.7504 sec 4.28
+group 500 initial_failed 0 usd 0.8004 sec 25.05
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 9 usd 0.8079 sec 4.35
+group 500 initial_failed 0 usd 0.8579 sec 25.04
+reference 75 initial_failed 0 usd 0.8654 sec 3.87
+group 500 initial_failed 0 usd 0.9154 sec 25.31
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 1 usd 0.9229 sec 4.59
+first error <urlopen error [Errno 54] Connection reset by peer>
+group 500 initial_failed 1 usd 0.9729 sec 25.47
+reference 75 initial_failed 0 usd 0.9804 sec 3.92
+group 500 initial_failed 0 usd 1.0304 sec 25.06
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 1 usd 1.0379 sec 4.42
+group 500 initial_failed 0 usd 1.0879 sec 25.06
+reference 75 initial_failed 0 usd 1.0954 sec 3.94
+group 500 initial_failed 0 usd 1.1454 sec 25.05
+reference 75 initial_failed 0 usd 1.1529 sec 3.92
+group 500 initial_failed 0 usd 1.2029 sec 25.1
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 1 usd 1.2104 sec 4.45
+group 500 initial_failed 0 usd 1.2604 sec 25.07
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 2 usd 1.2679 sec 4.5
+group 500 initial_failed 0 usd 1.3179 sec 25.1
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 1 usd 1.3254 sec 4.46
+group 500 initial_failed 0 usd 1.3754 sec 25.79
+reference 75 initial_failed 0 usd 1.3829 sec 3.95
+first error <urlopen error [Errno 54] Connection reset by peer>
+group 500 initial_failed 1 usd 1.4329 sec 25.41
+reference 75 initial_failed 0 usd 1.4404 sec 4.18
+group 500 initial_failed 0 usd 1.4904 sec 25.05
+reference 75 initial_failed 0 usd 1.4979 sec 3.92
+group 500 initial_failed 0 usd 1.5479 sec 25.04
+reference 75 initial_failed 0 usd 1.5554 sec 3.89
+first error <urlopen error [Errno 54] Connection reset by peer>
+group 500 initial_failed 1 usd 1.6054 sec 25.49
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 1 usd 1.6129 sec 4.41
+first error <urlopen error [Errno 54] Connection reset by peer>
+group 500 initial_failed 2 usd 1.6629 sec 25.46
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 1 usd 1.6704 sec 4.5
+first error <urlopen error [Errno 54] Connection reset by peer>
+group 500 initial_failed 1 usd 1.7204 sec 25.48
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 5 usd 1.7279 sec 4.44
+group 500 initial_failed 0 usd 1.7779 sec 25.07
+reference 75 initial_failed 0 usd 1.7854 sec 3.91
+group 500 initial_failed 0 usd 1.8354 sec 25.06
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 2 usd 1.8429 sec 4.37
+group 500 initial_failed 0 usd 1.8929 sec 25.65
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 1 usd 1.9004 sec 4.49
+group 500 initial_failed 0 usd 1.9504 sec 26.3
+reference 75 initial_failed 0 usd 1.9579 sec 3.92
+group 500 initial_failed 0 usd 2.0079 sec 26.27
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 2 usd 2.0154 sec 4.39
+group 500 initial_failed 0 usd 2.0654 sec 25.12
+reference 75 initial_failed 0 usd 2.0729 sec 4.34
+group 500 initial_failed 0 usd 2.1229 sec 25.06
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 13 usd 2.1304 sec 4.51
+group 500 initial_failed 0 usd 2.1804 sec 25.05
+reference 75 initial_failed 0 usd 2.1879 sec 4.02
+group 500 initial_failed 0 usd 2.2379 sec 25.07
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 13 usd 2.2452 sec 4.67
+group 500 initial_failed 0 usd 2.2952 sec 25.04
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 1 usd 2.3027 sec 4.33
+group 500 initial_failed 0 usd 2.3527 sec 25.09
+reference 75 initial_failed 0 usd 2.3602 sec 3.93
+group 500 initial_failed 0 usd 2.4102 sec 25.06
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 2 usd 2.4177 sec 4.62
+group 500 initial_failed 0 usd 2.4677 sec 25.07
+reference 75 initial_failed 0 usd 2.4752 sec 3.94
+group 500 initial_failed 0 usd 2.5252 sec 26.11
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 75 initial_failed 1 usd 2.5327 sec 4.55
+first error <urlopen error [Errno 54] Connection reset by peer>
+group 500 initial_failed 4 usd 2.5827 sec 25.5
+reference 75 initial_failed 0 usd 2.5902 sec 3.92
+group 500 initial_failed 0 usd 2.6402 sec 25.46
+reference 75 initial_failed 0 usd 2.6477 sec 3.96
+group 500 initial_failed 0 usd 2.6977 sec 25.22
+reference 75 initial_failed 0 usd 2.7052 sec 3.94
+group 500 initial_failed 0 usd 2.7552 sec 25.68
+reference 75 initial_failed 0 usd 2.7627 sec 3.82
+first error <urlopen error [Errno 54] Connection reset by peer>
+group 500 initial_failed 2 usd 2.8127 sec 27.73
+first error <urlopen error [Errno 54] Connection reset by peer>
+reference 43 initial_failed 2 usd 2.817 sec 2.68
+group 500 initial_failed 0 usd 2.867 sec 28.1
+group 450 initial_failed 0 usd 2.912 sec 22.59
+[saved T29: Raw annual grouped counts]
+T29
+[saved T30: Raw bulk reference metadata]
+T30
+[saved T31: Group and metadata API batch timing and billing]
+T31
+[saved J8: Group and reference collector timing]
+J8

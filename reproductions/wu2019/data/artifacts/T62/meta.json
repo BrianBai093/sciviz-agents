@@ -1,0 +1,39 @@
+{
+  "id": "T62",
+  "kind": "table",
+  "title": "C7 comparable-sample year, topic and focal-author models",
+  "description": "Size 1–10; work weight split over supported Columbia authors. Two-way author/work cluster sandwich, fixed percentile outcome, no finite population correction in this model-based inference.",
+  "producer": "analyst",
+  "inputs": [
+    "J9",
+    "T2",
+    "T3",
+    "T32",
+    "T33",
+    "T45",
+    "T46",
+    "T47",
+    "T5"
+  ],
+  "code": "script=scripts['claim7']; a0=script.index(' v=v.copy();'); b0=script.index('\\ndef csev',a0); scripts['claim7']=script[:a0]+''' from scipy.sparse import csr_matrix,hstack\n from scipy.sparse.linalg import lsmr\n ix=np.arange(len(v)); sw=np.sqrt(wt); Qm=hstack([csr_matrix((sw,(ix,f)),shape=(len(v),f.max()+1)) for f in fe],format='csr'); solve=lsmr(Qm,sw*v,atol=1e-12,btol=1e-12,maxiter=15000); assert solve[1]!=7\n r=v-(Qm@solve[0])/sw; assert max(abs(Qm.T@(sw*r)))<1e-4\n return r\n'''+script[b0:]\nwith threadpool_limits(2):exec(scripts['claim7'])",
+  "created_at": 1795491025.084,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "5 rows; columns: metric, estimate, lo, hi, se, n, n_authors, n_rows, weighted_n, residual_x_ss, cluster_fallback",
+    "text": "5 rows x 11 columns\nmetric: str [5 distinct]\nestimate: float64 [min -2.531, max -1.782, mean -1.976]\nlo: float64 [min -3.713, max -3.069, mean -3.32]\nhi: float64 [min -1.349, max -0.3534, mean -0.632]\nse: float64 [min 0.6024, max 0.801, mean 0.6854]\nn: int64 [min 4135, max 4135, mean 4135]\nn_authors: int64 [min 1892, max 1892, mean 1892]\nn_rows: int64 [min 6877, max 6877, mean 6877]\nweighted_n: float64 [min 2.04e+04, max 2.04e+04, mean 2.04e+04]\nresidual_x_ss: float64 [min 3926, max 1.372e+04, mean 9114]\ncluster_fallback: bool [min 0, max 0, mean 0]\nfirst rows:\n                  metric  estimate        lo        hi       se    n  n_authors  n_rows   weighted_n  residual_x_ss  cluster_fallback\n              Unadjusted -1.800575 -3.069340 -0.531811 0.646926 4135       1892    6877 20400.511437   13719.118826             False\n                 Year FE -1.817794 -3.088807 -0.546781 0.648073 4135       1892    6877 20400.511437   13700.138139             False\n         Year + topic FE -2.531019 -3.712542 -1.349496 0.602443 4135       1892    6877 20400.511437    7679.712581             False\n        Year + author FE -1.782135 -3.210913 -0.353356 0.728516 4135       1892    6877 20400.511437    6543.493649             False\nYear + topic + author FE -1.949550 -3.520512 -0.378588 0.801013 4135       1892    6877 20400.511437    3925.595230             False",
+    "rows": 5,
+    "columns": [
+      "metric",
+      "estimate",
+      "lo",
+      "hi",
+      "se",
+      "n",
+      "n_authors",
+      "n_rows",
+      "weighted_n",
+      "residual_x_ss",
+      "cluster_fallback"
+    ]
+  }
+}

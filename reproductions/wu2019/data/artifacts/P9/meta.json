@@ -1,0 +1,48 @@
+{
+  "id": "P9",
+  "kind": "figure",
+  "title": "Fig. 4 analogue — Empirical reference distributions for three selected team-size strata",
+  "description": "Design-weighted available-case survival curves for solo, 10-author and 51–100-author groups (623, 626 and 481 focal works for each metric). An edge is one focal work citing one reference; legends count edges. Ribbons are pointwise 95% design intervals from focal-work replicates. Age includes zero and excludes negative ages; display through 100 years. Popularity is the current OpenAlex lifetime citation count (23 November 2026 snapshot/live run); the symmetric-log axis is linear from 0 to 1, and no observed values were zero. Both larger groups cite newer and generally more highly cited references than solo works; their popularity curves are close. The figure supports only these empirical comparisons. T60 and T65 separately show imperfect exponential and power-law fits with parameter intervals, not laws.",
+  "producer": "analyst",
+  "inputs": [
+    "T59",
+    "T60",
+    "T65"
+  ],
+  "code": null,
+  "created_at": 1795491172.981,
+  "file": "figure.png",
+  "slug": "fig4-references",
+  "claims": [
+    "C5"
+  ],
+  "parent": "P8",
+  "version": 3,
+  "status": "approved_with_issues",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 4,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The panels clearly show that the two selected larger-team strata cite newer and generally more highly cited references than solo works. The popularity curves for those two strata are close. Keep the empirical figure and assign the fitted-parameter part of C5 to the companion tables.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The figure supports the empirical part of C5 for the three selected strata, but it does not show whether fitted distribution parameters vary with team size. In particular, the higher popularity curves for the two larger groups do not establish a difference in their fitted power-law exponents.",
+          "fix": "In the claim-to-evidence mapping, cite this figure for the empirical comparisons only and cite T60 and T65 for the parameter results. Qualify the parameter claim according to the reported intervals and fit diagnostics, and state that the popularity fit applies only to references with at least 50 citations. No new analysis is needed."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption defines an edge but does not explicitly distinguish the plotted edge-level estimate from the equal-focal-work estimate also present in T59. The 51–100-author ribbon is not discernible.",
+          "fix": "Say that the curves pool available citation edges, applying each focal work's sampling weight to its edges, rather than weighting focal works equally. If the largest stratum has zero-width design intervals because all eligible works were sampled, state that in the caption."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 4 analogue — Empirical reference distributions for three selected team-size strata' (version 3) for claims ['C5'], from ['T59', 'T60', 'T65']"
+}

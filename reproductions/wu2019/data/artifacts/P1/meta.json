@@ -1,0 +1,46 @@
+{
+  "id": "P1",
+  "kind": "figure",
+  "title": "Extended figure — Signed disruption distributions",
+  "description": "Design-weighted empirical CDF of raw D (selected symmetric log thresholds; central display range ±0.1) for one, ten and 51–100 authors (626, 626 and 481 works). Pointwise stratified 95% design replicate bands; census-stratum curve has no sampling variance. Zero is the sign boundary.",
+  "producer": "analyst",
+  "inputs": [
+    "T51"
+  ],
+  "code": null,
+  "created_at": 1795491069.28,
+  "file": "figure.png",
+  "slug": "ext-raw-disruption",
+  "claims": [
+    "C2"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 4,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The CDFs support C2 for the three displayed team-size strata: they show differences in the shares of works with negative, zero, and positive disruption scores, not just differences in means. The sign boundary, sample sizes, and pointwise uncertainty are visible, and the caption discloses the restricted display range.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The caption gives sample sizes and the uncertainty method but does not identify the eligible-work population or the citation window used to compute D.",
+          "fix": "Identify the study dataset and state the citation window used for these curves. Name the 51–100-author group as the census stratum and say that the shaded ribbons are pointwise 95% design intervals."
+        },
+        {
+          "severity": "minor",
+          "problem": "The legend says “1 authors,” and the y-axis label does not make clear that the percentages are weighted.",
+          "fix": "Change the legend entry to “1 author (n=626)” and label the y-axis “Weighted share of works at or below D (%).”"
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Extended figure — Signed disruption distributions' (version 1) for claims ['C2'], from ['T51']"
+}

@@ -1,0 +1,3 @@
+# cell 21 | agent: data | original run: ok | artifacts created: J7
+dp=Path('stage1_derive.py').read_text().replace('    for sw in s.itertuples(index=False):\n        pass\n','').replace('from collections import Counter','from collections import Counter'); compile(dp,'stage1_derive.py','exec'); Path('stage1_derive.py').write_text(dp)
+print(save_json({'derive':dp,'usage':'Exec in run_python; call derive(grouped_artifact_id, metadata_bulk_artifact_id, cursor_status_artifact_id, cursor_records_artifact_id) after production. All inputs are persisted raw before derivation.'},'json','Analysis-ready derivation and coverage code','Annual aggregation, window identities, ratios, and metadata coverage with explicit missingness.'))

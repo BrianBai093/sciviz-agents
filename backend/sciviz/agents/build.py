@@ -11,13 +11,13 @@ import sqlite3
 from pathlib import Path
 
 from deepagents import GeneralPurposeSubagentProfile, HarnessProfile, create_deep_agent, register_harness_profile
-from deepagents.backends.filesystem import FilesystemBackend
 from deepagents.middleware.filesystem import FilesystemMiddleware
 from langchain.agents.middleware import (ModelCallLimitMiddleware, ModelRetryMiddleware, TodoListMiddleware,
                                        ToolErrorMiddleware)
 from langgraph.checkpoint.sqlite import SqliteSaver
 
 from ..config import settings
+from ..harness.file_log import LoggedFilesystemBackend
 from ..session import Session
 from ..tools.data_tools import artifact_tools, catalog_tools, python_tool, sql_tool
 from ..tools.discovery_tools import discovery_tools
@@ -87,7 +87,7 @@ def single_prompt(s: Session) -> str:
 
 def build_single_agent(s: Session, checkpointer=None):
     _register_profiles()
-    backend = FilesystemBackend(root_dir=s.ws.root, virtual_mode=True)
+    backend = LoggedFilesystemBackend(s.ws.root)
     tools = [*catalog_tools(s, "single"), sql_tool(s, "single"), python_tool(s, "single"),
              *artifact_tools(s, "single"), *discovery_tools(s, "single"), *viz_tools(s, "single"), *lead_tools(s)]
     return create_deep_agent(
@@ -113,7 +113,7 @@ def _limits(n: int) -> list:
 
 def build_multi_agent(s: Session, checkpointer=None):
     _register_profiles()
-    backend = FilesystemBackend(root_dir=s.ws.root, virtual_mode=True)
+    backend = LoggedFilesystemBackend(s.ws.root)
     data_agent = {
         "name": "data",
         "description": "Data specialist: maps questions to tables/fields, filters, cleans and saves analysis-ready "
@@ -172,7 +172,7 @@ def build_reproduce_agent(s: Session, checkpointer=None):
     """Report mode (Project 2, PLAN_P2 §3): a Lead with a claim plan; data and analyst specialists (external
     API, background jobs, figure gate); a writer whose report passes the report gate before it is rendered."""
     _register_profiles()
-    backend = FilesystemBackend(root_dir=s.ws.root, virtual_mode=True)
+    backend = LoggedFilesystemBackend(s.ws.root)
 
     def kernel_tool(agent: str):
         t = python_tool(s, agent)

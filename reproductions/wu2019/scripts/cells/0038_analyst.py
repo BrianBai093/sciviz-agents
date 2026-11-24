@@ -1,0 +1,2 @@
+# cell 38 | agent: analyst | original run: ok | artifacts created: none
+scripts['figures_empirical']=scripts['figures_empirical'].replace(" fig.suptitle('References used by solo and larger teams',fontsize=11,y=1.04);",'');exec(scripts['figures_empirical']); print(c5p[(c5p.metric_name=='current reference citations') & c5p.target.eq('edge')].groupby('group').n_edges.first()); print(c1[c1.metric.eq('fraction negative') & c1.group.isin(['1','10','51–100'])].to_string(index=False)); print(c2[c2.metric.eq('raw D quantile 0.5')].to_string(index=False))

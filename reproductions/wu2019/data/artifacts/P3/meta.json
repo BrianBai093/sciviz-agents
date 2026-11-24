@@ -1,0 +1,46 @@
+{
+  "id": "P3",
+  "kind": "figure",
+  "title": "Fig. 2 analogue — Team size, disruption and citation counts",
+  "description": "Design-weighted mean within-publication-year D percentile (A) and median unique strictly postpublication citing works through 23 November 2026 (B) for 7,997 works with defined D. Stratum n is below each team size; dotted separator marks grouped sizes. Error bars: pointwise 95% stratified design replicate intervals; ranks recalculated. The 51–100 stratum is a census, so its citation median is fixed, but its ranks can vary with other strata.",
+  "producer": "analyst",
+  "inputs": [
+    "T50"
+  ],
+  "code": null,
+  "created_at": 1795491069.291,
+  "file": "figure.png",
+  "slug": "fig2-team",
+  "claims": [
+    "C1"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 4,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure supports the overall C1 pattern through the 51–100-author stratum. Both outcomes, stratum sample sizes, and pointwise 95% design-based intervals are easy to read. The caption explains why the largest stratum's citation median has no visible interval while its disruption rank still does.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "C1 could be read as claiming a monotonic change or a separate estimate for exactly 100 authors. Both series show local reversals or plateaus, and the largest teams are pooled in the 51–100-author stratum.",
+          "fix": "Describe the finding as an overall association across team-size strata: mean disruption percentile generally falls and median citations generally rise, with the pattern extending to the pooled 51–100-author group."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption explains the vertical separator but not the horizontal dashed line in panel A.",
+          "fix": "Identify the horizontal dashed line as the 50th-percentile reference."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 2 analogue — Team size, disruption and citation counts' (version 1) for claims ['C1'], from ['T50']"
+}

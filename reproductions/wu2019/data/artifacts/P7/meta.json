@@ -1,0 +1,52 @@
+{
+  "id": "P7",
+  "kind": "figure",
+  "title": "Fig. 3 analogue — Negative slopes predominate in supported fields and subfields",
+  "description": "Design-weighted slopes of the within-year disruption index (D) percentile per team-size doubling, sizes 1–10; citing works strictly postpublication through 23 November 2026. Counts n are unweighted. Support requires n≥30, ≥5 sampled works in each of the 1–2 and 5–10 author bands, and ≥4 distinct team sizes. Pointwise 95% design intervals, no multiple-comparison adjustment. The table shows observed group coverage and the negative-slope fractions with design intervals. Subfield estimates are mixed, and one supported journal cannot assess the claim about most journals.",
+  "producer": "analyst",
+  "inputs": [
+    "T53",
+    "T54"
+  ],
+  "code": null,
+  "created_at": 1795491124.573,
+  "file": "figure.png",
+  "slug": "fig3-fields",
+  "claims": [
+    "C4"
+  ],
+  "parent": "P5",
+  "version": 2,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 2,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 4,
+        "readability": 2,
+        "caption": 4
+      },
+      "summary": "The plotted field estimates and table agree with the supplied summaries. The figure shows that negative slopes predominate among supported fields and subfields, not that the gradient is universal or holds within most journals. Fix the overlapping table headers and make that distinction explicit.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The figure supports a narrower conclusion than C4: negative point estimates predominate among groups that meet the sample criteria, but the pattern is not uniform. Only 35 of 225 observed subfields meet those criteria, and one supported journal cannot establish what happens within most journals.",
+          "fix": "Mark C4 as partially supported wherever this figure is cited. State the result as 14 of 20 supported fields and 25 of 35 supported subfields having negative point estimates, and state that the claim about most journals could not be assessed. Keep those limits explicit in the caption."
+        },
+        {
+          "severity": "major",
+          "problem": "The table headers run into one another, making the column labels hard to distinguish even before the figure is reduced to print size.",
+          "fix": "Use the full figure width for the table, allocate more space to the longer headers, and wrap them onto two lines. Check the exported figure at its intended two-column width."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption explains the slope weights and work counts but does not explicitly distinguish the weighted slopes from the equal-per-group sign fractions or explain that the fraction intervals keep the set of supported groups fixed.",
+          "fix": "Identify the data as the team-size-stratified OpenAlex sample restricted to works with 1–10 authors. State that dots and bars show design-weighted slopes and pointwise 95% design intervals, and that the table counts each supported group once, holding the supported set fixed when calculating the fraction intervals."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 3 analogue — Negative slopes predominate in supported fields and subfields' (version 2) for claims ['C4'], from ['T53', 'T54']"
+}

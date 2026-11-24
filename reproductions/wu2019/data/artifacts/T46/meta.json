@@ -1,0 +1,47 @@
+{
+  "id": "T46",
+  "kind": "table",
+  "title": "Reference match coverage by stratum and source",
+  "description": "One focal team-size stratum/metadata source/status; pair and distinct-ID denominators.",
+  "producer": "data",
+  "inputs": [
+    "T10",
+    "T2",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T3",
+    "T30",
+    "T31",
+    "T32",
+    "T33",
+    "T34",
+    "T38",
+    "T39",
+    "T40",
+    "T6",
+    "T8"
+  ],
+  "code": "t6=load('T6'); q9=t6[t6.status.eq('returned') & t6.publication_year.isna()]; print(len(q9)); qo,qop=request_many([dict(metapar(q9.reference_id.tolist()),select='id,publication_year,publication_date,cited_by_count')]); print(qop); print([(z['id'].rsplit('/',1)[-1],z.get('publication_year'),z.get('publication_date')) for z in qo[0]['results']]); qdf=pd.DataFrame([(z['id'].rsplit('/',1)[-1],z.get('publication_year'),z.get('publication_date'),z.get('cited_by_count')) for z in qo[0]['results']],columns=['reference_id','publication_year','publication_date','cited_by_count']); print(save_table(pd.concat([load('T40'),qdf],ignore_index=True),'Complete missing publication-year audit','One live-matched reference with missing year; alternate publication date also checked.')); dp=dp.replace(\"meta['matched']=meta.status.eq('returned')\", \"meta.loc[meta.status.eq('returned') & (meta.publication_year.isna() | meta.cited_by_count.isna()),'status']='partial_metadata'; meta['matched']=meta.status.eq('returned')\"); Path('stage1_derive.py').write_text(dp); exec(compile(dp,'stage1_derive.py','exec')); D,meta,coverage,refworks=derive('T29','T39','T26','T27',write_disruption=False); print('metadata final',meta.status.value_counts().to_dict(),len(coverage),368818/375502,440558/448173); print('wall timing',json.loads(Path('artifacts/J8/data.json').read_text()),json.loads(Path('artifacts/J6/data.json').read_text())['wall_seconds'])",
+  "created_at": 1795490747.942,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "77 rows; columns: stratum, source, status, focal_reference_edges, distinct_reference_ids, matched_edges, zero_edges, stratum_edges, share_of_stratum_edges, distinct_ids_in_stratum, share_of_distinct_ids_in_stratum",
+    "text": "77 rows x 11 columns\nstratum: str [13 distinct]\nsource: str [3 distinct]\nstatus: str [3 distinct]\nfocal_reference_edges: int64 [min 1, max 4.134e+04, mean 5820]\ndistinct_reference_ids: int64 [min 1, max 3.822e+04, mean 5545]\nmatched_edges: int64 [min 0, max 4.134e+04, mean 5722]\nzero_edges: int64 [min 0, max 0, mean 0]\nstratum_edges: int64 [min 2.365e+04, max 4.516e+04, mean 3.462e+04]\nshare_of_stratum_edges: float64 [min 2.805e-05, max 0.9648, mean 0.1688]\ndistinct_ids_in_stratum: int64 [min 2.296e+04, max 4.186e+04, mean 3.294e+04]\nshare_of_distinct_ids_in_stratum: float64 [min 2.937e-05, max 0.9658, mean 0.1688]\nfirst rows:\nstratum              source           status  focal_reference_edges  distinct_reference_ids  matched_edges  zero_edges  stratum_edges  share_of_stratum_edges  distinct_ids_in_stratum  share_of_distinct_ids_in_stratum\n      1  live_openalex_bulk partial_metadata                     22                      22              0           0          23652                0.000930                    22958                          0.000958\n      1  live_openalex_bulk         returned                  21607                   20990          21607           0          23652                0.913538                    22958                          0.914278\n      1  live_openalex_bulk        unmatched                    870                     843              0           0          23652                0.036783                    22958                          0.036719\n      1 live_openalex_pilot         returned                    729                     702            729           0          23652                0.030822                    22958                          0.030578\n      1 live_openalex_pilot        unmatched                     68                      66              0           0          23652                0.002875                    22958                          0.002875",
+    "rows": 77,
+    "columns": [
+      "stratum",
+      "source",
+      "status",
+      "focal_reference_edges",
+      "distinct_reference_ids",
+      "matched_edges",
+      "zero_edges",
+      "stratum_edges",
+      "share_of_stratum_edges",
+      "distinct_ids_in_stratum",
+      "share_of_distinct_ids_in_stratum"
+    ]
+  }
+}

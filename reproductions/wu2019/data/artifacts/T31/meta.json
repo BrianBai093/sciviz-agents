@@ -1,0 +1,31 @@
+{
+  "id": "T31",
+  "kind": "table",
+  "title": "Group and metadata API batch timing and billing",
+  "description": "One completed API batch; actual incremental spend and elapsed active time.",
+  "producer": "data",
+  "inputs": [
+    "T2",
+    "T8",
+    "T9"
+  ],
+  "code": "from pathlib import Path\nexec(compile(Path('stage1_bulk.py').read_text(),'stage1_bulk.py','exec'))",
+  "created_at": 1795490690.085,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "100 rows; columns: kind, submitted, retried, backend_requests, cache_hits, errors, usd, active_seconds",
+    "text": "100 rows x 8 columns\nkind: str [3 distinct]\nsubmitted: int64 [min 20, max 500, mean 286.4]\nretried: int64 [min 0, max 13, mean 1.07]\nbackend_requests: int64 [min 1, max 603, mean 288.4]\ncache_hits: int64 [min 0, max 20, mean 0.38]\nerrors: int64 [min 0, max 0, mean 0]\nusd: float64 [min 0.0001, max 0.0603, mean 0.02884]\nactive_seconds: float64 [min 0.3254, max 29.72, mean 14.86]\nfirst rows:\n                kind  submitted  retried  backend_requests  cache_hits  errors    usd  active_seconds\nrepresentative_group         99        9                98          18       0 0.0098        5.664035\n           reference         20        4                 1          20       0 0.0001        0.325399\n               group        500        0               603           0       0 0.0603       29.715998\n           reference         75        0                82           0       0 0.0082        4.764633\n               group        500        0               590           0       0 0.0590       29.132084",
+    "rows": 100,
+    "columns": [
+      "kind",
+      "submitted",
+      "retried",
+      "backend_requests",
+      "cache_hits",
+      "errors",
+      "usd",
+      "active_seconds"
+    ]
+  },
+  "job": "job4"
+}

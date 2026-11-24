@@ -1,0 +1,47 @@
+{
+  "id": "P13",
+  "kind": "figure",
+  "title": "Extended figure — Signed raw disruption distributions (Stage 2)",
+  "description": "Inverse-inclusion-weighted empirical CDF of signed raw D for one, ten and 51–100 authors (600, 624 and 477 Columbia OpenAlex works with a unique postpublication citer through 23 November 2026). Display range is −0.1 to 0.1 on a symmetric log scale; zero is the sign boundary between development (negative) and disruption (positive). Pointwise 95% percentile bootstrap bands use 1,000 within-original-stratum focal-work replacement draws with no finite-population correction, including the 51–100 stratum. The raw score for most works is close to zero; the curves differ around zero.",
+  "producer": "analyst",
+  "inputs": [
+    "T67",
+    "P1"
+  ],
+  "code": null,
+  "created_at": 1795496194.857,
+  "file": "figure.png",
+  "slug": "ext-raw-disruption-stage2",
+  "claims": [
+    "C2"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 5,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The weighted CDFs support C2 for the three displayed team sizes: the share of works with negative or zero disruption scores differs clearly across groups, a comparison that means alone do not show. The caption states the restricted display range and identifies the intervals as pointwise bootstrap bands, with no finite-population correction even for the fully sampled stratum.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The phrase “with a unique postpublication citer” could be read as restricting the sample to works with exactly one citer.",
+          "fix": "Say “with at least one distinct citing work in the postpublication window ending 23 November 2026.”"
+        },
+        {
+          "severity": "minor",
+          "problem": "The legend says “1 authors.”",
+          "fix": "Change the label to “1 author (n=600).”"
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Extended figure — Signed raw disruption distributions (Stage 2)' (version 1) for claims ['C2'], from ['T67', 'P1']"
+}

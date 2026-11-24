@@ -1,0 +1,48 @@
+{
+  "id": "P16",
+  "kind": "figure",
+  "title": "Fig. 3 analogue — Negative slopes predominate in supported fields and subfields (Stage 2)",
+  "description": "Within-year D percentile slopes per doubling of team size for Columbia OpenAlex works with 1–10 authors and at least one unique strictly postpublication citing work through 23 November 2026. Dots and bars are inverse-inclusion-weighted slopes and pointwise 95% percentile bootstrap intervals; resample focal works with replacement within original strata (1,000 replicates), rerank and apply no finite-population correction, including the fully sampled stratum. Unweighted n shown for each field. Support requires n≥30, ≥5 in each of the 1–2 and 5–10 author bands and ≥4 distinct sizes. Table weights groups equally and holds each domain’s observed supported set fixed in resamples. Slopes are negative in 14/20 fields and 24/34 subfields; only one journal meets support, so no generalization to most journals.",
+  "producer": "analyst",
+  "inputs": [
+    "T69",
+    "T70",
+    "P10"
+  ],
+  "code": null,
+  "created_at": 1795496194.88,
+  "file": "figure.png",
+  "slug": "fig3-fields-stage2",
+  "claims": [
+    "C4"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 5,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The Stage 2 figure matches the cited-work analysis in T69 and T70 and reports the within-stratum bootstrap without a finite-population correction. It supports C4 only in part: estimated slopes are negative in 14 of 20 supported fields and 24 of 34 supported subfields, but the pattern is not universal, and the single supported journal cannot establish a pattern across most journals.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The caption uses D without defining it or explaining what a negative slope means.",
+          "fix": "Define D as the disruption index and state that a negative slope means larger teams rank lower on disruption within publication year."
+        },
+        {
+          "severity": "minor",
+          "problem": "The journal row's “100%” gives visual prominence to a result based on one supported journal, even though the caption correctly rules out generalization.",
+          "fix": "Show “1 of 1” without the percentage and keep the 0%–100% interval."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 3 analogue — Negative slopes predominate in supported fields and subfields (Stage 2)' (version 1) for claims ['C4'], from ['T69', 'T70', 'P10']"
+}

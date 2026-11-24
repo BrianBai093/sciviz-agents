@@ -1,0 +1,49 @@
+{
+  "id": "P17",
+  "kind": "figure",
+  "title": "Fig. 4 analogue — Empirical distributions of reference age and popularity (Stage 2)",
+  "description": "Stage-2 update of P12, preserving its empirical panels and geometry. Among Columbia OpenAlex works with at least one unique postpublication citing work through 23 November 2026, the curves pool deduplicated focal–reference pairs, applying the focal inverse-inclusion weight to every edge. For 1, 10 and 51–100 authors, respectively, A uses 22,001/34,531/43,548 edges and B uses 22,149/34,613/43,772 edges; both use 597/624/477 focal works with available metadata. Ribbons are pointwise 95% percentile bootstrap intervals from 1,000 focal-work replacement samples within the original team-size strata, including 51–100, with no finite-population correction. A includes same-year ages, excludes negative ages and displays thresholds through 100 years. B uses current global citation totals, not counts at focal publication; the axis is linear up to one and logarithmic above (no observed zeros). Both larger groups cite newer and generally more highly cited references than solo works; their popularity curves are close. These are empirical comparisons of the groups shown, not fitted curves. Separate updated fit evidence (T76/T77) shows positive geometric age-decay contrast for 10 versus solo, inconclusive citation-tail exponent contrast at counts ≥50, and notable empirical–fitted CDF gaps.",
+  "producer": "analyst",
+  "inputs": [
+    "P12",
+    "T75",
+    "T76",
+    "T77"
+  ],
+  "code": null,
+  "created_at": 1795496194.884,
+  "file": "figure.png",
+  "slug": "fig4-empirical",
+  "claims": [
+    "C5"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 4,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The revised P12 clearly shows that both larger-team groups cite newer and generally more highly cited references than solo works, while the two larger groups have similar popularity curves. The caption documents the citation eligibility rule, edge weighting, and focal-work bootstrap without a finite-population correction. The figure is ready for the report as the empirical component of C5.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The curves support the empirical part of C5 for the three groups shown, but do not establish differences in fitted distribution parameters. The caption flags this distinction, but the results text could still overstate the evidence.",
+          "fix": "Present T76/T77 alongside the figure in the C5 subsection. Distinguish the supported age-decay contrast for 10-author versus solo works from the inconclusive citation-tail exponent contrast."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption names the fit artifacts but does not cite the updated source for the empirical curves, intervals, and sample counts.",
+          "fix": "Cite T75 in the caption for the plotted estimates, ribbons, and counts."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Fig. 4 analogue — Empirical distributions of reference age and popularity (Stage 2)' (version 1) for claims ['C5'], from ['P12', 'T75', 'T76', 'T77']"
+}

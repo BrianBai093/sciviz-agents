@@ -1,0 +1,37 @@
+{
+  "id": "T64",
+  "kind": "table",
+  "title": "C7 OpenAlex article versus review gradients",
+  "description": "Restricted to OpenAlex article or review types; no theory or empirical label; design-based pointwise intervals.",
+  "producer": "analyst",
+  "inputs": [
+    "J9",
+    "T2",
+    "T3",
+    "T32",
+    "T33",
+    "T45",
+    "T46",
+    "T47",
+    "T5"
+  ],
+  "code": "script=scripts['claim7']; a0=script.index(' v=v.copy();'); b0=script.index('\\ndef csev',a0); scripts['claim7']=script[:a0]+''' from scipy.sparse import csr_matrix,hstack\n from scipy.sparse.linalg import lsmr\n ix=np.arange(len(v)); sw=np.sqrt(wt); Qm=hstack([csr_matrix((sw,(ix,f)),shape=(len(v),f.max()+1)) for f in fe],format='csr'); solve=lsmr(Qm,sw*v,atol=1e-12,btol=1e-12,maxiter=15000); assert solve[1]!=7\n r=v-(Qm@solve[0])/sw; assert max(abs(Qm.T@(sw*r)))<1e-4\n return r\n'''+script[b0:]\nwith threadpool_limits(2):exec(scripts['claim7'])",
+  "created_at": 1795491025.203,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "3 rows; columns: metric, estimate, lo, hi, n, weighted_n, group, n_size1_2, n_size5_10",
+    "text": "3 rows x 9 columns\nmetric: str [2 distinct]\nestimate: float64 [min -3.589, max 3.34, mean -0.1655]\nlo: float64 [min -4.375, max 0.4064, mean -2.305]\nhi: float64 [min -2.768, max 6.228, mean 1.995]\nn: int64 [min 390, max 5047, mean 3365]\nweighted_n: float64 [min 1952, max 2.453e+04, mean 1.635e+04]\ngroup: str [3 distinct]\nn_size1_2: float64 [min 65, max 806, mean 435.5] (33% null)\nn_size5_10: float64 [min 238, max 3014, mean 1626] (33% null)\nfirst rows:\n                    metric  estimate        lo        hi    n   weighted_n    group  n_size1_2  n_size5_10\n           log2 size slope -3.588570 -4.374905 -2.768158 4657 22574.916913  article      806.0      3014.0\n           log2 size slope -0.248261 -2.945499  2.525476  390  1952.486968   review       65.0       238.0\nreview minus article slope  3.340309  0.406373  6.228248 5047 24527.403881 contrast        NaN         NaN",
+    "rows": 3,
+    "columns": [
+      "metric",
+      "estimate",
+      "lo",
+      "hi",
+      "n",
+      "weighted_n",
+      "group",
+      "n_size1_2",
+      "n_size5_10"
+    ]
+  }
+}

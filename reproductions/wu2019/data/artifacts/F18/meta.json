@@ -1,0 +1,38 @@
+{
+  "id": "F18",
+  "kind": "finding",
+  "title": "C8 — partly reproduced: short windows and simplified ratio o",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.786,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[14] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[14] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"group\\\": \\\"...\\\", \\\"stratum\\\": \\\"...\\\", \\\"domain\\\": \\\"...\\\", \\\"source\\\": \\\"...\\\", \\\"claim\\\": \\\"...\\\", \\\"status\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"C8 \\u2014 partly reproduced: short windows and simplified ratio only. All intervals 95%. F>0 Main rank slope 1\\u201310, paired: -3.00804 [-3.92586, -2.01017], n=4,405 (T71); F>0 Fixed rank slope 1\\u201310, paired: -2.81825 [-3.85429, -1.77774], n=4,405 (T71); F>0 Fixed minus main rank slope 1\\u201310, paired: 0.189795 [-0.274334, 0.653303], n=4,405 (T71); F>0 Simplified ratio slope (pp) 1\\u201310: -4.28545 [-5.21216, -3.40083], n=6,210 (T71); F>0 D rank slope main standalone all cohorts: -3.47648 [-4.27441, -2.70213], n=6,210 (T71); F>0 D rank slope main standalone 2021\\u201323: -3.65368 [-4.52963, -2.75381], n=4,685 (T71); F>0 D rank slope fixed standalone 2021\\u201323: -2.81825 [-3.85429, -1.77774], n=4,405 (T71); U>0 Main rank slope 1\\u201310, paired: -3.8456 [-4.73449, -2.99763], n=4,721 (T71); U>0 Fixed rank slope 1\\u201310, paired: -4.03368 [-4.94037, -3.14544], n=4,721 (T71); U>0 Fixed minus main rank slope 1\\u201310, paired: -0.188087 [-0.675074, 0.293725], n=4,721 (T71); U>0 Simplified ratio slope (pp) 1\\u201310: -4.28545 [-5.21216, -3.40083], n=6,210 (T71); U>0 D rank slope main standalone all cohorts: -3.65731 [-4.42671, -2.91039], n=6,264 (T71); U>0 D rank slope main standalone 2021\\u201323: -3.8456 [-4.73449, -2.99763], n=4,721 (T71); U>0 D rank slope fixed standalone 2021\\u201323: -4.03368 [-4.94037, -3.14544], n=4,721 (T71)\", \"value\": [{\"metric\": \"Main rank slope\", \"estimate\": -3.008040367, \"lo\": -3.9258624486, \"hi\": -2.0101697941, \"n\": 4405, \"weighte"
+  }
+}

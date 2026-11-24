@@ -1,0 +1,25 @@
+{
+  "id": "T4",
+  "kind": "table",
+  "title": "Exact filter route footprint",
+  "description": "One sampled focal; ordered union partition and conservative percent-encoded URL bound.",
+  "producer": "data",
+  "inputs": [],
+  "code": "from urllib.parse import urlencode\nfrom math import ceil\nfrom itertools import islice\nfrom collections import Counter\ncut='2026-11-23'\ndef chunks(ids,m=100): return [list(ids[i:i+m]) for i in range(0,len(ids),m)]\ndef datefilter(a,b): return f'from_publication_date:{a},to_publication_date:{b}'\ndef pfilter(ids): return 'cites:'+'|'.join(ids)\ndef negfilter(ids): return 'cites:!'+'|'.join(ids)\ndef group(f): return {'filter':f,'group_by':'publication_year','per_page':200}\ndef count(f): return {'filter':f,'per_page':1,'select':'id'}\ndef within(p): return len('/works?'+urlencode(p))<=7950\ndef primary(w):\n f=w.work_id; refs=list(w.refs); d=datefilter(w.start_date,cut); full=[f]+refs\n F=d+','+pfilter([f]); I=F+''.join(','+negfilter(c) for c in chunks(refs)); U=[]; prev=[]\n for i,c in enumerate(chunks(full)):\n  U.append(d+','+pfilter(c)+''.join(','+negfilter(x) for x in prev)); prev.append(c)\n return F,I,U\nroutes=[]\nfor w in s.itertuples():\n F,I,U=primary(w); routes.append((w.sample_id,w.work_id,w.stratum,w.usable_refs,len(U),max(len(urlencode(group(k))) for k in [F,I,*U])+7,all(within(group(k)) for k in [F,I,*U])))\nroute=pd.DataFrame(routes,columns=['sample_id','work_id','stratum','usable_refs','union_parts','max_encoded_url','partition_fits']); print(route.groupby('partition_fits').agg(works=('work_id','size'),parts=('union_parts','sum'))); print(route[~route.partition_fits].to_string(index=False)); print('safe calls',sum(route[route.partition_fits].union_parts+2)); print('meta',ceil(len(missing)/100))\nprint(save_table(route,'Exact filter route footprint','One sampled focal; ordered union partition and conservative percent-encoded URL bound.'))\nprint(save_table(pd.DataFrame({'stratum':labels,'N_h':N.values,'n_h':n.values,'pi':(n/N).values,'weight':(N/n).values}),'Stratum allocation','One stratum; population and sample sizes and design weights.'))",
+  "created_at": 1795488978.835,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "8,000 rows; columns: sample_id, work_id, stratum, usable_refs, union_parts, max_encoded_url, partition_fits",
+    "text": "8,000 rows x 7 columns\nsample_id: int64 [min 1, max 8000, mean 4000]\nwork_id: str [8000 distinct]\nstratum: str [13 distinct]\nusable_refs: int64 [min 1, max 1454, mean 56.02]\nunion_parts: int64 [min 1, max 15, mean 1.141]\nmax_encoded_url: int64 [min 166, max 2.063e+04, mean 939.7]\npartition_fits: bool [min 0, max 1, mean 0.9982]\nfirst rows:\n sample_id     work_id stratum  usable_refs  union_parts  max_encoded_url  partition_fits\n         1 W2757003138       1           21            1              449            True\n         2 W2798929744       1           66            1             1077            True\n         3 W2807990901       1           39            1              699            True\n         4 W2899870065       1            5            1              225            True\n         5 W2960735315       1           16            1              379            True",
+    "rows": 8000,
+    "columns": [
+      "sample_id",
+      "work_id",
+      "stratum",
+      "usable_refs",
+      "union_parts",
+      "max_encoded_url",
+      "partition_fits"
+    ]
+  }
+}

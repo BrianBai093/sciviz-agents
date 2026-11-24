@@ -1,0 +1,23 @@
+{
+  "id": "T5",
+  "kind": "table",
+  "title": "Stratum allocation",
+  "description": "One stratum; population and sample sizes and design weights.",
+  "producer": "data",
+  "inputs": [],
+  "code": "from urllib.parse import urlencode\nfrom math import ceil\nfrom itertools import islice\nfrom collections import Counter\ncut='2026-11-23'\ndef chunks(ids,m=100): return [list(ids[i:i+m]) for i in range(0,len(ids),m)]\ndef datefilter(a,b): return f'from_publication_date:{a},to_publication_date:{b}'\ndef pfilter(ids): return 'cites:'+'|'.join(ids)\ndef negfilter(ids): return 'cites:!'+'|'.join(ids)\ndef group(f): return {'filter':f,'group_by':'publication_year','per_page':200}\ndef count(f): return {'filter':f,'per_page':1,'select':'id'}\ndef within(p): return len('/works?'+urlencode(p))<=7950\ndef primary(w):\n f=w.work_id; refs=list(w.refs); d=datefilter(w.start_date,cut); full=[f]+refs\n F=d+','+pfilter([f]); I=F+''.join(','+negfilter(c) for c in chunks(refs)); U=[]; prev=[]\n for i,c in enumerate(chunks(full)):\n  U.append(d+','+pfilter(c)+''.join(','+negfilter(x) for x in prev)); prev.append(c)\n return F,I,U\nroutes=[]\nfor w in s.itertuples():\n F,I,U=primary(w); routes.append((w.sample_id,w.work_id,w.stratum,w.usable_refs,len(U),max(len(urlencode(group(k))) for k in [F,I,*U])+7,all(within(group(k)) for k in [F,I,*U])))\nroute=pd.DataFrame(routes,columns=['sample_id','work_id','stratum','usable_refs','union_parts','max_encoded_url','partition_fits']); print(route.groupby('partition_fits').agg(works=('work_id','size'),parts=('union_parts','sum'))); print(route[~route.partition_fits].to_string(index=False)); print('safe calls',sum(route[route.partition_fits].union_parts+2)); print('meta',ceil(len(missing)/100))\nprint(save_table(route,'Exact filter route footprint','One sampled focal; ordered union partition and conservative percent-encoded URL bound.'))\nprint(save_table(pd.DataFrame({'stratum':labels,'N_h':N.values,'n_h':n.values,'pi':(n/N).values,'weight':(N/n).values}),'Stratum allocation','One stratum; population and sample sizes and design weights.'))",
+  "created_at": 1795488978.837,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "13 rows; columns: stratum, N_h, n_h, pi, weight",
+    "text": "13 rows x 5 columns\nstratum: str [13 distinct]\nN_h: int64 [min 481, max 6370, mean 3119]\nn_h: int64 [min 481, max 627, mean 615.4]\npi: float64 [min 0.09827, max 1, mean 0.2783]\nweight: float64 [min 1, max 10.18, mean 4.994]\nfirst rows:\nstratum  N_h  n_h       pi   weight\n      1 2681  627 0.233868 4.275917\n      2 4202  627 0.149215 6.701754\n      3 4702  627 0.133348 7.499203\n      4 4364  627 0.143676 6.960128\n      5 3781  627 0.165829 6.030303",
+    "rows": 13,
+    "columns": [
+      "stratum",
+      "N_h",
+      "n_h",
+      "pi",
+      "weight"
+    ]
+  }
+}

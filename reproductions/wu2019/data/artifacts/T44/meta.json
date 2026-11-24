@@ -1,0 +1,40 @@
+{
+  "id": "T44",
+  "kind": "table",
+  "title": "Complete missing publication-year audit",
+  "description": "One live-matched reference with missing year; alternate publication date also checked.",
+  "producer": "data",
+  "inputs": [
+    "T10",
+    "T2",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T3",
+    "T30",
+    "T31",
+    "T32",
+    "T33",
+    "T34",
+    "T38",
+    "T39",
+    "T40",
+    "T6",
+    "T8"
+  ],
+  "code": "t6=load('T6'); q9=t6[t6.status.eq('returned') & t6.publication_year.isna()]; print(len(q9)); qo,qop=request_many([dict(metapar(q9.reference_id.tolist()),select='id,publication_year,publication_date,cited_by_count')]); print(qop); print([(z['id'].rsplit('/',1)[-1],z.get('publication_year'),z.get('publication_date')) for z in qo[0]['results']]); qdf=pd.DataFrame([(z['id'].rsplit('/',1)[-1],z.get('publication_year'),z.get('publication_date'),z.get('cited_by_count')) for z in qo[0]['results']],columns=['reference_id','publication_year','publication_date','cited_by_count']); print(save_table(pd.concat([load('T40'),qdf],ignore_index=True),'Complete missing publication-year audit','One live-matched reference with missing year; alternate publication date also checked.')); dp=dp.replace(\"meta['matched']=meta.status.eq('returned')\", \"meta.loc[meta.status.eq('returned') & (meta.publication_year.isna() | meta.cited_by_count.isna()),'status']='partial_metadata'; meta['matched']=meta.status.eq('returned')\"); Path('stage1_derive.py').write_text(dp); exec(compile(dp,'stage1_derive.py','exec')); D,meta,coverage,refworks=derive('T29','T39','T26','T27',write_disruption=False); print('metadata final',meta.status.value_counts().to_dict(),len(coverage),368818/375502,440558/448173); print('wall timing',json.loads(Path('artifacts/J8/data.json').read_text()),json.loads(Path('artifacts/J6/data.json').read_text())['wall_seconds'])",
+  "created_at": 1795490745.628,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "283 rows; columns: reference_id, publication_year, publication_date, cited_by_count",
+    "text": "283 rows x 4 columns\nreference_id: str [283 distinct]\npublication_year: object [0 distinct] (100% null)\npublication_date: object [0 distinct] (100% null)\ncited_by_count: int64 [min 1, max 3.155e+04, mean 399.4]\nfirst rows:\nreference_id publication_year publication_date  cited_by_count\n W2097998348             None             None            7995\n W2052803649             None             None            4764\n W1575641806             None             None            3432\n W2128970394             None             None            2197\n W2167433878             None             None            1833",
+    "rows": 283,
+    "columns": [
+      "reference_id",
+      "publication_year",
+      "publication_date",
+      "cited_by_count"
+    ]
+  }
+}

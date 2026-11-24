@@ -1,0 +1,45 @@
+{
+  "id": "T45",
+  "kind": "table",
+  "title": "Analysis-ready deduplicated reference metadata",
+  "description": "One sampled reference ID; year, global lifetime citations and exact-match/missing statuses. Join T3 on reference_id.",
+  "producer": "data",
+  "inputs": [
+    "T10",
+    "T2",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T3",
+    "T30",
+    "T31",
+    "T32",
+    "T33",
+    "T34",
+    "T38",
+    "T39",
+    "T40",
+    "T6",
+    "T8"
+  ],
+  "code": "t6=load('T6'); q9=t6[t6.status.eq('returned') & t6.publication_year.isna()]; print(len(q9)); qo,qop=request_many([dict(metapar(q9.reference_id.tolist()),select='id,publication_year,publication_date,cited_by_count')]); print(qop); print([(z['id'].rsplit('/',1)[-1],z.get('publication_year'),z.get('publication_date')) for z in qo[0]['results']]); qdf=pd.DataFrame([(z['id'].rsplit('/',1)[-1],z.get('publication_year'),z.get('publication_date'),z.get('cited_by_count')) for z in qo[0]['results']],columns=['reference_id','publication_year','publication_date','cited_by_count']); print(save_table(pd.concat([load('T40'),qdf],ignore_index=True),'Complete missing publication-year audit','One live-matched reference with missing year; alternate publication date also checked.')); dp=dp.replace(\"meta['matched']=meta.status.eq('returned')\", \"meta.loc[meta.status.eq('returned') & (meta.publication_year.isna() | meta.cited_by_count.isna()),'status']='partial_metadata'; meta['matched']=meta.status.eq('returned')\"); Path('stage1_derive.py').write_text(dp); exec(compile(dp,'stage1_derive.py','exec')); D,meta,coverage,refworks=derive('T29','T39','T26','T27',write_disruption=False); print('metadata final',meta.status.value_counts().to_dict(),len(coverage),368818/375502,440558/448173); print('wall timing',json.loads(Path('artifacts/J8/data.json').read_text()),json.loads(Path('artifacts/J6/data.json').read_text())['wall_seconds'])",
+  "created_at": 1795490747.699,
+  "file": "data.parquet",
+  "summary": {
+    "one_line": "375,502 rows; columns: reference_id, publication_year, cited_by_count, source, status, batch, error, matched, true_zero",
+    "text": "375,502 rows x 9 columns\nreference_id: str [375502 distinct]\npublication_year: Int64 [min 1400, max 2026, mean 2012] (2% null)\ncited_by_count: Int64 [min 1, max 3.576e+05, mean 526.9] (2% null)\nsource: str [3 distinct]\nstatus: str [3 distinct]\nbatch: object [3588 distinct] (1% null)\nerror: str [1 distinct]\nmatched: bool [min 0, max 1, mean 0.9822]\ntrue_zero: bool [min 0, max 0, mean 0]\nfirst rows:\nreference_id  publication_year  cited_by_count         source   status batch error  matched  true_zero\n W2291288242              2022             150 local_snapshot returned  <NA>           True      False\n W2524275590              2021              28 local_snapshot returned  <NA>           True      False\n W2531499355              2021             434 local_snapshot returned  <NA>           True      False\n W2560470842              2022              33 local_snapshot returned  <NA>           True      False\n W2568496315              2021             312 local_snapshot returned  <NA>           True      False",
+    "rows": 375502,
+    "columns": [
+      "reference_id",
+      "publication_year",
+      "cited_by_count",
+      "source",
+      "status",
+      "batch",
+      "error",
+      "matched",
+      "true_zero"
+    ]
+  }
+}

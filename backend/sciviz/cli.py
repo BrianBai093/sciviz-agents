@@ -100,6 +100,18 @@ def ask(question: str, session: str = typer.Option(None, help="continue an exist
         s.close()
 
 
+def _archive_previous_turn(root: Path) -> None:
+    """A continued session keeps each earlier turn's constraints, lead report and API usage under history/turnN/."""
+    prev = [root / "lead_report.md", root / "inputs" / "run_constraints.md", root / "external_usage.json"]
+    if not prev[0].exists():
+        return
+    dest = root / "history" / f"turn{len(list((root / 'history').glob('turn*'))) + 1}"
+    dest.mkdir(parents=True)
+    for p in prev:
+        if p.exists():
+            shutil.move(p, dest / p.name)
+
+
 @app.command()
 def reproduce(
     paper: Path = typer.Option(..., exists=True, dir_okay=False, help="paper brief (Markdown)"),
@@ -118,6 +130,7 @@ def reproduce(
         s.events.subscribe(_printer)
     inputs = s.ws.root / "inputs"
     inputs.mkdir(exist_ok=True)
+    _archive_previous_turn(s.ws.root)
     shutil.copy(paper, inputs / "paper_brief.md")
     limits = constraints.read_text(encoding="utf8").strip() if constraints else "None: a full reproduction."
     if constraints:

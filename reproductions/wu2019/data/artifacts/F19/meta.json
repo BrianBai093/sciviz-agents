@@ -1,0 +1,38 @@
+{
+  "id": "F19",
+  "kind": "finding",
+  "title": "C9 — partly testable: descriptive acknowledgment differences",
+  "description": "",
+  "producer": "analyst",
+  "inputs": [
+    "J12",
+    "T66",
+    "T67",
+    "T68",
+    "T69",
+    "T70",
+    "T71",
+    "T72",
+    "T73",
+    "T74",
+    "T75",
+    "T76",
+    "T77",
+    "T78",
+    "T79",
+    "T80",
+    "T81",
+    "T82",
+    "T83",
+    "T84",
+    "T85",
+    "T86"
+  ],
+  "code": "exec(compile(Path('stage2_handoff.py').read_text(),'stage2_handoff.py','exec')); print(openalex_usage())",
+  "created_at": 1795496312.788,
+  "file": "data.json",
+  "summary": {
+    "one_line": "{\"text\": \"str\", \"value\": \"list[6] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"g",
+    "text": "structure: {\"text\": \"str\", \"value\": \"list[6] of {\\\"metric\\\": \\\"...\\\", \\\"estimate\\\": \\\"...\\\", \\\"lo\\\": \\\"...\\\", \\\"hi\\\": \\\"...\\\", \\\"n\\\": \\\"...\\\", \\\"weighted_n\\\": \\\"...\\\", \\\"group\\\": \\\"...\\\", \\\"domain\\\": \\\"...\\\", \\\"source\\\": \\\"...\\\", \\\"claim\\\": \\\"...\\\", \\\"status\\\": \\\"...\\\"}\"}\npreview: {\"text\": \"C9 \\u2014 partly testable: descriptive acknowledgment differences; historical, company-patent and Nobel components not testable. All intervals 95%. F>0 log2 size slope No acknowledgment recorded: -3.74563 [-4.91925, -2.64516], n=2,200 (T72); F>0 log2 size slope Acknowledgment recorded: 0.515387 [-0.534724, 1.59654], n=4,010 (T72); F>0 acknowledgment minus none slope contrast: 4.26102 [2.68436, 5.82642], n=6,210 (T72); U>0 log2 size slope No acknowledgment recorded: -3.86699 [-5.0274, -2.7723], n=2,242 (T72); U>0 log2 size slope Acknowledgment recorded: 0.401864 [-0.620747, 1.4919], n=4,022 (T72); U>0 acknowledgment minus none slope contrast: 4.26885 [2.72124, 5.82298], n=6,264 (T72)\", \"value\": [{\"metric\": \"log2 size slope\", \"estimate\": -3.74562903, \"lo\": -4.9192461991, \"hi\": -2.6451567068, \"n\": 2200, \"weighted_n\": 11826.3158608109, \"group\": \"No acknowledgment recorded\", \"domain\": \"F>0\", \"source\": \"T72\", \"claim\": \"C9\", \"status\": \"partly testable: descriptive acknowledgment differences; historical, company-patent and Nobel components not testable\"}, {\"metric\": \"log2 size slope\", \"estimate\": 0.5153872249, \"lo\": -0.5347244706, \"hi\": 1.596538183, \"n\": 4010, \"weighted_n\": 19225.4579033992, \"group\": \"Acknowledgment recorded\", \"domain\": \"F>0\", \"source\": \"T72\", \"claim\": \"C9\", \"status\": \"partly testable: descriptive acknowledgment differences; historical, company-patent and Nobel components not testable\"}, {\"metric\": \"acknowledgment minus none slope\", \"estimate\": 4.2610162549"
+  }
+}
