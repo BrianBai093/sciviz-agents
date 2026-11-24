@@ -1,0 +1,58 @@
+{
+  "id": "P23",
+  "kind": "figure",
+  "title": "How disruption rank changes with team size across fields",
+  "description": "Most of the fields shown have lower estimated disruption ranks for larger teams, though many intervals cross zero. The dots show the estimated change in disruption percentile for each doubling of the author count. The percentile ranks a work’s disruption score against works published in the same year. Higher ranks indicate greater disruption. The sample includes Columbia-linked works in OpenAlex with 1–10 authors and at least one later work citing them through 23 November 2026. Works less likely to be sampled count more. Parentheses show the actual number of works in each field. A field, subfield or journal needed at least 30 works, at least 5 in each of the 1–2 and 5–10 author ranges, and at least 4 distinct team sizes. Bars and table ranges are 95% confidence intervals for individual estimates. They come from 1,000 repetitions of resampling works with replacement within each team-size group, including the largest, and recalculating ranks. The table counts how many eligible groups had estimates below zero, giving each group equal weight and keeping the same groups in each repetition. That was 14 of 20 fields and 24 of 34 subfields. Only one journal met the requirements, so the figure cannot tell us whether the pattern is common across journals [T69, T70]. Compare with the field comparisons in Figure 3 and Extended Data of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P16",
+    "T69",
+    "T70"
+  ],
+  "code": null,
+  "created_at": 1795538420.358,
+  "file": "figure.png",
+  "slug": "disruption-by-field",
+  "claims": [
+    "C4"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 4,
+        "readability": 4,
+        "caption": 2
+      },
+      "summary": "The plotted estimates and table agree with the supplied summaries, and the figure is legible. Revise the wording to distinguish the two kinds of intervals and make clear that the evidence covers eligible fields and subfields, not most journals. No changes to the data or plotted marks are needed.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The figure supports only part of C4. Lower estimated disruption ranks for larger teams predominate among the fields and subfields that met the sample requirements, but the pattern is not universal and many field intervals include zero. With only one eligible journal, the figure cannot show whether the pattern holds within most journals.",
+          "fix": "Keep the caption’s journal caveat and state the same qualified finding in the report: the pattern was partly reproduced for fields and subfields, and could not be tested across journals."
+        },
+        {
+          "severity": "major",
+          "problem": "The caption does not distinguish the two kinds of uncertainty shown. Each plot bar is an interval for one field’s estimated rank change. Each table range is an interval for the percentage of eligible groups whose estimated change is below zero.",
+          "fix": "Explain the plot bars and table ranges in separate sentences. Say that the table gives each eligible group equal weight and keeps the same groups in every repeat. Describe the resampling as drawing works within the original sampling groups; drop the ambiguous phrase “including the largest.”"
+        },
+        {
+          "severity": "major",
+          "problem": "The caption explains how disruption scores are ranked but not what the score measures. It also leaves “Columbia-linked” undefined.",
+          "fix": "State the exact rule that connects works to Columbia University. Add a short explanation that the score uses later citation patterns to distinguish work cited on its own from work cited alongside the research it builds on."
+        },
+        {
+          "severity": "minor",
+          "problem": "The table headings “Met rules / observed” and “Rank fell with larger teams” obscure the denominator and make estimated differences sound like observed declines.",
+          "fix": "Use headings such as “Groups with enough works, out of all groups” and “Groups with lower estimated ranks for larger teams.” Keep the table values unchanged."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'How disruption rank changes with team size across fields' (version 1) for claims ['C4'], from ['P16', 'T69', 'T70']"
+}

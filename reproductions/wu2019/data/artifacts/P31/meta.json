@@ -1,0 +1,52 @@
+{
+  "id": "P31",
+  "kind": "figure",
+  "title": "Disruption rank by team size and citation rank",
+  "description": "The original finding was partly reproduced. Among teams of 1–10 authors, disruption rank fell with team size in the lowest citation group. The data do not establish a decline across all citation groups or a steeper decline in the highest group. The estimated change per doubling was 2.73 percentile points higher in the top tenth than in the lowest half. The 95% confidence interval runs from 1.89 points lower to 6.00 points higher, based on 3,734 works [T68]. The figure covers 7,933 works with a recorded reference and at least one later work citing them through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. The disruption score compares how often later works cite a work without its references with how often they cite both. Works are ranked separately by disruption score and by the number of distinct later works citing them. Both ranks compare works from the same publication year. Higher disruption ranks indicate greater disruption. Works less likely to be sampled count more. The middle citation group starts at the 50th percentile and stops just before the 90th; the top group starts at the 90th. The legend gives actual work counts. The dashed line marks the midpoint of the disruption rank scale. The dotted line separates individual team sizes from size ranges. Each bar is a separate 95% confidence interval for one plotted average. The intervals come from recalculating both ranks and citation groups in 1,000 repeated draws within each original team-size group, including the largest. A work could be picked more than once. The points for larger team sizes show group averages. Compare with the citation comparisons in Figure 3 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P18",
+    "T68"
+  ],
+  "code": null,
+  "created_at": 1795538575.153,
+  "file": "figure.png",
+  "slug": "disruption-by-citation-rank",
+  "claims": [
+    "C3"
+  ],
+  "parent": "P26",
+  "version": 3,
+  "status": "approved_with_issues",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 2,
+        "truthfulness": 5,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The figure makes the comparison clearly, and its caption is candid about what did not reproduce. The main fix is to bring the stated claim into line with the evidence. No new analysis or change to the plotted values is needed.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "C3 is stated as a finding, but the figure supports only part of it. Among teams of one to ten authors, disruption rank declined in the lowest citation group. The estimates do not establish a decline in the other groups or a steeper decline in the highest group. The caption already acknowledges this.",
+          "fix": "Keep the data and marks unchanged. Present C3 as the original finding being tested, not as a finding reproduced here. In the report and caption, say that the decline was reproduced in the lowest citation group, but that the broader pattern was not established."
+        },
+        {
+          "severity": "minor",
+          "problem": "The error bars show uncertainty around individual averages, not around the change with team size. The caption gives the interval for the difference between the highest and lowest citation groups, but not for the decline it reports in the lowest group.",
+          "fix": "Add the existing estimate to the caption: in the lowest citation group, disruption rank fell by 2.50 percentile points per doubling of team size. The 95% confidence interval ran from a fall of 1.64 points to a fall of 3.39 points [T68]."
+        },
+        {
+          "severity": "minor",
+          "problem": "The legend heading, “Citation rank by year (works),” does not make clear that works are ranked within their publication year or that the numbers in parentheses are counts.",
+          "fix": "Use “Citation rank within publication year (number of works)” as the legend heading."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Disruption rank by team size and citation rank' (version 3) for claims ['C3'], from ['P18', 'T68']"
+}

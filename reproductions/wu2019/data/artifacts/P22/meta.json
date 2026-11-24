@@ -1,0 +1,52 @@
+{
+  "id": "P22",
+  "kind": "figure",
+  "title": "Disruption rank and citations by team size",
+  "description": "Larger teams generally rank lower on disruption and receive more citations, but neither pattern holds at every step. The panels show 7,933 Columbia-linked works in OpenAlex cited by at least one later work through 23 November 2026. Panel A averages each work’s disruption percentile, its rank on a 0–100 scale among works published in the same year. Higher ranks indicate greater disruption. Panel B shows the median number of distinct later works citing each work. Works that were less likely to be sampled count more. The counts below the equally spaced team-size categories are the actual numbers of works. The dotted line separates individual sizes from size ranges. The median for teams of 51–100 authors is 39 citing works, with a 95% interval from 31 to 46, based on 477 works [T66]. Bars are pointwise 95% confidence intervals, one per estimate. They come from 1,000 repetitions of resampling works with replacement in every team-size group, including the largest, and recalculating the ranks. Compare with Figure 2 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P15",
+    "T66"
+  ],
+  "code": null,
+  "created_at": 1795538420.347,
+  "file": "figure.png",
+  "slug": "team-size-and-disruption",
+  "claims": [
+    "C1"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 5,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure supports the overall pattern: average disruption rank tends to fall and median citation counts tend to rise as teams get larger, though neither changes in the same direction at every step. The extension to 100 authors is clearly shown as a pooled group of 51–100 authors, not as an estimate for teams of exactly 100.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The caption explains the vertical dotted line but not the horizontal dashed line in Panel A.",
+          "fix": "Say that the horizontal dashed line marks 50, the midpoint of the disruption rank scale."
+        },
+        {
+          "severity": "minor",
+          "problem": "The phrase “Columbia-linked” does not tell readers which works qualify for the sample.",
+          "fix": "Replace it with a short description of how a work was identified as connected to Columbia."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption describes how the intervals were calculated, but “pointwise” and “resampling works with replacement” are more technical than needed.",
+          "fix": "Say that each bar is a 95% confidence interval for one estimate. Explain that the estimates were recalculated from repeated draws in which the same work could be picked more than once."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Disruption rank and citations by team size' (version 1) for claims ['C1'], from ['P15', 'T66']"
+}

@@ -280,11 +280,19 @@ def run_record(root: Path) -> str:
     if not starts:
         return ""
     bounds = [*starts, float("inf")]
+    # A completion event belongs to the turn it measures, the one under way when it started (ts minus its seconds),
+    # even if the next turn had already begun when it was written.
+    done_of: dict[int, float] = {}
+    for e in ev:
+        if e["kind"] == "done" and e["payload"].get("seconds") is not None:
+            began = e["ts"] - e["payload"]["seconds"]
+            k = max((j for j, t in enumerate(starts) if t <= began + 5), default=0)
+            done_of[k] = e["payload"]["seconds"]
     rows, by_agent, models = [], {}, set()
     for i, t0 in enumerate(starts):
         seg = [e for e in ev if t0 <= e["ts"] < bounds[i + 1]]
-        done = [e["payload"].get("seconds") for e in seg if e["kind"] == "done"]
-        secs = done[-1] if done else seg[-1]["ts"] - t0
+        done = [done_of[i]] if i in done_of else []
+        secs = done[-1] if done else seg[-1]["ts"] - t0  # a turn without a completion event was stopped
         costs = [e for e in seg if e["kind"] == "cost"]
         for e in costs:
             by_agent.setdefault(e["agent"], Counter())[i] += e["payload"].get("usd", 0.0)
@@ -302,7 +310,8 @@ def run_record(root: Path) -> str:
         fig_text = f"{len(fig)}, {sum(g.get('verdict') == 'pass' for g in fig)} passed" if fig else "0"
         rep_text = f"{len(rep_)}: {', '.join(g.get('verdict', '?') for g in rep_)}" if rep_ else "0"
         rows.append(
-            f"| {i + 1} | {datetime.fromtimestamp(t0, timezone.utc):%Y-%m-%d %H:%M} | {secs / 60:.0f} min | "
+            f"| {i + 1} | {datetime.fromtimestamp(t0, timezone.utc):%Y-%m-%d %H:%M} | {secs / 60:.0f} min"
+            f"{'' if done else ' (stopped)'} | "
             f"{len(costs)} | ${sum(e['payload'].get('usd', 0.0) for e in costs):.2f} | "
             f"{usage.get('requests', 0):,} | ${usage.get('usd', 0.0):.2f} | {jobs_text} | {fig_text} | {rep_text} |")
     n = len(starts)

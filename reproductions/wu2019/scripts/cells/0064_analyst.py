@@ -1,0 +1,11 @@
+# cell 64 | agent: analyst | original run: ok | artifacts created: none
+script=script.replace('Change in disruption rank per doubling of team size (percentile points)','Disruption rank change per doubling (percentile points)').replace('from matplotlib.text import Text','from matplotlib.text import Text\nfrom matplotlib.legend import Legend\nfrom matplotlib.offsetbox import TextArea').replace('Citation rank within publication year','Citation rank by year (works)').replace('Lowest half (3,768 works)','Lowest half (3,768)').replace('50th to below 90th (3,278 works)','50th to below 90th (3,278)').replace('90th to 100th (887 works)','90th to 100th (887)').replace("r' (\\1 works)', text)","r' (\\1)', text)")
+s1="""                if mode.startswith('words'):
+                    # Preserve legend keys, frames and text anchors by retaining the original text boxes.
+                    for legend in model.findobj(Legend):
+                        for area in legend._legend_box.findobj(TextArea):
+                            fixed=area.get_bbox(renderer)
+                            area.get_bbox=lambda renderer, fixed=fixed: fixed
+"""
+script=script.replace("                if mode == 'words':\n",s1).replace('                return bbox','                if mode.endswith(\'-hidden\'):\n                    for artist in model.findobj(Text): artist.set_alpha(0)\n                return bbox')
+script=script.replace("            changed_pixels=int(np.count_nonzero(np.any(reference!=final,axis=2)))", "            changed_pixels=int(np.count_nonzero(np.any(reference!=final,axis=2)))\n            stripped=[render(m)[0] for m in ('original-hidden','words-hidden')]\n            if ext=='pdf': stripped=[render_pdf(x) for x in stripped]\n            marks_exact=bool(np.array_equal(*map(pixels,stripped)))\n            assert marks_exact,(parent,ext,'non-text pixels changed')").replace('else: baseline_equal=changed_pixels=None','else: baseline_equal=changed_pixels=marks_exact=None').replace('original_rerender_pixel_exact=baseline_equal,changed_pixels=changed_pixels','original_rerender_pixel_exact=baseline_equal,non_text_pixels_exact=marks_exact,changed_pixels=changed_pixels'); rel=test_relabel()

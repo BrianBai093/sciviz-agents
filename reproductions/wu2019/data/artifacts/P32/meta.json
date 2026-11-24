@@ -1,0 +1,58 @@
+{
+  "id": "P32",
+  "kind": "figure",
+  "title": "How disruption rank changes with team size across fields",
+  "description": "The original finding was partly reproduced. Larger teams had lower estimated disruption ranks in 14 of 20 fields and 24 of 34 subfields that met the sample requirements. Many field estimates remain uncertain because their intervals cross zero. Only one journal met the requirements, so the finding about most journals could not be tested [T69, T70]. The dots show the estimated change in disruption percentile when author count doubles. The score compares how often later works cite a work without citing any of its references with how often they cite both. The percentile ranks the score against works from the same publication year. The sample includes works with 1–10 authors, a recorded reference and at least one later work citing them through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. Works less likely to be sampled count more. Parentheses give actual work counts. To be included, a field, subfield or journal needed at least 30 works, at least 5 in each of the 1–2 and 5–10 author ranges, and at least 4 distinct team sizes. Each bar is a 95% confidence interval for one field’s estimated change. Each table range is a 95% confidence interval for the percentage of groups with estimates below zero, among the groups that met the rules. The intervals use 1,000 repeated draws within every original team-size group, including the largest. Works could appear more than once, and ranks were recalculated. The table gives each eligible group equal weight and keeps the same groups in every repeat. Compare with the field comparisons in Figure 3 and Extended Data of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P16",
+    "T69",
+    "T70"
+  ],
+  "code": null,
+  "created_at": 1795538575.168,
+  "file": "figure.png",
+  "slug": "disruption-by-field",
+  "claims": [
+    "C4"
+  ],
+  "parent": "P28",
+  "version": 3,
+  "status": "approved_with_issues",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 4,
+        "readability": 2,
+        "caption": 3
+      },
+      "summary": "The plotted estimates and table agree with the supplied summaries. The figure shows that lower disruption ranks were more common among fields and subfields with enough data, but it cannot establish the pattern across most journals. Fix the clipped table heading before release and clarify the score and axis wording without changing any values.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The second table heading is clipped at the cell boundary. This obscures the distinction between groups that met the sample requirements and all groups seen in the sample.",
+          "fix": "Use a shorter heading, such as “Groups with enough data.” Explain in the caption that each entry gives the number that met the requirements out of all groups seen. Check that the heading fits at two-column print width."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption explains two citation patterns but leaves out later works that cite the paper’s references without citing the paper. Readers may think the score uses only later works that cite the paper itself.",
+          "fix": "Add that later works citing only the references also count toward the total used to calculate the score."
+        },
+        {
+          "severity": "minor",
+          "problem": "The axis label “Rank change” can sound like a measured change in the same paper or a causal effect of adding authors. The dots show an estimated association across papers.",
+          "fix": "Use “Estimated rank difference per doubling of team size” and keep the unit “percentile points.” In the caption, explain that the dashed line marks no estimated difference."
+        },
+        {
+          "severity": "minor",
+          "problem": "The figure and caption support a narrower conclusion than the full claim. Lower ranks predominate among fields and subfields with enough data, but many field intervals include zero and only one journal met the requirements.",
+          "fix": "Keep the caption’s partial-reproduction verdict and use the same qualification in the report’s claim. State that the result for most journals could not be tested. No additional analysis is needed."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'How disruption rank changes with team size across fields' (version 3) for claims ['C4'], from ['P16', 'T69', 'T70']"
+}

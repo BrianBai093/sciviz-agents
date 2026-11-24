@@ -1,0 +1,2 @@
+# cell 59 | agent: analyst | original run: ok | artifacts created: none
+print(load('T75').query("domain=='F>0' and target=='edge'").drop_duplicates(['metric_name','group'])[['metric_name','group','n','n_edges']].to_string(index=False)); print(load('T68').query("domain=='F>0' and metric=='share of rank domain'")[['group','n']].to_string(index=False)); print([f['reviews'][-1]['issues'] for f in j14['figures']]); print('\n'.join(line for line in src.splitlines() if 'P17' in line or 'fig4-empirical' in line))

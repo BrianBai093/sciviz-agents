@@ -24,6 +24,7 @@ class GateState:
     escalated: bool = False
     last_artifact: str | None = None
     last_reviewed: str | None = None  # the text the last review saw (report gate)
+    capped: bool = False  # released after the last allowed round: no more reviews in this turn
 
 
 class Session:

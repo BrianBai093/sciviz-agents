@@ -1,0 +1,42 @@
+{
+  "id": "P44",
+  "kind": "figure",
+  "title": "Disruption rank by team size and citation rank",
+  "description": "This figure tests, but does not confirm, the original finding that the decline was stronger among highly cited papers. The decline is clear in the least-cited half; the middle and top estimates and the contrast are uncertain. Compare with the citation comparison in Figure 3 of the original study [brief].\n\nEach point shows the average disruption percentile for one team-size and citation group. Each bar gives a separate 95% confidence interval for that average, not for the change with team size. The figure covers 7,933 works with a recorded reference and at least one later work citing them through 23 November 2026. Each work had an author listing Columbia University or an institution that OpenAlex lists under it. A work is more disruptive when later works cite it instead of citing it together with its references. Higher percentiles mean higher disruption relative to works in the sample from the same year. Citation rank compares counts of distinct later citing works among works from that same year. The middle group starts at the 50th percentile and stops just before the 90th. Works less likely to be sampled count more both when setting the groups from those ranks and when calculating the plotted averages. The legend counts each sampled work once, so the lowest half need not contain half of the sampled works. The intervals come from 1,000 repeated draws within each original team-size group. The same work could be drawn more than once, and both ranks and the citation groups were recalculated each time. The dashed line marks the middle of the disruption rank scale. The dotted line separates individual team sizes from ranges. The ranges above ten authors are shown for comparison only.\n\nThe estimates of change use teams with 1–10 authors. For each doubling of team size, the rank in the lowest citation group fell by an estimated 2.50 percentile points, with a 95% interval from a fall of 3.39 to a fall of 1.64, based on 3,277 works. In the middle group, the estimate was a fall of 1.22 points, with a 95% interval from a fall of 2.54 to a rise of 0.48, based on 2,476 works. In the top tenth, the estimate was a rise of 0.23 points, with a 95% interval from a fall of 4.33 to a rise of 3.37, based on 457 works. The estimated change was 2.73 points higher in the top tenth than in the lowest half, with a 95% interval from 1.89 points lower to 6.00 points higher, based on 3,734 works [T68].",
+  "producer": "analyst",
+  "inputs": [
+    "P18",
+    "T68"
+  ],
+  "code": null,
+  "created_at": 1795540250.763,
+  "file": "figure.png",
+  "slug": "disruption-by-citation-rank",
+  "claims": [
+    "C3"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 5,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure and caption provide the evidence needed to judge both parts of C3. The decline in disruption rank is clear only in the least-cited half, and the comparison does not establish a stronger decline among the most-cited works. The caption correctly distinguishes the error bars around group averages from the uncertainty in the estimated changes.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The caption says the middle and top estimates and the contrast are uncertain, but readers have to reach the last paragraph to see what that means for the claim.",
+          "fix": "As optional polish, say up front that the middle and top groups do not show a clear decline and that the top-versus-bottom comparison allows for either a stronger or a weaker decline."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Disruption rank by team size and citation rank' (version 1) for claims ['C3'], from ['P18', 'T68']"
+}

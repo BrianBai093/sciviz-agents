@@ -1,0 +1,49 @@
+{
+  "id": "P36",
+  "kind": "figure",
+  "title": "Observed reference ages and citation counts in three team-size groups",
+  "description": "Compared with solo authors, the two larger groups cite newer and generally more highly cited references. The two larger groups have similar citation-count curves. These are observed differences among the three groups shown, not evidence that fitted parameters differ for both measures. The works had at least one later work citing them through 23 November 2026. Each had at least one author listing Columbia University or an institution that OpenAlex lists under it. The curves show the percentage of reference links with an age or citation count above the horizontal-axis value. They pool the available links, counting each reference once per work that lists it. Each link carries the weight of the work that lists it. Works less likely to be sampled count more per link, and works with more links contribute more. In order of 1, 10 and 51–100 authors, both panels use 597, 624 and 477 works with the relevant information. Panel A uses 22,001, 34,531 and 43,548 links. Panel B uses 22,149, 34,613 and 43,772 [T75]. Reference age is the difference in publication years between the reference and the work that cites it. Panel A includes same-year references, excludes references dated after the work’s publication year and shows ages through 100 years. Panel B uses current citation totals, not totals when the work appeared. Its scale is linear through one citation and logarithmic above one. Shading shows a separate 95% confidence interval at each value, not an interval for the whole curve. The intervals come from 1,000 repeated draws within every original team-size group, including the largest, allowing a work to be picked more than once. Separate model results suggest that older references become less common faster for ten-author teams than for solo authors. The fitted comparison for references with 50 or more citations is inconclusive [T76, T77]. Compare with Figure 4 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P17",
+    "T75",
+    "T76",
+    "T77"
+  ],
+  "code": null,
+  "created_at": 1795538637.723,
+  "file": "figure.png",
+  "slug": "references-by-team-size",
+  "claims": [
+    "C5"
+  ],
+  "parent": "P33",
+  "version": 4,
+  "status": "approved_with_issues",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 5,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The plots are clear and consistent with the saved summaries. The figure can support the observed group differences once the report separates them from the more limited evidence from the fitted models.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The figure supports the observed differences among the three groups, but not the full claim that fitted age and citation-count parameters both vary with team size. Neither panel shows a fitted model, and the separate citation-count comparison is inconclusive. The caption correctly acknowledges this, but the stated claim does not.",
+          "fix": "Keep the data and marks unchanged. Narrow the claim tied to this figure: in this sample, both larger groups cited newer and generally more highly cited references than solo authors, and their citation-count curves were similar. Use [T76, T77] in the report to explain that the age model showed a difference between solo and ten-author works, but the citation-count model did not establish a difference."
+        },
+        {
+          "severity": "minor",
+          "problem": "The shared vertical label is awkward because the age or citation count, not the link itself, is above the value shown. The caption defines the curves but could make the direction of the comparison easier to read.",
+          "fix": "Use “References above the value shown (%)” as the vertical label. In the caption, retain the explanation of how links are counted and weighted, and add that a lower curve in A means fewer older references, while a higher curve in B means more references above the same citation count."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Observed reference ages and citation counts in three team-size groups' (version 4) for claims ['C5'], from ['P17', 'T75', 'T76', 'T77']"
+}

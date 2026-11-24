@@ -17,401 +17,668 @@ figcaption { font-size: 9pt; color: #222; text-align: left; margin-top: 4pt; }
 code, pre { font-family: Menlo, monospace; font-size: 8.5pt; }
 pre { background: #f5f5f5; padding: 6pt; white-space: pre-wrap; }
 .evidence td:first-child { white-space: nowrap; font-family: Menlo, monospace; }
-</style></head><body><h1>Team size and disruption in Columbia research</h1>
-<div class="subtitle">Stage 2 reproduction of Wu, Wang &amp; Evans using frozen OpenAlex evidence</div>
+</style></head><body><h1>How later research cites work by smaller and larger teams</h1>
+<div class="subtitle">A comparison of recent Columbia-linked research with Wu, Wang and Evans</div>
 <h2>Summary</h2>
-<p><strong>In the eligible Columbia sample, larger teams generally had more citing works and were more likely to have negative disruption scores.</strong> Among 7,933 OpenAlex works published in 2021–2024 with at least one strictly later citing work by the cutoff, each doubling of team size among works with 1–10 authors was associated with a 3.48-point lower within-year disruption percentile (95% interval −4.27 to −2.70; n=6,210). The median citing-work count rose from 4 [3, 4] for solo works to 15 [13, 17] for ten-author works and 39 [31, 46] for the 51–100 band (n=600, 624 and 477). Neither trend was strictly monotone <span class="cite">[T1, T82, T87, F11, P15]</span>.</p>
-<p>A negative score means more later works cited the focal work together with a recorded reference than cited the focal work alone <span class="cite">[brief]</span> <span class="cite">[T32, T33]</span>. Negative scores accounted for 48.2% of solo work [44.3%, 52.3%], versus 77.6% [74.1%, 81.0%] for ten authors and 88.1% [85.0%, 90.8%] for 51–100 authors (same group sizes). Solo work ranked higher without being predominantly positive <span class="cite">[T66, F12]</span>. The slope was negative in the bottom half of citation impact; estimates for the middle and top groups were inconclusive, and the data did not establish a stronger decline at the top <span class="cite">[T68, F13]</span>. Most supported fields and subfields had negative slopes, but the pattern was not uniform. Larger teams cited newer and more currently cited references <span class="cite">[T70, T74, F14, F15]</span>.</p>
-<p>Stage 2 requires positive focal citation separately in each window and replaces finite-population intervals with inference that resamples even the fully sampled stratum. Keeping works with a defined score but no focal citation gives much the same headline gradient; the tables below show where point estimates or uncertainty differ. These are local, observational associations, not effects of assigning team size or evidence for patents and software <span class="cite">[T66, T82, T86, T87, J15]</span> <span class="cite">[brief]</span>.</p>
-<h2>Data and methods</h2>
-<p><strong>Frame and sample.</strong> The Columbia OpenAlex snapshot contains 55,371 works from 2021–2024 with 1–100 listed authors. Team size uses the snapshot authorship count, including unresolved byline positions; no additional document-type filter was applied. The screen required at least one distinct, syntactically valid OpenAlex work ID as a recorded reference, excluding the focal work's own ID. It removed 10,720 works with no recorded reference edge and a registered reference count of zero. A further 4,110 works had usable references but no positive snapshot citation total, later-calendar-year count through the snapshot year, or strictly later local inbound edge. The 40,541 remaining works form a proxy frame, not a census of works with positive date-filtered global inbound counts. Among the reference exclusions, 3,507 had positive snapshot totals, 3,188 had positive later-year counts and 482 had dated local inbound evidence; these criteria overlap <span class="cite">[T1, T3, T83, F20, J5]</span>.</p>
-<p>The prespecified draw was stratified simple random sampling without replacement from sorted IDs (PCG64 seed 42), with near-equal allocation across exact sizes 1–10 and pooled 11–20, 21–50 and 51–100 bands, subject to stratum capacity. Each draw retained weight N_h/n_h (the inverse selection probability); weights were not reset after eligibility filtering. The 51–100 band was fully sampled. The exact frame sizes, weights and both windows' counts by stratum and cohort are in the audit <span class="cite">[T2, T5, T82, J5]</span>.</p>
+<p>Among sampled Columbia-linked works published from 2021 through 2024 in OpenAlex and cited in the main window, larger teams generally received more citations. A work scores below zero on disruption when more later publications cite it with at least one of its references than cite it without any. Works by larger teams more often scored below zero. Wu, Wang and Evans call this pattern development and the opposite balance disruption. This does not show that adding authors makes work less original. <span class="cite">[brief]</span> <span class="cite">[T2, T82, F11, F12]</span></p>
+<p>The distribution of disruption scores differed by team size, as in the original study. We ranked works by disruption score within each publication year. Larger teams generally ranked lower, but not at every team size or in every field. Compared with solo works, works with 10 or 51 to 100 authors cited newer and generally more highly cited references. We looked at works cited in the first or second full calendar year after publication. On average, works with 51 to 100 authors received a greater share of those citations in the first full year than solo works did. Larger teams still showed less disruption when we compared works sharing an author, counted citations over a shorter period, or used a simpler score. <span class="cite">[brief]</span> <span class="cite">[F11, F12, F14, F15, F16, F17, F18, P45]</span></p>
+<p>The decline in disruption rank was clear in the least-cited half. We did not establish the original claim of a steeper decline among the most cited. We could not tell whether disruption ranks for reviews rose or fell with team size. We also could not tell whether very high citation counts became rarer at different rates among references cited by solo and ten-author works. We could not test recognition years later, team growth over decades, company patents or Nobel-winning work. <span class="cite">[brief]</span> <span class="cite">[T1, F13, F15, F16, F17, F19]</span></p>
+<h2>What the original study asked</h2>
+<p>Wu, Wang and Evans asked whether small teams tend to disrupt and large teams tend to develop earlier work. They examined research articles, US patents and GitHub software projects. Team size meant the number of authors, inventors or contributors listed on a work. <span class="cite">[brief]</span></p>
+<h2>What we measured</h2>
+<p>We sampled 8,000 works published from 2021 through 2024 in OpenAlex, a research index. They included articles, reviews and book chapters. Each had an author listing Columbia University or an institution OpenAlex groups under Columbia. For team size, we used the author count stored in our copy of OpenAlex. We randomly sampled works separately at each team size from one to ten and in three ranges: 11 to 20, 21 to 50, and 51 to 100. A work’s sampling weight was the number of eligible works in its group divided by the number we sampled. <span class="cite">[T1, T2, T5, T82, P25, J5]</span></p>
+<p>To be eligible for sampling, a work needed a recorded reference other than itself and evidence of a citation in our copy of OpenAlex. We accepted an overall count above zero, an annual count above zero for a later calendar year through 2026, or a link to a citing work published later, even in the same year. <span class="cite">[T1, T3, T33, T82, T83, J5]</span></p>
+<p>For the main disruption analysis, we separately checked for a later work citing the sampled work within the citation window. We searched across all of OpenAlex, not just the Columbia sample. The main window ended on 23 November 2026. The shorter window ended on 31 December of the second calendar year after publication. Works from 2024 were excluded from the shorter analysis because their window had not ended. <span class="cite">[T32, T33, T82, T84]</span></p>
+<p>To score disruption, sort later works into three groups: those that cite the sampled work without any of its references, those that cite it with at least one of its references, and those that cite one or more of its references but not the sampled work. Count each later work in just one group. Subtract the second count from the first, then divide by the total across all three groups. If all three counts are zero, there is no score. <span class="cite">[brief]</span> <span class="cite">[T32, T33]</span></p>
+<p>Suppose six later works cite a sampled work without any of its references, two cite both, and eight cite only the references. Subtract two from six and divide four by sixteen: the score is positive one quarter. A negative score means citing the work alongside a reference was more common than citing it without its references. If those counts tie, the score is zero. <span class="cite">[brief]</span></p>
+<p>The original study mostly reported percentiles, or ranks, across works. We instead used sampling weights to rank works within each publication year. The main analysis ranks each work among sampled works from its year that were themselves cited during the window being analysed. To get a rank from 0 to 100, add the full weight of works with lower scores and half the weight of works with the same score, including the work itself. Express that sum as a percentage of the total eligible weight for the year. For example, if the total weight is 100, the weight below is 40 and the tied weight is 20, the rank is 50. A high rank need not mean a positive score. <span class="cite">[brief]</span> <span class="cite">[T66, T67, T84, P25, J15]</span></p>
+<p>For most estimates, we made new samples by drawing from the original sample within each team-size group, allowing the same work to appear more than once. We recalculated the estimate for each new sample. This is called a bootstrap. The middle 95% of the recalculated estimates gives the confidence interval. We did not narrow the intervals to account for how much of each group we had sampled. For a statistic based only on teams of 51 to 100 authors, such as their median citation count, the interval shows variation across repeat draws. There was no uncertainty about which eligible works we picked in that group: we picked them all. <span class="cite">[T5, T66, T68, P25]</span></p>
+<h2>Larger teams ranked lower on disruption and drew more citations</h2>
+<p>Larger teams generally ranked lower on disruption and drew more citations. The original study found steadily falling ranks and rising typical citation counts, with the disruption pattern extending to teams of up to 100. <span class="cite">[brief]</span> <span class="cite">[F11, P25]</span></p>
+<p>For works with one to ten authors, we fitted a trend that estimates the same change in disruption rank for each doubling of team size. It showed a decline of 3.48 rank points per doubling, with a 95% interval of 2.70 to 4.27 points of decline among 6,210 works. <span class="cite">[T66, F11, P25]</span></p>
+<p>Figure 1 shows average ranks in panel A and median citation counts in panel B. The median is the citation count at the halfway point after ordering works by citation count and counting each work according to its sampling weight. For 600 solo works it was 4, with a 95% interval of 3 to 4. For 624 ten-author works it was 15, with an interval of 13 to 17. For 477 works with 51 to 100 authors it was 39, with an interval of 31 to 46. <span class="cite">[T66, F11, P25]</span></p>
+<figure><img src="figures/figure1_P25_team-size-and-disruption.png"><figcaption><b>Figure 1.</b> <b>Disruption rank and citations by team size.</b> Larger teams generally rank lower on disruption and receive more citations, but neither pattern holds at every step. The panels show 7,933 works with a recorded reference and at least one later work citing them through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. Panel A averages each work’s disruption percentile, its rank on a 0–100 scale among works from the same publication year. Higher ranks indicate greater disruption. The dashed line marks 50, the middle of the rank scale. Panel B shows the median number of distinct later works citing each work. Works less likely to be sampled count more. The counts below the equally spaced team sizes are the actual numbers of works. The dotted line separates individual sizes from size ranges. For the 477 works by teams of 51–100 authors, the median is 39 citing works, with a 95% confidence interval from 31 to 46 <span class="cite">[T66]</span>. Each bar gives a 95% confidence interval for one estimate. The intervals come from recalculating the estimates and ranks in 1,000 repeated draws within every original team-size group, including the largest. The same work could be drawn more than once in each repetition. Compare with Figure 2 of the original study <span class="cite">[brief]</span>. <span class="cite"><span class="cite">[P25]</span></span></figcaption></figure>
+<p><strong>Partly reproduced.</strong> The measures sometimes levelled off or reversed between neighbouring groups. The largest group shows a result for the range, not each size in it. <span class="cite">[brief]</span> <span class="cite">[F11, P25]</span></p>
+<h2>The distribution changed, not just the average</h2>
+<p>Larger teams more often scored below zero. The original study likewise found that the distribution differed by team size. In Figure 2 each curve shows the share at or below each score. Look just left of zero to exclude exact zeros. <span class="cite">[brief]</span> <span class="cite">[T67, F12, P30]</span></p>
+<p>The share below zero was 77.6% for ten-author works and 48.2% for solo works. The difference was 29.4 percentage points, with a 95% interval of 24.0 to 34.5 points among 1,224 works. Most scores were close to zero. Solo works tended to rank higher, but only 44.3% scored above zero, with an interval of 40.3% to 48.0% among 600 works. <span class="cite">[T66, T67, F12, P30]</span></p>
+<figure><img src="figures/figure2_P30_disruption-score-distributions.png"><figcaption><b>Figure 2.</b> <b>Distributions of disruption scores by team size.</b> Most scores are close to zero. Just left of zero, the curves show that larger teams have a greater share of works with negative scores. Each curve shows the percentage of works at or below the score on the horizontal axis. The jump at zero counts only works with a score of exactly zero. The curves cover 600 solo works, 624 works by ten authors and 477 works by teams of 51–100 authors <span class="cite">[T67]</span>. All had a recorded reference and at least one later work citing them through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. Works less likely to be sampled count more. A score is positive when more later works cite the work without citing any of its references than cite both the work and its references. A negative score means the reverse. Later works that cite the references but not the work also count toward the total used to scale the score <span class="cite">[brief]</span>. The plot shows scores from negative 0.1 to positive 0.1 and spreads out values near zero. Shading shows the uncertainty in the estimated percentage at each score separately, not for the whole curve at once. These 95% confidence intervals come from 1,000 repeated draws within each original team-size group, including the largest. A work could be picked more than once per draw. This is not a panel-for-panel redraw of the original study. Its closest comparison is the Extended Data analysis of differences in the full disruption-score distributions across team sizes <span class="cite">[brief]</span>. <span class="cite"><span class="cite">[P30]</span></span></figcaption></figure>
+<p><strong>Reproduced in this sample.</strong> We found a difference in distributions without repeating the original tests. <span class="cite">[brief]</span> <span class="cite">[T67, F12]</span></p>
+<h2>The decline was clearest among less-cited works</h2>
+<p>The decline in disruption rank was clear in the least-cited half. The original study reported declines at all citation levels, especially among the most cited. <span class="cite">[brief]</span> <span class="cite">[T68, F13]</span></p>
+<p>Figure 3 groups works by how often they were cited. We ranked counts of distinct citing works within each publication year using the sampling weights. Tied counts share a rank. On the 0 to 100 citation-rank scale, the least-cited group is below 50, the middle group starts at 50 and stops just before 90, and the top group starts at 90. Because the ranks are weighted, the lowest group need not contain half the sampled works. The fitted changes use works with one to ten authors. <span class="cite">[T68, T84, P44]</span></p>
+<p>The least-cited group fell by 2.50 rank points per doubling, with a 95% interval of 1.64 to 3.39 points of decline among 3,277 works. The middle result was inconclusive. The top estimate was a rise of 0.23 points; its interval ran from a decline of 4.33 to a rise of 3.37 points among 457 works. <span class="cite">[T68, F13, P44]</span></p>
+<figure><img src="figures/figure3_P44_disruption-by-citation-rank.png"><figcaption><b>Figure 3.</b> <b>Disruption rank by team size and citation rank.</b> This figure tests, but does not confirm, the original finding that the decline was stronger among highly cited papers. The decline is clear in the least-cited half; the middle and top estimates and the contrast are uncertain. Compare with the citation comparison in Figure 3 of the original study <span class="cite">[brief]</span>.
+<p>Each point shows the average disruption percentile for one team-size and citation group. Each bar gives a separate 95% confidence interval for that average, not for the change with team size. The figure covers 7,933 works with a recorded reference and at least one later work citing them through 23 November 2026. Each work had an author listing Columbia University or an institution that OpenAlex lists under it. A work is more disruptive when later works cite it instead of citing it together with its references. Higher percentiles mean higher disruption relative to works in the sample from the same year. Citation rank compares counts of distinct later citing works among works from that same year. The middle group starts at the 50th percentile and stops just before the 90th. Works less likely to be sampled count more both when setting the groups from those ranks and when calculating the plotted averages. The legend counts each sampled work once, so the lowest half need not contain half of the sampled works. The intervals come from 1,000 repeated draws within each original team-size group. The same work could be drawn more than once, and both ranks and the citation groups were recalculated each time. The dashed line marks the middle of the disruption rank scale. The dotted line separates individual team sizes from ranges. The ranges above ten authors are shown for comparison only.</p>
+<p>The estimates of change use teams with 1–10 authors. For each doubling of team size, the rank in the lowest citation group fell by an estimated 2.50 percentile points, with a 95% interval from a fall of 3.39 to a fall of 1.64, based on 3,277 works. In the middle group, the estimate was a fall of 1.22 points, with a 95% interval from a fall of 2.54 to a rise of 0.48, based on 2,476 works. In the top tenth, the estimate was a rise of 0.23 points, with a 95% interval from a fall of 4.33 to a rise of 3.37, based on 457 works. The estimated change was 2.73 points higher in the top tenth than in the lowest half, with a 95% interval from 1.89 points lower to 6.00 points higher, based on 3,734 works <span class="cite">[T68]</span>. <span class="cite"><span class="cite">[P44]</span></span></figcaption></figure></p>
+<p><strong>Partly reproduced.</strong> Per doubling of team size, the estimated change in rank was 2.73 points higher in the top tenth than in the least-cited half. The 95% interval ranged from 1.89 points lower to 6.00 points higher, based on 3,734 works. We could not establish that the trends differed. <span class="cite">[T68, F13]</span></p>
+<h2>The decline was common across fields, but not universal</h2>
+<p>Most fields and subfields with enough data had downward estimates. The original study found declines across fields and subfields and within most journals. We used the broad and narrow subjects in OpenAlex’s main classification for each work. <span class="cite">[brief]</span> <span class="cite">[T69, T70, P35]</span></p>
+<p>Figure 4 plots the change per doubling for each field. To qualify, a field, subfield or journal needed at least 30 works with one to ten authors, at least four distinct sizes, and at least five works in each of two ranges: one or two authors, and five to ten. <span class="cite">[T69, T70, P35]</span></p>
+<p>Across 20 qualifying fields with 6,074 works in total, 14 fields had estimated declines: 70%, with a 95% interval of 55% to 80%. Across 34 qualifying subfields with 3,601 works in total, 24 had estimated declines: 71%, with an interval of 53% to 76%. These intervals show how the percentage with a decline varied when we recalculated trends for the same fields and subfields in each repeat sample. In many individual groups, the data were also consistent with no change or a rise. <span class="cite">[T69, T70, F14, P35, J15]</span></p>
+<figure><img src="figures/figure4_P35_disruption-by-field.png"><figcaption><b>Figure 4.</b> <b>Disruption rank by team size in fields with enough data.</b> Larger teams had lower estimated disruption ranks in 14 of the 20 fields and 24 of the 34 subfields that met the sample requirements. Many field intervals include zero. Only one journal met the requirements, so the result for most journals could not be tested. The field and subfield pattern was partly reproduced <span class="cite">[T69, T70]</span>. The dots show the estimated difference in disruption rank across works for a doubling of the number of authors. The dashed line marks no estimated difference. The score compares later works that cite the work without any of its references with those that cite both. Later works that cite only the references also count toward the total used to scale the score. The percentile is the rank of that score among works published in the same year. Works with 1–10 authors had a recorded reference and at least one later work citing them through 23 November 2026. Each had at least one author listing Columbia University or an institution that OpenAlex lists under it. Works less likely to be sampled count more in the estimates. Parentheses show actual work counts. To be included, a field, subfield or journal needed at least 30 works, at least 5 in each of the 1–2 and 5–10 author ranges, and at least 4 distinct team sizes. The second table column counts groups that met those requirements out of all groups seen in the sample. Each bar gives a 95% confidence interval for one field’s estimate. Each table range gives a 95% interval for the percentage of eligible groups with estimates below zero. The intervals come from 1,000 repeated draws within each original team-size group, including the largest, allowing repeats and recalculating ranks. The table gives each eligible group equal weight and keeps the same groups in each draw. Compare with the field comparisons in Figure 3 and Extended Data of the original study <span class="cite">[brief]</span>. <span class="cite"><span class="cite">[P35]</span></span></figcaption></figure>
+<p><strong>Partly reproduced for fields and subfields; not testable for most journals.</strong> Only <em>Proceedings of the National Academy of Sciences</em> qualified. For its 45 works the estimate was a decline of 2.11 points per doubling, with a 95% interval from a decline of 12.2 to a rise of 7.73. <span class="cite">[T69, T70, F14]</span></p>
+<h2>Larger teams drew on newer and more cited references</h2>
+<p>Larger teams in Figure 5 cited newer and generally more highly cited sources than solo authors did, as in the original study. We measured popularity using cumulative citation totals from our copy of OpenAlex or from the live index, not totals as of the publication date of the work listing each reference. <span class="cite">[brief]</span> <span class="cite">[T10, T11, T45, T74, T75, F15, P45]</span></p>
+<p>A reference’s age is the number of years between its publication year and that of the work that cited it. In Figure 5, each reference carries the sampling weight of the work listing it, so longer lists contribute more. For the comparisons below, we instead calculated each work’s average reference age and compared those averages using the sampling weights. Among 1,221 works themselves cited in the main window, references in ten-author works were 5.20 years newer on this measure than in solo works, with a 95% interval of 4.41 to 6.05 years newer. Without requiring a citation to the work itself in the main window, references in ten-author works were 5.38 years newer on this measure than in solo works, with an interval of 4.58 to 6.24 years newer among 1,249 works. <span class="cite">[T74, T75, F15, P45]</span></p>
+<figure><img src="figures/figure5_P45_references-by-team-size.png"><figcaption><b>Figure 5.</b> <b>Reference ages and citation counts in three team-size groups.</b> In the three groups shown, works with 10 or 51–100 authors cited newer and generally more highly cited references than solo works did. The two larger groups have similar citation-count curves. A lower curve in panel A means fewer references older than the age shown. A higher curve in panel B means more references above the citation count shown.
+<p>The works had at least one later work citing them through 23 November 2026. Each had at least one author listing Columbia University or an institution that OpenAlex lists under it. The curves count each reference once per work that lists it. Each link carries that work’s weight, so works less likely to be sampled count more per link, and works with more links contribute more. In order of 1, 10 and 51–100 authors, both panels use 597, 624 and 477 works. Panel A uses 22,001, 34,531 and 43,548 links; panel B uses 22,149, 34,613 and 43,772 <span class="cite">[T75]</span>. Reference age is the difference in publication years. Panel A includes same-year references, excludes references published in later years and shows ages through 100 years. Panel B uses current citation totals, not totals at publication. Its scale is linear through one citation and logarithmic above one.</p>
+<p>Shading shows sampling uncertainty at each age or citation-count cutoff, not for the curve as a whole. Each 95% confidence interval comes from 1,000 repeated draws within each original team-size group. A work could be picked more than once per draw.</p>
+<p>These curves show what we observed. They do not show whether a mathematical model fits. Separate checks ask whether a constant rate of decline describes reference age and whether very highly cited references follow the pattern the original study proposed; neither model fits closely. In the age model, a constant rate means the share of references older than a given age falls by the same fraction with each additional year. In those checks, older references became less common faster for ten-author works than for solo works. The model comparison among references with at least 50 citations was inconclusive <span class="cite">[T76, T77]</span>. The original finding was partly reproduced. Compare with Figure 4 of the original study <span class="cite">[brief]</span>. <span class="cite"><span class="cite">[P45]</span></span></figcaption></figure></p>
+<p><strong>Partly reproduced.</strong> The curves show the references we counted. The age model assumes that raising the age cutoff by one year reduces the share of references older than that cutoff by the same fraction each time. That fraction was larger for works with ten authors than for solo works. The citation model assumes that each doubling of the citation count reduces the predicted share of references with exactly that count by the same fraction. For example, the fraction lost when comparing exactly 50 citations with exactly 100 is the same as when comparing exactly 100 with exactly 200. Among references with at least 50 citations, we could not tell whether that drop differed between solo and ten-author works. Neither model fit closely. <span class="cite">[brief]</span> <span class="cite">[T76, T77, F15, J12]</span></p>
+<h2>The largest teams drew more of their early attention in the first full year</h2>
+<p>We looked at works cited in the first or second full calendar year after publication. On average, works with 51 to 100 authors received a greater share of those citations in the first full year than solo works did. In the original study, large-team work tended to draw attention sooner, while delayed recognition was more common for small-team and disruptive work. <span class="cite">[brief]</span> <span class="cite">[T32, T78, F16]</span></p>
+<p>We used works from 2021 through 2023. For each work, we calculated the share of its citations in those two full years that arrived in the first. We then averaged those shares using the sampling weights. The average was 5.23 percentage points higher for works with 51 to 100 authors than for solo works. The 95% interval was 0.94 to 9.38 points higher, based on 688 works. The ten-author comparison was inconclusive. <span class="cite">[T32, T78, F16]</span></p>
+<p>For each work, we also counted citations from the day after publication through the end of the second full calendar year. We calculated what share of its citations in that period arrived in its publication year. We compared works with negative and positive disruption scores in the main citation window as if both groups had the same mix of publication years and quarters. The average publication-year share was 2.14 percentage points larger for negative scores, with a 95% interval of 1.04 to 3.19 points among 5,421 works. Among citations in the first two full calendar years, the groups did not clearly differ in the share received in the first year. Some of the same citations helped determine both the disruption score and when attention arrived. <span class="cite">[T32, T78, F16]</span></p>
+<p><strong>Partly reproduced.</strong> The largest teams had a higher average first-year share. Neither measure tests recognition after years of little attention. <span class="cite">[F16]</span></p>
+<h2>The link held when we compared each qualifying author’s works</h2>
+<p>Larger teams still ranked lower when we compared works that shared a qualifying author. The original study found that the link mostly remained after accounting for year, topic and author, and appeared across types of work. <span class="cite">[brief]</span> <span class="cite">[T79, F17]</span></p>
+<p>We used teams of one to ten. An author qualified if they listed a Columbia affiliation on at least two works with different team sizes that were themselves cited in the main window. A work entered once for each qualifying author, with its sampling weight divided among those entries. For each qualifying author, we compared the disruption ranks of their works with different team sizes. We allowed average ranks to differ by publication year and by the main topic OpenAlex assigned to each work. Among 4,107 works, each doubling was associated with a rank 1.85 points lower, with a 95% interval of 0.27 to 3.43 points of decline. The unadjusted estimate uses the same works but does not account for author, year or topic. It does not compare works by the same author. It showed a decline of 1.73 points, with an interval of 0.46 to 3.01 points of decline. These intervals account for works sharing an author and works counted under several authors, without resampling. <span class="cite">[T79, T80, F17, J12]</span></p>
+<p><strong>Partly reproduced.</strong> The decline persisted after adjustment. In this subset, the unadjusted decline of 1.73 points per doubling was already smaller than the 3.48 points in the full analysis of works with one to ten authors. <span class="cite">[T66, T79, F11, F17]</span></p>
+<p>In a separate comparison by type, ranks fell among works OpenAlex classified as articles. We could not tell whether reviews ranked higher or lower as team size grew, whether we required a citation to the review itself or also included reviews with citations only to their references. Under the first rule, we could not tell whether the trends for articles and reviews differed. Under the broader rule, the estimated decline was steeper for articles, but the interval for the difference only just excluded zero. <span class="cite">[T81, F17]</span></p>
+<h2>The association held with a shorter window and a simpler score</h2>
+<p>The original study found the link held across several windows and scoring rules. <span class="cite">[brief]</span> For the window comparison, we took all 5,671 works cited in both windows. We ranked them within each publication year, separately for each window. We then estimated the team-size trend using the 4,405 of those works with one to ten authors. The decline per doubling was 3.01 points in the main window, with a 95% interval of 2.01 to 3.93 points of decline. It was 2.82 points in the shorter window, with an interval of 1.78 to 3.85. The direct comparison did not establish a difference. <span class="cite">[T71, T82, T84, F18, J15]</span></p>
+<p><strong>Partly reproduced.</strong> For each sampled work, we took the later works that cited it and calculated the percentage that cited none of its references. Among 6,210 works with one to ten authors, that percentage fell by 4.29 points per doubling of team size. The 95% interval was a decline of 3.40 to 5.21 percentage points. Other scores and long windows were not tested. <span class="cite">[brief]</span> <span class="cite">[T33, T71, F18]</span></p>
+<p>Including works whose references were cited but that were not themselves cited barely changed the main decline in rank with team size. It made the estimated decline steeper in the shorter window. It also changed the result for the difference between article and review trends, as noted above. <span class="cite">[F11, F17, F18, T87]</span></p>
+<h2>Funding records offer a narrower comparison</h2>
+<p>The rank trend differed between works with and without a funding acknowledgment in OpenAlex. The original study also compared funded work and company patents, tracked team sizes over decades and found Nobel-winning papers unusually disruptive. <span class="cite">[brief]</span> <span class="cite">[T72, F19]</span></p>
+<p>Among 6,210 works with one to ten authors, each doubling of team size was associated with a decline of 3.75 disruption rank points for works without a recorded funding acknowledgment and a rise of 0.52 points for works with one. The data supported the decline but did not establish a rise. The estimated change was 4.26 points higher for works with an acknowledgment, with a 95% interval of 2.68 to 5.83 points higher. <span class="cite">[T72, F19]</span></p>
+<p><strong>Original comparisons not testable; local funding records only.</strong> Our results describe differences by recorded acknowledgment, not verified funding status. Team growth over decades, company patents and Nobel-winning work were not testable here. <span class="cite">[brief]</span> <span class="cite">[T1, F19]</span></p>
+<h2>Where the findings agree and where they do not</h2>
+<table>
+<thead>
+<tr>
+<th>Finding</th>
+<th>Original result</th>
+<th>Result in this sample</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Team size</td>
+<td>Disruption rank fell and typical citations rose steadily, with the disruption pattern extending to larger teams. <span class="cite">[brief]</span></td>
+<td><strong>Partly reproduced.</strong> Both directions held overall, with exceptions between neighbouring sizes. <span class="cite">[F11, P25]</span></td>
+</tr>
+<tr>
+<td>Distribution of scores</td>
+<td>The distribution changed, not just the average. <span class="cite">[brief]</span></td>
+<td><strong>Reproduced in this sample.</strong> Larger teams more often scored below zero. <span class="cite">[F12, T67, P30]</span></td>
+</tr>
+<tr>
+<td>Citation levels</td>
+<td>Disruption fell with team size at all citation levels, most sharply among highly cited works. <span class="cite">[brief]</span></td>
+<td><strong>Partly reproduced.</strong> The decline was clear in the least-cited half but not established at other citation levels. <span class="cite">[F13, P44]</span></td>
+</tr>
+<tr>
+<td>Fields and journals</td>
+<td>The decline appeared across fields and subfields and in most journals. <span class="cite">[brief]</span></td>
+<td><strong>Partly reproduced.</strong> The decline was common but not universal. Only one journal qualified. <span class="cite">[F14, P35]</span></td>
+</tr>
+<tr>
+<td>References</td>
+<td>Larger teams cited newer and more popular work. How quickly older and highly cited references became rarer differed by team size. <span class="cite">[brief]</span></td>
+<td><strong>Partly reproduced.</strong> References were newer and generally more cited. The fitted age difference agreed in direction; the citation model comparison was inconclusive. <span class="cite">[F15, T76, T77, P45]</span></td>
+</tr>
+<tr>
+<td>Timing</td>
+<td>Large teams tended to draw earlier attention; delayed recognition was more common for small teams and disruptive works. <span class="cite">[brief]</span></td>
+<td><strong>Partly reproduced.</strong> The largest teams had a higher average first-full-year share of citations received in the first two full calendar years than solo authors. Long-delayed recognition could not be tested. <span class="cite">[F16, T78]</span></td>
+</tr>
+<tr>
+<td>Author, year, topic and type</td>
+<td>The link remained after accounting for author, year and topic, and appeared across research types. <span class="cite">[brief]</span></td>
+<td><strong>Partly reproduced.</strong> The decline held when comparing each qualifying author’s works. Reviews were inconclusive. <span class="cite">[F17, T79, T81]</span></td>
+</tr>
+<tr>
+<td>Other windows and scores</td>
+<td>The link held across windows and scoring rules. <span class="cite">[brief]</span></td>
+<td><strong>Partly reproduced.</strong> The direction held with a shorter window and a simpler score. <span class="cite">[F18, T71]</span></td>
+</tr>
+<tr>
+<td>Historical and policy context</td>
+<td>Team sizes grew over decades, and Nobel-winning papers were unusually disruptive. The study also compared funded work and company patents. <span class="cite">[brief]</span></td>
+<td><strong>Original comparisons not testable; local funding records only.</strong> We describe differences by recorded acknowledgment, not verified funding status. <span class="cite">[T1, T72, F19]</span></td>
+</tr>
+</tbody>
+</table>
+<h2>What we could not test</h2>
+<p>The short follow-up cannot reveal recognition years later or show whether team sizes grew over decades. We did not test long citation windows or score variants that exclude self-citations, use only popular references or count individual citation links instead of citing works. <span class="cite">[brief]</span> <span class="cite">[T1, T32, T33, T71, T78, F18, F19]</span></p>
+<p>One university’s research cannot stand in for the original collections of articles, patents and software. We lacked data on company patents and Nobel-winning work. Most journals had too few works across the required range of team sizes. We could not reliably distinguish work about theories from work based on observations or experiments, or verify funding. <span class="cite">[brief]</span> <span class="cite">[T1, T69, T70, T72, T81, F17, F19]</span></p>
+<h2>How far to take the findings</h2>
+<p>Disruption measures citations, not whether researchers abandoned an idea. Even within authors, different projects may attract different numbers of collaborators. The results do not show what would happen if a team added an author. <span class="cite">[brief]</span> <span class="cite">[T32, T33, T79]</span></p>
+<p>The results do not describe all Columbia output. Even within a publication year, earlier works had more time to be cited. OpenAlex’s subjects may differ from the original study’s. <span class="cite">[brief]</span> <span class="cite">[T1, T33, T69, T82, T83, T84]</span></p>
+<p>The cutoff applies to when citing works were published, not to when OpenAlex recorded their citations. Our counts matched separate counts in the cases checked, but that does not mean OpenAlex recorded every citation. The intervals do not account for index errors or for one later work contributing to several scores. <span class="cite">[T15, T24, T25, T32, T33, T66, T79]</span></p>
+<h2>Appendix: sampling and checks</h2>
+<p><strong>Sampling.</strong> Of the 55,371 Columbia-linked works in our copy of OpenAlex, 10,720 had no usable reference link and a recorded reference count of zero. None had a positive reference count without a usable link. Another 4,110 lacked citation evidence, leaving 40,541. Of those excluded for references, 3,507 had a positive citation total, 3,188 a later-year count, and 482 a dated later citing work; groups overlap. <span class="cite">[T1, T83, F20, J5]</span></p>
+<p>We sorted the OpenAlex work IDs as strings and drew randomly without replacement within groups, using PCG64 with seed 42. The weight is the number listed divided by the number drawn. Works kept those weights after screening. <span class="cite">[T2, T5, T82, J5]</span></p>
 <table>
 <thead>
 <tr>
 <th>Authors</th>
+<th style="text-align:right">Listed</th>
 <th style="text-align:right">Drawn</th>
-<th style="text-align:right">Main F&gt;0</th>
-<th>Authors</th>
-<th style="text-align:right">Drawn</th>
-<th style="text-align:right">Main F&gt;0</th>
+<th style="text-align:right">Work cited: main</th>
+<th style="text-align:right">Work cited: short</th>
+<th style="text-align:right">Weight</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
+<td style="text-align:right">2,681</td>
 <td style="text-align:right">627</td>
 <td style="text-align:right">600</td>
-<td>8</td>
-<td style="text-align:right">626</td>
-<td style="text-align:right">623</td>
+<td style="text-align:right">350</td>
+<td style="text-align:right">4.28</td>
 </tr>
 <tr>
 <td>2</td>
+<td style="text-align:right">4,202</td>
 <td style="text-align:right">627</td>
 <td style="text-align:right">618</td>
-<td>9</td>
-<td style="text-align:right">626</td>
-<td style="text-align:right">625</td>
+<td style="text-align:right">428</td>
+<td style="text-align:right">6.70</td>
 </tr>
 <tr>
 <td>3</td>
+<td style="text-align:right">4,702</td>
 <td style="text-align:right">627</td>
 <td style="text-align:right">623</td>
-<td>10</td>
-<td style="text-align:right">626</td>
-<td style="text-align:right">624</td>
+<td style="text-align:right">428</td>
+<td style="text-align:right">7.50</td>
 </tr>
 <tr>
 <td>4</td>
+<td style="text-align:right">4,364</td>
 <td style="text-align:right">627</td>
 <td style="text-align:right">623</td>
-<td>11–20</td>
-<td style="text-align:right">626</td>
-<td style="text-align:right">623</td>
+<td style="text-align:right">452</td>
+<td style="text-align:right">6.96</td>
 </tr>
 <tr>
 <td>5</td>
+<td style="text-align:right">3,781</td>
 <td style="text-align:right">627</td>
 <td style="text-align:right">624</td>
-<td>21–50</td>
-<td style="text-align:right">626</td>
-<td style="text-align:right">623</td>
+<td style="text-align:right">465</td>
+<td style="text-align:right">6.03</td>
 </tr>
 <tr>
 <td>6</td>
+<td style="text-align:right">3,194</td>
 <td style="text-align:right">627</td>
 <td style="text-align:right">625</td>
-<td>51–100</td>
-<td style="text-align:right">481</td>
-<td style="text-align:right">477</td>
+<td style="text-align:right">450</td>
+<td style="text-align:right">5.09</td>
 </tr>
 <tr>
 <td>7</td>
+<td style="text-align:right">2,663</td>
 <td style="text-align:right">627</td>
 <td style="text-align:right">625</td>
+<td style="text-align:right">463</td>
+<td style="text-align:right">4.25</td>
+</tr>
+<tr>
+<td>8</td>
+<td style="text-align:right">2,212</td>
+<td style="text-align:right">626</td>
+<td style="text-align:right">623</td>
+<td style="text-align:right">452</td>
+<td style="text-align:right">3.53</td>
+</tr>
+<tr>
+<td>9</td>
+<td style="text-align:right">1,920</td>
+<td style="text-align:right">626</td>
+<td style="text-align:right">625</td>
+<td style="text-align:right">448</td>
+<td style="text-align:right">3.07</td>
+</tr>
+<tr>
+<td>10</td>
+<td style="text-align:right">1,622</td>
+<td style="text-align:right">626</td>
+<td style="text-align:right">624</td>
+<td style="text-align:right">469</td>
+<td style="text-align:right">2.59</td>
+</tr>
+<tr>
+<td>11–20</td>
+<td style="text-align:right">6,370</td>
+<td style="text-align:right">626</td>
+<td style="text-align:right">623</td>
+<td style="text-align:right">474</td>
+<td style="text-align:right">10.18</td>
+</tr>
+<tr>
+<td>21–50</td>
+<td style="text-align:right">2,349</td>
+<td style="text-align:right">626</td>
+<td style="text-align:right">623</td>
+<td style="text-align:right">437</td>
+<td style="text-align:right">3.75</td>
+</tr>
+<tr>
+<td>51–100</td>
+<td style="text-align:right">481</td>
+<td style="text-align:right">481</td>
+<td style="text-align:right">477</td>
+<td style="text-align:right">355</td>
+<td style="text-align:right">1.00</td>
+</tr>
+<tr>
 <td>All</td>
+<td style="text-align:right">40,541</td>
 <td style="text-align:right">8,000</td>
 <td style="text-align:right">7,933</td>
+<td style="text-align:right">5,671</td>
+<td style="text-align:right">—</td>
 </tr>
 </tbody>
 </table>
-<p><em>Original sample sizes and main analysis eligibility by team stratum; weight range 1.00–10.18 <span class="cite">[T5, T82, F20, P15]</span>.</em></p>
-<p><strong>Counting disruption.</strong> Let f be a focal work and R its recorded references. Among distinct later works, n_i counts those citing f but nothing in R; n_j those citing f and at least one member of R; and n_k those citing at least one member of R but not f. F = n_i + n_j, U = n_i + n_j + n_k, and D = (n_i − n_j) / U. Negative D means that co-citation of prior work outweighs focal-only citation; positive D means the reverse. The rank measures relative position, not this sign. F = 0 and U &gt; 0 implies D = 0, but it is not evidence of focal uptake [brief; T32, T33, T84].</p>
-<p>Focal dates and reference lists came from the local snapshot; citing works were counted in the global OpenAlex graph by publication date, not ingestion date. The frozen API inputs contain annual grouped counts for focal, focal-only and union sets. Long unions used disjoint partitions; overflow used dated cursor IDs with deduplication and outbound-edge classification of focal citers, not sums of overlapping counts. Grouped counts matched all 62 independent checks; 122 checked overflow-tail citers satisfied tail membership and prefix exclusion; reversing partition order gave identical totals in seven checks. All 79 overflow streams were complete. These tests validate counting on the observed graph, not its completeness <span class="cite">[T3, T15, T24, T25, T26, T27, T28, T29, T32, T33, J10]</span>.</p>
-<p><strong>Windows and eligibility.</strong> Both windows begin the day after the focal publication date. The main window ends November 23, 2026, inclusive. The true fixed window ends December 31 of the publication year plus two, inclusive, not two years after the publication date. It is complete only for 2021–2023: 6,012 complete draws, with 1,988 from 2024 excluded as incomplete. In the main window, 7,933 focal works had at least one later citer; for 64, later works cited their references but not the focal work; and three had no later works citing either. The complete fixed window had 5,671 focal works with at least one later citer, 339 whose references were cited but not the focal work, and two for which neither was cited. Among the complete cohorts, 5,966 meet main F&gt;0; the 5,671 fixed-positive works also meet main F&gt;0 and form the strict paired sample before restricting team sizes. The comparator requires U&gt;0 in each window (7,997 main; 6,010 fixed and paired). The domains are applied after sampling, without replacements for ineligible works <span class="cite">[T2, T33, T82, T84, F20]</span>.</p>
-<p><strong>Estimation and intervals.</strong> Percentiles are inverse-inclusion-weighted midranks within publication year and the applicable domain; ties share a midrank. Slopes use log2(author count), reported in disruption percentile points per author doubling unless otherwise specified. Ranks are computed over the eligible domain before subgroup analyses. In each of 1,000 replicates (seed 20261123), resample the original number of focal works with replacement within every original team stratum, including the fully sampled band. Keep original inverse-inclusion weights, apply domain restrictions, then recalculate weighted D and F midranks and citation-impact bins jointly. All bootstrap intervals are pointwise 95% percentile intervals, with no finite-population correction (FPC) and conditional on the observed graph. Fixed-effects model intervals instead use two-way author/work clustering on a fixed rank outcome, also without FPC <span class="cite">[T66, T68, T71, T79, T80, T84, J12, J15]</span>.</p>
-<h2>Results: disruption, impact and references</h2>
-<h3>C1 · Team size and disruption</h3>
-<p>Figure 1 shows the overall decline in mean disruption rank and rise in median citing works, with reversals or plateaus within the small-team range. Relative to solo works (62.46 [59.99, 64.78]; n=600), the ten-author mean rank was lower (47.57 [45.29, 49.77]; n=624). The pooled 51–100 band was lower still (36.23 [33.97, 38.54]; n=477), a difference from ten authors of −11.34 points [−14.47, −8.12] across 1,101 works. The pooled result does not establish a smooth decline at every author count <span class="cite">[F11, T66, P15]</span>.</p>
-<figure><img src="figures/figure1_P15_fig2-team-stage2.png"><figcaption><b>Figure 1.</b> <b>Fig. 2 analogue — Team size, disruption rank and citation counts (Stage 2).</b> Design-weighted mean within-year disruption percentile (A) and median unique strictly postpublication citing works through 23 November 2026 (B), for 7,933 Columbia OpenAlex works with at least one such citer. Unweighted stratum n is below each team size; dotted line separates exact sizes from pooled bands. Error bars show pointwise 95% percentile bootstrap intervals from 1,000 focal-work replacement draws within each original stratum with original inverse-inclusion weights and reranking; no finite-population correction, including in the fully sampled 51–100 stratum. Trends are not strictly monotone. For 51–100 authors the median is 39 citing works [31,46], n=477. <span class="cite"><span class="cite">[P15]</span></span></figcaption></figure>
-<h3>C2 · Signed disruption distributions</h3>
-<p>Figure 2 shows separation around zero despite small absolute scores. Median D was 0 [−0.000056, 0] for solo works, −0.000420 [−0.000523, −0.000289] for ten authors and −0.001158 [−0.001384, −0.000982] for 51–100 authors (n=600, 624 and 477). The share below zero was 29.4 percentage points higher [24.0, 34.5] for ten authors than solo (n=1,224). That interval supports a difference at zero. The weighted empirical CDF distance describes how far apart the curves are; it is not an iid KS test <span class="cite">[T66, T67, F12, P19]</span>.</p>
-<figure><img src="figures/figure2_P19_ext-raw-disruption-stage2.png"><figcaption><b>Figure 2.</b> <b>Extended figure — Signed raw disruption distributions (Stage 2).</b> Inverse-inclusion-weighted empirical CDF of signed raw D for one, ten and 51–100 authors (600, 624 and 477 Columbia OpenAlex works with at least one distinct citing work in the postpublication window ending 23 November 2026). Display range is −0.1 to 0.1 on a symmetric log scale; zero is the sign boundary between development (negative) and disruption (positive). Pointwise 95% percentile bootstrap bands: in each of 1,000 replicates resample the original number of focal works with replacement within each original stratum, including 51–100, without a finite-population correction. The raw score for most works is close to zero; the curves differ around zero. Source: T67. <span class="cite"><span class="cite">[P19]</span></span></figcaption></figure>
-<h3>C3 · Does the gradient strengthen at high citation impact?</h3>
-<p><strong>Partly reproduced locally: the bottom-half decline was supported, but the full cross-impact claim was not reproduced.</strong> In Figure 3 and the side-by-side table, the middle and top intervals include zero. The top-minus-bottom difference points toward a <em>less</em> negative slope at high impact, opposite the study's stronger-decline prediction, but the contrast is inconclusive. This is neither evidence of a reversed moderation effect nor a test that top-ranked works necessarily have positive raw D <span class="cite">[brief]</span> <span class="cite">[T68, F13, P18, T87]</span>.</p>
-<figure><img src="figures/figure3_P18_fig3-impact-stage2.png"><figcaption><b>Figure 3.</b> <b>Fig. 3 analogue — Team size and disruption across citation impact (Stage 2).</b> Inverse-inclusion-weighted mean within-year disruption percentile for 7,933 Columbia OpenAlex works with at least one distinct strictly postpublication citing work through 23 November 2026. Higher D percentiles indicate greater disruption; the horizontal line marks percentile 50, the vertical line separates exact sizes and grouped sizes. Impact bands use weighted midranks; unweighted n are in the legend. Pointwise 95% percentile bootstrap intervals: in each of 1,000 replicates resample the original number of focal works with replacement in each original stratum, including 51–100, with no finite-population correction; recompute D and impact ranks and bins jointly. For teams of 1–10, slopes in percentile points per author doubling: bottom half −2.50 [−3.39, −1.64], n=3,277; middle band −1.22 [−2.54, 0.48], n=2,476; top decile +0.23 [−4.33, 3.37], n=457. Top-minus-bottom +2.73 [−1.89, 6.00], n=3,734. The bottom-half decline is supported, but not a decline at every impact level or a stronger decline at high impact. Larger-team bands are descriptive. Source: T68. <span class="cite"><span class="cite">[P18]</span></span></figcaption></figure>
-<h3>C4 · Fields, subfields and journals</h3>
-<p>Figure 4 shows a predominance of negative, not universal, slopes. Of 25 observed fields and 224 observed subfields, 20 and 34 were supported under the sample-size and team-size coverage rules in the caption. The bootstrap fraction holds the supported group set fixed and weights groups equally. Of 2,591 observed journals, only <em>Proceedings of the National Academy of Sciences</em> met the rules, with an imprecise slope of −2.11 [−12.22, 7.73] (n=45). A claim about most journals is not testable here <span class="cite">[T69, T70, F14, P16]</span>.</p>
-<figure><img src="figures/figure4_P16_fig3-fields-stage2.png"><figcaption><b>Figure 4.</b> <b>Fig. 3 analogue — Negative slopes predominate in supported fields and subfields (Stage 2).</b> Within-year D percentile slopes per doubling of team size for Columbia OpenAlex works with 1–10 authors and at least one unique strictly postpublication citing work through 23 November 2026. Dots and bars are inverse-inclusion-weighted slopes and pointwise 95% percentile bootstrap intervals; resample focal works with replacement within original strata (1,000 replicates), rerank and apply no finite-population correction, including the fully sampled stratum. Unweighted n shown for each field. Support requires n≥30, ≥5 in each of the 1–2 and 5–10 author bands and ≥4 distinct sizes. Table weights groups equally and holds each domain’s observed supported set fixed in resamples. Slopes are negative in 14/20 fields and 24/34 subfields; only one journal meets support, so no generalization to most journals. <span class="cite"><span class="cite">[P16]</span></span></figcaption></figure>
-<h3>C5 · Age and current popularity of references</h3>
-<p>Figure 5 is the corrected rendering of P12: it retains the empirical layout, uses the strict domain and replaces the old finite-population ribbons. The curves pool deduplicated focal–reference pairs, applying the focal work's weight to every edge; long reference lists therefore contribute more. The companion work target first averages available references within each work, then applies the design weight to that mean. Both targets show newer and more currently cited references for ten-author versus solo works; the side-by-side table reports age and log2(1 + current citations). The original all-draw target also agrees: the work-mean age difference is −5.38 years [−6.24, −4.58] (n=1,249) <span class="cite">[P12, P17, T74, T75, F15]</span>.</p>
-<figure><img src="figures/figure5_P17_fig4-empirical.png"><figcaption><b>Figure 5.</b> <b>Fig. 4 analogue — Empirical distributions of reference age and popularity (Stage 2).</b> Stage-2 update of P12, preserving its empirical panels and geometry. Among Columbia OpenAlex works with at least one unique postpublication citing work through 23 November 2026, the curves pool deduplicated focal–reference pairs, applying the focal inverse-inclusion weight to every edge. For 1, 10 and 51–100 authors, respectively, A uses 22,001/34,531/43,548 edges and B uses 22,149/34,613/43,772 edges; both use 597/624/477 focal works with available metadata. Ribbons are pointwise 95% percentile bootstrap intervals from 1,000 focal-work replacement samples within the original team-size strata, including 51–100, with no finite-population correction. A includes same-year ages, excludes negative ages and displays thresholds through 100 years. B uses current global citation totals, not counts at focal publication; the axis is linear up to one and logarithmic above (no observed zeros). Both larger groups cite newer and generally more highly cited references than solo works; their popularity curves are close. These are empirical comparisons of the groups shown, not fitted curves. Separate updated fit evidence (T76/T77) shows positive geometric age-decay contrast for 10 versus solo, inconclusive citation-tail exponent contrast at counts ≥50, and notable empirical–fitted CDF gaps. <span class="cite"><span class="cite">[P17]</span></span></figcaption></figure>
-<p>Of 446,323 strict-domain pairs (373,977 distinct reference IDs), 7,547 lacked a reference year and 1,742 had negative age; these pairs do not contribute to age estimates. The 10,732 same-year pairs remain eligible. Popularity uses global lifetime counts available from the snapshot or frozen collection, not counts at focal publication: 7,230 pairs lack this measure, and no observed counts are zero. These are separate available-case denominators, not imputations <span class="cite">[T45, T73, T85, F20]</span>.</p>
-<p>Separate weighted fits favor a steeper geometric age decay for ten authors versus solo, but the exponent difference for a discrete power-law tail above or at 50 citations is inconclusive. Fit is imperfect: for ten-author work the maximum empirical–fitted CDF gaps are about 0.081 for age (n=624; 34,531 pairs) and 0.088 for the popularity tail (n=620; 26,259 pairs). These are descriptive fit checks, not iid tests or fitted curves in the figure <span class="cite">[T76, T77, F15, P17]</span>.</p>
-<h2>Results: timing, controls, robustness and funding</h2>
-<h3>C6 · Early attention, not late recognition</h3>
-<p>See C6 rows in the side-by-side table. Using complete 2021–2023 cohorts, the largest team band received a higher share of its year +1/+2 citing works in year +1 than solo works. This share is averaged over focal works with citations in those two years <span class="cite">[T78, F16]</span>. Publication-year shares instead require positive total citations in the focal year through year +2 and are standardized to common publication-year and quarter cells. The 51–100 versus solo contrast is positive under both definitions, but the ten-versus-solo contrasts are inconclusive <span class="cite">[T78, F16]</span>. Negative-D works have a higher standardized publication-year share than positive-D works; the year +1 contrast is inconclusive. Sign uses main-window D and therefore overlaps the timing data. Share conditioning explains why the displayed contrasts are identical across domains; count and zero-citation profiles need not match <span class="cite">[T32, T78, F16, J15]</span>. Late recognition or sleeping beauties are not testable with this follow-up <span class="cite">[T32, T78]</span> <span class="cite">[brief]</span>.</p>
-<h3>C7 · Like-for-like fixed effects and work types</h3>
-<p>See C7 rows in the side-by-side table. The comparable sample retains works by identified Columbia authors observed on works of differing team sizes; the work weight is split across qualifying authors. The strict fit uses 4,107 works from 1,885 supported authors (6,838 author–work rows) <span class="cite">[T79, F17, J12]</span>. The fully adjusted slope remains negative relative to the same-sample unadjusted estimate; that sample already shows a substantially weaker baseline than the full small-team sample <span class="cite">[T66, T79, T80]</span>. The review slope and primary review-minus-article contrast are inconclusive. The latter excludes zero only in the broader comparator, so the type result is sensitive to domain; theory versus empirical work is not classified. The within-author association is not causal <span class="cite">[T79, T81, F17, J12]</span> <span class="cite">[brief]</span>.</p>
-<h3>C8 · Short-window and simplified-score checks</h3>
-<p>See C8 rows in the side-by-side table. The paired estimates rerank each window on the same intersection of eligible works; they do not compare all main-window works with fixed-window survivors. The standalone analyses rank each eligible domain separately. Strict standalone fixed and paired fixed coincide because fixed-positive works are also main-positive, but standalone main for the complete cohorts is larger. Both paired slopes remain negative, and their difference is inconclusive in either domain. The focal-only share n_i/F also declines with size; by construction it cannot use F=0 works, even under U&gt;0 <span class="cite">[T71, T82, T84, F18]</span>. The study's long windows and its self-citation, popular-reference and citation-edge variants were not reproduced here <span class="cite">[T71, F18]</span> <span class="cite">[brief]</span>.</p>
-<h3>C9 · Recorded funding acknowledgments</h3>
-<p>See C9 rows in the side-by-side table. Among small teams, the slope is negative without an acknowledgment on record; with a record, it is near zero and imprecise. The difference is descriptive: absence of a funding record is not absence of funding, and the result does not estimate an effect of funding <span class="cite">[T72, F19]</span>. Historical trends, corporate-patent comparisons and Nobel-winning papers are not testable in this snapshot <span class="cite">[T1, F19]</span> <span class="cite">[brief]</span>.</p>
-<h2>Side-by-side robustness: strict versus defined disruption</h2>
-<p>Each cell gives estimate [95% interval]; n is the number of focal works. Both columns use the revised no-FPC inference: pointwise focal-work bootstrap intervals except the two clustered C7 model rows. Rank slopes and slope contrasts are percentile points per author doubling; pp denotes percentage points. C4 fractions count supported groups equally; their n counts works in those groups. Rows cite the full tables underlying the headline extract <span class="cite">[T87, T66, T70, T79]</span>.</p>
+<p>Counts are unweighted. <span class="cite">[T5, T82, F20]</span></p>
+<p><strong>Windows.</strong> In the main window, 64 works had only their references cited and three had no citations to either. The shorter window ended for 6,012 works, excluding 1,988 from 2024. In that window, 339 had only references cited and two had neither the work nor its references cited. Of 5,966 cited in the main window with time for both, 5,671 were cited in both. Admitting references-only cases brings the totals to 7,997 for the main window and 6,010 for the shorter window and direct comparison. <span class="cite">[T33, T82, T84, F20]</span></p>
+<p><strong>Count checks.</strong> We searched throughout OpenAlex. For the total citing either the sampled work or its references, the batches included the sampled work’s own ID as well as its reference IDs. A citing work counted only in the first batch it matched, even if it cited just the sampled work. <span class="cite">[J5, T8]</span> All 62 grouped-count checks, including main and short totals, matched independent counts or classifications from citing works’ reference lists. Reversing batch order left counts unchanged in seven checks. All 122 checked works in one later batch cited a reference from that batch and none from earlier ones. All 79 retrieved lists matched separate OpenAlex totals after deduplication. For lists citing the sampled work itself, we checked which works also listed a reference. <span class="cite">[T15, T24, T25, T26, T27, T29, T32, T33]</span></p>
+<p><strong>Uncertainty.</strong> In 1,000 repeat draws (seed 20261123) we kept group sizes and weights, reapplied eligibility and recalculated ranks. This included the largest group, even though all 481 listed works were sampled. For the author models, 1,885 authors and 4,107 works made 6,838 author–work records. Their intervals hold ranks fixed and allow records sharing an author or work to be related, called two-way clustering. <span class="cite">[T5, T66, T68, T79, T80, J12, J15]</span></p>
+<p><strong>References.</strong> Among works themselves cited in the main window, 373,977 distinct sources appeared 446,323 times. Age excluded 7,547 appearances without a year and 1,742 dated later than the listing work; it kept 10,732 same-year appearances. Citation totals were missing for 7,230 and never zero where known. <span class="cite">[T73, T85, F20]</span></p>
+<p>The logarithmic citation scale counts doublings from one after adding one to the total: three citations become four, or two doublings. The age model uses the negative natural logarithm of the fraction remaining each year. The citation model uses a power-law exponent: doubling the count halves the predicted frequency at exponent one and quarters it at exponent two. Larger values mean faster drops. We measured how far the models’ predictions were from the observed values. We did not use those differences as formal tests. <span class="cite">[T74, T76, T77, J12]</span></p>
+<h2>Appendix: estimates</h2>
+<p>Each cell gives the estimate, 95% bounds in parentheses, and unweighted work count after the semicolon. The first results column requires a citation to the work itself. The second also accepts citations to its references alone. Results use the main window unless noted. Trends are rank points per doubling for one to ten authors unless stated. Differences subtract the second group from the first. <span class="cite">[T66, T68, T71, T87]</span></p>
+<h3>Team size and score distributions</h3>
 <table>
 <thead>
 <tr>
-<th>Claim and estimate</th>
-<th>Stage 2 primary: F&gt;0</th>
-<th>Stage 1 domain: U&gt;0, revised intervals</th>
+<th>Estimate</th>
+<th>Work itself cited</th>
+<th>Also if only references cited</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>C1 Rank slope, 1–10 authors <span class="cite">[T66, F11]</span></td>
-<td>−3.48 [−4.27, −2.70]; n=6,210</td>
-<td>−3.66 [−4.43, −2.91]; n=6,264</td>
+<td>Rank trend <span class="cite">[T66, F11]</span></td>
+<td>−3.48 (−4.27,−2.70); 6,210</td>
+<td>−3.66 (−4.43,−2.91); 6,264</td>
 </tr>
 <tr>
-<td>C1 Mean rank, solo <span class="cite">[T66, F11]</span></td>
-<td>62.46 [59.99, 64.78]; n=600</td>
-<td>62.85 [60.46, 65.14]; n=626</td>
+<td>Mean rank: solo <span class="cite">[T66, F11]</span></td>
+<td>62.46 (59.99,64.78); 600</td>
+<td>62.85 (60.46,65.14); 626</td>
 </tr>
 <tr>
-<td>C1 Mean rank, ten <span class="cite">[T66, F11]</span></td>
-<td>47.57 [45.29, 49.77]; n=624</td>
-<td>47.44 [45.20, 49.67]; n=626</td>
+<td>Mean rank: 10 authors <span class="cite">[T66, F11]</span></td>
+<td>47.57 (45.29,49.77); 624</td>
+<td>47.44 (45.20,49.67); 626</td>
 </tr>
 <tr>
-<td>C1 Mean rank, 51–100 <span class="cite">[T66, F11]</span></td>
-<td>36.23 [33.97, 38.54]; n=477</td>
-<td>36.35 [34.09, 38.65]; n=481</td>
+<td>Mean rank: 51–100 authors <span class="cite">[T66, F11]</span></td>
+<td>36.23 (33.97,38.54); 477</td>
+<td>36.35 (34.09,38.65); 481</td>
 </tr>
 <tr>
-<td>C1 Median F, solo / ten / 51–100 <span class="cite">[T66, F11]</span></td>
-<td>4 [3, 4] / 15 [13, 17] / 39 [31, 46]; n as above</td>
-<td>4 [3, 4] / 15 [13, 17] / 38 [31, 44]; n as above</td>
+<td>Rank difference: 51–100 vs 10 <span class="cite">[T66, F11]</span></td>
+<td>−11.34 (−14.47,−8.12); 1,101</td>
+<td>−11.09 (−14.27,−8.00); 1,107</td>
 </tr>
 <tr>
-<td>C2 Weighted CDF distance, ten vs solo <span class="cite">[T67, F12]</span></td>
-<td>0.294 [0.247, 0.348]; n=1,224</td>
-<td>0.312 [0.261, 0.364]; n=1,252</td>
+<td>Median citations: solo <span class="cite">[T66, F11]</span></td>
+<td>4 (3,4); 600</td>
+<td>4 (3,4); 626</td>
 </tr>
 <tr>
-<td>C2 Negative D share, ten minus solo (pp) <span class="cite">[T67, F12]</span></td>
-<td>+29.4 [24.0, 34.5]; n=1,224</td>
-<td>+31.2 [26.0, 36.0]; n=1,252</td>
+<td>Median citations: 10 authors <span class="cite">[T66, F11]</span></td>
+<td>15 (13,17); 624</td>
+<td>15 (13,17); 626</td>
 </tr>
 <tr>
-<td>C3 Bottom-half slope <span class="cite">[T68, F13]</span></td>
-<td>−2.50 [−3.39, −1.64]; n=3,277</td>
-<td>−2.65 [−3.54, −1.79]; n=3,299</td>
+<td>Median citations: 51–100 authors <span class="cite">[T66, F11]</span></td>
+<td>39 (31,46); 477</td>
+<td>38 (31,44); 481</td>
 </tr>
 <tr>
-<td>C3 Middle-band slope <span class="cite">[T68, F13]</span></td>
-<td>−1.22 [−2.54, 0.48]; n=2,476</td>
-<td>−1.30 [−2.62, 0.46]; n=2,503</td>
+<td>Median score: solo <span class="cite">[T67, F12]</span></td>
+<td>0 (−0.0000555,0); 600</td>
+<td>0 (−0.0000107,0); 626</td>
 </tr>
 <tr>
-<td>C3 Top-decile slope <span class="cite">[T68, F13]</span></td>
-<td>+0.23 [−4.33, 3.37]; n=457</td>
-<td>+0.18 [−4.55, 3.29]; n=462</td>
+<td>Median score: 10 authors <span class="cite">[T67, F12]</span></td>
+<td>−0.000420 (−0.000523,−0.000289); 624</td>
+<td>−0.000416 (−0.000521,−0.000289); 626</td>
 </tr>
 <tr>
-<td>C3 Top minus bottom slope <span class="cite">[T68, F13]</span></td>
-<td>+2.73 [−1.89, 6.00]; n=3,734</td>
-<td>+2.83 [−1.75, 6.00]; n=3,761</td>
+<td>Median score: 51–100 authors <span class="cite">[T67, F12]</span></td>
+<td>−0.00116 (−0.00138,−0.000982); 477</td>
+<td>−0.00112 (−0.00134,−0.000880); 481</td>
 </tr>
 <tr>
-<td>C4 Negative field slopes <span class="cite">[T70, F14]</span></td>
-<td>14/20; 70% [55%, 80%]; n=6,074</td>
-<td>14/20; 70% [55%, 80%]; n=6,128</td>
+<td>Below zero: solo (%) <span class="cite">[T66, F12]</span></td>
+<td>48.2 (44.3,52.3); 600</td>
+<td>46.2 (42.4,50.2); 626</td>
 </tr>
 <tr>
-<td>C4 Negative subfield slopes <span class="cite">[T70, F14]</span></td>
-<td>24/34; 71% [53%, 76%]; n=3,601</td>
-<td>25/35; 71% [57%, 77%]; n=3,693</td>
+<td>Above zero: solo (%) <span class="cite">[T66, F12]</span></td>
+<td>44.3 (40.3,48.0); 600</td>
+<td>42.5 (38.6,46.1); 626</td>
 </tr>
 <tr>
-<td>C5 Age, ten minus solo, pooled edges (years) <span class="cite">[T74, F15]</span></td>
-<td>−4.95 [−5.95, −3.97]; n=1,221</td>
-<td>−5.04 [−6.02, −4.09]; n=1,248</td>
+<td>Below zero: 10 authors (%) <span class="cite">[T66, F12]</span></td>
+<td>77.6 (74.1,81.0); 624</td>
+<td>77.3 (73.8,80.8); 626</td>
 </tr>
 <tr>
-<td>C5 Age, work means (years) <span class="cite">[T74, F15]</span></td>
-<td>−5.20 [−6.05, −4.41]; n=1,221</td>
-<td>−5.30 [−6.08, −4.51]; n=1,248</td>
+<td>Above zero: 10 authors (%) <span class="cite">[T66, F12]</span></td>
+<td>17.9 (14.9,21.0); 624</td>
+<td>17.9 (14.9,20.9); 626</td>
 </tr>
 <tr>
-<td>C5 Log popularity, ten minus solo, pooled edges <span class="cite">[T74, F15]</span></td>
-<td>+0.36 [0.23, 0.48]; n=1,221</td>
-<td>+0.37 [0.24, 0.49]; n=1,248</td>
+<td>Below zero: 51–100 authors (%) <span class="cite">[T66, F12]</span></td>
+<td>88.1 (85.0,90.8); 477</td>
+<td>87.3 (84.2,90.0); 481</td>
 </tr>
 <tr>
-<td>C5 Log popularity, work means <span class="cite">[T74, F15]</span></td>
-<td>+0.39 [0.25, 0.53]; n=1,221</td>
-<td>+0.39 [0.25, 0.53]; n=1,248</td>
+<td>Above zero: 51–100 authors (%) <span class="cite">[T66, F12]</span></td>
+<td>9.22 (6.77,11.9); 477</td>
+<td>9.15 (6.65,11.9); 481</td>
+</tr>
+<tr>
+<td>Below-zero gap: 10 vs solo (percentage points) <span class="cite">[T67, F12]</span></td>
+<td>29.4 (24.0,34.5); 1,224</td>
+<td>31.2 (26.0,36.0); 1,252</td>
+</tr>
+<tr>
+<td>Largest curve gap: 10 vs solo (share) <span class="cite">[T67, F12]</span></td>
+<td>0.294 (0.247,0.348); 1,224</td>
+<td>0.312 (0.261,0.364); 1,252</td>
 </tr>
 </tbody>
 </table>
-<h3>Side-by-side robustness (continued)</h3>
+<p>The curve gap compares shares at or below each score, whichever curve is higher. <span class="cite">[T67, F12]</span></p>
+<h3>Citation levels and subjects</h3>
 <table>
 <thead>
 <tr>
-<th>Claim and estimate</th>
-<th>Stage 2 primary: F&gt;0</th>
-<th>Stage 1 domain: U&gt;0, revised intervals</th>
+<th>Estimate</th>
+<th>Work itself cited</th>
+<th>Also if only references cited</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>C6 Year +1 share, 51–100 minus solo (pp) <span class="cite">[T78, F16]</span></td>
-<td>+5.23 [0.94, 9.38]; n=688</td>
-<td>+5.23 [0.94, 9.38]; n=688</td>
+<td>Trend: least-cited half <span class="cite">[T68, F13]</span></td>
+<td>−2.50 (−3.39,−1.64); 3,277</td>
+<td>−2.65 (−3.54,−1.79); 3,299</td>
 </tr>
 <tr>
-<td>C6 Standardized publication-year share, 51–100 minus solo (pp) <span class="cite">[T78, F16]</span></td>
-<td>+3.31 [0.45, 6.10]; n=705</td>
-<td>+3.31 [0.45, 6.10]; n=705</td>
+<td>Trend: middle group <span class="cite">[T68, F13]</span></td>
+<td>−1.22 (−2.54,0.48); 2,476</td>
+<td>−1.30 (−2.62,0.46); 2,503</td>
 </tr>
 <tr>
-<td>C6 Year +1 share, ten minus solo (pp) <span class="cite">[T78, F16]</span></td>
-<td>+2.82 [−1.76, 7.21]; n=804</td>
-<td>+2.82 [−1.76, 7.21]; n=804</td>
+<td>Trend: most-cited tenth <span class="cite">[T68, F13]</span></td>
+<td>0.23 (−4.33,3.37); 457</td>
+<td>0.18 (−4.55,3.29); 462</td>
 </tr>
 <tr>
-<td>C6 Standardized publication-year share, ten minus solo (pp) <span class="cite">[T78, F16]</span></td>
-<td>−1.24 [−4.01, 1.13]; n=819</td>
-<td>−1.24 [−4.01, 1.13]; n=819</td>
+<td>Trend difference: top vs bottom <span class="cite">[T68, F13]</span></td>
+<td>2.73 (−1.89,6.00); 3,734</td>
+<td>2.83 (−1.75,6.00); 3,761</td>
 </tr>
 <tr>
-<td>C6 Year +1 share, negative minus positive D (pp) <span class="cite">[T78, F16]</span></td>
-<td>+1.85 [−0.20, 3.85]; n=5,369</td>
-<td>+1.85 [−0.20, 3.85]; n=5,369</td>
+<td>Fields with estimated declines (%) <span class="cite">[T70, F14]</span></td>
+<td>14/20: 70 (55,80); 6,074</td>
+<td>14/20: 70 (55,80); 6,128</td>
 </tr>
 <tr>
-<td>C6 Standardized publication-year share, negative minus positive D (pp) <span class="cite">[T78, F16]</span></td>
-<td>+2.14 [1.04, 3.19]; n=5,421</td>
-<td>+2.14 [1.04, 3.19]; n=5,421</td>
+<td>Subfields with estimated declines (%) <span class="cite">[T70, F14]</span></td>
+<td>24/34: 71 (53,76); 3,601</td>
+<td>25/35: 71 (57,77); 3,693</td>
 </tr>
 <tr>
-<td>C7 Same-sample unadjusted slope (clustered) <span class="cite">[T79, F17]</span></td>
-<td>−1.73 [−3.01, −0.46]; n=4,107</td>
-<td>−1.80 [−3.07, −0.53]; n=4,135</td>
+<td>Journals with estimated declines (%) <span class="cite">[T70, F14]</span></td>
+<td>1/1: 100 (0,100); 45</td>
+<td>1/1: 100 (0,100); 45</td>
 </tr>
 <tr>
-<td>C7 Year, topic and author fixed effects (clustered) <span class="cite">[T79, F17]</span></td>
-<td>−1.85 [−3.43, −0.27]; n=4,107</td>
-<td>−1.95 [−3.52, −0.38]; n=4,135</td>
-</tr>
-<tr>
-<td>C7 Article slope <span class="cite">[T81, F17]</span></td>
-<td>−3.45 [−4.34, −2.50]; n=4,628</td>
-<td>−3.59 [−4.47, −2.66]; n=4,657</td>
-</tr>
-<tr>
-<td>C7 Review slope <span class="cite">[T81, F17]</span></td>
-<td>−0.24 [−3.26, 2.88]; n=390</td>
-<td>−0.25 [−3.27, 2.87]; n=390</td>
-</tr>
-<tr>
-<td>C7 Review minus article slope <span class="cite">[T81, F17]</span></td>
-<td>+3.21 [−0.08, 6.52]; n=5,018</td>
-<td>+3.34 [0.07, 6.64]; n=5,047</td>
-</tr>
-<tr>
-<td>C8 Main standalone, complete cohorts <span class="cite">[T71, F18]</span></td>
-<td>−3.65 [−4.53, −2.75]; n=4,685</td>
-<td>−3.85 [−4.73, −3.00]; n=4,721</td>
-</tr>
-<tr>
-<td>C8 Main, paired <span class="cite">[T71, F18]</span></td>
-<td>−3.01 [−3.93, −2.01]; n=4,405</td>
-<td>−3.85 [−4.73, −3.00]; n=4,721</td>
-</tr>
-<tr>
-<td>C8 Fixed, paired and standalone <span class="cite">[T71, F18]</span></td>
-<td>−2.82 [−3.85, −1.78]; n=4,405</td>
-<td>−4.03 [−4.94, −3.15]; n=4,721</td>
-</tr>
-<tr>
-<td>C8 Fixed minus main, paired <span class="cite">[T71, F18]</span></td>
-<td>+0.19 [−0.27, 0.65]; n=4,405</td>
-<td>−0.19 [−0.68, 0.29]; n=4,721</td>
-</tr>
-<tr>
-<td>C8 Simplified focal-only share slope (pp per doubling) <span class="cite">[T71, F18]</span></td>
-<td>−4.29 [−5.21, −3.40]; n=6,210</td>
-<td>−4.29 [−5.21, −3.40]; n=6,210</td>
-</tr>
-<tr>
-<td>C9 No acknowledgment recorded, slope <span class="cite">[T72, F19]</span></td>
-<td>−3.75 [−4.92, −2.65]; n=2,200</td>
-<td>−3.87 [−5.03, −2.77]; n=2,242</td>
-</tr>
-<tr>
-<td>C9 Acknowledgment recorded, slope <span class="cite">[T72, F19]</span></td>
-<td>+0.52 [−0.53, 1.60]; n=4,010</td>
-<td>+0.40 [−0.62, 1.49]; n=4,022</td>
-</tr>
-<tr>
-<td>C9 Recorded minus none, slope <span class="cite">[T72, F19]</span></td>
-<td>+4.26 [2.68, 5.83]; n=6,210</td>
-<td>+4.27 [2.72, 5.82]; n=6,264</td>
+<td>Trend: only qualifying journal <span class="cite">[T69, F14]</span></td>
+<td>−2.11 (−12.22,7.73); 45</td>
+<td>−2.04 (−12.09,7.76); 45</td>
 </tr>
 </tbody>
 </table>
-<p>Matched Stage 1 point estimates agree with the rebuilt comparator to rounding; the reconciliation distinguishes unmatched rows and does not assert that the superseded FPC intervals match. C5’s original all-draw target was rebuilt separately, not relabeled as the U&gt;0 estimate <span class="cite">[T74, T86, F15, J15]</span>.</p>
-<h2>Comparison with Wu, Wang &amp; Evans</h2>
+<h3>References</h3>
+<p>Differences compare ten authors with solo works. Citation averages use the logarithmic scale. All draws passed the initial screen. <span class="cite">[T74, T77, T83, F15]</span></p>
 <table>
 <thead>
 <tr>
-<th>Claim</th>
-<th>Original study</th>
-<th>Stage 2 local result</th>
-<th>Status and reason</th>
+<th>Estimate</th>
+<th>Work itself cited</th>
+<th>Also if only references cited</th>
+<th>All draws (no additional citation filter)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>C1 · Team size</td>
-<td>Disruption rank fell and citations rose steadily with team size; the disruption gradient extended to large teams <span class="cite">[brief]</span>.</td>
-<td>Lower rank and higher median citations overall, including the pooled largest band <span class="cite">[T66, F11, P15]</span>.</td>
-<td><strong>Partly.</strong> Not monotone; Columbia works do not replicate the paper, patent and software comparison <span class="cite">[T1, P15]</span>.</td>
+<td>Age gap: each listed reference (years) <span class="cite">[T74, F15]</span></td>
+<td>−4.95 (−5.95,−3.97); 1,221</td>
+<td>−5.04 (−6.02,−4.09); 1,248</td>
+<td>−5.04 (−6.03,−4.09); 1,249</td>
 </tr>
 <tr>
-<td>C2 · Distribution</td>
-<td>Team-size differences extended beyond the mean <span class="cite">[brief]</span>.</td>
-<td>Signed score distributions differ, especially around zero <span class="cite">[T66, T67, P19]</span>.</td>
-<td><strong>Reproduced</strong> locally using weighted CDFs and sign contrasts, not the original iid tests <span class="cite">[F12]</span>.</td>
+<td>Age gap: averages per work (years) <span class="cite">[T74, F15]</span></td>
+<td>−5.20 (−6.05,−4.41); 1,221</td>
+<td>−5.30 (−6.08,−4.51); 1,248</td>
+<td>−5.38 (−6.24,−4.58); 1,249</td>
 </tr>
 <tr>
-<td>C3 · Impact</td>
-<td>The decline appeared at every citation-impact level and was stronger at high impact <span class="cite">[brief]</span>.</td>
-<td>Decline clear in the bottom half; middle and top inconclusive; estimated top-minus-bottom contrast in the opposite direction and inconclusive <span class="cite">[T68, F13, P18]</span>.</td>
-<td><strong>Not reproduced as stated.</strong> Partly reproduced locally: the bottom-half decline was supported, but the full cross-impact claim was not established <span class="cite">[T68, F13]</span>.</td>
+<td>Citation gap: each listed reference <span class="cite">[T74, F15]</span></td>
+<td>0.362 (0.234,0.481); 1,221</td>
+<td>0.366 (0.237,0.486); 1,248</td>
+<td>0.367 (0.237,0.487); 1,249</td>
 </tr>
 <tr>
-<td>C4 · Fields and journals</td>
-<td>Negative gradients across fields and subfields and in most journals <span class="cite">[brief]</span>.</td>
-<td>Negative slopes predominate among supported fields and subfields, but not uniformly <span class="cite">[T69, T70, P16]</span>.</td>
-<td><strong>Partly.</strong> Only one journal meets support; generalization across journals is not testable <span class="cite">[F14]</span>.</td>
+<td>Citation gap: averages per work <span class="cite">[T74, F15]</span></td>
+<td>0.391 (0.245,0.530); 1,221</td>
+<td>0.392 (0.248,0.526); 1,248</td>
+<td>0.398 (0.254,0.535); 1,249</td>
 </tr>
 <tr>
-<td>C5 · References</td>
-<td>Larger teams cited newer, more popular work; age and popularity distribution parameters varied with team size <span class="cite">[brief]</span>.</td>
-<td>Newer and more currently cited references, with steeper age decay in ten-author versus solo works <span class="cite">[T74, T76, T77, P17]</span>.</td>
-<td><strong>Partly.</strong> Popularity exponent contrast inconclusive; fits imperfect; current counts are not historical popularity <span class="cite">[F15, T45]</span>.</td>
+<td>Difference in fitted age decline <span class="cite">[T77, F15]</span></td>
+<td>0.0313 (0.0259,0.0363); 1,221</td>
+<td>0.0317 (0.0265,0.0366); 1,248</td>
+<td>0.0317 (0.0266,0.0366); 1,249</td>
 </tr>
 <tr>
-<td>C6 · Timing</td>
-<td>Large teams drew early attention; smaller or disruptive works were more often recognized late <span class="cite">[brief]</span>.</td>
-<td>Earlier relative attention for the largest band versus solo in the complete-year share; less clear for ten authors and disruption sign <span class="cite">[T78, F16]</span>.</td>
-<td><strong>Partly.</strong> Early conditional shares are observable; late recognition is not testable <span class="cite">[T32, T78]</span>.</td>
+<td>Difference in fitted citation exponent <span class="cite">[T77, F15]</span></td>
+<td>0.00723 (−0.0117,0.0261); 1,204</td>
+<td>0.00798 (−0.0110,0.0268); 1,230</td>
+<td>0.00798 (−0.0110,0.0268); 1,230</td>
 </tr>
 <tr>
-<td>C7 · Controls and design</td>
-<td>The relationship mostly survived year, topic and author controls and appeared across research types <span class="cite">[brief]</span>.</td>
-<td>Gradient persists after adjustment on a comparable sample with a weaker baseline; reviews imprecise <span class="cite">[T79, T80, T81, F17]</span>.</td>
-<td><strong>Partly.</strong> Limited author support; theory/empirical labels unavailable; type comparisons do not establish a common gradient <span class="cite">[T79, T81, J12]</span>.</td>
+<td>References with usable age (%) <span class="cite">[T73, F15]</span></td>
+<td>97.87 (97.78,97.96); 7,933</td>
+<td>97.87 (97.78,97.95); 7,997</td>
+<td>97.87 (97.78,97.95); 8,000</td>
 </tr>
 <tr>
-<td>C8 · Robustness</td>
-<td>Direction held across long citation windows and alternative disruption measures <span class="cite">[brief]</span>.</td>
-<td>Negative paired short-window and simplified-score slopes <span class="cite">[T71, T82, F18]</span>.</td>
-<td><strong>Partly.</strong> Original long horizons and the other variants were not implemented <span class="cite">[T33, T71]</span>.</td>
-</tr>
-<tr>
-<td>C9 · Context</td>
-<td>Team sizes rose historically; the study also compared funded work and corporate patents and examined Nobel-winning papers <span class="cite">[brief]</span>.</td>
-<td>Local slopes differ descriptively by acknowledgment record; no direct test of the historical, patent or prize comparisons <span class="cite">[T1, T72, F19]</span>.</td>
-<td><strong>Not testable</strong> as the original contextual claim. Acknowledgment is a proxy, not verified funding <span class="cite">[T72, F19]</span>.</td>
+<td>References with known count (%) <span class="cite">[T73, F15]</span></td>
+<td>98.37 (98.29,98.44); 7,933</td>
+<td>98.36 (98.29,98.43); 7,997</td>
+<td>98.36 (98.29,98.43); 8,000</td>
 </tr>
 </tbody>
 </table>
-<h2>Deviations and limitations</h2>
-<p>This is a reproduction of the association in a recent, single-institution OpenAlex frame, not a rerun of the study's historical paper, patent and software corpus. The study's overall disruption percentiles are replaced with weighted within-publication-year ranks to reduce comparability problems from unequal cohort exposure, not to equalize follow-up within a year. OpenAlex primary topic and venue metadata are practical proxies for field and journal comparisons, and its article and review labels cannot establish research design. Groups with sparse team-size support are not representative tests of the corresponding fields or venues <span class="cite">[brief]</span> <span class="cite">[T1, T33, T68, T69, T70, T81, T84]</span>.</p>
-<p>The local reference/citation screen and positive-window citation condition select which works enter the analysis. The date filters truncate citing publications, not the underlying graph as it existed at an earlier date. Missing references, errors in dates or authorships, and later index changes can affect measured D and eligibility; validation on the same graph does not address such errors. Counting a large union of works citing recorded references can yield scores very close to zero even where the sign distributions differ. Intervals do not cover graph error, shared-citation dependence across works, or uncertainty when extrapolating across institutions; they are pointwise, not simultaneous. No analysis rules out unmeasured composition or project selection as explanations for the associations <span class="cite">[T1, T15, T24, T25, T32, T33, T67, T79, T82, T83, J15]</span>.</p>
-<p><strong>Original study:</strong> Wu, L., Wang, D. &amp; Evans, J. A. <em>Nature</em> <strong>566</strong>, 378–382 (2019). DOI: 10.1038/s41586-019-0941-9 <span class="cite">[brief]</span>.</p>
-<h2>How to reproduce the run</h2>
-<p>Use the full frozen run export, including the local snapshot and joins, cached API responses, artifacts and scripts, in the harness environment with its <code>load</code>, <code>sql</code> and artifact-writing helpers. Do not substitute today's OpenAlex responses. The saved frame/sample and manifest code is in J5; J3 documents the grouped and cursor collectors. For a replay from collection inputs, use the frozen response tables (including grouped counts, cursor completeness and records, and final reference metadata responses) with the recorded derivation in J10. Do not invoke the live collectors or metadata recovery requests. The Stage 2 starting point is the complete validated annual/window tables and final reference metadata, not the report's rounded values or artifact previews <span class="cite">[J5, J3, T26, T27, T29, J10, T32, T33, T45, J15]</span>.</p>
-<p>In the exported harness kernel, restore <code>analysis_stage1.py</code> from J12 and <code>analysis_stage2.py</code> and <code>stage2_handoff.py</code> from J15, preserving their contents and working directory. Execute <code>exec(Path('analysis_stage2.py').read_text())</code> for estimates and figures, then <code>exec(Path('stage2_handoff.py').read_text())</code> for the evidence handoff after the figures are staged and approved. J15 also gives the saved-tables-only rendering entry point: set <code>STAGE2_RUN=False</code>, execute the correction script, then call <code>render_saved_stage2()</code>. The scripts regenerate evidence and graphics; approvals are separate harness actions. Preserve the final gated figure index and the report section source when rendering this deliverable. The export automatically includes the run record for time, spend, API requests and gate rounds. The Stage 2 correction made no external requests <span class="cite">[J12, J14, J15, F20]</span>.</p>
-<h3>Team workflow</h3>
-<p>The data agent recorded the proxy frame, sampling design, frozen responses and independent count checks. The analysis agent rebuilt eligible domains, intervals and figures offline and recorded the findings and reconciliation. The writer assembled the report from that evidence without recomputing estimates. Figure approval and report review were separate from authoring <span class="cite">[J5, J10, T15, T86, T87, J14, J15]</span>.</p>
+<h3>Timing, authors and research types</h3>
+<p>Timing rows compare average shares in percentage points. Both columns require a citation to the work itself for these rows. <span class="cite">[T78, F16]</span></p>
+<table>
+<thead>
+<tr>
+<th>Estimate</th>
+<th>Work itself cited</th>
+<th>Also if only references cited</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First full year: 51–100 vs solo <span class="cite">[T78, F16]</span></td>
+<td>5.23 (0.94,9.38); 688</td>
+<td>5.23 (0.94,9.38); 688</td>
+</tr>
+<tr>
+<td>Publication year: 51–100 vs solo <span class="cite">[T78, F16]</span></td>
+<td>3.31 (0.45,6.10); 705</td>
+<td>3.31 (0.45,6.10); 705</td>
+</tr>
+<tr>
+<td>First full year: 10 vs solo <span class="cite">[T78, F16]</span></td>
+<td>2.82 (−1.76,7.21); 804</td>
+<td>2.82 (−1.76,7.21); 804</td>
+</tr>
+<tr>
+<td>Publication year: 10 vs solo <span class="cite">[T78, F16]</span></td>
+<td>−1.24 (−4.01,1.13); 819</td>
+<td>−1.24 (−4.01,1.13); 819</td>
+</tr>
+<tr>
+<td>First full year: negative vs positive scores <span class="cite">[T78, F16]</span></td>
+<td>1.85 (−0.20,3.85); 5,369</td>
+<td>1.85 (−0.20,3.85); 5,369</td>
+</tr>
+<tr>
+<td>Publication year: negative vs positive scores <span class="cite">[T78, F16]</span></td>
+<td>2.14 (1.04,3.19); 5,421</td>
+<td>2.14 (1.04,3.19); 5,421</td>
+</tr>
+<tr>
+<td>Before accounting for year, topic and author <span class="cite">[T79, F17]</span></td>
+<td>−1.73 (−3.01,−0.46); 4,107</td>
+<td>−1.80 (−3.07,−0.53); 4,135</td>
+</tr>
+<tr>
+<td>Same trend, bootstrap bounds <span class="cite">[T80]</span></td>
+<td>−1.73 (−2.80,−0.55); 4,107</td>
+<td>−1.80 (−2.82,−0.63); 4,135</td>
+</tr>
+<tr>
+<td>Accounting for year, topic and author <span class="cite">[T79, F17]</span></td>
+<td>−1.85 (−3.43,−0.27); 4,107</td>
+<td>−1.95 (−3.52,−0.38); 4,135</td>
+</tr>
+<tr>
+<td>Trend: articles <span class="cite">[T81, F17]</span></td>
+<td>−3.45 (−4.34,−2.50); 4,628</td>
+<td>−3.59 (−4.47,−2.66); 4,657</td>
+</tr>
+<tr>
+<td>Trend: reviews <span class="cite">[T81, F17]</span></td>
+<td>−0.24 (−3.26,2.88); 390</td>
+<td>−0.25 (−3.27,2.87); 390</td>
+</tr>
+<tr>
+<td>Trend difference: reviews vs articles <span class="cite">[T81, F17]</span></td>
+<td>3.21 (−0.08,6.52); 5,018</td>
+<td>3.34 (0.07,6.64); 5,047</td>
+</tr>
+</tbody>
+</table>
+<h3>Windows, scores and funding records</h3>
+<p>The simpler score requires a citation to the work itself in both columns. Even under the broader rule, the direct comparison between windows was inconclusive. <span class="cite">[F18, T71]</span></p>
+<table>
+<thead>
+<tr>
+<th>Estimate</th>
+<th>Work itself cited</th>
+<th>Also if only references cited</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main trend: all years <span class="cite">[T71, F18]</span></td>
+<td>−3.48 (−4.27,−2.70); 6,210</td>
+<td>−3.66 (−4.43,−2.91); 6,264</td>
+</tr>
+<tr>
+<td>Main trend: years with both windows <span class="cite">[T71, F18]</span></td>
+<td>−3.65 (−4.53,−2.75); 4,685</td>
+<td>−3.85 (−4.73,−3.00); 4,721</td>
+</tr>
+<tr>
+<td>Main trend: same works eligible in both windows <span class="cite">[T71, F18]</span></td>
+<td>−3.01 (−3.93,−2.01); 4,405</td>
+<td>−3.85 (−4.73,−3.00); 4,721</td>
+</tr>
+<tr>
+<td>Short trend: same works eligible in both windows <span class="cite">[T71, F18]</span></td>
+<td>−2.82 (−3.85,−1.78); 4,405</td>
+<td>−4.03 (−4.94,−3.15); 4,721</td>
+</tr>
+<tr>
+<td>Short trend: all qualifying works <span class="cite">[T71, F18]</span></td>
+<td>−2.82 (−3.85,−1.78); 4,405</td>
+<td>−4.03 (−4.94,−3.15); 4,721</td>
+</tr>
+<tr>
+<td>Short vs main trend: same works <span class="cite">[T71, F18]</span></td>
+<td>0.19 (−0.27,0.65); 4,405</td>
+<td>−0.19 (−0.68,0.29); 4,721</td>
+</tr>
+<tr>
+<td>Simpler score trend (percentage points) <span class="cite">[T71, F18]</span></td>
+<td>−4.29 (−5.21,−3.40); 6,210</td>
+<td>−4.29 (−5.21,−3.40); 6,210</td>
+</tr>
+<tr>
+<td>Trend: no acknowledgment recorded <span class="cite">[T72, F19]</span></td>
+<td>−3.75 (−4.92,−2.65); 2,200</td>
+<td>−3.87 (−5.03,−2.77); 2,242</td>
+</tr>
+<tr>
+<td>Trend: acknowledgment recorded <span class="cite">[T72, F19]</span></td>
+<td>0.52 (−0.53,1.60); 4,010</td>
+<td>0.40 (−0.62,1.49); 4,022</td>
+</tr>
+<tr>
+<td>Trend difference: acknowledgment vs none <span class="cite">[T72, F19]</span></td>
+<td>4.26 (2.68,5.83); 6,210</td>
+<td>4.27 (2.72,5.82); 6,264</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Original study:</strong> Wu, L., Wang, D. &amp; Evans, J. A. <em>Nature</em> 566, 378–382 (2019). DOI: 10.1038/s41586-019-0941-9. <span class="cite">[brief]</span></p>
+<h2>How to reproduce this report</h2>
+<p>Added by the harness when the run was exported. A team of AI agents (a lead, a data agent, an analysis agent and a writer) produced this report, and independent reviewers checked each figure and the text before release. Everything needed to check the report is in the package that contains it:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>report.pdf</code>, <code>figures/</code></td>
+<td>this report, and its figures as PDF and PNG files</td>
+</tr>
+<tr>
+<td><code>data/artifacts/&lt;id&gt;/</code></td>
+<td>every saved result the report cites (the ids in square brackets), with the code that made it and its inputs</td>
+</tr>
+<tr>
+<td><code>data/api_responses.sqlite.xz</code></td>
+<td>the responses of the external data service that the run used, frozen</td>
+</tr>
+<tr>
+<td><code>scripts/</code></td>
+<td>the 81 code steps the agents ran, in order, and <code>run_all.py</code></td>
+</tr>
+<tr>
+<td><code>trace/</code></td>
+<td>the run's inputs, plan, decisions, reviews and logs</td>
+</tr>
+</tbody>
+</table>
+<p>To rerun the whole analysis offline, without API keys or network access, run <code>uv run python reproductions/wu2019/scripts/run_all.py</code> from the repository. It repeats every code step on the frozen data and compares each result with the original. <code>REPRODUCE.md</code> in the package gives the full instructions.</p>
 <h2>Appendix: run record</h2>
-<p>Generated by the harness from the run's event log, usage files, cell log and artifact store when the run was exported. The agents did not write this section. A turn is one instruction from the user to the lead agent; this run had 2. Model: gpt-6.2-sol.</p>
+<p>Generated by the harness from the run's event log, usage files, cell log and artifact store when the run was exported. The agents did not write this section. A turn is one instruction from the user to the lead agent; this run had 6. Model: gpt-6.2-sol.</p>
 <table>
 <thead>
 <tr>
@@ -452,6 +719,54 @@ pre { background: #f5f5f5; padding: 6pt; white-space: pre-wrap; }
 <td>7, 6 passed</td>
 <td>2: revise, pass</td>
 </tr>
+<tr>
+<td>3</td>
+<td>2026-11-24 16:36</td>
+<td>31 min (stopped)</td>
+<td>113</td>
+<td>$2.78</td>
+<td>0</td>
+<td>$0.00</td>
+<td>0</td>
+<td>24, 4 passed</td>
+<td>2: revise, revise</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2026-11-24 17:10</td>
+<td>24 min</td>
+<td>53</td>
+<td>$2.16</td>
+<td>0</td>
+<td>$0.00</td>
+<td>0</td>
+<td>2, 2 passed</td>
+<td>4: revise, revise, revise, revise</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2026-11-24 17:35</td>
+<td>16 min</td>
+<td>25</td>
+<td>$1.04</td>
+<td>0</td>
+<td>$0.00</td>
+<td>0</td>
+<td>0</td>
+<td>4: revise, revise, revise, revise</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2026-11-24 17:51</td>
+<td>27 min (stopped)</td>
+<td>43</td>
+<td>$2.14</td>
+<td>0</td>
+<td>$0.00</td>
+<td>0</td>
+<td>0</td>
+<td>5: revise, revise, revise, revise, revise</td>
+</tr>
 </tbody>
 </table>
 <p>LLM spend by agent (the critic does the independent figure and report reviews):</p>
@@ -461,47 +776,75 @@ pre { background: #f5f5f5; padding: 6pt; white-space: pre-wrap; }
 <th>Agent</th>
 <th>Turn 1</th>
 <th>Turn 2</th>
+<th>Turn 3</th>
+<th>Turn 4</th>
+<th>Turn 5</th>
+<th>Turn 6</th>
 <th>Total</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>analyst</td>
-<td>$0.40</td>
-<td>$0.63</td>
-<td>$1.03</td>
+<td>critic</td>
+<td>$0.23</td>
+<td>$0.32</td>
+<td>$1.08</td>
+<td>$0.82</td>
+<td>$0.60</td>
+<td>$1.26</td>
+<td>$4.31</td>
 </tr>
 <tr>
 <td>writer</td>
 <td>$0.00</td>
 <td>$0.57</td>
-<td>$0.57</td>
+<td>$0.75</td>
+<td>$1.02</td>
+<td>$0.26</td>
+<td>$0.79</td>
+<td>$3.38</td>
 </tr>
 <tr>
-<td>critic</td>
-<td>$0.23</td>
-<td>$0.32</td>
-<td>$0.55</td>
-</tr>
-<tr>
-<td>data</td>
-<td>$0.49</td>
+<td>analyst</td>
+<td>$0.40</td>
+<td>$0.63</td>
+<td>$0.76</td>
+<td>$0.09</td>
 <td>$0.00</td>
-<td>$0.49</td>
+<td>$0.00</td>
+<td>$1.88</td>
 </tr>
 <tr>
 <td>lead</td>
 <td>$0.13</td>
 <td>$0.16</td>
-<td>$0.29</td>
+<td>$0.19</td>
+<td>$0.24</td>
+<td>$0.18</td>
+<td>$0.09</td>
+<td>$0.98</td>
+</tr>
+<tr>
+<td>data</td>
+<td>$0.49</td>
+<td>$0.00</td>
+<td>$0.00</td>
+<td>$0.00</td>
+<td>$0.00</td>
+<td>$0.00</td>
+<td>$0.49</td>
 </tr>
 <tr>
 <td>all</td>
 <td>$1.25</td>
 <td>$1.68</td>
-<td>$2.93</td>
+<td>$2.78</td>
+<td>$2.16</td>
+<td>$1.04</td>
+<td>$2.14</td>
+<td>$11.05</td>
 </tr>
 </tbody>
 </table>
-<p>Code cells run by the agents (background jobs included): 52 (data 28, analyst 24), of which 5 failed (an agent reads the error and runs a corrected cell). Artifacts: 20 finding, 15 json, 87 table. Figure versions submitted to the figure gate: 19 (11 approved, 1 approved_with_issues, 7 rejected). Report gate: approved in round 2.</p>
-<h2>Evidence index</h2><p>Every artifact cited above, with its kind and description. Code, data and lineage for each are in the run's workspace and in the exported scripts.</p><table class="evidence"><tr><th>ID</th><th>Kind</th><th>Title</th><th>Description</th></tr><tr><td>T1</td><td>table</td><td>Local proxy frame</td><td>One snapshot work; screen and local covariates.</td></tr><tr><td>T82</td><td>table</td><td>Stage 2 Window and original stratum coverage and weights</td><td>Reproducibility audit; year 0 means all cohorts, All means all strata.</td></tr><tr><td>T87</td><td>table</td><td>Stage 2 side-by-side headline evidence for C1–C9</td><td>T66–T81 carry full results. U&gt;0 uses revised no-FPC intervals, except C7 model estimates use no-FPC clustered intervals. C5 also reconstructs the original all-draw target.</td></tr><tr><td>F11</td><td>finding</td><td>C1 — partly reproduced: overall, not monotone; single instit</td><td></td></tr><tr><td>P15</td><td>figure</td><td>Fig. 2 analogue — Team size, disruption rank and citation counts (Stage 2)</td><td>Design-weighted mean within-year disruption percentile (A) and median unique strictly postpublication citing works through 23 November 2026 (B), for 7,933 Columbia OpenAlex works with at least one such citer. Unweighted </td></tr><tr><td>T32</td><td>table</td><td>Validated annual D inputs</td><td>One fully measured focal and citing publication year under strict main-date filter; missing year within range is represented by zero.</td></tr><tr><td>T33</td><td>table</td><td>Validated main and fixed disruption inputs with focal coverage</td><td>One sampled focal; exact date-window counts where valid, D and strict eligibility, truncation status and reasons.</td></tr><tr><td>T66</td><td>table</td><td>Stage 2 C1 team gradients and sign</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F12</td><td>finding</td><td>C2 — reproduced locally: distributions differ, not an iid KS</td><td></td></tr><tr><td>T68</td><td>table</td><td>Stage 2 C3 reranked citation-impact contrasts</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F13</td><td>finding</td><td>C3 — partly reproduced: bottom-half only; stronger top gradi</td><td></td></tr><tr><td>T70</td><td>table</td><td>Stage 2 C4 negative slopes among observed supported groups</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T74</td><td>table</td><td>Stage 2 C5 reference means and contrasts (edge and work targets)</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F14</td><td>finding</td><td>C4 — partly reproduced: majority of supported fields/subfiel</td><td></td></tr><tr><td>F15</td><td>finding</td><td>C5 — partly reproduced: empirical age/popularity and age-dec</td><td></td></tr><tr><td>T86</td><td>table</td><td>Stage 2 Stage 1 comparator point reconciliation</td><td>Reproducibility audit; year 0 means all cohorts, All means all strata.</td></tr><tr><td>J15</td><td>json</td><td>Stage 2 executable offline correction and handoff code</td><td>Frozen T32/T33 and T45 plus local snapshot joins; no external calls. Figure gate approvals are harness actions on the staged PDF/PNG, not generated by code.</td></tr><tr><td>T3</td><td>table</td><td>Sample reference edges</td><td>One focal work and distinct valid nonself reference.</td></tr><tr><td>T83</td><td>table</td><td>Stage 2 Frame exclusions and local positive citation evidence</td><td>Reproducibility audit; year 0 means all cohorts, All means all strata.</td></tr><tr><td>F20</td><td>finding</td><td>Stage 2 audit (counts, not confidence limits). T82: 8,000 dr</td><td></td></tr><tr><td>J5</td><td>json</td><td>Complete frame, sample, manifest and validation code</td><td>Exact local screen, sampling, preflight tests, request manifests, and budget projection.</td></tr><tr><td>T2</td><td>table</td><td>Prespecified 8000-work sample</td><td>One sampled work; stratified SRSWOR and window endpoints.</td></tr><tr><td>T5</td><td>table</td><td>Stratum allocation</td><td>One stratum; population and sample sizes and design weights.</td></tr><tr><td>T15</td><td>table</td><td>Independent grouped-count validation results</td><td>One exact grouped-versus-plain or cursor-classification comparison.</td></tr><tr><td>T24</td><td>table</td><td>Independent overflow-tail outbound check</td><td>One residual citer; classifier verifies tail membership and exclusion of assigned prefix.</td></tr><tr><td>T25</td><td>table</td><td>Long partition order invariance checks</td><td>One focal/year; verifies union totals after reversing the chunk assignment order.</td></tr><tr><td>T26</td><td>table</td><td>Residual and focal cursor stream checks</td><td>One overflow cursor stream; independent count, distinct date-bearing IDs and status.</td></tr><tr><td>T27</td><td>table</td><td>Raw overflow cursor records</td><td>One citing ID per overflow stream with date; focal streams classify outgoing edges.</td></tr><tr><td>T28</td><td>table</td><td>Cursor waves and timing</td><td>One parallel cursor wave; initial submissions, retries and elapsed active time.</td></tr><tr><td>T29</td><td>table</td><td>Raw annual grouped counts</td><td>One grouped request; annual sparse counts, request ID, total and integrity status.</td></tr><tr><td>J10</td><td>json</td><td>Final derivation, metadata recovery, and status code</td><td>Executable derivation with partial-reference normalization and preserved targeted recovery checks.</td></tr><tr><td>T84</td><td>table</td><td>Stage 2 Work-level recalculated main/fixed/paired ranks</td><td>Reproducibility audit; year 0 means all cohorts, All means all strata.</td></tr><tr><td>T71</td><td>table</td><td>Stage 2 C8 paired and standalone windows, simplified ratio</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T79</td><td>table</td><td>Stage 2 C7 comparable-sample clustered models</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T80</td><td>table</td><td>Stage 2 C7 bootstrap baselines</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>J12</td><td>json</td><td>Stage 1 executable analysis and figure code</td><td>Executable Python using the persistent harness helpers; no network calls or API spend.</td></tr><tr><td>T67</td><td>table</td><td>Stage 2 C2 signed raw D quantiles and empirical CDF/KS</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>P19</td><td>figure</td><td>Extended figure — Signed raw disruption distributions (Stage 2)</td><td>Inverse-inclusion-weighted empirical CDF of signed raw D for one, ten and 51–100 authors (600, 624 and 477 Columbia OpenAlex works with at least one distinct citing work in the postpublication window ending 23 November 2</td></tr><tr><td>P18</td><td>figure</td><td>Fig. 3 analogue — Team size and disruption across citation impact (Stage 2)</td><td>Inverse-inclusion-weighted mean within-year disruption percentile for 7,933 Columbia OpenAlex works with at least one distinct strictly postpublication citing work through 23 November 2026. Higher D percentiles indicate </td></tr><tr><td>T69</td><td>table</td><td>Stage 2 C4 field, subfield and journal support and slopes</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>P16</td><td>figure</td><td>Fig. 3 analogue — Negative slopes predominate in supported fields and subfields (Stage 2)</td><td>Within-year D percentile slopes per doubling of team size for Columbia OpenAlex works with 1–10 authors and at least one unique strictly postpublication citing work through 23 November 2026. Dots and bars are inverse-inc</td></tr><tr><td>P12</td><td>figure</td><td>Fig. 4 analogue — Empirical distributions of reference age and popularity</td><td>Empirical component of C5 only. Curves pool available focal-work–reference pairs, applying each focal work’s inverse inclusion weight to every edge, rather than giving equal total weight to each work. For teams of 1, 10 </td></tr><tr><td>P17</td><td>figure</td><td>Fig. 4 analogue — Empirical distributions of reference age and popularity (Stage 2)</td><td>Stage-2 update of P12, preserving its empirical panels and geometry. Among Columbia OpenAlex works with at least one unique postpublication citing work through 23 November 2026, the curves pool deduplicated focal–referen</td></tr><tr><td>T75</td><td>table</td><td>Stage 2 C5 P12 update curves (edge and work targets)</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T45</td><td>table</td><td>Analysis-ready deduplicated reference metadata</td><td>One sampled reference ID; year, global lifetime citations and exact-match/missing statuses. Join T3 on reference_id.</td></tr><tr><td>T73</td><td>table</td><td>Stage 2 C5 reference metadata coverage</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T85</td><td>table</td><td>Stage 2 Reference denominator and metadata audit</td><td>Reproducibility audit; year 0 means all cohorts, All means all strata.</td></tr><tr><td>T76</td><td>table</td><td>Stage 2 C5 separate fit diagnostics</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T77</td><td>table</td><td>Stage 2 C5 separate fit intervals</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>T78</td><td>table</td><td>Stage 2 C6 early citation timing and standardized contrasts</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F16</td><td>finding</td><td>C6 — partly reproduced: 51–100 earlier than solo on a comple</td><td></td></tr><tr><td>F17</td><td>finding</td><td>C7 — partly reproduced: comparable-sample FE gradient persis</td><td></td></tr><tr><td>T81</td><td>table</td><td>Stage 2 C7 article and review contrasts</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F18</td><td>finding</td><td>C8 — partly reproduced: short windows and simplified ratio o</td><td></td></tr><tr><td>T72</td><td>table</td><td>Stage 2 C9 recorded funder acknowledgment</td><td>95% pointwise percentile intervals from 1,000 within-original-stratum n_h-out-of-n_h focal-work replacement draws (seed 20261123), no FPC including census; original inverse inclusion weights. C7 FE uses two-way cluster m</td></tr><tr><td>F19</td><td>finding</td><td>C9 — partly testable: descriptive acknowledgment differences</td><td></td></tr><tr><td>J3</td><td>json</td><td>Executable stage-1 collection code</td><td>Bulk and overflow collectors with exact manifest and budget guard.</td></tr><tr><td>J14</td><td>json</td><td>Stage 2 gate and writer handoff index</td><td>Exact captions, review outcomes, file paths, provenance, and findings. No report generated.</td></tr></table></body></html>
+<p>Code cells run by the agents (background jobs included): 81 (analyst 53, data 28), of which 11 failed (an agent reads the error and runs a corrected cell). Artifacts: 20 finding, 18 json, 87 table. Figure versions submitted to the figure gate: 45 (17 approved, 13 approved_with_issues, 15 rejected). Report gate: approved_with_issues in round 4, with 4 wording points from the reader left open (review log).</p>
+<h2>Evidence index</h2><p>The ids in square brackets point to the saved results behind each statement. This list gives each one under the title the agents gave it while working. The data, the code that produced it and its inputs are in the reproduction package, under <code>data/artifacts/&lt;id&gt;/</code>.</p><table class="evidence"><tr><th>ID</th><th>Kind</th><th>Title</th></tr><tr><td>T2</td><td>table</td><td>Prespecified 8000-work sample</td></tr><tr><td>T82</td><td>table</td><td>Stage 2 Window and original stratum coverage and weights</td></tr><tr><td>F11</td><td>finding</td><td>C1 — partly reproduced: overall, not monotone; single instit</td></tr><tr><td>F12</td><td>finding</td><td>C2 — reproduced locally: distributions differ, not an iid KS</td></tr><tr><td>F14</td><td>finding</td><td>C4 — partly reproduced: majority of supported fields/subfiel</td></tr><tr><td>F15</td><td>finding</td><td>C5 — partly reproduced: empirical age/popularity and age-dec</td></tr><tr><td>F16</td><td>finding</td><td>C6 — partly reproduced: 51–100 earlier than solo on a comple</td></tr><tr><td>F17</td><td>finding</td><td>C7 — partly reproduced: comparable-sample FE gradient persis</td></tr><tr><td>F18</td><td>finding</td><td>C8 — partly reproduced: short windows and simplified ratio o</td></tr><tr><td>P45</td><td>figure</td><td>Reference ages and citation counts in three team-size groups</td></tr><tr><td>T1</td><td>table</td><td>Local proxy frame</td></tr><tr><td>F13</td><td>finding</td><td>C3 — partly reproduced: bottom-half only; stronger top gradi</td></tr><tr><td>F19</td><td>finding</td><td>C9 — partly testable: descriptive acknowledgment differences</td></tr><tr><td>T5</td><td>table</td><td>Stratum allocation</td></tr><tr><td>P25</td><td>figure</td><td>Disruption rank and citations by team size</td></tr><tr><td>J5</td><td>json</td><td>Complete frame, sample, manifest and validation code</td></tr><tr><td>T3</td><td>table</td><td>Sample reference edges</td></tr><tr><td>T33</td><td>table</td><td>Validated main and fixed disruption inputs with focal coverage</td></tr><tr><td>T83</td><td>table</td><td>Stage 2 Frame exclusions and local positive citation evidence</td></tr><tr><td>T32</td><td>table</td><td>Validated annual D inputs</td></tr><tr><td>T84</td><td>table</td><td>Stage 2 Work-level recalculated main/fixed/paired ranks</td></tr><tr><td>T66</td><td>table</td><td>Stage 2 C1 team gradients and sign</td></tr><tr><td>T67</td><td>table</td><td>Stage 2 C2 signed raw D quantiles and empirical CDF/KS</td></tr><tr><td>J15</td><td>json</td><td>Stage 2 executable offline correction and handoff code</td></tr><tr><td>T68</td><td>table</td><td>Stage 2 C3 reranked citation-impact contrasts</td></tr><tr><td>P30</td><td>figure</td><td>Distributions of disruption scores by team size</td></tr><tr><td>P44</td><td>figure</td><td>Disruption rank by team size and citation rank</td></tr><tr><td>T69</td><td>table</td><td>Stage 2 C4 field, subfield and journal support and slopes</td></tr><tr><td>T70</td><td>table</td><td>Stage 2 C4 negative slopes among observed supported groups</td></tr><tr><td>P35</td><td>figure</td><td>Disruption rank by team size in fields with enough data</td></tr><tr><td>T10</td><td>table</td><td>Snapshot reference metadata</td></tr><tr><td>T11</td><td>table</td><td>Local versus live reference metadata audit</td></tr><tr><td>T45</td><td>table</td><td>Analysis-ready deduplicated reference metadata</td></tr><tr><td>T74</td><td>table</td><td>Stage 2 C5 reference means and contrasts (edge and work targets)</td></tr><tr><td>T75</td><td>table</td><td>Stage 2 C5 P12 update curves (edge and work targets)</td></tr><tr><td>T76</td><td>table</td><td>Stage 2 C5 separate fit diagnostics</td></tr><tr><td>T77</td><td>table</td><td>Stage 2 C5 separate fit intervals</td></tr><tr><td>J12</td><td>json</td><td>Stage 1 executable analysis and figure code</td></tr><tr><td>T78</td><td>table</td><td>Stage 2 C6 early citation timing and standardized contrasts</td></tr><tr><td>T79</td><td>table</td><td>Stage 2 C7 comparable-sample clustered models</td></tr><tr><td>T80</td><td>table</td><td>Stage 2 C7 bootstrap baselines</td></tr><tr><td>T81</td><td>table</td><td>Stage 2 C7 article and review contrasts</td></tr><tr><td>T71</td><td>table</td><td>Stage 2 C8 paired and standalone windows, simplified ratio</td></tr><tr><td>T87</td><td>table</td><td>Stage 2 side-by-side headline evidence for C1–C9</td></tr><tr><td>T72</td><td>table</td><td>Stage 2 C9 recorded funder acknowledgment</td></tr><tr><td>T15</td><td>table</td><td>Independent grouped-count validation results</td></tr><tr><td>T24</td><td>table</td><td>Independent overflow-tail outbound check</td></tr><tr><td>T25</td><td>table</td><td>Long partition order invariance checks</td></tr><tr><td>F20</td><td>finding</td><td>Stage 2 audit (counts, not confidence limits). T82: 8,000 dr</td></tr><tr><td>T8</td><td>table</td><td>Exact request manifest for disruption</td></tr><tr><td>T26</td><td>table</td><td>Residual and focal cursor stream checks</td></tr><tr><td>T27</td><td>table</td><td>Raw overflow cursor records</td></tr><tr><td>T29</td><td>table</td><td>Raw annual grouped counts</td></tr><tr><td>T73</td><td>table</td><td>Stage 2 C5 reference metadata coverage</td></tr><tr><td>T85</td><td>table</td><td>Stage 2 Reference denominator and metadata audit</td></tr></table></body></html>

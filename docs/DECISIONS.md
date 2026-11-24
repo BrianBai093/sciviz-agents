@@ -430,3 +430,8 @@ Each record states the context, the options considered, the decision, and why. R
   - `evidence_text` puts every finding first, then every artifact the report cites (title, description, summary, and the rows of small tables or the data of JSON artifacts), then one line for each artifact it does not cite. The budget is 150,000 characters; for this report everything fits (134k).
   - After the last round, the reviewer's unresolved issues are appended to the report (a reader must know about unresolved evidence problems). The reader's unresolved points go to `status.json` and the review log, and the run record mentions them.
 - **Status:** Accepted.
+
+## D59. One turn per session at a time; completion events belong to the turn they measure
+- **Problem:** I started a turn four seconds before the previous turn's lead had finished. Its completion event landed in the new turn's part of the event log, so the run record showed the finished turn as stopped and gave the new turn the wrong wall time; the late lead report was written after the new turn had archived the previous one.
+- **Decision:** `sciviz reproduce` holds a lock file (`session.lock`, with the process id) for the whole turn and refuses to start while another live process holds it; a lock left by an ended process is ignored. The run record assigns each completion event to the turn under way when it began (its time minus its duration).
+- **Status:** Accepted.

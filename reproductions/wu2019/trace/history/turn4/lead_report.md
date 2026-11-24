@@ -1,0 +1,5 @@
+[Download the revised plain-language report (PDF)](/report/report.pdf). The independent report gate **released it with issues noted** in [round 4](/report/status.json). All five figures are approved, including the two resubmitted unchanged [J18].
+
+The main text is about **2,800 words** and the appendix about **1,450**, excluding the separately reviewed figure captions. Including those captions puts the main text over 3,500 words. The report retains the comparison table and the appendix column showing how the results change when uncited works with a defined score are included.
+
+**What remains open:** The [final reader review](/report/reviews.jsonl) asked for clearer wording about which works entered the sample, how later citations were counted across OpenAlex, and how works by the same author were compared. No analyses were rerun, no numerical results changed, and no external API requests were made.

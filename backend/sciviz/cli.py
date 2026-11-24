@@ -6,7 +6,9 @@
 """
 from __future__ import annotations
 
+import contextlib
 import json
+import os
 import shutil
 import time
 from pathlib import Path
@@ -15,6 +17,7 @@ import typer
 from rich.console import Console
 from rich.markdown import Markdown
 
+from .config import settings
 from .harness.budget import SpendLedger
 from .runner import run_turn
 from .session import Session
@@ -100,6 +103,35 @@ def ask(question: str, session: str = typer.Option(None, help="continue an exist
         s.close()
 
 
+@contextlib.contextmanager
+def _one_turn_at_a_time(root: Path | None):
+    """A session runs one turn at a time. A second process on the same session would interleave its event log, turn
+    records and checkpoints. The lock file holds the running process's id; a lock whose process has ended is ignored."""
+    if root is None:  # a new session: nothing else can be using it
+        yield
+        return
+    lock = root / "session.lock"
+    if lock.exists():
+        pid = 0
+        try:
+            pid = int(lock.read_text().strip() or 0)
+            os.kill(pid, 0)
+            busy = pid > 0
+        except (ValueError, ProcessLookupError):
+            busy = False
+        except PermissionError:
+            busy = True
+        if busy:
+            console.print(f"[red]Session {root.name} is running in process {pid}; wait until that turn has ended.[/]")
+            raise typer.Exit(1)
+    root.mkdir(parents=True, exist_ok=True)
+    lock.write_text(str(os.getpid()))
+    try:
+        yield
+    finally:
+        lock.unlink(missing_ok=True)
+
+
 def _archive_previous_turn(root: Path) -> None:
     """A continued session keeps each earlier turn's constraints, lead report, API usage and released report (with
     its gate reviews) under history/turnN/."""
@@ -134,42 +166,43 @@ def reproduce(
     quiet: bool = typer.Option(False, help="do not print agent events"),
 ):
     """Report mode (Project 2): reproduce a study's findings on this dataset from a paper brief."""
-    s = Session(session, mode="reproduce", external_budget_usd=external_budget)
-    if not quiet:
-        s.events.subscribe(_printer)
-    inputs = s.ws.root / "inputs"
-    inputs.mkdir(exist_ok=True)
-    _archive_previous_turn(s.ws.root)
-    shutil.copy(paper, inputs / "paper_brief.md")
-    limits = constraints.read_text(encoding="utf8").strip() if constraints else "None: a full reproduction."
-    if constraints:
-        shutil.copy(constraints, inputs / "run_constraints.md")
-    for f in extra_inputs or []:
-        shutil.copy(f, inputs / f.name)
-    message = (f"RESEARCH QUESTION: {question}\n\n"
-               f"RUN CONSTRAINTS (set by the user; they override defaults):\n{limits}\n\n"
-               f"EXTERNAL API BUDGET FOR THIS RUN: ${s.openalex.usage['budget_usd']:.2f}\n\n"
-               f"INPUT FILES (read with read_input): {', '.join(sorted(p.name for p in inputs.iterdir()))}")
-    console.print(f"[dim]session {s.id} ({s.ws.root})[/]")
-    t0 = time.time()
-    try:
-        final = run_turn(s, message, mode="reproduce")
-        (s.ws.root / "lead_report.md").write_text(final, encoding="utf8")
-        console.rule("lead report")
-        console.print(Markdown(final))
-        console.rule()
-    finally:
-        console.print(f"[dim]{time.time() - t0:.0f}s, LLM ${s.ledger.session_total(s.id):.3f} "
-                      f"(report-mode ledger ${s.ledger.total:.2f} of ${s.ledger.budget_usd:.0f}); "
-                      f"{s.openalex.usage_text()}[/]")
-        s.close()
+    root = settings.workspaces_dir / "reproduce" / session if session else None
+    with _one_turn_at_a_time(root):
+        s = Session(session, mode="reproduce", external_budget_usd=external_budget)
+        if not quiet:
+            s.events.subscribe(_printer)
+        inputs = s.ws.root / "inputs"
+        inputs.mkdir(exist_ok=True)
+        _archive_previous_turn(s.ws.root)
+        shutil.copy(paper, inputs / "paper_brief.md")
+        limits = constraints.read_text(encoding="utf8").strip() if constraints else "None: a full reproduction."
+        if constraints:
+            shutil.copy(constraints, inputs / "run_constraints.md")
+        for f in extra_inputs or []:
+            shutil.copy(f, inputs / f.name)
+        message = (f"RESEARCH QUESTION: {question}\n\n"
+                   f"RUN CONSTRAINTS (set by the user; they override defaults):\n{limits}\n\n"
+                   f"EXTERNAL API BUDGET FOR THIS RUN: ${s.openalex.usage['budget_usd']:.2f}\n\n"
+                   f"INPUT FILES (read with read_input): {', '.join(sorted(p.name for p in inputs.iterdir()))}")
+        console.print(f"[dim]session {s.id} ({s.ws.root})[/]")
+        t0 = time.time()
+        try:
+            final = run_turn(s, message, mode="reproduce")
+            (s.ws.root / "lead_report.md").write_text(final, encoding="utf8")
+            console.rule("lead report")
+            console.print(Markdown(final))
+            console.rule()
+        finally:
+            console.print(f"[dim]{time.time() - t0:.0f}s, LLM ${s.ledger.session_total(s.id):.3f} "
+                          f"(report-mode ledger ${s.ledger.total:.2f} of ${s.ledger.budget_usd:.0f}); "
+                          f"{s.openalex.usage_text()}[/]")
+            s.close()
 
 
 @app.command("export-run")
 def export_run_cmd(session: str = typer.Option(..., help="report-mode session id"),
                    out: Path = typer.Option(..., help="output folder, e.g. reproductions/wu2019")):
     """Export a finished report-mode run: report, figures, data, frozen API responses, replayable scripts, trace."""
-    from .config import settings
     from .harness.export import export_run
     ws = settings.workspaces_dir / "reproduce" / session
     if not ws.exists():

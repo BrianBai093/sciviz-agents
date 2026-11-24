@@ -1,0 +1,42 @@
+{
+  "id": "P30",
+  "kind": "figure",
+  "title": "Distributions of disruption scores by team size",
+  "description": "Most scores are close to zero. Just left of zero, the curves show that larger teams have a greater share of works with negative scores. Each curve shows the percentage of works at or below the score on the horizontal axis. The jump at zero counts only works with a score of exactly zero. The curves cover 600 solo works, 624 works by ten authors and 477 works by teams of 51–100 authors [T67]. All had a recorded reference and at least one later work citing them through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. Works less likely to be sampled count more. A score is positive when more later works cite the work without citing any of its references than cite both the work and its references. A negative score means the reverse. Later works that cite the references but not the work also count toward the total used to scale the score [brief]. The plot shows scores from negative 0.1 to positive 0.1 and spreads out values near zero. Shading shows the uncertainty in the estimated percentage at each score separately, not for the whole curve at once. These 95% confidence intervals come from 1,000 repeated draws within each original team-size group, including the largest. A work could be picked more than once per draw. This is not a panel-for-panel redraw of the original study. Its closest comparison is the Extended Data analysis of differences in the full disruption-score distributions across team sizes [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P19",
+    "T67"
+  ],
+  "code": null,
+  "created_at": 1795538575.152,
+  "file": "figure.png",
+  "slug": "disruption-score-distributions",
+  "claims": [
+    "C2"
+  ],
+  "parent": "P27",
+  "version": 3,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 5,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The curves show how the distribution differs across the three team sizes, not just how their averages differ. Just to the left of zero, the larger teams have a higher share of negative scores. The caption distinguishes those scores from scores of exactly zero and explains the sample, weighting, and pointwise uncertainty.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The caption refers to the original study’s Extended Data analysis but does not identify a specific figure or panel.",
+          "fix": "If [brief] identifies the closest figure or panel, give its number in the caption and keep the note that this is not a direct redraw. If there is no matching panel, say so explicitly."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Distributions of disruption scores by team size' (version 3) for claims ['C2'], from ['P19', 'T67']"
+}

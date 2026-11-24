@@ -1,0 +1,47 @@
+{
+  "id": "P25",
+  "kind": "figure",
+  "title": "Disruption rank and citations by team size",
+  "description": "Larger teams generally rank lower on disruption and receive more citations, but neither pattern holds at every step. The panels show 7,933 works with a recorded reference and at least one later work citing them through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. Panel A averages each work’s disruption percentile, its rank on a 0–100 scale among works from the same publication year. Higher ranks indicate greater disruption. The dashed line marks 50, the middle of the rank scale. Panel B shows the median number of distinct later works citing each work. Works less likely to be sampled count more. The counts below the equally spaced team sizes are the actual numbers of works. The dotted line separates individual sizes from size ranges. For the 477 works by teams of 51–100 authors, the median is 39 citing works, with a 95% confidence interval from 31 to 46 [T66]. Each bar gives a 95% confidence interval for one estimate. The intervals come from recalculating the estimates and ranks in 1,000 repeated draws within every original team-size group, including the largest. The same work could be drawn more than once in each repetition. Compare with Figure 2 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P15",
+    "T66"
+  ],
+  "code": null,
+  "created_at": 1795538508.004,
+  "file": "figure.png",
+  "slug": "team-size-and-disruption",
+  "claims": [
+    "C1"
+  ],
+  "parent": "P22",
+  "version": 2,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 5,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure supports the overall pattern: larger teams tend to rank lower on disruption and receive more citations, though neither trend holds at every step. The final point represents teams of 51–100 authors as a group, not teams of exactly 100 authors.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The caption explains how to read a disruption percentile but not what makes a work rank as more disruptive. It also leaves the set of works used for the same-year comparison implicit.",
+          "fix": "Add a short explanation that a work scores as more disruptive when later works tend to cite it without also citing the works it referenced. Name the set of works used to calculate the ranks within each year."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption explains how the uncertainty bars were calculated but does not say that the largest team-size group was fully sampled.",
+          "fix": "State that the data include every eligible work in the 51–100 author group and that its bars still show how much the estimate varied across repeated draws from those works."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Disruption rank and citations by team size' (version 2) for claims ['C1'], from ['P15', 'T66']"
+}

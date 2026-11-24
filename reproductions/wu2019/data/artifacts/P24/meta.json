@@ -1,0 +1,54 @@
+{
+  "id": "P24",
+  "kind": "figure",
+  "title": "Age and current citation counts of references by team size",
+  "description": "The two larger groups cite newer and generally more highly cited references than solo authors do. Their citation-count curves are close to each other. The curves use Columbia-linked works in OpenAlex cited by at least one later work through 23 November 2026. At each value on the horizontal axis, the curve shows the percentage of reference links above that value. The curves pool the available links, counting each reference once per citing work. Every link inherits the weight of the work that lists it, so works less likely to be sampled count more per link, and works with more links contribute more. In order of 1, 10 and 51–100 authors, both panels use 597, 624 and 477 works with the relevant information. Panel A uses 22,001, 34,531 and 43,548 links; panel B uses 22,149, 34,613 and 43,772 [T75]. Panel A counts age in years, includes same-year references, excludes references dated after the citing work’s publication year, and shows ages through 100 years. Panel B uses current citation totals, not totals when the citing work appeared. Its scale is linear through one citation and logarithmic above one. Shading shows pointwise 95% confidence intervals from 1,000 repetitions of resampling works with replacement within every team-size group, including the largest. These are observed distributions, not fitted curves. Separate model fits suggest that older references become less common faster for ten-author teams than for solo authors, but the results do not resolve whether the citation-count distributions thin out at different rates above 50 citations. Neither model closely follows the observed curves throughout [T76, T77]. Compare with Figure 4 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P17",
+    "T75",
+    "T76",
+    "T77"
+  ],
+  "code": null,
+  "created_at": 1795538420.364,
+  "file": "figure.png",
+  "slug": "references-by-team-size",
+  "claims": [
+    "C5"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 4,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The panels are clear and support the descriptive comparison. Revise the claim, not the plot: the observed curves do not establish that fitted parameters differ for both measures.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "C5 goes beyond the evidence shown. The curves support the finding that the two larger groups cite newer and generally more highly cited references than solo authors do. They do not show that fitted parameters vary with team size for both measures. In particular, the higher citation-count curves do not establish that highly cited references become rarer at different rates.",
+          "fix": "Keep the plotted data and marks unchanged. Narrow C5 to the observed comparisons among the three groups shown. Report the fitted results separately using the existing estimates and intervals: the age fit suggests a faster decline for ten-author teams than for solo authors, while the citation-count comparison is inconclusive [T76, T77]."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption says the citation-count fit applies 'above 50 citations,' but the fit includes references with exactly 50 citations.",
+          "fix": "Say 'among references with 50 or more citations.'"
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption leaves 'Columbia-linked' undefined and uses 'pointwise' without explaining what it means for the shaded bands.",
+          "fix": "State what qualified a work as linked to Columbia. Say that the shading gives a 95% confidence interval at each horizontal-axis value separately."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Age and current citation counts of references by team size' (version 1) for claims ['C5'], from ['P17', 'T75', 'T76', 'T77']"
+}

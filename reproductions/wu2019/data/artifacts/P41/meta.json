@@ -1,0 +1,47 @@
+{
+  "id": "P41",
+  "kind": "figure",
+  "title": "Reference ages and citation counts in three team-size groups",
+  "description": "In the three groups shown, works with 10 or 51–100 authors cited newer and generally more highly cited references than solo works did. The two larger groups have similar citation-count curves. A lower curve in panel A means fewer references older than the age shown. A higher curve in panel B means more references above the citation count shown.\n\nThe works had at least one later work citing them through 23 November 2026. Each had at least one author listing Columbia University or an institution that OpenAlex lists under it. The curves count each reference once per work that lists it. Each link carries that work’s weight, so works less likely to be sampled count more per link, and works with more links contribute more. In order of 1, 10 and 51–100 authors, both panels use 597, 624 and 477 works. Panel A uses 22,001, 34,531 and 43,548 links; panel B uses 22,149, 34,613 and 43,772 [T75]. Reference age is the difference in publication years. Panel A includes same-year references, excludes references published in later years and shows ages through 100 years. Panel B uses current citation totals, not totals at publication. Its scale is linear through one citation and logarithmic above one.\n\nShading shows sampling uncertainty at each age or citation-count cutoff, not for the curve as a whole. Each 95% confidence interval comes from 1,000 repeated draws within each original team-size group. A work could be picked more than once per draw.\n\nThese curves show what we observed. They do not show whether a mathematical model fits. Separate checks ask whether a constant rate of decline describes reference age and whether very highly cited references follow the pattern the original study proposed; neither model fits closely. In those checks, older references became less common faster for ten-author works than for solo works. The model comparison among references with at least 50 citations was inconclusive [T76, T77]. The original finding was partly reproduced. Compare with Figure 4 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P17",
+    "T75"
+  ],
+  "code": null,
+  "created_at": 1795538864.494,
+  "file": "figure.png",
+  "slug": "references-by-team-size",
+  "claims": [
+    "C5"
+  ],
+  "parent": "P40",
+  "version": 7,
+  "status": "approved_with_issues",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The two panels are clear and show the descriptive differences well. The caption identifies the sample, explains the weighting and uncertainty, and names the matching figure in the original study. The main revision is to narrow the claim so it does not overstate what the curves and separate model checks establish.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The curves support the descriptive comparison, but they do not show that the fitted patterns for reference age and citation counts both vary with team size. The separate age-model comparison supports a difference between solo and ten-author works, while the comparison for highly cited references was inconclusive. The caption makes this distinction, but the stated claim does not.",
+          "fix": "Narrow the claim attached to this figure: in the groups shown, larger teams cited newer and generally more highly cited references than solo authors did. Report the age-model result separately and state that the comparison for highly cited references was inconclusive. No change to the plotted data or marks is needed."
+        },
+        {
+          "severity": "minor",
+          "problem": "In the caption, “a constant rate of decline” could mean that the share drops by the same number of percentage points each year, rather than by the same fraction.",
+          "fix": "Say that the age model tests whether the share of references older than a given age falls by the same fraction for each additional year."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Reference ages and citation counts in three team-size groups' (version 7) for claims ['C5'], from ['P17', 'T75']"
+}

@@ -129,6 +129,7 @@ def test_run_record_summarizes_turns_from_the_event_log(tmp_path):
     assert "| 1 | 1970-01-01 00:16 | 2 min | 1 | $0.25 | 1,234 | $0.12 |" in text
     assert "| 0 | 1, 1 passed | 0 |" in text and "| 0 | 0 | 1: pass |" in text
     assert "| writer | $0.00 | $0.50 | $0.50 |" in text and "| all | $0.25 | $0.50 | $0.75 |" in text
+    assert text.count("(stopped)") == 1 and "| 2 | 1970-01-01 00:33 | 0 min (stopped) |" in text  # no "done" event
 
 
 def test_render_pdf(tmp_path):
@@ -249,6 +250,34 @@ def test_open_reader_points_stay_out_of_the_released_report(session, monkeypatch
     write, _remove, _draft, submit = rt.report_tools(session, "writer")
     write.invoke({"position": 1, "name": "summary", "markdown": "## Summary\n\nThe answer [brief]."})
     assert "approved_with_issues in round 1" in submit.invoke({"title": "R"})
+    write.invoke({"position": 1, "name": "summary", "markdown": "## Summary\n\nThe answer, again [brief]."})
+    assert "released after the last of 1 review rounds" in submit.invoke({"title": "R"})  # no endless final round
     root = session.ws.root / "report"
     assert "Open review issues" not in (root / "report.md").read_text()
     assert json.loads((root / "status.json").read_text())["open_reader_points"] == ["a long sentence"]
+
+
+def test_run_record_gives_a_late_completion_event_to_its_own_turn(tmp_path):
+    ev = [{"ts": 1000.0, "agent": "user", "kind": "message", "payload": {"text": "a"}},
+          {"ts": 1950.0, "agent": "user", "kind": "message", "payload": {"text": "b"}},  # started before turn 1 ended
+          {"ts": 1960.0, "agent": "system", "kind": "done", "payload": {"seconds": 960}},  # turn 1's completion
+          {"ts": 3000.0, "agent": "writer", "kind": "cost", "payload": {"model": "m", "usd": 0.5}}]
+    (tmp_path / "events.jsonl").write_text("".join(json.dumps(e) + "\n" for e in ev))
+    text = rep.run_record(tmp_path)
+    assert "| 1 | 1970-01-01 00:16 | 16 min |" in text and "| 2 | 1970-01-01 00:32 | 18 min (stopped) |" in text
+
+
+def test_a_session_runs_one_turn_at_a_time(tmp_path):
+    import os
+
+    import typer
+
+    from sciviz.cli import _one_turn_at_a_time
+    (tmp_path / "session.lock").write_text(str(os.getppid()))  # a live process holds the session
+    with pytest.raises(typer.Exit):
+        with _one_turn_at_a_time(tmp_path):
+            pass
+    (tmp_path / "session.lock").write_text("999999999")  # a lock left by a process that has ended
+    with _one_turn_at_a_time(tmp_path):
+        assert (tmp_path / "session.lock").read_text() == str(os.getpid())
+    assert not (tmp_path / "session.lock").exists()

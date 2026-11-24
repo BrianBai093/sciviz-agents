@@ -1,0 +1,47 @@
+{
+  "id": "P27",
+  "kind": "figure",
+  "title": "Distributions of disruption scores by team size",
+  "description": "Most scores are close to zero. Just left of zero, the curves show that larger teams have a greater share of works with negative scores. Each curve shows the percentage of works at or below the score on the horizontal axis. The jump at zero counts only works with a score of exactly zero. The curves cover 600 solo works, 624 works by ten authors and 477 works by teams of 51–100 authors [T67]. All had a recorded reference and at least one later work citing them through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. Works less likely to be sampled count more. A score is positive when more later works cite the work without its references than cite both the work and its references. A negative score means the reverse. Later works that cite the references but not the work also count toward the total used to scale the score [brief]. The plot shows scores from negative 0.1 to positive 0.1 and spreads out values near zero. Shading gives a separate 95% confidence interval at each score. The intervals come from 1,000 repeated draws within each original team-size group, including the largest, allowing a work to be picked more than once per repetition. Compare with the analysis of how disruption scores are distributed in the original study’s Extended Data [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P19",
+    "T67"
+  ],
+  "code": null,
+  "created_at": 1795538508.008,
+  "file": "figure.png",
+  "slug": "disruption-score-distributions",
+  "claims": [
+    "C2"
+  ],
+  "parent": "P20",
+  "version": 2,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 2,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 5,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 3
+      },
+      "summary": "The curves support the claim that disruption scores differ by team size beyond differences in averages. Just below zero, the two larger-team groups have a greater share of negative scores than solo works. The figure is readable and needs no changes to the data or plotted marks; revise the caption to identify the original comparison.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The caption refers generally to the original study’s Extended Data but does not identify the figure or panel readers should compare.",
+          "fix": "Name the matching Extended Data figure and panel in the caption, using the original study’s numbering. If there is no direct counterpart, say so and identify the closest comparison."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption explains how the intervals were made, but it does not say in plain language what the shading tells readers.",
+          "fix": "Say that the shading shows uncertainty in the estimated percentage at each score separately, not uncertainty for the whole curve at once. Keep the resampling explanation brief."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Distributions of disruption scores by team size' (version 2) for claims ['C2'], from ['P19', 'T67']"
+}

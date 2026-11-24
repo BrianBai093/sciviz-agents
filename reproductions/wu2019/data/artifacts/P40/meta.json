@@ -1,0 +1,47 @@
+{
+  "id": "P40",
+  "kind": "figure",
+  "title": "Reference ages and citation counts in three team-size groups",
+  "description": "Both larger groups cite newer and generally more highly cited references than solo authors do. The two larger groups have similar citation-count curves. A lower curve in panel A means fewer references older than the age shown. A higher curve in panel B means more references above the citation count shown.\n\nThe works had at least one later work citing them through 23 November 2026. Each had at least one author listing Columbia University or an institution that OpenAlex lists under it. The curves pool the available reference links, counting each reference once per work that lists it. Each link carries that work’s weight, so works less likely to be sampled count more per link, and works with more links contribute more. In order of 1, 10 and 51–100 authors, both panels use 597, 624 and 477 works. Panel A uses 22,001, 34,531 and 43,548 links; panel B uses 22,149, 34,613 and 43,772 [T75]. Reference age is the difference in publication years. Panel A includes same-year references, excludes references published in later years and shows ages through 100 years. Panel B uses current citation totals, not totals at publication. Its scale is linear through one citation and logarithmic above one.\n\nShading shows sampling uncertainty at each age or citation-count cutoff, not for the curve as a whole. Each 95% confidence interval comes from 1,000 repeated draws within every original team-size group, including the group with the largest teams. A work could be picked more than once per draw.\n\nThe figure supports the observed comparison in these three groups, not the full finding about fitted distributions. In separate fits, older references became less common faster for ten-author works than for solo works. The fitted comparison among references with 50 or more citations was inconclusive [T76, T77]. Compare with Figure 4 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P17",
+    "T75"
+  ],
+  "code": null,
+  "created_at": 1795538764.973,
+  "file": "figure.png",
+  "slug": "references-by-team-size",
+  "claims": [
+    "C5"
+  ],
+  "parent": "P37",
+  "version": 6,
+  "status": "approved_with_issues",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure clearly shows the observed differences between the three groups and explains the sample, weighting, and uncertainty. The claim needs to match that evidence: higher observed citation counts do not establish that the fitted citation-count pattern varies with team size.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "C5 says that the fitted patterns for both reference age and citation counts vary with team size. The figure shows observed curves for three groups, not fitted curves. The separate model results support an age difference between ten-author and solo works, but the comparison for references with at least 50 citations is inconclusive.",
+          "fix": "Revise C5 to say that, in this sample, works with 10 or 51–100 authors cited newer and generally more highly cited references than solo works did. Report the model results separately and mark the original finding as partly reproduced. Keep the plotted data and marks unchanged."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption uses “separate fits” and “fitted comparison” without explaining those terms.",
+          "fix": "Say that separate statistical models, not shown here, estimated how quickly older references become less common and compared citation counts among references with at least 50 citations."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Reference ages and citation counts in three team-size groups' (version 6) for claims ['C5'], from ['P17', 'T75']"
+}

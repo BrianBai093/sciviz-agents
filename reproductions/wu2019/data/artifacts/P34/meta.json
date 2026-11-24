@@ -1,0 +1,52 @@
+{
+  "id": "P34",
+  "kind": "figure",
+  "title": "Disruption rank by team size and citation rank",
+  "description": "The decline in disruption rank was reproduced for the lowest citation group, but the broader pattern was not established. Among teams of 1–10 authors, disruption rank fell by an estimated 2.50 percentile points per doubling of team size in the lowest citation group. The 95% interval ran from a fall of 3.39 points to a fall of 1.64 points, based on 3,277 works. In the middle group, the estimate was a fall of 1.22 points, with a 95% interval from a fall of 2.54 to a rise of 0.48, based on 2,476 works. In the top tenth, the estimate was a rise of 0.23 points, with a 95% interval from a fall of 4.33 to a rise of 3.37, based on 457 works. The estimated change was 2.73 points higher in the top tenth than in the lowest half. Its 95% interval ran from 1.89 points lower to 6.00 points higher, based on 3,734 works. The intervals do not establish a decline across all groups or a steeper decline at high citation levels [T68]. The figure shows 7,933 works with a recorded reference and at least one later work citing them through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. Works are ranked by disruption score and, separately, by the number of distinct later works citing them. Both ranks compare works from the same publication year. The disruption score compares later works that cite a work without any of its references with those that cite both. Works less likely to be sampled count more. The middle citation group starts at the 50th percentile and stops just before the 90th. The legend gives actual work counts. Each bar is a separate 95% confidence interval for one plotted average, not for a change with team size. The intervals come from recalculating ranks and citation groups in 1,000 repeated draws within every original team-size group, including the largest. A work could be picked more than once. The dashed line marks the midpoint of the disruption rank scale. The dotted line separates individual team sizes from size ranges. This figure tests the citation comparison in Figure 3 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P18",
+    "T68"
+  ],
+  "code": null,
+  "created_at": 1795538637.704,
+  "file": "figure.png",
+  "slug": "disruption-by-citation-rank",
+  "claims": [
+    "C3"
+  ],
+  "parent": "P31",
+  "version": 4,
+  "status": "approved_with_issues",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 2,
+        "truthfulness": 5,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The plot is readable, matches the supplied estimates, and distinguishes uncertainty around plotted averages from uncertainty around changes with team size. The main revision is to align C3 with the evidence: the decline was reproduced only in the lowest citation group.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The figure and caption test C3 but do not support it as written. Among teams of one to ten authors, only the lowest citation group shows a clear decline. The intervals for the middle group, the top tenth, and the difference between the top and bottom groups all include zero.",
+          "fix": "Keep the data and marks. Revise the report's finding to say that the citation comparison was partly reproduced: disruption rank declined with team size in the lowest citation group, but the results did not establish a decline at every citation level or a steeper decline in the top tenth."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption explains how works are ranked but does not directly say that a higher disruption percentile means a more disruptive work. It also leaves readers to infer that the size ranges above ten authors are shown for comparison but were not used to estimate the changes.",
+          "fix": "State that higher ranks mean greater disruption relative to works from the same year. Say explicitly that the estimates of change use only teams of one to ten authors."
+        },
+        {
+          "severity": "minor",
+          "problem": "The supplied title is clear, but the image itself shows only a heading for the citation-group legend.",
+          "fix": "Use “Disruption rank by team size and citation rank” as the visible figure title in the report."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Disruption rank by team size and citation rank' (version 4) for claims ['C3'], from ['P18', 'T68']"
+}

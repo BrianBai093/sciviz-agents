@@ -304,6 +304,291 @@
    ]
   }
  ],
+ "P20": [
+  {
+   "round": 1,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 5,
+    "truthfulness": 4,
+    "readability": 5,
+    "caption": 3
+   },
+   "summary": "The curves show distribution differences directly: larger teams have a greater share of negative scores just left of zero and a greater share of scores at or below zero. The distinct line styles and visible steps make the comparison easy to read. Revise the caption without changing the data or marks.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The caption does not say what made a work eligible as \u201cColumbia-linked,\u201d so a reader cannot tell which papers the results describe.",
+     "fix": "State the actual rule used to identify works connected to Columbia University. Keep the citation requirement and the sample count for each team size."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption says works were resampled within each plotted team-size group, while the source describes resampling within the groups originally used to draw the sample. It also leaves \u201cpointwise\u201d unexplained.",
+     "fix": "Say that the shading gives a 95% confidence interval at each score separately. Describe the 1,000 repetitions as drawing works again within each original sampling group, allowing a work to be drawn more than once."
+    },
+    {
+     "severity": "minor",
+     "problem": "The reference to Extended Data does not identify a specific figure in the original study.",
+     "fix": "Give the matching Extended Data figure number if the brief identifies one. If there is no direct match, name the related analysis without implying that this plot reproduces a specific figure."
+    }
+   ]
+  }
+ ],
+ "P21": [
+  {
+   "round": 1,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 3
+   },
+   "summary": "The chart is clear and consistent with the supplied estimates. It can show which part of the original finding was reproduced, but it should not be presented as evidence that disruption falls with team size at every citation level or that the decline is strongest for highly cited works.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure tests C3 but does not support it as written. Among teams of one to ten authors, only the lowest citation group shows a clear decline. The comparison between the highest and lowest citation groups does not establish a steeper decline at high citation levels.",
+     "fix": "Keep the plotted data and marks. Present the figure as a test of the original finding, not as confirmation. State in the caption and report that the decline was reproduced for the lowest citation group, but that the data did not establish a decline across all groups or a stronger decline in the highest group."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption says that higher disruption ranks mean greater disruption, but it does not explain what the score measures. It also uses \u201cpointwise\u201d without explaining that each bar applies to one plotted average.",
+     "fix": "Briefly explain that the disruption score uses whether later works cite a paper on its own or alongside the earlier works it cites. Replace \u201cpointwise 95% confidence intervals\u201d with \u201cThe bars show a separate 95% confidence interval for each plotted average.\u201d"
+    }
+   ]
+  }
+ ],
+ "P22": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 5,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure supports the overall pattern: average disruption rank tends to fall and median citation counts tend to rise as teams get larger, though neither changes in the same direction at every step. The extension to 100 authors is clearly shown as a pooled group of 51\u2013100 authors, not as an estimate for teams of exactly 100.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The caption explains the vertical dotted line but not the horizontal dashed line in Panel A.",
+     "fix": "Say that the horizontal dashed line marks 50, the midpoint of the disruption rank scale."
+    },
+    {
+     "severity": "minor",
+     "problem": "The phrase \u201cColumbia-linked\u201d does not tell readers which works qualify for the sample.",
+     "fix": "Replace it with a short description of how a work was identified as connected to Columbia."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption describes how the intervals were calculated, but \u201cpointwise\u201d and \u201cresampling works with replacement\u201d are more technical than needed.",
+     "fix": "Say that each bar is a 95% confidence interval for one estimate. Explain that the estimates were recalculated from repeated draws in which the same work could be picked more than once."
+    }
+   ]
+  }
+ ],
+ "P23": [
+  {
+   "round": 1,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 4,
+    "readability": 4,
+    "caption": 2
+   },
+   "summary": "The plotted estimates and table agree with the supplied summaries, and the figure is legible. Revise the wording to distinguish the two kinds of intervals and make clear that the evidence covers eligible fields and subfields, not most journals. No changes to the data or plotted marks are needed.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure supports only part of C4. Lower estimated disruption ranks for larger teams predominate among the fields and subfields that met the sample requirements, but the pattern is not universal and many field intervals include zero. With only one eligible journal, the figure cannot show whether the pattern holds within most journals.",
+     "fix": "Keep the caption\u2019s journal caveat and state the same qualified finding in the report: the pattern was partly reproduced for fields and subfields, and could not be tested across journals."
+    },
+    {
+     "severity": "major",
+     "problem": "The caption does not distinguish the two kinds of uncertainty shown. Each plot bar is an interval for one field\u2019s estimated rank change. Each table range is an interval for the percentage of eligible groups whose estimated change is below zero.",
+     "fix": "Explain the plot bars and table ranges in separate sentences. Say that the table gives each eligible group equal weight and keeps the same groups in every repeat. Describe the resampling as drawing works within the original sampling groups; drop the ambiguous phrase \u201cincluding the largest.\u201d"
+    },
+    {
+     "severity": "major",
+     "problem": "The caption explains how disruption scores are ranked but not what the score measures. It also leaves \u201cColumbia-linked\u201d undefined.",
+     "fix": "State the exact rule that connects works to Columbia University. Add a short explanation that the score uses later citation patterns to distinguish work cited on its own from work cited alongside the research it builds on."
+    },
+    {
+     "severity": "minor",
+     "problem": "The table headings \u201cMet rules / observed\u201d and \u201cRank fell with larger teams\u201d obscure the denominator and make estimated differences sound like observed declines.",
+     "fix": "Use headings such as \u201cGroups with enough works, out of all groups\u201d and \u201cGroups with lower estimated ranks for larger teams.\u201d Keep the table values unchanged."
+    }
+   ]
+  }
+ ],
+ "P24": [
+  {
+   "round": 1,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 4,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The panels are clear and support the descriptive comparison. Revise the claim, not the plot: the observed curves do not establish that fitted parameters differ for both measures.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "C5 goes beyond the evidence shown. The curves support the finding that the two larger groups cite newer and generally more highly cited references than solo authors do. They do not show that fitted parameters vary with team size for both measures. In particular, the higher citation-count curves do not establish that highly cited references become rarer at different rates.",
+     "fix": "Keep the plotted data and marks unchanged. Narrow C5 to the observed comparisons among the three groups shown. Report the fitted results separately using the existing estimates and intervals: the age fit suggests a faster decline for ten-author teams than for solo authors, while the citation-count comparison is inconclusive [T76, T77]."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption says the citation-count fit applies 'above 50 citations,' but the fit includes references with exactly 50 citations.",
+     "fix": "Say 'among references with 50 or more citations.'"
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption leaves 'Columbia-linked' undefined and uses 'pointwise' without explaining what it means for the shaded bands.",
+     "fix": "State what qualified a work as linked to Columbia. Say that the shading gives a 95% confidence interval at each horizontal-axis value separately."
+    }
+   ]
+  }
+ ],
+ "P25": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 5,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure supports the overall pattern: larger teams tend to rank lower on disruption and receive more citations, though neither trend holds at every step. The final point represents teams of 51\u2013100 authors as a group, not teams of exactly 100 authors.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The caption explains how to read a disruption percentile but not what makes a work rank as more disruptive. It also leaves the set of works used for the same-year comparison implicit.",
+     "fix": "Add a short explanation that a work scores as more disruptive when later works tend to cite it without also citing the works it referenced. Name the set of works used to calculate the ranks within each year."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption explains how the uncertainty bars were calculated but does not say that the largest team-size group was fully sampled.",
+     "fix": "State that the data include every eligible work in the 51\u2013100 author group and that its bars still show how much the estimate varied across repeated draws from those works."
+    }
+   ]
+  }
+ ],
+ "P26": [
+  {
+   "round": 2,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 5,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The plot and caption show a partial reproduction, not the full finding stated in C3. Revise the claim attached to the figure; no new analysis or changes to the plotted values are needed.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure does not support C3 as written. Among teams of one to ten authors, the decline is clear only in the lowest citation group. The other groups' intervals allow both a decline and an increase, and the comparison between the highest and lowest groups does not establish a steeper decline in the highest group. The caption reports this accurately, but the claim attached to the figure does not.",
+     "fix": "Keep C3 as the original study's finding being tested, not as a reproduced result. Label the result as partly reproduced: disruption rank fell with team size in the lowest citation group, but a decline across all citation groups or a steeper decline in the highest group was not established. Keep the plotted data and marks unchanged."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption calls the comparison between the highest and lowest citation groups inconclusive but does not give its interval. The error bars in the plot show uncertainty for individual averages, not for the difference in declines.",
+     "fix": "Report the existing comparison from [T68]: the estimated slope was 2.73 percentile points higher in the top tenth than in the lowest half per doubling of team size, with a 95% confidence interval from 1.89 points lower to 6.00 points higher."
+    },
+    {
+     "severity": "minor",
+     "problem": "The only heading visible in the image is the legend heading, which names citation rank but not disruption or team size.",
+     "fix": "Make sure the supplied title, 'Disruption rank by team size and citation rank,' appears with the figure in the report."
+    }
+   ]
+  }
+ ],
+ "P27": [
+  {
+   "round": 2,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 5,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 3
+   },
+   "summary": "The curves support the claim that disruption scores differ by team size beyond differences in averages. Just below zero, the two larger-team groups have a greater share of negative scores than solo works. The figure is readable and needs no changes to the data or plotted marks; revise the caption to identify the original comparison.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The caption refers generally to the original study\u2019s Extended Data but does not identify the figure or panel readers should compare.",
+     "fix": "Name the matching Extended Data figure and panel in the caption, using the original study\u2019s numbering. If there is no direct counterpart, say so and identify the closest comparison."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption explains how the intervals were made, but it does not say in plain language what the shading tells readers.",
+     "fix": "Say that the shading shows uncertainty in the estimated percentage at each score separately, not uncertainty for the whole curve at once. Keep the resampling explanation brief."
+    }
+   ]
+  }
+ ],
+ "P28": [
+  {
+   "round": 2,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 4,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The plotted estimates and table agree with the supplied data, and the zero line makes the direction of the estimates easy to see. The figure supports a tendency toward lower disruption ranks for larger teams in the fields and subfields that could be compared. Narrow C4 to that finding and state that the journal result could not be tested.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "C4 goes beyond the evidence. The estimated association is negative in most fields and subfields that met the sample requirements, but many field intervals cross zero. Only one journal met the requirements, so the figure cannot show whether the pattern holds within most journals.",
+     "fix": "Report C4 as partly reproduced: larger teams had lower estimated disruption ranks in 14 of 20 fields and 24 of 34 subfields that met the sample requirements. Say that many field estimates remain uncertain and that the finding about most journals could not be tested. Keep the existing marks and values."
+    },
+    {
+     "severity": "minor",
+     "problem": "The table heading \u201call groups\u201d can be read as all fields, subfields, or journals in the database. The denominators count groups observed in the sample. \u201cLower estimated rank\u201d also leaves the team-size comparison implicit.",
+     "fix": "Use two-line headings such as \u201cMet sample rules / observed in sample\u201d and \u201cLower estimated rank for larger teams.\u201d State that the table ranges describe uncertainty for the groups that met the rules, not for all groups in the database."
+    },
+    {
+     "severity": "minor",
+     "problem": "The axis does not say what doubles. The caption explains this, but \u201ccite a work on its own\u201d can sound as if the later work cites nothing else.",
+     "fix": "Label the axis \u201cEstimated change in disruption rank when author count doubles (percentile points).\u201d In the caption, say \u201ccites the work without citing any of its references\u201d rather than \u201ccites the work on its own.\u201d"
+    }
+   ]
+  }
+ ],
+ "P29": [
+  {
+   "round": 2,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure is clear and accurately shows the observed differences between solo authors and the two larger groups. Revise the claim it is asked to support, not the curves: the evidence does not establish that both fitted distribution parameters vary with team size.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure supports the observed comparison, but not the full claim that fitted age and citation-count parameters both vary with team size. The two larger groups cite newer and generally more highly cited references than solo authors do, but their citation-count curves are close. The separate model results suggest an age difference between ten-author teams and solo authors, while the difference in how quickly high citation counts become rarer remains inconclusive.",
+     "fix": "Keep the plotted data and marks unchanged. Narrow the claim attached to this figure to the observed comparison among the three groups shown. Report the separate model results in the text, citing [T76, T77], and state plainly that they do not establish a difference in the fitted citation-count pattern."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption explains how the curves are calculated, but it does not explicitly define reference age. The shared axis label also says 'references' even though the same reference can count once for each work that lists it.",
+     "fix": "Define reference age as the number of years between the reference's publication and the publication of the work that cites it. Use 'Reference links above the value shown (%)' for the shared vertical axis."
+    }
+   ]
+  }
+ ],
  "P3": [
   {
    "round": 1,
@@ -325,6 +610,276 @@
      "severity": "minor",
      "problem": "The caption explains the vertical separator but not the horizontal dashed line in panel A.",
      "fix": "Identify the horizontal dashed line as the 50th-percentile reference."
+    }
+   ]
+  }
+ ],
+ "P30": [
+  {
+   "round": 3,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 5,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The curves show how the distribution differs across the three team sizes, not just how their averages differ. Just to the left of zero, the larger teams have a higher share of negative scores. The caption distinguishes those scores from scores of exactly zero and explains the sample, weighting, and pointwise uncertainty.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The caption refers to the original study\u2019s Extended Data analysis but does not identify a specific figure or panel.",
+     "fix": "If [brief] identifies the closest figure or panel, give its number in the caption and keep the note that this is not a direct redraw. If there is no matching panel, say so explicitly."
+    }
+   ]
+  }
+ ],
+ "P31": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 5,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The figure makes the comparison clearly, and its caption is candid about what did not reproduce. The main fix is to bring the stated claim into line with the evidence. No new analysis or change to the plotted values is needed.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "C3 is stated as a finding, but the figure supports only part of it. Among teams of one to ten authors, disruption rank declined in the lowest citation group. The estimates do not establish a decline in the other groups or a steeper decline in the highest group. The caption already acknowledges this.",
+     "fix": "Keep the data and marks unchanged. Present C3 as the original finding being tested, not as a finding reproduced here. In the report and caption, say that the decline was reproduced in the lowest citation group, but that the broader pattern was not established."
+    },
+    {
+     "severity": "minor",
+     "problem": "The error bars show uncertainty around individual averages, not around the change with team size. The caption gives the interval for the difference between the highest and lowest citation groups, but not for the decline it reports in the lowest group.",
+     "fix": "Add the existing estimate to the caption: in the lowest citation group, disruption rank fell by 2.50 percentile points per doubling of team size. The 95% confidence interval ran from a fall of 1.64 points to a fall of 3.39 points [T68]."
+    },
+    {
+     "severity": "minor",
+     "problem": "The legend heading, \u201cCitation rank by year (works),\u201d does not make clear that works are ranked within their publication year or that the numbers in parentheses are counts.",
+     "fix": "Use \u201cCitation rank within publication year (number of works)\u201d as the legend heading."
+    }
+   ]
+  }
+ ],
+ "P32": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 4,
+    "readability": 2,
+    "caption": 3
+   },
+   "summary": "The plotted estimates and table agree with the supplied summaries. The figure shows that lower disruption ranks were more common among fields and subfields with enough data, but it cannot establish the pattern across most journals. Fix the clipped table heading before release and clarify the score and axis wording without changing any values.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The second table heading is clipped at the cell boundary. This obscures the distinction between groups that met the sample requirements and all groups seen in the sample.",
+     "fix": "Use a shorter heading, such as \u201cGroups with enough data.\u201d Explain in the caption that each entry gives the number that met the requirements out of all groups seen. Check that the heading fits at two-column print width."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption explains two citation patterns but leaves out later works that cite the paper\u2019s references without citing the paper. Readers may think the score uses only later works that cite the paper itself.",
+     "fix": "Add that later works citing only the references also count toward the total used to calculate the score."
+    },
+    {
+     "severity": "minor",
+     "problem": "The axis label \u201cRank change\u201d can sound like a measured change in the same paper or a causal effect of adding authors. The dots show an estimated association across papers.",
+     "fix": "Use \u201cEstimated rank difference per doubling of team size\u201d and keep the unit \u201cpercentile points.\u201d In the caption, explain that the dashed line marks no estimated difference."
+    },
+    {
+     "severity": "minor",
+     "problem": "The figure and caption support a narrower conclusion than the full claim. Lower ranks predominate among fields and subfields with enough data, but many field intervals include zero and only one journal met the requirements.",
+     "fix": "Keep the caption\u2019s partial-reproduction verdict and use the same qualification in the report\u2019s claim. State that the result for most journals could not be tested. No additional analysis is needed."
+    }
+   ]
+  }
+ ],
+ "P33": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The panels clearly show the observed differences for the three groups. Revise the claim attached to the figure so that it does not imply a demonstrated difference in both fitted parameters. No changes to the data or plotted marks are needed.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "C5 makes a broader claim than the figure supports. The curves show that works by the two larger groups cite newer and generally more highly cited references than solo-authored works. They do not show that the fitted age and citation-count parameters both vary with team size. The separate citation-count comparison is inconclusive.",
+     "fix": "Leave the curves unchanged and narrow the claim attached to the figure to the observed patterns in the three groups. Report the fitted results separately with [T76, T77]: the age model suggests a steeper drop for ten-author works than for solo-authored works, while the comparison for references with at least 50 citations is inconclusive."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption opens with a qualification rather than the main finding, and it describes how the confidence intervals were made before explaining what the shading means for the reader.",
+     "fix": "Lead with the observed differences and note that the two larger groups have similar citation-count curves. Explain that the shading shows sampling uncertainty separately at each value on the horizontal axis, not for the whole curve at once."
+    }
+   ]
+  }
+ ],
+ "P34": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 5,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The plot is readable, matches the supplied estimates, and distinguishes uncertainty around plotted averages from uncertainty around changes with team size. The main revision is to align C3 with the evidence: the decline was reproduced only in the lowest citation group.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure and caption test C3 but do not support it as written. Among teams of one to ten authors, only the lowest citation group shows a clear decline. The intervals for the middle group, the top tenth, and the difference between the top and bottom groups all include zero.",
+     "fix": "Keep the data and marks. Revise the report's finding to say that the citation comparison was partly reproduced: disruption rank declined with team size in the lowest citation group, but the results did not establish a decline at every citation level or a steeper decline in the top tenth."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption explains how works are ranked but does not directly say that a higher disruption percentile means a more disruptive work. It also leaves readers to infer that the size ranges above ten authors are shown for comparison but were not used to estimate the changes.",
+     "fix": "State that higher ranks mean greater disruption relative to works from the same year. Say explicitly that the estimates of change use only teams of one to ten authors."
+    },
+    {
+     "severity": "minor",
+     "problem": "The supplied title is clear, but the image itself shows only a heading for the citation-group legend.",
+     "fix": "Use \u201cDisruption rank by team size and citation rank\u201d as the visible figure title in the report."
+    }
+   ]
+  }
+ ],
+ "P35": [
+  {
+   "round": 3,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 4,
+    "truthfulness": 5,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The figure passes. The estimates are lower for larger teams in most fields and subfields that met the sample requirements, but many field intervals cross zero. That supports partial reproduction. With only one journal meeting the requirements, the figure cannot test whether the pattern holds in most journals, and the caption makes that limit clear.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The displayed title says \u201cDisruption,\u201d but the figure plots differences in disruption rank, not in the score itself. The axis phrase \u201cper author doubling\u201d is also compressed.",
+     "fix": "Use the same title in the image and caption, and name the rank in both. Label the axis \u201cDifference in disruption rank when team size doubles (percentile points).\u201d"
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption describes which citations count but does not explain what makes a score higher or how to read an interval that crosses zero.",
+     "fix": "Say that the score is higher when more later papers cite the paper without citing its references than cite both. Explain that a bar crossing zero means the data do not clearly show whether the rank is lower or higher for larger teams."
+    },
+    {
+     "severity": "minor",
+     "problem": "The phrase \u201cincluding the largest\u201d could mean the group with the most papers or the group with the largest teams. The relevant detail is that the resampling also included the group whose papers were all sampled.",
+     "fix": "Omit that phrase from the caption and, if needed, explain in the methods appendix that the repeated draws also included the team-size group for which every paper was sampled."
+    }
+   ]
+  }
+ ],
+ "P36": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 5,
+    "readability": 4,
+    "caption": 4
+   },
+   "summary": "The plots are clear and consistent with the saved summaries. The figure can support the observed group differences once the report separates them from the more limited evidence from the fitted models.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure supports the observed differences among the three groups, but not the full claim that fitted age and citation-count parameters both vary with team size. Neither panel shows a fitted model, and the separate citation-count comparison is inconclusive. The caption correctly acknowledges this, but the stated claim does not.",
+     "fix": "Keep the data and marks unchanged. Narrow the claim tied to this figure: in this sample, both larger groups cited newer and generally more highly cited references than solo authors, and their citation-count curves were similar. Use [T76, T77] in the report to explain that the age model showed a difference between solo and ten-author works, but the citation-count model did not establish a difference."
+    },
+    {
+     "severity": "minor",
+     "problem": "The shared vertical label is awkward because the age or citation count, not the link itself, is above the value shown. The caption defines the curves but could make the direction of the comparison easier to read.",
+     "fix": "Use \u201cReferences above the value shown (%)\u201d as the vertical label. In the caption, retain the explanation of how links are counted and weighted, and add that a lower curve in A means fewer older references, while a higher curve in B means more references above the same citation count."
+    }
+   ]
+  }
+ ],
+ "P37": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure is readable and accurately presents the observed differences among the three team-size groups. Revise the claim, not the plot: the observed citation-count differences do not establish a difference in the fitted parameters.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The curves show that the two larger groups cite newer and generally more highly cited references than solo authors. They do not show that the fitted age and citation-count parameters both vary with team size. The separate fits support a difference in how quickly the age curves fall for ten-author and solo works, but the fitted comparison for highly cited references was inconclusive.",
+     "fix": "Keep the plotted data and marks. Narrow the report claim to the three groups shown and describe the model results separately: the fitted age curve fell faster for ten-author works than for solo works, but the fits did not establish a difference in how quickly their citation-count curves fell among references with at least 50 citations."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption is one dense paragraph, and the explanation of the shaded bands is easy to miss.",
+     "fix": "Split the caption into short paragraphs covering the main comparison, the sample and counting rules, and the uncertainty. Explain that the shading shows uncertainty at each age or citation-count cutoff, not for the whole curve at once."
+    }
+   ]
+  }
+ ],
+ "P38": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure is readable and accurately shows a partial reproduction. Revise the claim to match the evidence; no changes to the plotted values or new analyses are needed.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The stated claim says disruption rank falls with team size at every citation level and falls most steeply among the most-cited works. For teams with one to ten authors, only the least-cited half shows a clear decline. The intervals for the middle group, the most-cited tenth, and the difference between the highest and lowest citation groups all include no change.",
+     "fix": "Keep the plotted data and marks. Revise the claim to say that disruption rank fell as team size increased in the least-cited half, but the results did not establish a decline in the other citation groups or a steeper decline in the most-cited tenth. Keep the larger team-size ranges labeled as descriptive."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption gives several estimates before telling readers what the points show, and the legend label \u201cMiddle band\u201d does not say that it refers to citation rank.",
+     "fix": "Lead with the main finding, then explain that each point is an average disruption rank for a team size and citation group and that each bar shows uncertainty for that average, not for the change with team size. Use \u201cMiddle citation ranks\u201d in the legend and retain the caption\u2019s exact group boundaries."
+    }
+   ]
+  }
+ ],
+ "P39": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure is clear and gives readers the comparisons they need to judge the original finding. Revise how the report links it to C3, not the data or the plotted marks.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure is listed as supporting C3, but it supports only part of that claim. Disruption rank declined with team size in the least-cited half. The intervals do not establish a decline in the other citation groups or a steeper decline in the most-cited tenth.",
+     "fix": "Keep the plot and estimates unchanged. In the report, present C3 as the original finding being tested, and mark it as partly reproduced. Use the caption's qualified conclusion when citing this figure."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption gives the number of works in each citation group and says that some works count more, but it does not make clear that this also affects which group a work belongs to. Readers may wonder why the lowest half contains fewer than half of the plotted works.",
+     "fix": "Say that works less likely to be sampled count more both when setting the citation groups and when calculating the plotted averages. Clarify that the legend counts each sampled work once."
     }
    ]
   }
@@ -360,6 +915,146 @@
      "severity": "minor",
      "problem": "The legend in panel B covers part of the upper curves, and several uncertainty bands are hard to distinguish from their lines at print size.",
      "fix": "Move the legend to an empty part of the panel or outside the plotting area, and increase band contrast while retaining the distinct line styles."
+    }
+   ]
+  }
+ ],
+ "P40": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure clearly shows the observed differences between the three groups and explains the sample, weighting, and uncertainty. The claim needs to match that evidence: higher observed citation counts do not establish that the fitted citation-count pattern varies with team size.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "C5 says that the fitted patterns for both reference age and citation counts vary with team size. The figure shows observed curves for three groups, not fitted curves. The separate model results support an age difference between ten-author and solo works, but the comparison for references with at least 50 citations is inconclusive.",
+     "fix": "Revise C5 to say that, in this sample, works with 10 or 51\u2013100 authors cited newer and generally more highly cited references than solo works did. Report the model results separately and mark the original finding as partly reproduced. Keep the plotted data and marks unchanged."
+    },
+    {
+     "severity": "minor",
+     "problem": "The caption uses \u201cseparate fits\u201d and \u201cfitted comparison\u201d without explaining those terms.",
+     "fix": "Say that separate statistical models, not shown here, estimated how quickly older references become less common and compared citation counts among references with at least 50 citations."
+    }
+   ]
+  }
+ ],
+ "P41": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The two panels are clear and show the descriptive differences well. The caption identifies the sample, explains the weighting and uncertainty, and names the matching figure in the original study. The main revision is to narrow the claim so it does not overstate what the curves and separate model checks establish.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The curves support the descriptive comparison, but they do not show that the fitted patterns for reference age and citation counts both vary with team size. The separate age-model comparison supports a difference between solo and ten-author works, while the comparison for highly cited references was inconclusive. The caption makes this distinction, but the stated claim does not.",
+     "fix": "Narrow the claim attached to this figure: in the groups shown, larger teams cited newer and generally more highly cited references than solo authors did. Report the age-model result separately and state that the comparison for highly cited references was inconclusive. No change to the plotted data or marks is needed."
+    },
+    {
+     "severity": "minor",
+     "problem": "In the caption, \u201ca constant rate of decline\u201d could mean that the share drops by the same number of percentage points each year, rather than by the same fraction.",
+     "fix": "Say that the age model tests whether the share of references older than a given age falls by the same fraction for each additional year."
+    }
+   ]
+  }
+ ],
+ "P42": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 2,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure is legible, and the caption correctly distinguishes uncertainty around the plotted averages from uncertainty around the changes with team size. The needed revision is to the claim linked to the figure, not the underlying analysis.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "The figure tests C3 but does not support it as written. Disruption rank declined clearly with team size only in the least-cited half. The most-cited tenth did not show a steeper estimated decline, and the interval for the difference is compatible with either group having the steeper decline.",
+     "fix": "Keep the plotted data and estimates unchanged. Present C3 as the original finding being tested, not as a reproduced result. State the result as: Among teams of one to ten authors, disruption rank fell as team size grew in the least-cited half, but the evidence did not establish a decline in the other citation groups or a steeper decline among the most-cited works."
+    },
+    {
+     "severity": "minor",
+     "problem": "The y-axis label gives the full percentile scale in parentheses, even though the plot shows only part of that scale.",
+     "fix": "Label the axis \u201cAverage disruption percentile\u201d and explain in the caption that percentiles run from zero to one hundred. Keep the plotted scale unchanged."
+    }
+   ]
+  }
+ ],
+ "P43": [
+  {
+   "round": 3,
+   "verdict": "revise",
+   "scores": {
+    "supports_claims": 3,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure is clear and supports the comparison among the three groups shown. The caption appropriately calls the finding a partial reproduction. Revise C5 to match that conclusion before release; no redraw or new analysis is needed.",
+   "issues": [
+    {
+     "severity": "major",
+     "problem": "C5 says that the fitted reference-age and citation-count distributions both change with team size. The plotted curves show observed differences among three groups, not differences in fitted parameters. As the caption notes, neither model fit closely, and the comparison for highly cited references was inconclusive.",
+     "fix": "Narrow C5 to what the curves show: works with 10 or 51\u2013100 authors cited newer and generally more highly cited references than single-author works. Report the existing model results separately: the fitted drop in the share of older references was steeper for 10-author works than for single-author works, but the comparison for highly cited references was inconclusive. Keep the plotted data and marks unchanged."
+    },
+    {
+     "severity": "minor",
+     "problem": "The phrase \u201clogarithmic above one\u201d names the scale but does not tell a reader how to read it.",
+     "fix": "Say that above one citation, each tenfold increase takes up the same space on the axis."
+    }
+   ]
+  }
+ ],
+ "P44": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 5,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure and caption provide the evidence needed to judge both parts of C3. The decline in disruption rank is clear only in the least-cited half, and the comparison does not establish a stronger decline among the most-cited works. The caption correctly distinguishes the error bars around group averages from the uncertainty in the estimated changes.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The caption says the middle and top estimates and the contrast are uncertain, but readers have to reach the last paragraph to see what that means for the claim.",
+     "fix": "As optional polish, say up front that the middle and top groups do not show a clear decline and that the top-versus-bottom comparison allows for either a stronger or a weaker decline."
+    }
+   ]
+  }
+ ],
+ "P45": [
+  {
+   "round": 1,
+   "verdict": "pass",
+   "scores": {
+    "supports_claims": 4,
+    "truthfulness": 5,
+    "readability": 5,
+    "caption": 4
+   },
+   "summary": "The figure lets readers compare reference ages and citation counts across the three groups. Both larger groups cited newer and generally more highly cited references than solo works, while their citation-count curves were close to each other. The curves do not test differences in fitted parameters directly, and the caption clearly distinguishes the observed patterns from the separate model checks.",
+   "issues": [
+    {
+     "severity": "minor",
+     "problem": "The phrase \u201colder references became less common faster\u201d could be mistaken for a change over calendar time.",
+     "fix": "Say that in the fitted age model, the share of references above the age cutoff fell faster for ten-author works than for solo works as the cutoff increased."
     }
    ]
   }

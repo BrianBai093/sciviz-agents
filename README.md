@@ -296,23 +296,23 @@ plus every intermediate artifact, the agents' code, the frozen API responses and
 [`reproductions/wu2019/`](reproductions/wu2019/), starting with [report.pdf](reproductions/wu2019/report.pdf) and
 [REPRODUCE.md](reproductions/wu2019/REPRODUCE.md).
 
-![Mean disruption percentile and median citations by team size, Columbia 2021–2024](reproductions/wu2019/figures/figure1_P15_fig2-team-stage2.png)
+![Disruption rank and citations by team size, Columbia 2021–2024](reproductions/wu2019/figures/figure1_P25_team-size-and-disruption.png)
 
-**Figure 2.** The agents' analogue of the study's Fig. 2. It covers 7,933 Columbia works from 2021–2024 that have at least one citing work, out of a sample of 8,000 stratified by team size. Error bars are 95% bootstrap intervals.
+**Figure 1 of the report.** Average disruption rank (A) and median citation count (B) by team size, for the 7,933 sampled Columbia works from 2021–2024 that were cited at least once (from a sample of 8,000 drawn separately at each team size). Error bars are 95% bootstrap intervals. It corresponds to Fig. 2 of the original study.
 
 **Result.** The central pattern holds on this data, one claim does not, and the rest hold in part:
 
 | Claim of the study | Status in the report | Our estimate (95% interval) |
 |---|---|---|
-| Disruption falls and citations rise with team size | Partly: the decline is clear, but flat between 3 and 9 authors | −3.48 percentile points per doubling of team size, 1–10 authors (−4.27 to −2.70); median citations 4 (solo), 15 (10 authors), 39 (51–100) |
-| The whole distribution of D shifts | Reproduced | Share of works with D < 0: 48% solo, 78% ten authors |
-| The decline is stronger for highly cited work | **Not reproduced** | Top-decile slope +0.23 (−4.33 to 3.37); top minus bottom +2.73 (−1.89 to 6.00) |
-| It holds across fields | Partly | Negative in 14 of 20 supported fields and 24 of 34 subfields; only 1 journal had enough works |
-| Larger teams cite newer and more popular work | Partly | References 5.2 years newer for ten authors than for solo works (4.4 to 6.1) |
-| Early attention for large teams | Partly | Larger share of early citations for 51–100 authors than solo (+5.2 points, 0.9 to 9.4) |
-| It holds within author | Partly | −1.85 per doubling with year, topic and author fixed effects (−3.43 to −0.27) |
-| It holds for another citation window | Partly | Fixed 2-year window −2.82 per doubling, paired with the main window −3.01 |
-| Funding, history, patents, Nobel | Not testable | A funding acknowledgment proxy only |
+| Disruption falls and citations rise with team size | Partly: true overall, but not at every step (flat between 3 and 9 authors) | −3.48 rank points per doubling of team size, 1–10 authors (95% interval −4.27 to −2.70); median citations 4 (solo), 15 (10 authors), 39 (51–100) |
+| The whole distribution of scores shifts | Reproduced | Share of works scoring below zero: 48% solo, 78% ten authors |
+| The decline holds at every citation level and is steepest for the most cited | Partly: clear only in the least-cited half; **the steeper decline at the top was not found** | Least-cited half −2.50 per doubling; top tenth +0.23 (−4.33 to 3.37); top minus bottom +2.73 (−1.89 to 6.00) |
+| It holds across fields | Partly | Downward in 14 of 20 fields and 24 of 34 subfields with enough data; only 1 journal had enough works |
+| Larger teams cite newer and more popular work | Partly | References 5.2 years newer for ten authors than for solo works (4.4 to 6.1); the fitted-model comparison for highly cited references was inconclusive |
+| Early attention for large teams | Partly | Larger share of early citations in the first full year for 51–100 authors than solo (+5.2 points, 0.9 to 9.4) |
+| It holds within author | Partly | −1.85 per doubling, comparing works that share an author and adjusting for year and topic (−3.43 to −0.27) |
+| It holds for another citation window and a simpler score | Partly | Shorter window −2.82 per doubling, main window −3.01 on the same works |
+| Funding, history, patents, Nobel | Not testable | Only recorded funding acknowledgments could be compared |
 
 **How the agents worked.**
 - The Lead turned the brief into a claim plan.
@@ -321,23 +321,24 @@ plus every intermediate artifact, the agents' code, the frozen API responses and
   - it piloted the design on 100 works, then collected 30k requests for 8,000 works in background jobs;
   - it checked its counts 62 times against independent counts.
 - The Analyst computed percentiles, bootstrap intervals and regressions, and drew the figures. Each figure passed a vision review.
-- The Writer wrote the report. A reviewer checked it against the claim plan and every recorded finding, and passed it in the second round.
+- The Writer wrote the report. A reviewer checked it against the claim plan and every recorded finding. After the user found the first released version too dense, the report and the figure wording were rewritten in plain language (stage 3), and a second reader, who sees only the report, now checks that a researcher from a neighbouring field can follow it.
 
-The user made the scale and method decisions at the check-ins: the pilot, the sample size, and two corrections before writing ([D47–D55](docs/DECISIONS.md)).
+The user made the scale and method decisions at the check-ins: the pilot, the sample size, two corrections before writing, and the plain-language rewrite ([D47–D59](docs/DECISIONS.md)).
 
 **What the harness adds for report mode** (all generic: the study enters only through the brief, and a lint test keeps study terms out of prompts and code):
 - an OpenAlex tool and a local proxy for kernels, with a response cache, a rate limit and a spend budget; the key never reaches the agents;
 - background jobs;
 - a figure gate (file checks plus a vision review);
-- a report gate: cited artifact ids must exist, figures must be approved, and every statistic must cite its artifact; then an independent reviewer;
+- plain-language rules for everything a reader sees (no labels the team made up; standard terms explained; no symbols in running text);
+- a report gate: cited artifact ids must exist, figures must be approved, and every statistic must cite its artifact; then two independent checks: a reviewer who compares the text with all cited evidence, and a reader who sees only the report;
 - PDF rendering;
-- `sciviz export-run`, which writes the reproduction package with a harness-written run record and a replay of every cell, job and file write in order.
+- `sciviz export-run`, which writes the reproduction package, adds a harness-written "How to reproduce" section and run record to the report, and writes a replay of every cell, job and file write in order.
 
 **Reproduce.**
 ```bash
 uv run python reproductions/wu2019/scripts/run_all.py      # offline, no keys, about 2 minutes
 ```
-The replay reruns all 52 code cells from the frozen API responses: 98 of the 109 recomputed artifacts are identical (3 of them up to row order). The 11 others record timings, retries or live API usage, or were made before a retry of failed requests. All 10 figures are rendered again with identical pixels. Rerunning the agents themselves takes three commands ([REPRODUCE.md](reproductions/wu2019/REPRODUCE.md)).
+The replay reruns all 81 code cells from the frozen API responses: 101 of the 112 recomputed artifacts are identical (3 of them up to row order). The 11 others record timings, retries or live API usage, or were made before a retry of failed requests. All 15 figures, the report's five included, are rendered again with identical pixels. Rerunning the agents themselves takes four commands ([REPRODUCE.md](reproductions/wu2019/REPRODUCE.md)).
 
 **Cost and time** (GPT-6.2 Sol for all agents):
 
@@ -346,14 +347,15 @@ The replay reruns all 52 code cells from the frozen API responses: 98 of the 109
 | Pilot | 13 min | $0.48 | $0.08 |
 | Stage 1 | 42 min | $1.25 | $2.91 |
 | Stage 2 | 15 min | $1.68 | $0 |
-| Total | 70 min | $3.41 | $3.00 |
+| Stage 3 (plain-language rewrite, 4 turns) | 98 min | $8.12 | $0 |
+| Total | 168 min | $11.53 | $3.00 |
 
-The $30 LLM cap was never approached.
+The rewrite cost more than the analysis: about $3 went to review loops that the harness fixes in D57–D59 remove. The $30 LLM cap was not approached.
 
 **Limitations.**
 - One institution and four publication years, so citation windows are short and late recognition cannot be tested.
 - A stratified sample of 8,000 works, not all 40,541 eligible ones.
 - OpenAlex coverage and metadata errors.
-- The report is accurate but dense.
+- The reader check is strict: at the round limit it left 4 small wording points open (recorded in the package, not in the report).
 
 Plan and reviews: [PLAN_P2](docs/PLAN_P2.md), [pilot review](docs/reviews/P2-pilot.md), [stage-1 review](docs/reviews/P2-M2.md), [final review](docs/reviews/P2-M3.md).

@@ -1,0 +1,53 @@
+{
+  "id": "P28",
+  "kind": "figure",
+  "title": "How disruption rank changes with team size across fields",
+  "description": "Larger teams have lower estimated disruption ranks in most fields and subfields with enough works to compare team sizes. Many field intervals cross zero, and the comparison could not be made across journals: only one met the requirements. The dots show the estimated change in disruption rank for each doubling of the author count. The disruption score compares how often later works cite a work on its own or alongside its references. The percentile ranks that score against works from the same publication year. Negative changes mean lower estimated ranks for larger teams. The sample includes works with 1–10 authors, a recorded reference and at least one later work citing them through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. Works less likely to be sampled count more. The parentheses show actual work counts. To be included, a field, subfield or journal needed at least 30 works, at least 5 in each of the 1–2 and 5–10 author ranges, and at least 4 distinct team sizes. Each bar is a 95% confidence interval for one field’s estimated change. Each table range is a 95% confidence interval for the percentage of eligible groups with estimates below zero. That was 14 of 20 fields and 24 of 34 subfields [T69, T70]. The intervals use 1,000 repeated draws within each original team-size group, with ranks recalculated and works allowed to appear more than once. The table gives each eligible group equal weight and keeps the same groups in every repeat. Compare with the field comparisons in Figure 3 and Extended Data of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P16",
+    "T69",
+    "T70"
+  ],
+  "code": null,
+  "created_at": 1795538508.023,
+  "file": "figure.png",
+  "slug": "disruption-by-field",
+  "claims": [
+    "C4"
+  ],
+  "parent": "P23",
+  "version": 2,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 2,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 2,
+        "truthfulness": 4,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The plotted estimates and table agree with the supplied data, and the zero line makes the direction of the estimates easy to see. The figure supports a tendency toward lower disruption ranks for larger teams in the fields and subfields that could be compared. Narrow C4 to that finding and state that the journal result could not be tested.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "C4 goes beyond the evidence. The estimated association is negative in most fields and subfields that met the sample requirements, but many field intervals cross zero. Only one journal met the requirements, so the figure cannot show whether the pattern holds within most journals.",
+          "fix": "Report C4 as partly reproduced: larger teams had lower estimated disruption ranks in 14 of 20 fields and 24 of 34 subfields that met the sample requirements. Say that many field estimates remain uncertain and that the finding about most journals could not be tested. Keep the existing marks and values."
+        },
+        {
+          "severity": "minor",
+          "problem": "The table heading “all groups” can be read as all fields, subfields, or journals in the database. The denominators count groups observed in the sample. “Lower estimated rank” also leaves the team-size comparison implicit.",
+          "fix": "Use two-line headings such as “Met sample rules / observed in sample” and “Lower estimated rank for larger teams.” State that the table ranges describe uncertainty for the groups that met the rules, not for all groups in the database."
+        },
+        {
+          "severity": "minor",
+          "problem": "The axis does not say what doubles. The caption explains this, but “cite a work on its own” can sound as if the later work cites nothing else.",
+          "fix": "Label the axis “Estimated change in disruption rank when author count doubles (percentile points).” In the caption, say “cites the work without citing any of its references” rather than “cites the work on its own.”"
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'How disruption rank changes with team size across fields' (version 2) for claims ['C4'], from ['P16', 'T69', 'T70']"
+}

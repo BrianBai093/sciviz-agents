@@ -78,6 +78,11 @@ def report_tools(s: Session, agent: str):
             _emit_result(s, agent, "submit_report", False, text)
             return text
         gate = s.gate("report")
+        if gate.capped:
+            text = (f"Not submitted: the report was released after the last of {REPORT_ROUNDS} review rounds, and its "
+                    "open points are recorded. Report them to the lead; a new turn can address them.")
+            _emit_result(s, agent, "submit_report", False, text)
+            return text
         if md == gate.last_reviewed:  # a review of unchanged text would only repeat the last verdict
             text = ("Not submitted: the report is unchanged since the last review. Fix the issues it raised, or, if "
                     "your instructions do not allow the changes, stop and report the conflict to the lead.")
@@ -117,6 +122,7 @@ def report_tools(s: Session, agent: str):
             _emit_result(s, agent, "submit_report", False, text)
             return text
         status = "approved" if passed else "approved_with_issues"
+        gate.capped = not passed
         open_reader = [i.problem for i in reading.issues if i.severity == "major"] if reading.verdict != "pass" else []
         if verdict.verdict != "pass":  # unresolved evidence problems travel with the report; wording points do not
             open_items = [i for i in verdict.issues if i.severity == "major"] or verdict.issues

@@ -1,0 +1,1 @@
+[Download the updated report (PDF)](/report/report.pdf). The independent report gate **released it with issues noted** in [round 4](/report/status.json). Only the three requested passages were revised; the analysis, figures, and rest of the report were unchanged.

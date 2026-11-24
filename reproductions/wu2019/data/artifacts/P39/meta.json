@@ -1,0 +1,47 @@
+{
+  "id": "P39",
+  "kind": "figure",
+  "title": "Disruption rank by team size and citation rank",
+  "description": "The original citation comparison was partly reproduced. Disruption rank fell as team size increased in the least-cited half. The data do not establish a decline in the other citation groups or a steeper decline in the most-cited tenth.\n\nEach point shows the mean disruption percentile for one team-size and citation group. Each bar gives a separate 95% confidence interval for that average, not for a change with team size. The figure covers 7,933 works with a recorded reference and at least one later work citing them through 23 November 2026. Each work had an author listing Columbia University or an institution that OpenAlex lists under it. The disruption score compares later works that cite a work without any of its references with those that cite both. Higher disruption ranks mean greater disruption relative to works published in the same year. Citation rank compares counts of distinct later citing works among works from that same year. The middle group starts at the 50th percentile and stops just before the 90th. The legend gives actual work counts. Works less likely to be sampled count more. The intervals come from recalculating both kinds of rank and the citation groups in 1,000 repeated draws within every original team-size group, including the largest, allowing a work to be picked more than once. The dashed line marks the middle of the disruption rank scale. The dotted line separates individual team sizes from ranges. The ranges above ten authors are shown for comparison only.\n\nThe estimates of change use teams with 1–10 authors. For each doubling of team size, the rank in the lowest citation group fell by an estimated 2.50 percentile points, with a 95% interval from a fall of 3.39 to a fall of 1.64, based on 3,277 works. In the middle group, the estimate was a fall of 1.22 points, with a 95% interval from a fall of 2.54 to a rise of 0.48, based on 2,476 works. In the top tenth, the estimate was a rise of 0.23 points, with a 95% interval from a fall of 4.33 to a rise of 3.37, based on 457 works. The estimated change was 2.73 points higher in the top tenth than in the lowest half, with a 95% interval from 1.89 points lower to 6.00 points higher, based on 3,734 works [T68]. Compare with the citation comparison in Figure 3 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P18",
+    "T68"
+  ],
+  "code": null,
+  "created_at": 1795538764.973,
+  "file": "figure.png",
+  "slug": "disruption-by-citation-rank",
+  "claims": [
+    "C3"
+  ],
+  "parent": "P38",
+  "version": 6,
+  "status": "approved_with_issues",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 2,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure is clear and gives readers the comparisons they need to judge the original finding. Revise how the report links it to C3, not the data or the plotted marks.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The figure is listed as supporting C3, but it supports only part of that claim. Disruption rank declined with team size in the least-cited half. The intervals do not establish a decline in the other citation groups or a steeper decline in the most-cited tenth.",
+          "fix": "Keep the plot and estimates unchanged. In the report, present C3 as the original finding being tested, and mark it as partly reproduced. Use the caption's qualified conclusion when citing this figure."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption gives the number of works in each citation group and says that some works count more, but it does not make clear that this also affects which group a work belongs to. Readers may wonder why the lowest half contains fewer than half of the plotted works.",
+          "fix": "Say that works less likely to be sampled count more both when setting the citation groups and when calculating the plotted averages. Clarify that the legend counts each sampled work once."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Disruption rank by team size and citation rank' (version 6) for claims ['C3'], from ['P18', 'T68']"
+}

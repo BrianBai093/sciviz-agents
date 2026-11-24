@@ -1,0 +1,2 @@
+# cell 69 | agent: analyst | original run: ok | artifacts created: none
+script=script.replace('Met sample rules /\\nseen in sample','Enough data /\\nseen in sample').replace('Rank change per doubling of authors (percentile points)','Rank difference per author doubling (percentile points)').replace('Citation rank by year (works)','Citation rank within publication year (work counts)'); rel=test_relabel()

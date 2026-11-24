@@ -1,0 +1,49 @@
+{
+  "id": "P29",
+  "kind": "figure",
+  "title": "Age and current citation counts of references by team size",
+  "description": "This figure tests the original study’s comparison of observed reference ages and citation counts, not its fitted models. In the three groups shown, both larger groups cite newer and generally more highly cited references than solo authors do. The two larger groups’ citation-count curves are close. The sample includes works cited at least once by a later work through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. Each curve shows the percentage of reference links with an age or citation count greater than the value on the horizontal axis. The curves pool the available links, counting each reference once per work that lists it. Each link carries the weight of that work. Works less likely to be sampled count more per link, and works with more links contribute more. In order of 1, 10 and 51–100 authors, both panels use 597, 624 and 477 works with the relevant information. Panel A uses 22,001, 34,531 and 43,548 links; panel B uses 22,149, 34,613 and 43,772 [T75]. Panel A includes same-year references, excludes references dated after the work’s publication year and shows ages through 100 years. Panel B uses current citation totals, not totals at publication. Its scale is linear through one citation and logarithmic above one. Shading gives a separate 95% confidence interval at each value on the horizontal axis. The intervals come from 1,000 repeated draws within every original team-size group, including the largest, allowing a work to be picked more than once. In the separate model results, the age fit suggests older references become less common faster for ten-author teams than for solo authors. Among references with 50 or more citations, the results do not settle whether citation counts thin out at different rates. The fitted curves do not follow the observed distributions closely throughout [T76, T77]. Compare with Figure 4 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P17",
+    "T75",
+    "T76",
+    "T77"
+  ],
+  "code": null,
+  "created_at": 1795538508.029,
+  "file": "figure.png",
+  "slug": "references-by-team-size",
+  "claims": [
+    "C5"
+  ],
+  "parent": "P24",
+  "version": 2,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 2,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 2,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure is clear and accurately shows the observed differences between solo authors and the two larger groups. Revise the claim it is asked to support, not the curves: the evidence does not establish that both fitted distribution parameters vary with team size.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The figure supports the observed comparison, but not the full claim that fitted age and citation-count parameters both vary with team size. The two larger groups cite newer and generally more highly cited references than solo authors do, but their citation-count curves are close. The separate model results suggest an age difference between ten-author teams and solo authors, while the difference in how quickly high citation counts become rarer remains inconclusive.",
+          "fix": "Keep the plotted data and marks unchanged. Narrow the claim attached to this figure to the observed comparison among the three groups shown. Report the separate model results in the text, citing [T76, T77], and state plainly that they do not establish a difference in the fitted citation-count pattern."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption explains how the curves are calculated, but it does not explicitly define reference age. The shared axis label also says 'references' even though the same reference can count once for each work that lists it.",
+          "fix": "Define reference age as the number of years between the reference's publication and the publication of the work that cites it. Use 'Reference links above the value shown (%)' for the shared vertical axis."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Age and current citation counts of references by team size' (version 2) for claims ['C5'], from ['P17', 'T75', 'T76', 'T77']"
+}

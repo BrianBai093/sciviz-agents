@@ -1,0 +1,2 @@
+# cell 68 | agent: analyst | original run: ok | artifacts created: none
+script=script.replace('Enough works /\\nall groups','Met sample rules /\\nseen in sample').replace('Lower estimated\\nrank','Lower rank for\\nlarger teams\\n(estimated)').replace('Disruption rank change per doubling (percentile points)','Rank change per doubling of authors (percentile points)').replace('References above threshold (%)','Reference links above shown value (%)'); rel=test_relabel()

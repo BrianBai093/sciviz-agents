@@ -1,0 +1,47 @@
+{
+  "id": "P43",
+  "kind": "figure",
+  "title": "Reference ages and citation counts in three team-size groups",
+  "description": "In the three groups shown, works with 10 or 51–100 authors cited newer and generally more highly cited references than solo works did. The two larger groups have similar citation-count curves. A lower curve in panel A means fewer references older than the age shown. A higher curve in panel B means more references above the citation count shown.\n\nThe works had at least one later work citing them through 23 November 2026. Each had at least one author listing Columbia University or an institution that OpenAlex lists under it. The curves count each reference once per work that lists it. Each link carries that work’s weight, so works less likely to be sampled count more per link, and works with more links contribute more. In order of 1, 10 and 51–100 authors, both panels use 597, 624 and 477 works. Panel A uses 22,001, 34,531 and 43,548 links; panel B uses 22,149, 34,613 and 43,772 [T75]. Reference age is the difference in publication years. Panel A includes same-year references, excludes references published in later years and shows ages through 100 years. Panel B uses current citation totals, not totals at publication. Its scale is linear through one citation and logarithmic above one.\n\nShading shows sampling uncertainty at each age or citation-count cutoff, not for the curve as a whole. Each 95% confidence interval comes from 1,000 repeated draws within each original team-size group. A work could be picked more than once per draw.\n\nThese curves show what we observed. They do not show whether a mathematical model fits. Separate checks ask whether a constant rate of decline describes reference age and whether very highly cited references follow the pattern the original study proposed; neither model fits closely. In the age model, a constant rate means the share of references older than a given age falls by the same fraction with each additional year. In those checks, older references became less common faster for ten-author works than for solo works. The model comparison among references with at least 50 citations was inconclusive [T76, T77]. The original finding was partly reproduced. Compare with Figure 4 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P17",
+    "T75"
+  ],
+  "code": null,
+  "created_at": 1795538902.49,
+  "file": "figure.png",
+  "slug": "references-by-team-size",
+  "claims": [
+    "C5"
+  ],
+  "parent": "P41",
+  "version": 8,
+  "status": "approved_with_issues",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The figure is clear and supports the comparison among the three groups shown. The caption appropriately calls the finding a partial reproduction. Revise C5 to match that conclusion before release; no redraw or new analysis is needed.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "C5 says that the fitted reference-age and citation-count distributions both change with team size. The plotted curves show observed differences among three groups, not differences in fitted parameters. As the caption notes, neither model fit closely, and the comparison for highly cited references was inconclusive.",
+          "fix": "Narrow C5 to what the curves show: works with 10 or 51–100 authors cited newer and generally more highly cited references than single-author works. Report the existing model results separately: the fitted drop in the share of older references was steeper for 10-author works than for single-author works, but the comparison for highly cited references was inconclusive. Keep the plotted data and marks unchanged."
+        },
+        {
+          "severity": "minor",
+          "problem": "The phrase “logarithmic above one” names the scale but does not tell a reader how to read it.",
+          "fix": "Say that above one citation, each tenfold increase takes up the same space on the axis."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Reference ages and citation counts in three team-size groups' (version 8) for claims ['C5'], from ['P17', 'T75']"
+}

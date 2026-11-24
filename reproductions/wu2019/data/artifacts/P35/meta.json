@@ -1,0 +1,53 @@
+{
+  "id": "P35",
+  "kind": "figure",
+  "title": "Disruption rank by team size in fields with enough data",
+  "description": "Larger teams had lower estimated disruption ranks in 14 of the 20 fields and 24 of the 34 subfields that met the sample requirements. Many field intervals include zero. Only one journal met the requirements, so the result for most journals could not be tested. The field and subfield pattern was partly reproduced [T69, T70]. The dots show the estimated difference in disruption rank across works for a doubling of the number of authors. The dashed line marks no estimated difference. The score compares later works that cite the work without any of its references with those that cite both. Later works that cite only the references also count toward the total used to scale the score. The percentile is the rank of that score among works published in the same year. Works with 1–10 authors had a recorded reference and at least one later work citing them through 23 November 2026. Each had at least one author listing Columbia University or an institution that OpenAlex lists under it. Works less likely to be sampled count more in the estimates. Parentheses show actual work counts. To be included, a field, subfield or journal needed at least 30 works, at least 5 in each of the 1–2 and 5–10 author ranges, and at least 4 distinct team sizes. The second table column counts groups that met those requirements out of all groups seen in the sample. Each bar gives a 95% confidence interval for one field’s estimate. Each table range gives a 95% interval for the percentage of eligible groups with estimates below zero. The intervals come from 1,000 repeated draws within each original team-size group, including the largest, allowing repeats and recalculating ranks. The table gives each eligible group equal weight and keeps the same groups in each draw. Compare with the field comparisons in Figure 3 and Extended Data of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P16",
+    "T69",
+    "T70"
+  ],
+  "code": null,
+  "created_at": 1795538637.717,
+  "file": "figure.png",
+  "slug": "disruption-by-field",
+  "claims": [
+    "C4"
+  ],
+  "parent": "P32",
+  "version": 4,
+  "status": "approved",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "pass",
+      "scores": {
+        "supports_claims": 4,
+        "truthfulness": 5,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The figure passes. The estimates are lower for larger teams in most fields and subfields that met the sample requirements, but many field intervals cross zero. That supports partial reproduction. With only one journal meeting the requirements, the figure cannot test whether the pattern holds in most journals, and the caption makes that limit clear.",
+      "issues": [
+        {
+          "severity": "minor",
+          "problem": "The displayed title says “Disruption,” but the figure plots differences in disruption rank, not in the score itself. The axis phrase “per author doubling” is also compressed.",
+          "fix": "Use the same title in the image and caption, and name the rank in both. Label the axis “Difference in disruption rank when team size doubles (percentile points).”"
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption describes which citations count but does not explain what makes a score higher or how to read an interval that crosses zero.",
+          "fix": "Say that the score is higher when more later papers cite the paper without citing its references than cite both. Explain that a bar crossing zero means the data do not clearly show whether the rank is lower or higher for larger teams."
+        },
+        {
+          "severity": "minor",
+          "problem": "The phrase “including the largest” could mean the group with the most papers or the group with the largest teams. The relevant detail is that the resampling also included the group whose papers were all sampled.",
+          "fix": "Omit that phrase from the caption and, if needed, explain in the methods appendix that the repeated draws also included the team-size group for which every paper was sampled."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Disruption rank by team size in fields with enough data' (version 4) for claims ['C4'], from ['P16', 'T69', 'T70']"
+}

@@ -1,0 +1,52 @@
+{
+  "id": "P20",
+  "kind": "figure",
+  "title": "Distributions of disruption scores by team size",
+  "description": "Most scores are close to zero, but the curves separate around zero. Larger teams have a greater share of works with scores of zero or below. Each curve shows the percentage of works at or below the score on the horizontal axis. The jump at zero counts works with a score of exactly zero, not works with negative scores. The groups are 600 solo works, 624 works by ten authors and 477 works by teams of 51–100 authors. All are Columbia-linked works in OpenAlex cited by at least one later work through 23 November 2026 [T67]. Works less likely to be sampled count more. A score is positive when more later works cite the work without its references than cite both the work and its references. A negative score means the reverse. Later works that cite the references but not the work also count toward the total used to scale the score [brief]. The plot shows scores from negative 0.1 to positive 0.1 and spreads out values near zero. Shading shows pointwise 95% confidence intervals from 1,000 repetitions of resampling works with replacement within every team-size group, including the largest. Compare with the disruption-score distribution analysis in Extended Data of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P19",
+    "T67"
+  ],
+  "code": null,
+  "created_at": 1795538420.339,
+  "file": "figure.png",
+  "slug": "disruption-score-distributions",
+  "claims": [
+    "C2"
+  ],
+  "parent": null,
+  "version": 1,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 1,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 5,
+        "truthfulness": 4,
+        "readability": 5,
+        "caption": 3
+      },
+      "summary": "The curves show distribution differences directly: larger teams have a greater share of negative scores just left of zero and a greater share of scores at or below zero. The distinct line styles and visible steps make the comparison easy to read. Revise the caption without changing the data or marks.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The caption does not say what made a work eligible as “Columbia-linked,” so a reader cannot tell which papers the results describe.",
+          "fix": "State the actual rule used to identify works connected to Columbia University. Keep the citation requirement and the sample count for each team size."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption says works were resampled within each plotted team-size group, while the source describes resampling within the groups originally used to draw the sample. It also leaves “pointwise” unexplained.",
+          "fix": "Say that the shading gives a 95% confidence interval at each score separately. Describe the 1,000 repetitions as drawing works again within each original sampling group, allowing a work to be drawn more than once."
+        },
+        {
+          "severity": "minor",
+          "problem": "The reference to Extended Data does not identify a specific figure in the original study.",
+          "fix": "Give the matching Extended Data figure number if the brief identifies one. If there is no direct match, name the related analysis without implying that this plot reproduces a specific figure."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Distributions of disruption scores by team size' (version 1) for claims ['C2'], from ['P19', 'T67']"
+}

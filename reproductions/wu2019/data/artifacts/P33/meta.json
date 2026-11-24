@@ -1,0 +1,49 @@
+{
+  "id": "P33",
+  "kind": "figure",
+  "title": "Age and current citation counts of references in three team-size groups",
+  "description": "This figure supports only the comparison of observed distributions among the three groups shown. The two larger groups cite newer and generally more highly cited references than solo authors do. Their citation-count curves are close. The curves do not establish differences in fitted distributions. The sample includes works cited at least once by a later work through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. Each curve shows the percentage of reference links with an age or citation count above the value on the horizontal axis. The curves pool the available links, counting each reference once per work that lists it. Works less likely to be sampled count more per link, and works with more links contribute more. In order of 1, 10 and 51–100 authors, both panels use 597, 624 and 477 works with the relevant information. Panel A uses 22,001, 34,531 and 43,548 links; panel B uses 22,149, 34,613 and 43,772 [T75]. Reference age is the difference in publication years between a reference and the work that cites it. Panel A includes same-year references, excludes references dated after the work’s publication year and shows ages through 100 years. Panel B uses current citation totals, not totals when the work was published. Its scale is linear through one citation and logarithmic above one. Shading gives a separate 95% confidence interval at each value on the horizontal axis. The intervals come from 1,000 repeated draws within every original team-size group, including the largest, allowing a work to be picked more than once. In the separate model results, the age fit suggests that older references become less common faster for ten-author teams than for solo authors. Among references with 50 or more citations, the fitted comparison is inconclusive. Neither fit follows the observed distribution closely throughout [T76, T77]. Compare with Figure 4 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P17",
+    "T75",
+    "T76",
+    "T77"
+  ],
+  "code": null,
+  "created_at": 1795538575.175,
+  "file": "figure.png",
+  "slug": "references-by-team-size",
+  "claims": [
+    "C5"
+  ],
+  "parent": "P29",
+  "version": 3,
+  "status": "approved_with_issues",
+  "reviews": [
+    {
+      "round": 3,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 3,
+        "truthfulness": 5,
+        "readability": 5,
+        "caption": 4
+      },
+      "summary": "The panels clearly show the observed differences for the three groups. Revise the claim attached to the figure so that it does not imply a demonstrated difference in both fitted parameters. No changes to the data or plotted marks are needed.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "C5 makes a broader claim than the figure supports. The curves show that works by the two larger groups cite newer and generally more highly cited references than solo-authored works. They do not show that the fitted age and citation-count parameters both vary with team size. The separate citation-count comparison is inconclusive.",
+          "fix": "Leave the curves unchanged and narrow the claim attached to the figure to the observed patterns in the three groups. Report the fitted results separately with [T76, T77]: the age model suggests a steeper drop for ten-author works than for solo-authored works, while the comparison for references with at least 50 citations is inconclusive."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption opens with a qualification rather than the main finding, and it describes how the confidence intervals were made before explaining what the shading means for the reader.",
+          "fix": "Lead with the observed differences and note that the two larger groups have similar citation-count curves. Explain that the shading shows sampling uncertainty separately at each value on the horizontal axis, not for the whole curve at once."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Age and current citation counts of references in three team-size groups' (version 3) for claims ['C5'], from ['P17', 'T75', 'T76', 'T77']"
+}

@@ -1,0 +1,52 @@
+{
+  "id": "P26",
+  "kind": "figure",
+  "title": "Disruption rank by team size and citation rank",
+  "description": "The decline in disruption rank was reproduced for the lowest citation group among teams of 1–10 authors. The data do not establish a decline across all citation groups or a steeper decline in the highest group. The figure covers 7,933 works with a recorded reference and at least one later work citing them through 23 November 2026. On each work, at least one author listed Columbia University or an institution that OpenAlex lists under it. The disruption score compares how often later works cite a work on its own or alongside its references. Higher ranks indicate greater disruption. Works are ranked separately by disruption score and by the number of distinct later works citing them. Both ranks compare works from the same publication year. Works less likely to be sampled count more. The middle citation group starts at the 50th percentile and stops just before the 90th; the top group starts at the 90th. The legend gives actual work counts. The dashed line marks the midpoint of the disruption rank scale. The dotted line separates individual team sizes from size ranges. Each bar gives a separate 95% confidence interval for one plotted average. The intervals come from 1,000 repeated draws in every original team-size group, including the largest, allowing a work to be picked more than once and recalculating both ranks and the citation groups. In the lowest citation group, doubling team size from within the 1–10 author range corresponds to a drop of 2.50 percentile points, with a 95% interval from a drop of 3.39 to a drop of 1.64, based on 3,277 works. The other groups’ intervals are compatible with a decline or an increase. The comparison between the top group and lower half, based on 3,734 works, is inconclusive [T68]. The points for the larger team sizes show group averages. Compare with the citation comparisons in Figure 3 of the original study [brief].",
+  "producer": "analyst",
+  "inputs": [
+    "P18",
+    "T68"
+  ],
+  "code": null,
+  "created_at": 1795538508.005,
+  "file": "figure.png",
+  "slug": "disruption-by-citation-rank",
+  "claims": [
+    "C3"
+  ],
+  "parent": "P21",
+  "version": 2,
+  "status": "rejected",
+  "reviews": [
+    {
+      "round": 2,
+      "verdict": "revise",
+      "scores": {
+        "supports_claims": 2,
+        "truthfulness": 5,
+        "readability": 4,
+        "caption": 4
+      },
+      "summary": "The plot and caption show a partial reproduction, not the full finding stated in C3. Revise the claim attached to the figure; no new analysis or changes to the plotted values are needed.",
+      "issues": [
+        {
+          "severity": "major",
+          "problem": "The figure does not support C3 as written. Among teams of one to ten authors, the decline is clear only in the lowest citation group. The other groups' intervals allow both a decline and an increase, and the comparison between the highest and lowest groups does not establish a steeper decline in the highest group. The caption reports this accurately, but the claim attached to the figure does not.",
+          "fix": "Keep C3 as the original study's finding being tested, not as a reproduced result. Label the result as partly reproduced: disruption rank fell with team size in the lowest citation group, but a decline across all citation groups or a steeper decline in the highest group was not established. Keep the plotted data and marks unchanged."
+        },
+        {
+          "severity": "minor",
+          "problem": "The caption calls the comparison between the highest and lowest citation groups inconclusive but does not give its interval. The error bars in the plot show uncertainty for individual averages, not for the difference in declines.",
+          "fix": "Report the existing comparison from [T68]: the estimated slope was 2.73 percentile points higher in the top tenth than in the lowest half per doubling of team size, with a 95% confidence interval from 1.89 points lower to 6.00 points higher."
+        },
+        {
+          "severity": "minor",
+          "problem": "The only heading visible in the image is the legend heading, which names citation rank but not disruption or team size.",
+          "fix": "Make sure the supplied title, 'Disruption rank by team size and citation rank,' appears with the figure in the report."
+        }
+      ]
+    }
+  ],
+  "summary": "figure 'Disruption rank by team size and citation rank' (version 2) for claims ['C3'], from ['P18', 'T68']"
+}
