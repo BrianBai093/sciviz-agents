@@ -56,7 +56,7 @@ Result of the replay on 2026-11-24:
 
 Needs `OPENAI_API_KEY` and `OPENALEX_API_KEY` (with about $3.50 of OpenAlex credit). The original run cost $3.41 of LLM
 spend in total (pilot $0.48, stage 1 $1.25, stage 2 $1.68) and $3.00 of OpenAlex requests, and took about 70 minutes of
-agent time. The three steps are the same commands with the inputs in [`inputs/wu2019/`](../../inputs/wu2019/):
+agent time. The four steps are the same commands with the inputs in [`inputs/wu2019/`](../../inputs/wu2019/):
 
 ```bash
 Q="How does team size influence the balance between disruptive innovation and developmental research in science and technology?"
@@ -66,6 +66,8 @@ uv run sciviz reproduce --session my-pilot --paper inputs/wu2019/paper_brief.md 
 uv run sciviz reproduce --session my-run --paper inputs/wu2019/paper_brief.md --constraints inputs/wu2019/full_stage1.md --input inputs/wu2019/pilot_report.md --input inputs/wu2019/pilot_decisions.md --external-budget 3.5 --question "$Q"
 # 3. stage 2: the user's two corrections, then the report through the report gate
 uv run sciviz reproduce --session my-run --paper inputs/wu2019/paper_brief.md --constraints inputs/wu2019/full_stage2.md --external-budget 0.3 --question "$Q"
+# 4. stage 3: figure wording and the report rewritten in plain language (no new analysis)
+uv run sciviz reproduce --session my-run --paper inputs/wu2019/paper_brief.md --constraints inputs/wu2019/full_stage3.md --external-budget 0 --question "$Q"
 uv run sciviz export-run --session my-run --out reproductions/my-run
 ```
 

@@ -408,3 +408,16 @@ Each record states the context, the options considered, the decision, and why. R
   - The evidence index in the PDF lists each cited artifact under the title the agents gave it while working, and says so; the long working descriptions are left to the package.
 - **Why:** the user's instruction ("write it for people, in plain language, with no made-up terms"). A reviewer that shares the authors' vocabulary cannot judge readability; a reader without that context can. The rules are generic: they name no study, measure or technique.
 - **Status:** Accepted.
+
+## D57. Review criteria that converge: figures are judged on testing a claim; the reader is bounded
+- **Problem (seen in stage 3, D56's first run):**
+  - The figure review marked figures down when the study's claim did not hold in our data ("revise the claim, not the plot"). No caption can fix that, so two figures for claims that reproduced only in part ran into the round limit and were accepted with open issues, after several futile resubmissions.
+  - The new reader check did not converge. It reviewed the whole report, appendix and figure captions included, listed every problem it found (about 50, then 63), and called most of them major. The writer answered each point by adding explanation, so the draft grew from 7,100 to 8,300 words and the reader found more to question. The user's instruction was a plainer, less dense report; the run was stopped in round 2.
+  - The reviewer passed "Lu Wu" for the brief's "L. Wu" (a first name the writer guessed).
+- **Decision:**
+  - Figure review: `supports_claims` scores whether the figure tests the listed claims, not whether they hold; a figure showing that a claim held only in part serves the report as well, if its caption says so. The claims' wording is not part of the review.
+  - Reader check: it judges the main text; sections titled "Appendix" are checked only for made-up labels; figure captions are context, since the figure gate reviews them under the same rules. At most 12 problems, most important first. "Major" means a reader cannot follow a main method or result, or a made-up label. It passes when no major problem remains, and it prefers fixes that shorten or simplify.
+  - Writer: fix readability by rewriting more simply, cutting or moving detail to the appendix, not by adding explanation. Add nothing about the study that the brief does not say. The reviewer checks statements about the study against the brief.
+  - A stopped turn (constraints but no lead report) is archived like a finished one when the session continues.
+- **Why:** a gate that cannot be satisfied by the work under review produces loops and longer text instead of better text. These rules keep each check on what its author can fix.
+- **Status:** Accepted.

@@ -88,8 +88,11 @@ FIGURE_CRITIC_PROMPT = """You are an independent reviewer of figures for a resea
 Judge it from the image, its caption, the claims it is meant to support, and the summaries of the data behind it.
 
 Criteria (score each 1-5):
-1. supports_claims: the figure shows the evidence the listed claims need, at the right level (groups, measures,
-   comparisons) and without leaving out what a reader needs to judge the claim.
+1. supports_claims: the figure shows the evidence needed to judge the listed claims, at the right level (groups,
+   measures, comparisons), without leaving out what a reader needs. Score whether the figure tests the claims, not
+   whether the claims hold: a figure showing that a claim held only in part, or not at all, serves the report as
+   well as one confirming it, provided the caption says what it shows. The claims are the study's and their wording
+   is not part of this review.
 2. truthfulness: axes, scales, baselines, units and labels are correct and not misleading; uncertainty (for example
    confidence intervals) and sample sizes are shown or stated where the claim depends on them; values are plausible
    given the data summaries.
@@ -134,7 +137,8 @@ claim plan, the report text, and the evidence: every finding the team recorded a
 
 Check:
 1. support: every number and factual statement in the report is backed by the cited evidence, and the cited numbers
-   match the findings (allow rounding);
+   match the findings (allow rounding); statements about the original study (its authors, data, methods and
+   results) match the paper brief and add nothing it does not say;
 2. coverage: every claim in the claim plan is addressed, with a clear status (reproduced / partly / not reproduced /
    not testable) and the reason;
 3. honesty: conclusions follow from the evidence; no overclaiming (causal language, generalizing beyond the data,
@@ -165,20 +169,25 @@ def review_report(brief: str, claim_plan: str, report_md: str, evidence: str, ca
 
 
 COLD_READER_PROMPT = """You are a careful reader of a research report: a researcher from a neighbouring field who has
-not seen the work behind it. You get only the report, with each figure's title and caption where the figure stands.
-Read it from start to finish and find every place you could not follow on a first reading:
-- words, labels, abbreviations, symbols or variable names that are not everyday English or standard terms of
-  research, or that the report uses before or without explaining them;
-- names that look made up by the authors for their own samples, groups, checks, stages or versions;
-- sentences you would have to read twice, or that pack several qualifications into one;
-- passages about the history of the work (earlier versions, stages, corrections) that a reader does not need;
-- figures or tables whose point the text does not explain.
-Citations in square brackets (for example [T3] or [brief]) point to the authors' evidence; ignore them.
+not seen the work behind it. You get only the report. Each figure appears where it stands as its number, title and
+caption in square brackets; the captions were reviewed with the figures, so read them for context and do not list
+problems in them. Citations in square brackets (for example [T3] or [brief]) point to the authors' evidence; ignore
+them.
 
-For each problem, quote the exact words and give plain wording that keeps the meaning and every number. Mark a
-problem "major" when it keeps a reader from understanding a method or a result, "minor" otherwise. Score
-readability 1-5 (5: a researcher from a neighbouring field follows everything on a first reading). Return "pass"
-only when no major problem remains and readability is at least 4.
+Read the main text (every section before the appendix) as a whole and find what would stop you from following it
+on a first reading:
+- words, labels, abbreviations or symbols that the authors seem to have made up, or that are used before or
+  without an explanation;
+- sentences you would have to read twice;
+- passages about the history of the work (earlier versions, stages, corrections) that a reader does not need;
+- a method or result whose meaning you cannot tell from the text.
+Sections titled "Appendix" are for specialists: check them only for labels the authors made up.
+
+List at most 12 problems, the most important first. For each, quote the exact words and give plain wording that
+keeps the meaning and every number; prefer fixes that make the text shorter or simpler over fixes that add
+explanation. Mark a problem "major" only when it keeps a reader from understanding a main method or result, or when
+it is a label the authors made up; mark everything else "minor". Score readability 1-5 (5: a researcher from a
+neighbouring field follows the main text on a first reading). Return "pass" when no major problem remains.
 
 The authors were asked to follow these rules:
 

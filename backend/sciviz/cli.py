@@ -104,7 +104,7 @@ def _archive_previous_turn(root: Path) -> None:
     """A continued session keeps each earlier turn's constraints, lead report, API usage and released report (with
     its gate reviews) under history/turnN/."""
     prev = [root / "lead_report.md", root / "inputs" / "run_constraints.md", root / "external_usage.json"]
-    if not prev[0].exists():
+    if not any(p.exists() for p in prev):  # a stopped turn has constraints but no lead report
         return
     dest = root / "history" / f"turn{len(list((root / 'history').glob('turn*'))) + 1}"
     dest.mkdir(parents=True)

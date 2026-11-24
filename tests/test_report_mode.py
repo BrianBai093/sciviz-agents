@@ -207,3 +207,13 @@ def test_exported_report_gets_the_harness_reproduction_section(tmp_path):
     note = _reproduce_note(ws, out)
     assert note.startswith("## How to reproduce this report") and "the 2 code steps" in note
     assert "/scripts/run_all.py" in note and "REPRODUCE.md" in note and "api_responses" not in note
+
+
+def test_a_stopped_turn_is_archived_too(tmp_path):
+    from sciviz.cli import _archive_previous_turn
+    (tmp_path / "inputs").mkdir()
+    (tmp_path / "inputs" / "run_constraints.md").write_text("stopped turn")  # no lead report: the turn was stopped
+    _archive_previous_turn(tmp_path)
+    assert (tmp_path / "history" / "turn1" / "run_constraints.md").read_text() == "stopped turn"
+    _archive_previous_turn(tmp_path)  # nothing left to archive: no empty turn folder
+    assert not (tmp_path / "history" / "turn2").exists()

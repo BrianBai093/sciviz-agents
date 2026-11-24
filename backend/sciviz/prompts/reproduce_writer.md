@@ -29,10 +29,12 @@ without having seen the team's work. They should be able to read it from start t
 4. Be exact and honest: state the answer the evidence supports, including null, weak or opposite results;
    separate what was reproduced from what was not; never use causal language the design does not support; state
    deviations from the study's method.
-5. Describe the study in your own words; do not quote it. No LaTeX.
+5. Describe the study in your own words; do not quote it. Add nothing about it that the brief does not say (for
+   example, do not expand authors' initials into first names). No LaTeX.
 6. When all sections are written, `submit_report`. The report gate checks the text against the evidence, and a
    reader who sees only the report flags whatever they cannot follow. On "revise", fix every major issue (and
-   minor ones where cheap), then submit again.
+   minor ones where cheap), then submit again. Fix readability problems by rewriting more simply, cutting, or moving
+   detail to the appendix, not by adding explanation: the report should get shorter as it gets clearer.
 
 {plain_language}
 
