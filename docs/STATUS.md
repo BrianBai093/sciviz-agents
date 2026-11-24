@@ -7,11 +7,14 @@ _Last updated: 2026-11-23. Project 1 complete and published. Project 2: pilot do
 - **Published (D45):** public repo https://github.com/BrianBai093/sciviz-agents. The full database is the asset of release [v1.0.0](https://github.com/BrianBai093/sciviz-agents/releases/tag/v1.0.0); README §1 gives the download command and checksum. GitHub Actions runs lint and the unit tests on every push.
 - **Open (user decision):** where to host the video. For now it is in the repo (`demo/video/sciviz_demo.mp4`).
 - **Design Test (Option A):** done. The architecture figure is `docs/figures/sciviz_architecture.{pdf,png,svg}`, built by `docs/figures/build_architecture_figure.py` (D46), and it opens README §3.
-- **Project 2** (reproduce Wu, Wang & Evans 2019; plan `docs/PLAN_P2.md`, D47–D49):
-  - Report-mode harness built: OpenAlex service and proxy, `sciviz reproduce`.
-  - 100-work pilot done and checked (`docs/reviews/P2-pilot.md`): D is correct on 7 hand-checked works; OpenAlex $0.08; LLM $0.48.
-  - **Waiting on the user:** the scale of the full run. All 40,541 eligible works need about 130k–189k OpenAlex list requests ($13–19). The free key allows $1 per day, so that is 14–19 days, unless the user buys prepaid credit or we use a sample.
-  - Still to build in P2-M1: background jobs, the figure gate, the report builder, script export.
+- **Project 2** (reproduce Wu, Wang & Evans 2019; plan `docs/PLAN_P2.md`, D47–D51):
+  - M1 done: report-mode harness, pilot, background jobs, figure gate, report gate, export with replay.
+  - **Stage 1 of the full run done** (`workspaces/reproduce/r-full-8k`, review `docs/reviews/P2-M2.md`):
+    - an 8,000-work stratified sample; findings F1–F9 for claims C1–C9; 5 gated figures;
+    - LLM $1.25; OpenAlex $2.91.
+    - Headline: the D percentile falls with team size (62.9 for solo → 36.4 for 51–100) while citations rise. This reproduces the main result. The high-impact claim does not reproduce.
+  - **Waiting on the user:** check-in on the results, and on two settings for stage 2 (interval method; the at-least-one-citation restriction).
+  - Then: stage 2 (writer + report gate → PDF), `sciviz export-run`, README, video.
 
 ## How to run
 See README §1. In short:

@@ -270,7 +270,10 @@ class OpenAlexProxy:
             def log_message(self, *args):  # silence per-request logging
                 pass
 
-        self._server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        class Server(ThreadingHTTPServer):
+            request_queue_size = 256  # many concurrent kernel/job workers; the default backlog (5) resets connections
+
+        self._server = Server(("127.0.0.1", 0), Handler)
         self._server.daemon_threads = True
         self.url = f"http://127.0.0.1:{self._server.server_address[1]}"
         self._thread = threading.Thread(target=self._server.serve_forever, daemon=True, name="openalex-proxy")

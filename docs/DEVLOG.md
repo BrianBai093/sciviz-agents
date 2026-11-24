@@ -356,3 +356,26 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
   - a job plus the cell log, then export and offline replay (3 of 3 artifacts identical);
   - PDF rendering (skipped when Chromium is missing).
   All 23 pass.
+
+## 2026-11-23: Project 2, stage 1 of the full run (evidence and figures)
+
+- **Run:** `workspaces/reproduce/r-full-8k`. 43 min; LLM $1.25 (report-mode ledger $1.73 of $30); OpenAlex $2.91 of $3.50 (30.2k requests; the daily allowance ran out, then prepaid credit was used).
+- **Sample (data agent):** 8,000 of 40,541 eligible works. 626–627 works per team-size stratum, plus all 481 works with 51–100 authors. Inclusion probabilities and weights are kept.
+- **Data design:** for both windows from one request, it used `group_by=publication_year` on the citing sets of f, of f ∪ R, and of "f but none of R". Long reference lists use disjoint chunks; 14 works needed cursor overflow. Reference metadata comes in batches of 100 IDs: 375k references.
+- **Validation:**
+  - by the agent: grouped counts against independent counts, 62 checks;
+  - by the reviewer, outside the run: 4 main-window and 3 fixed-window D values recomputed from full citing records, all 7 exact.
+- **Results (analyst):**
+  - C1: the mean D percentile falls with team size: 62.9 for solo, 47.4 for 10 authors, 36.4 for 51–100. That is −3.66 points per doubling for 1–10 authors (CI −4.34 to −2.99). Median citations rise: 4, 15, 38.
+  - C2: the distribution shifts.
+  - C3: the decline is **not** stronger at high impact. In the top decile, solo works rank low.
+  - C4: slopes are negative in 14 of 20 fields and 25 of 35 subfields.
+  - C5: larger teams cite newer references (+5.4 years for solo vs 10 authors) and more-cited ones.
+  - C6: earlier attention for large teams.
+  - C7: within author, with year, topic and author fixed effects: −1.95 per doubling (CI −3.52 to −0.38).
+  - C8: the fixed window gives the same slope.
+  - C9: a weaker gradient for works with a funder acknowledgment.
+- **Reviewer recomputation of C1** from the raw counts, restricted to works with at least one citation: 62.5, 47.6, 36.2; medians 4, 15, 39. This agrees.
+- **Figures:** 5 approved, after 12 submissions to the gate (7 sent back for revision).
+- **Fixed:** the proxy's connection backlog (connection resets under 24 concurrent workers; the jobs retried them).
+- **For stage 2:** the confidence intervals treat the 51–100 stratum as a census (near-zero width), and the main estimates include 64 works without focal citations. See `docs/reviews/P2-M2.md`.
