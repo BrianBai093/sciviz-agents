@@ -421,3 +421,12 @@ Each record states the context, the options considered, the decision, and why. R
   - A stopped turn (constraints but no lead report) is archived like a finished one when the session continues.
 - **Why:** a gate that cannot be satisfied by the work under review produces loops and longer text instead of better text. These rules keep each check on what its author can fix.
 - **Status:** Accepted.
+
+## D58. The report reviewer sees all cited evidence; only evidence problems are appended to a released report
+- **Problem:**
+  - The reviewer's evidence was cut at 60,000 characters, in artifact order. With 170 artifacts (26 new figure versions with long captions among them) it received 60k of 161k characters, and cited tables such as T75–T77 and T87 were not in it, so it could not check numbers taken from them. Earlier reviews of this run were also partly blind to late tables; the reviewer's own spot checks of the main numbers (and mine) had covered the findings.
+  - A report released after the last round carried every open point, including the reader's wording suggestions, as an "Open review issues" section.
+- **Decision:**
+  - `evidence_text` puts every finding first, then every artifact the report cites (title, description, summary, and the rows of small tables or the data of JSON artifacts), then one line for each artifact it does not cite. The budget is 150,000 characters; for this report everything fits (134k).
+  - After the last round, the reviewer's unresolved issues are appended to the report (a reader must know about unresolved evidence problems). The reader's unresolved points go to `status.json` and the review log, and the run record mentions them.
+- **Status:** Accepted.

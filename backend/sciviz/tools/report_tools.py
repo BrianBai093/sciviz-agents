@@ -3,7 +3,8 @@
 The gate is enforced here: mechanical evidence checks first, then two independent checks, then rendering. The
 reviewer compares the text with the evidence; the reader sees only the report (with figure titles and captions) and
 flags what a researcher who has not seen the run could not follow. Both must pass. After `REPORT_ROUNDS` reviewed
-submissions the latest version is released with the open review issues appended.
+submissions the latest version is released: the reviewer's open issues are appended to it (a reader must know about
+unresolved evidence problems), the reader's open points are kept in status.json and the review log.
 """
 from __future__ import annotations
 
@@ -81,7 +82,8 @@ def report_tools(s: Session, agent: str):
         brief = brief_file.read_text(encoding="utf8") if brief_file.exists() else "(no brief)"
         plan_file = s.ws.root / "claim_plan.json"
         plan = plan_file.read_text(encoding="utf8") if plan_file.exists() else "(no claim plan)"
-        verdict = critic.review_report(brief, plan, md, rep.evidence_text(arts, s.ws.root),
+        cited = {x.strip() for c in rep.CITE.finditer(md) for x in c.group(1).split(",")} | set(rep.FIG.findall(md))
+        verdict = critic.review_report(brief, plan, md, rep.evidence_text(arts, s.ws.root, cited),
                                        callbacks=[s.usage_callback])
         reading = critic.review_readability(rep.reader_text(md, arts), callbacks=[s.usage_callback])
         passed = verdict.verdict == "pass" and reading.verdict == "pass"
@@ -109,8 +111,9 @@ def report_tools(s: Session, agent: str):
             _emit_result(s, agent, "submit_report", False, text)
             return text
         status = "approved" if passed else "approved_with_issues"
-        if status == "approved_with_issues":
-            open_items = [i for i in all_issues if i.severity == "major"] or all_issues
+        open_reader = [i.problem for i in reading.issues if i.severity == "major"] if reading.verdict != "pass" else []
+        if verdict.verdict != "pass":  # unresolved evidence problems travel with the report; wording points do not
+            open_items = [i for i in verdict.issues if i.severity == "major"] or verdict.issues
             md += ("\n## Open review issues\n\nThe independent review still raised these points after "
                    f"{REPORT_ROUNDS} rounds:\n\n" + "\n".join(f"- {i.problem}" for i in open_items) + "\n")
         out = s.ws.root / "report"
@@ -118,7 +121,8 @@ def report_tools(s: Session, agent: str):
         html_text = rep.to_html(md, arts, s.ws.root, subtitle)
         rep.render_pdf(html_text, out / "report.html", out / "report.pdf")
         (out / "status.json").write_text(json.dumps({"status": status, "round": round_no, "scores": scores,
-                                                     "title": title, "subtitle": subtitle}))
+                                                     "title": title, "subtitle": subtitle,
+                                                     "open_reader_points": open_reader}))
         s.events.emit(agent, "report", status=status, pdf=str(out / "report.pdf"))
         text = (f"Report {status} in round {round_no} ({scores}); rendered to report/report.pdf.\n"
                 f"{summary}\nRemaining issues:\n{issues}")

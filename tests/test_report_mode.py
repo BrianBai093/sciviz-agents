@@ -217,3 +217,35 @@ def test_a_stopped_turn_is_archived_too(tmp_path):
     assert (tmp_path / "history" / "turn1" / "run_constraints.md").read_text() == "stopped turn"
     _archive_previous_turn(tmp_path)  # nothing left to archive: no empty turn folder
     assert not (tmp_path / "history" / "turn2").exists()
+
+
+def test_reviewer_evidence_puts_cited_artifacts_first(tmp_path):
+    import pandas as pd
+    arts = {}
+    for i in range(1, 300):  # a long run: many artifacts the report does not cite
+        arts[f"T{i}"] = {"id": f"T{i}", "kind": "table", "title": f"table {i}", "description": "x" * 400,
+                         "summary": "y" * 900, "file": "data.parquet"}
+    d = tmp_path / "artifacts" / "T299"
+    d.mkdir(parents=True)
+    pd.DataFrame({"group": ["a", "b"], "gap": [0.0812, 0.0885]}).to_parquet(d / "data.parquet")
+    text = rep.evidence_text(arts, tmp_path, cited={"T299", "brief"}, limit=20000)
+    assert text.startswith("T299 (table)") and "0.0812" in text  # the cited small table, with its rows
+    assert "T5 (table) table 5\n" in text and "x" * 400 not in text.split("OTHER ARTIFACTS")[1]
+
+
+def test_open_reader_points_stay_out_of_the_released_report(session, monkeypatch):
+    from sciviz.agents import critic
+    from sciviz.tools import report_tools as rt
+    monkeypatch.setattr(rt, "REPORT_ROUNDS", 1)
+    monkeypatch.setattr(critic, "review_report", lambda *a, **k: critic.ReportVerdict(
+        verdict="pass", support=5, coverage=5, honesty=5, clarity=4, summary="ok"))
+    monkeypatch.setattr(critic, "review_readability", lambda *a, **k: critic.ReadabilityVerdict(
+        verdict="revise", readability=4, summary="one sentence is hard", issues=[
+            critic.Issue(severity="major", problem="a long sentence", fix="split it")]))
+    monkeypatch.setattr(rep, "render_pdf", lambda html_text, h, p: (h.write_text(html_text), p.write_bytes(b"%PDF")))
+    write, _remove, _draft, submit = rt.report_tools(session, "writer")
+    write.invoke({"position": 1, "name": "summary", "markdown": "## Summary\n\nThe answer [brief]."})
+    assert "approved_with_issues in round 1" in submit.invoke({"title": "R"})
+    root = session.ws.root / "report"
+    assert "Open review issues" not in (root / "report.md").read_text()
+    assert json.loads((root / "status.json").read_text())["open_reader_points"] == ["a long sentence"]

@@ -219,22 +219,49 @@ def render_pdf(html_text: str, html_path: Path, pdf_path: Path) -> None:
         browser.close()
 
 
-def evidence_text(artifacts: dict[str, dict], root: Path, limit: int = 60000) -> str:
-    """Findings in full, plus one-line summaries of all other artifacts (input for the report reviewer)."""
-    parts = []
+def _artifact_data_text(m: dict, root: Path, max_rows: int = 80, max_chars: int = 6000) -> str:
+    """A small table in full (CSV) or a JSON artifact's data, so a reviewer can check the numbers taken from it."""
+    path = root / "artifacts" / m["id"] / m.get("file", "")
+    try:
+        if m["kind"] == "table" and path.suffix == ".parquet":
+            import pandas as pd
+            df = pd.read_parquet(path)
+            if len(df) > max_rows:
+                return ""
+            text = df.to_csv(index=False, float_format="%.6g")
+        elif m["kind"] == "json" and path.suffix == ".json":
+            text = path.read_text(encoding="utf8")
+        else:
+            return ""
+    except Exception:  # noqa: BLE001 (unreadable data: the summary still describes it)
+        return ""
+    return text if len(text) <= max_chars else text[:max_chars] + "\n... [data truncated]"
+
+
+def evidence_text(artifacts: dict[str, dict], root: Path, cited: set[str] | None = None,
+                  limit: int = 150000) -> str:
+    """Input for the report reviewer. First every finding in full, then every artifact the report cites (with its
+    summary, and its data when the table is small), then one line for each other artifact. Cited evidence comes
+    first, so the other artifacts of a long run cannot push it past the limit."""
+    cited = cited or set()
+    findings, cited_parts, others = [], [], []
     for aid, m in artifacts.items():
         if m["kind"] == "finding":
             try:
                 data = json.loads((root / "artifacts" / aid / "data.json").read_text())
-                parts.append(f"{aid} (finding) {data.get('text')} | value: {json.dumps(data.get('value'), default=str)[:800]}")
+                findings.append(f"{aid} (finding) {data.get('text')} | value: "
+                                f"{json.dumps(data.get('value'), default=str)[:800]}")
             except (OSError, json.JSONDecodeError):
-                parts.append(f"{aid} (finding) {m['title']}")
-    for aid, m in artifacts.items():
-        if m["kind"] != "finding":
-            short = m["summary"] if isinstance(m["summary"], str) else m["summary"].get("text", "")[:900]
+                findings.append(f"{aid} (finding) {m['title']}")
+        elif aid in cited:
+            short = (m["summary"] if isinstance(m["summary"], str) else m["summary"].get("text", ""))[:1200]
             status = f" [{m.get('status')}]" if m["kind"] in ("figure", "viz") else ""
-            parts.append(f"{aid} ({m['kind']}{status}) {m['title']}: {m.get('description', '')[:400]}\n{short}")
-    text = "\n\n".join(parts)
+            data = _artifact_data_text(m, root)
+            cited_parts.append(f"{aid} ({m['kind']}{status}) {m['title']}: {m.get('description', '')[:800]}\n{short}"
+                               + (f"\nDATA:\n{data}" if data else ""))
+        else:
+            others.append(f"{aid} ({m['kind']}) {m['title']}")
+    text = "\n\n".join([*findings, *cited_parts]) + "\n\nOTHER ARTIFACTS (not cited):\n" + "\n".join(others)
     return text if len(text) <= limit else text[:limit] + "\n... [evidence truncated]"
 
 
@@ -319,6 +346,8 @@ def run_record(root: Path) -> str:
             f"Figure versions submitted to the figure gate: {len(figs)} "
             f"({', '.join(f'{v} {k}' for k, v in sorted(status.items(), key=lambda kv: str(kv[0])))})."
             if figs else "",
-            f"Report gate: {rs.get('status')} in round {rs.get('round')}." if rs else ""] if part),
+            (f"Report gate: {rs.get('status')} in round {rs.get('round')}"
+             + (f", with {len(rs['open_reader_points'])} wording points from the reader left open (review log)."
+                if rs.get("open_reader_points") else ".")) if rs else ""] if part),
         "",
     ])
