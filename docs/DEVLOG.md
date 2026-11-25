@@ -425,3 +425,12 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
 - **Spend:** stage 3 $8.12 LLM, 98 min; about $3 of it went to loops that the fixes above remove. Project 2 total: LLM $11.53 of $30 (pilot $0.48 + session $11.05), OpenAlex $3.00.
 - **Replay of the final package** (offline): 81 cells in 155 s. 101 of the 112 recomputed data artifacts are identical (3 up to row order); the same 11 as before differ by design; the same 2 cells cannot pass offline; all 15 figures (the newest gated version of each, the 5 report figures included) render with identical pixels.
 - **Tests:** 34 pass.
+
+## 2026-11-25: Design Test, Option A, for Project 2
+
+- Agreed with the user: the "pipeline with gates" layout (of three options: pipeline with gates, evidence chain, stage timeline), the design only with no run numbers, and abstract icons for the outputs.
+- Layout references: the Project 1 figure's references (MASPOB, MegaAgent, OSDA Agent) for consistency, and Data Interpreter (ACL 2025 Findings) for a plan layer over an execution layer with a tool band. The gallery had no closer match for a paper-reproduction pipeline.
+- `docs/figures/build_reproduce_figure.py` writes `sciviz_reproduce.svg` and renders a vector PDF (7 × 3.36 in, fonts embedded) and a 300 dpi PNG. The shared drawing code moved to `figure_kit.py`; the Project 1 SVG is byte-identical after the move.
+- Checked against the code: every label in the figure names something the harness or the prompts do (the gates' steps, the agents' tools, the package contents, the services). A first draft said the brief was "the only study input"; the user's run constraints can name the study too, so that label was dropped.
+- README §9 opens with the figure (Figure 2) and its caption.
+

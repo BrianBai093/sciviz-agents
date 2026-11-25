@@ -435,3 +435,9 @@ Each record states the context, the options considered, the decision, and why. R
 - **Problem:** I started a turn four seconds before the previous turn's lead had finished. Its completion event landed in the new turn's part of the event log, so the run record showed the finished turn as stopped and gave the new turn the wrong wall time; the late lead report was written after the new turn had archived the previous one.
 - **Decision:** `sciviz reproduce` holds a lock file (`session.lock`, with the process id) for the whole turn and refuses to start while another live process holds it; a lock left by an ended process is ignored. The run record assigns each completion event to the turn under way when it began (its time minus its duration).
 - **Status:** Accepted.
+
+## D60. Design figure for Project 2 (Design Test, Option A)
+- **Decision:** a sibling of the Project 1 figure, chosen with the user: "pipeline with gates" (three panels: input → report-mode harness with a figure gate and a report gate → report and reproduction package with its offline replay), the user's loop over turns along the top, and the harness services along the bottom. It shows the design only (no numbers from the run) and uses abstract icons. The two figure scripts now share `docs/figures/figure_kit.py` (styles, icons, helpers, rendering); the Project 1 SVG is byte-identical after the refactor.
+- **Alternatives considered with the user:** an evidence chain (one claim traced from data to report sentence) and a timeline of the run's stages.
+- **Status:** Accepted.
+

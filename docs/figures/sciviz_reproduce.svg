@@ -1,0 +1,315 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" width="7.0in" height="3.36in">
+<defs><style>
+text { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #1f2328; }
+.panel { font-size: 16px; font-weight: 700; }
+.badge { font-size: 11px; font-weight: 700; fill: #fff; }
+.box { font-size: 13.5px; font-weight: 700; }
+.box-s { font-size: 12px; font-weight: 700; }
+.body { font-size: 12px; fill: #3a3936; }
+.small { font-size: 11px; fill: #5c5b57; }
+.small-b { font-size: 11px; font-weight: 700; }
+.note { font-size: 11px; fill: #5c5b57; font-style: italic; }
+.quote { font-size: 11.5px; fill: #3a3936; font-style: italic; }
+.mono { font-family: Menlo, 'SF Mono', Consolas, 'DejaVu Sans Mono', monospace; font-size: 10.5px;
+         font-style: normal; fill: #3a3936; }
+.tiny { font-size: 8px; font-weight: 700; fill: #fff; }
+</style>
+<symbol id="i-robot" viewBox="0 0 24 24">
+  <line x1="12" y1="2.6" x2="12" y2="5.6" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="12" cy="2.3" r="1.5" fill="currentColor"/>
+  <rect x="3.6" y="5.6" width="16.8" height="13.6" rx="4" fill="#fff" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="9" cy="11.6" r="1.7" fill="currentColor"/><circle cx="15" cy="11.6" r="1.7" fill="currentColor"/>
+  <path d="M9.3 15.4 H14.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  <rect x="1.2" y="10" width="2.4" height="4.6" rx="1" fill="currentColor"/>
+  <rect x="20.4" y="10" width="2.4" height="4.6" rx="1" fill="currentColor"/>
+</symbol>
+<symbol id="i-user" viewBox="0 0 24 24">
+  <circle cx="12" cy="7.5" r="4.3" fill="currentColor"/>
+  <path d="M3.5 21.5 C3.5 15.6 7.4 13.1 12 13.1 C16.6 13.1 20.5 15.6 20.5 21.5 Z" fill="currentColor"/>
+</symbol>
+<symbol id="i-db" viewBox="0 0 24 24">
+  <path d="M4 5.5 V18.5 C4 20.4 7.6 22 12 22 C16.4 22 20 20.4 20 18.5 V5.5" fill="#fff" stroke="currentColor" stroke-width="1.5"/>
+  <ellipse cx="12" cy="5.5" rx="8" ry="3.2" fill="#fff" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M4 12 C4 13.9 7.6 15.4 12 15.4 C16.4 15.4 20 13.9 20 12" fill="none" stroke="currentColor" stroke-width="1.3"/>
+</symbol>
+<symbol id="i-shield" viewBox="0 0 24 24">
+  <path d="M12 2 L20 5.2 V11.2 C20 16.2 16.6 19.8 12 22 C7.4 19.8 4 16.2 4 11.2 V5.2 Z" fill="#fff" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M8.3 12 L11 14.7 L16 9.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-check" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+  <path d="M7.5 12.3 L10.6 15.3 L16.6 8.9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-cursor" viewBox="0 0 24 24">
+  <path d="M5 2.5 L5 19.5 L9.3 15.4 L12.2 21.6 L15 20.3 L12.1 14.3 L18 14.3 Z" fill="#fff" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-term" viewBox="0 0 24 24">
+  <rect x="2.5" y="4" width="19" height="16" rx="2.5" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M6.5 9.5 L9.5 12 L6.5 14.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M11.5 15 H16.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+</symbol>
+<symbol id="i-pkg" viewBox="0 0 24 24">
+  <path d="M12 2.5 L20.5 7 V17 L12 21.5 L3.5 17 V7 Z" fill="#fff" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M3.5 7 L12 11.5 L20.5 7 M12 11.5 V21.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-log" viewBox="0 0 24 24">
+  <rect x="4" y="2.5" width="16" height="19" rx="2" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M8 8 H16 M8 12 H16 M8 16 H12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+</symbol>
+<symbol id="i-retry" viewBox="0 0 24 24">
+  <path d="M19.5 12 A7.5 7.5 0 1 1 16.9 6.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M17.6 2.6 V7 H13.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-coin" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="9" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M14.8 8.6 C14.2 7.7 13.2 7.3 12 7.3 C10.3 7.3 9.2 8.2 9.2 9.5 C9.2 12.3 15 11.2 15 14.3 C15 15.7 13.8 16.7 12 16.7 C10.7 16.7 9.6 16.2 9 15.2 M12 5.6 V7.3 M12 16.7 V18.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</symbol>
+<symbol id="i-layers" viewBox="0 0 24 24">
+  <path d="M12 3 L21 8 L12 13 L3 8 Z" fill="#fff" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M3 12 L12 17 L21 12 M3 16 L12 21 L21 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+</symbol>
+<symbol id="i-table" viewBox="0 0 24 24">
+  <rect x="3" y="4" width="18" height="16" rx="1.5" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M3 9 H21 M3 14.5 H21 M9.5 4 V20" stroke="currentColor" stroke-width="1.3"/>
+</symbol>
+<symbol id="i-graph" viewBox="0 0 24 24">
+  <path d="M6 6 L17 8 L8 18 Z M17 8 L19 18 L8 18" fill="none" stroke="currentColor" stroke-width="1.4"/>
+  <circle cx="6" cy="6" r="2.6" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="17" cy="8" r="2.6" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="8" cy="18" r="2.6" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="19" cy="18" r="2.6" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+</symbol>
+<symbol id="i-doc" viewBox="0 0 24 24">
+  <path d="M6 2.5 H14.5 L19 7 V21.5 H6 Z" fill="#fff" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M14.5 2.5 V7 H19" fill="none" stroke="currentColor" stroke-width="1.4"/>
+  <path d="M9 12 H16 M9 15.5 H16 M9 19 H13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+</symbol>
+<symbol id="i-code" viewBox="0 0 24 24">
+  <rect x="2.5" y="4" width="19" height="16" rx="2" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M9 9 L6 12 L9 15 M15 9 L18 12 L15 15 M13 8.5 L11 15.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<marker id="a-grey" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#6b6a66"/></marker><marker id="a-grey-s" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#6b6a66"/></marker><marker id="a-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#2a78d6"/></marker><marker id="a-blue-s" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#2a78d6"/></marker><marker id="a-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#c4382b"/></marker><marker id="a-red-s" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#c4382b"/></marker><marker id="a-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#2e8b43"/></marker><marker id="a-green-s" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#2e8b43"/></marker><marker id="a-amber" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#c27a00"/></marker><marker id="a-amber-s" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" fill="#c27a00"/></marker>
+<symbol id="i-globe" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="9" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M3 12 H21 M12 3 C8.6 6.4 8.6 17.6 12 21 M12 3 C15.4 6.4 15.4 17.6 12 21" fill="none" stroke="currentColor" stroke-width="1.3"/>
+</symbol>
+<symbol id="i-clock" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="9" fill="#fff" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M12 6.8 V12 L15.6 14.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+</defs>
+<rect width="1000" height="480" fill="#fff"/>
+<rect x="10" y="38" width="150" height="330" rx="10" fill="#f7f7f5" stroke="#dcdbd5" stroke-width="1.0"/>
+<circle cx="27" cy="57" r="9" fill="#1f2328"/>
+<text x="27" y="60.8" class="badge" text-anchor="middle">1</text>
+<text x="42" y="62.5" class="panel">Input</text>
+<use href="#i-user" x="18" y="68" width="20" height="20" style="color:#5c5b57"/>
+<text x="43" y="83" class="box-s">User</text>
+<rect x="18" y="94" width="134" height="72" rx="6" fill="#fff" stroke="#cfcec8" stroke-width="1.0"/>
+<path d="M26,94.6 L29,87.5 L35,94.6" fill="#fff" stroke="#cfcec8" stroke-width="1" stroke-linejoin="round"/>
+<text x="25" y="109.0" class="quote">“How does team size</text>
+<text x="25" y="121.6" class="quote">influence the balance</text>
+<text x="25" y="134.2" class="quote">between disruptive</text>
+<text x="25" y="146.8" class="quote">and developmental</text>
+<text x="25" y="159.4" class="quote">research?”</text>
+<rect x="18" y="172" width="134" height="18" rx="9" fill="#e8f1fb" stroke="#2a78d6" stroke-width="0.8"/>
+<use href="#i-log" x="24" y="174.5" width="13" height="13" style="color:#2a78d6"/>
+<text x="40" y="184.8" class="small" style="fill:#1d5fae">+ run constraints</text>
+<use href="#i-doc" x="18" y="199" width="24" height="24" style="color:#4a4945"/>
+<text x="46" y="211" class="box-s">Paper brief</text>
+<text x="46" y="224" class="small">claims, measures and</text>
+<text x="46" y="236" class="small">methods, in our words</text>
+<use href="#i-db" x="20" y="252" width="26" height="26" style="color:#0f8fa8"/>
+<text x="52" y="263" class="box-s">Local snapshot</text>
+<text x="52" y="276" class="small">read-only SQL</text>
+<use href="#i-globe" x="20" y="290" width="26" height="26" style="color:#0f8fa8"/>
+<text x="52" y="301" class="box-s">OpenAlex API</text>
+<text x="52" y="314" class="small">via the harness proxy</text>
+<text x="85" y="354" class="note" text-anchor="middle">datasets are pluggable</text>
+<rect x="170" y="38" width="520" height="330" rx="10" fill="#f7f7f5" stroke="#dcdbd5" stroke-width="1.0"/>
+<circle cx="187" cy="57" r="9" fill="#1f2328"/>
+<text x="187" y="60.8" class="badge" text-anchor="middle">2</text>
+<text x="202" y="62.5" class="panel">Report-mode harness</text>
+<rect x="450" y="46" width="232" height="18" rx="9" fill="#e9f5ec" stroke="#2e8b43" stroke-width="0.8"/>
+<use href="#i-check" x="455" y="48.5" width="13" height="13" style="color:#2e8b43"/>
+<text x="473" y="58.8" class="small" style="fill:#23683a">no study-specific prompts or code</text>
+<rect x="196" y="74" width="236" height="56" rx="8" fill="#f3eefb" stroke="#7c4dcc" stroke-width="1.3"/>
+<use href="#i-robot" x="205" y="82" width="24" height="24" style="color:#7c4dcc"/>
+<text x="238" y="93" class="box">Lead agent</text>
+<text x="238" y="108.0" class="body">brief → claim plan</text>
+<text x="238" y="121.5" class="body">delegates · checks reports</text>
+<rect x="180" y="146" width="104" height="168" rx="8" fill="#e7f4f7" stroke="#0f8fa8" stroke-width="1.3"/>
+<use href="#i-robot" x="188" y="152" width="20" height="20" style="color:#0f8fa8"/>
+<text x="213" y="167" class="box">Data</text>
+<text x="190" y="184" class="body">designs and</text>
+<text x="190" y="197" class="body">pilots the data</text>
+<text x="190" y="210" class="body">collection,</text>
+<text x="190" y="223" class="body">checks counts;</text>
+<text x="190" y="236" class="body">long runs as</text>
+<text x="190" y="249" class="body">background jobs</text>
+<text x="190" y="264" class="mono">openalex()</text>
+<rect x="300" y="146" width="148" height="54" rx="8" fill="#eaf4ec" stroke="#2e8b43" stroke-width="1.3"/>
+<use href="#i-robot" x="308" y="152" width="20" height="20" style="color:#2e8b43"/>
+<text x="333" y="167" class="box">Analyst</text>
+<text x="310" y="184" class="body">measures, statistics,</text>
+<text x="310" y="197" class="body">models, figures</text>
+<rect x="300" y="226" width="148" height="54" rx="8" fill="#fbf3e3" stroke="#c27a00" stroke-width="1.3"/>
+<use href="#i-robot" x="308" y="232" width="20" height="20" style="color:#c27a00"/>
+<text x="333" y="247" class="box">Writer</text>
+<text x="310" y="264" class="body">plain-language report;</text>
+<text x="310" y="277" class="body">every number cited</text>
+<path d="M232,131 V144" fill="none" stroke="#6b6a66" stroke-width="1.1" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M291,131 V253" fill="none" stroke="#6b6a66" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M291,173 H298" fill="none" stroke="#6b6a66" stroke-width="1.1" marker-end="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M291,253 H298" fill="none" stroke="#6b6a66" stroke-width="1.1" marker-end="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="300" y="141" class="note">brief / report</text>
+<rect x="180" y="330" width="502" height="30" rx="8" fill="#fff" stroke="#cfcec8" stroke-width="1.0"/>
+<use href="#i-table" x="188" y="335" width="19" height="19" style="color:#5c5b57"/>
+<use href="#i-graph" x="209" y="335" width="19" height="19" style="color:#5c5b57"/>
+<use href="#i-doc" x="230" y="335" width="19" height="19" style="color:#5c5b57"/>
+<use href="#i-code" x="251" y="335" width="19" height="19" style="color:#5c5b57"/>
+<text x="278" y="349.5" class="box-s">Shared artifact store</text>
+<text x="410" y="349.5" class="small">each result with its code and lineage</text>
+<path d="M232,315 V328" fill="none" stroke="#6b6a66" stroke-width="1" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M374,281 V328" fill="none" stroke="#6b6a66" stroke-width="1" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="492" y="74" width="190" height="246" rx="8" fill="#fcebe9" stroke="#c4382b" stroke-width="1.3"/>
+<use href="#i-shield" x="500" y="80" width="22" height="22" style="color:#c4382b"/>
+<text x="528" y="94" class="box">Verification gates</text>
+<text x="528" y="109" class="note">enforced by the harness</text>
+<rect x="500" y="120" width="174" height="80" rx="6" fill="#fff" stroke="#c4382b" stroke-width="0.9"/>
+<text x="508" y="136" class="box-s">Figure gate</text>
+<use href="#i-robot" x="652" y="124" width="15" height="15" style="color:#c4382b"/>
+<circle cx="513" cy="148.3" r="5" fill="#c4382b"/>
+<text x="513" y="151" class="tiny" text-anchor="middle">1</text>
+<text x="523" y="152" class="small">file checks</text>
+<circle cx="513" cy="162.3" r="5" fill="#c4382b"/>
+<text x="513" y="165" class="tiny" text-anchor="middle">2</text>
+<text x="523" y="166" class="small">critic sees the image:</text>
+<text x="523" y="178" class="small">does it test the claim?</text>
+<circle cx="513" cy="188.3" r="5" fill="#c4382b"/>
+<text x="513" y="191" class="tiny" text-anchor="middle">3</text>
+<text x="523" y="192" class="small">plain labels and caption</text>
+<rect x="500" y="208" width="174" height="104" rx="6" fill="#fff" stroke="#c4382b" stroke-width="0.9"/>
+<text x="508" y="224" class="box-s">Report gate</text>
+<use href="#i-robot" x="652" y="212" width="15" height="15" style="color:#c4382b"/>
+<circle cx="513" cy="236.3" r="5" fill="#c4382b"/>
+<text x="513" y="239" class="tiny" text-anchor="middle">1</text>
+<text x="523" y="240" class="small">numbers cite evidence,</text>
+<text x="523" y="252" class="small">figures are approved</text>
+<circle cx="513" cy="264.3" r="5" fill="#c4382b"/>
+<text x="513" y="267" class="tiny" text-anchor="middle">2</text>
+<text x="523" y="268" class="small">reviewer checks the text</text>
+<text x="523" y="280" class="small">against all evidence</text>
+<circle cx="513" cy="292.3" r="5" fill="#c4382b"/>
+<text x="513" y="295" class="tiny" text-anchor="middle">3</text>
+<text x="523" y="296" class="small">reader sees only the</text>
+<text x="523" y="308" class="small">report: can it be followed?</text>
+<path d="M449,162 H498" fill="none" stroke="#2e8b43" stroke-width="1.3" marker-end="url(#a-green)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M498,188 H451" fill="none" stroke="#c4382b" stroke-width="1.3" stroke-dasharray="3 2" marker-end="url(#a-red)" stroke-linecap="round" stroke-linejoin="round"/>
+<use href="#i-retry" x="456" y="167" width="13" height="13" style="color:#c4382b"/>
+<text x="473" y="177.5" class="small-b" style="fill:#c4382b">×N</text>
+<path d="M449,243 H498" fill="none" stroke="#c27a00" stroke-width="1.3" marker-end="url(#a-amber)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M498,269 H451" fill="none" stroke="#c4382b" stroke-width="1.3" stroke-dasharray="3 2" marker-end="url(#a-red)" stroke-linecap="round" stroke-linejoin="round"/>
+<use href="#i-retry" x="456" y="248" width="13" height="13" style="color:#c4382b"/>
+<text x="473" y="258.5" class="small-b" style="fill:#c4382b">×N</text>
+<text x="474" y="156" class="note" text-anchor="middle">submit</text>
+<text x="474" y="237" class="note" text-anchor="middle">submit</text>
+<path d="M506,201 C490,214 462,210 440,224" fill="none" stroke="#2e8b43" stroke-width="1.3" marker-end="url(#a-green)" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="436" y="215" class="small-b" text-anchor="end" style="fill:#2e7d32">approved figures</text>
+<rect x="700" y="38" width="290" height="330" rx="10" fill="#f7f7f5" stroke="#dcdbd5" stroke-width="1.0"/>
+<circle cx="717" cy="57" r="9" fill="#1f2328"/>
+<text x="717" y="60.8" class="badge" text-anchor="middle">3</text>
+<text x="732" y="62.5" class="panel">Report and package</text>
+<rect x="712" y="74" width="92" height="160" rx="3" fill="#fff" stroke="#c4c3bd" stroke-width="1.0"/>
+<path d="M720,86 H780" stroke="#8a8984" stroke-width="3" stroke-linecap="round"/>
+<path d="M720,96 H796 M720,103 H776" stroke="#c9c8c2" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M724,112 V152 H794" fill="none" stroke="#8a8984" stroke-width="1"/>
+<polyline points="732,121 744,127 756,129 768,132 780,139 790,144" fill="none" stroke="#2a78d6" stroke-width="1.3"/>
+<path d="M732,117 V125" stroke="#2a78d6" stroke-width="0.9"/>
+<circle cx="732" cy="121" r="1.8" fill="#2a78d6"/>
+<path d="M744,123 V131" stroke="#2a78d6" stroke-width="0.9"/>
+<circle cx="744" cy="127" r="1.8" fill="#2a78d6"/>
+<path d="M756,125 V133" stroke="#2a78d6" stroke-width="0.9"/>
+<circle cx="756" cy="129" r="1.8" fill="#2a78d6"/>
+<path d="M768,128 V136" stroke="#2a78d6" stroke-width="0.9"/>
+<circle cx="768" cy="132" r="1.8" fill="#2a78d6"/>
+<path d="M780,135 V143" stroke="#2a78d6" stroke-width="0.9"/>
+<circle cx="780" cy="139" r="1.8" fill="#2a78d6"/>
+<path d="M790,140 V148" stroke="#2a78d6" stroke-width="0.9"/>
+<circle cx="790" cy="144" r="1.8" fill="#2a78d6"/>
+<path d="M720,164 H796 M720,171 H784" stroke="#c9c8c2" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M720,184 H762" stroke="#d6d5cf" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="774" cy="184" r="3" fill="#2e8b43"/>
+<path d="M720,195 H762" stroke="#d6d5cf" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="774" cy="195" r="3" fill="#c27a00"/>
+<path d="M720,206 H762" stroke="#d6d5cf" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="774" cy="206" r="3" fill="#c4382b"/>
+<path d="M720,217 H762" stroke="#d6d5cf" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="774" cy="217" r="3" fill="#9a9993"/>
+<path d="M720,226 H772" stroke="#d6d5cf" stroke-width="1.6" stroke-linecap="round"/>
+<text x="816" y="90" class="box-s">Report (PDF)</text>
+<text x="816" y="105" class="small">one section per finding</text>
+<text x="816" y="118" class="small">of the study: its result,</text>
+<text x="816" y="131" class="small">ours, and a verdict:</text>
+<circle cx="822" cy="144.5" r="3.5" fill="#2e8b43"/>
+<text x="831" y="148" class="small">reproduced</text>
+<circle cx="822" cy="158.5" r="3.5" fill="#c27a00"/>
+<text x="831" y="162" class="small">partly reproduced</text>
+<circle cx="822" cy="172.5" r="3.5" fill="#c4382b"/>
+<text x="831" y="176" class="small">not reproduced</text>
+<circle cx="822" cy="186.5" r="3.5" fill="#9a9993"/>
+<text x="831" y="190" class="small">not testable</text>
+<text x="816" y="214" class="small">plain language; every</text>
+<text x="816" y="227" class="small">number cites its source</text>
+<use href="#i-pkg" x="712" y="252" width="28" height="28" style="color:#4a4945"/>
+<text x="748" y="264" class="box-s">Reproduction package</text>
+<text x="748" y="279.0" class="small">every result with its code</text>
+<text x="748" y="291.5" class="small">every code step, in order</text>
+<text x="748" y="304.0" class="small">frozen API responses</text>
+<text x="748" y="316.5" class="small">run record by the harness</text>
+<rect x="712" y="330" width="270" height="30" rx="6" fill="#e9f5ec" stroke="#2e8b43" stroke-width="0.8"/>
+<use href="#i-retry" x="719" y="337" width="16" height="16" style="color:#2e8b43"/>
+<text x="742" y="342.5" class="small-b" style="fill:#23683a">Offline replay</text>
+<text x="742" y="354.5" class="small" style="fill:#23683a">reruns every step; compares every result</text>
+<path d="M152,122 C176,122 176,94 194,94" fill="none" stroke="#2a78d6" stroke-width="1.4" marker-end="url(#a-blue)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M156,213 C178,213 168,120 194,118" fill="none" stroke="#6b6a66" stroke-width="1.2" marker-end="url(#a-grey)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M146,265 H178" fill="none" stroke="#6b6a66" stroke-width="1.2" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M146,303 H178" fill="none" stroke="#6b6a66" stroke-width="1.2" marker-end="url(#a-grey-s)" marker-start="url(#a-grey-s)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M674,224 H710" fill="none" stroke="#2e8b43" stroke-width="1.4" marker-end="url(#a-green)" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M682,345 H695 V266 H710" fill="none" stroke="#6b6a66" stroke-width="1.2" marker-end="url(#a-grey)" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="676" y="342" class="note" text-anchor="end">export</text>
+<path d="M940,38 V16 H125 V37" fill="none" stroke="#2a78d6" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#a-blue)" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="300" y="9" width="470" height="14" rx="3" fill="#fff" stroke="none" stroke-width="1.0"/>
+<text x="535" y="20" class="note" text-anchor="middle" style="fill:#1d5fae">user reads the report → constraints for the next turn: pilot → full run → corrections → rewrite</text>
+<rect x="10" y="396" width="980" height="82" rx="10" fill="#f1f0ec" stroke="#dcdbd5" stroke-width="1.0"/>
+<rect x="20" y="388" width="132" height="18" rx="5" fill="#1f2328" stroke="none" stroke-width="1.0"/>
+<text x="86" y="401" class="box-s" text-anchor="middle" style="fill:#fff">Harness services</text>
+<use href="#i-layers" x="32" y="418" width="22" height="22" style="color:#4a4945"/>
+<text x="60" y="426" class="box-s">Deep Agents</text>
+<text x="60" y="440.0" class="small">on LangGraph,</text>
+<text x="60" y="452.5" class="small">with checkpoints</text>
+<use href="#i-term" x="169" y="418" width="22" height="22" style="color:#4a4945"/>
+<text x="197" y="426" class="box-s">Python kernels</text>
+<text x="197" y="440.0" class="small">one per agent,</text>
+<text x="197" y="452.5" class="small">secrets stripped</text>
+<use href="#i-globe" x="306" y="418" width="22" height="22" style="color:#4a4945"/>
+<text x="334" y="426" class="box-s">OpenAlex service</text>
+<text x="334" y="440.0" class="small">local proxy, cache,</text>
+<text x="334" y="452.5" class="small">rate limit, budget</text>
+<use href="#i-clock" x="443" y="418" width="22" height="22" style="color:#4a4945"/>
+<text x="471" y="426" class="box-s">Background jobs</text>
+<text x="471" y="440.0" class="small">long collections,</text>
+<text x="471" y="452.5" class="small">logged step by step</text>
+<use href="#i-log" x="580" y="418" width="22" height="22" style="color:#4a4945"/>
+<text x="608" y="426" class="box-s">Cell &amp; file log</text>
+<text x="608" y="440.0" class="small">every code step</text>
+<text x="608" y="452.5" class="small">and file write</text>
+<use href="#i-pkg" x="717" y="418" width="22" height="22" style="color:#4a4945"/>
+<text x="745" y="426" class="box-s">Export &amp; replay</text>
+<text x="745" y="440.0" class="small">package, run record,</text>
+<text x="745" y="452.5" class="small">offline rerun</text>
+<use href="#i-coin" x="854" y="418" width="22" height="22" style="color:#4a4945"/>
+<text x="882" y="426" class="box-s">Budget</text>
+<text x="882" y="440.0" class="small">LLM ledger,</text>
+<text x="882" y="452.5" class="small">API spend cap</text>
+</svg>

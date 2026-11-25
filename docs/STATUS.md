@@ -6,7 +6,7 @@ _Last updated: 2026-11-24. Project 1 complete and published. Project 2: report r
 - **Project 1: all three milestones are done.** Reviews: `docs/reviews/M1.md`, `M2.md`, `M3.md`.
 - **Published (D45):** public repo https://github.com/BrianBai093/sciviz-agents. The full database is the asset of release [v1.0.0](https://github.com/BrianBai093/sciviz-agents/releases/tag/v1.0.0); README §1 gives the download command and checksum. GitHub Actions runs lint and the unit tests on every push.
 - **Open (user decision):** where to host the video. For now it is in the repo (`demo/video/sciviz_demo.mp4`).
-- **Design Test (Option A):** done for Project 1. The architecture figure is `docs/figures/sciviz_architecture.{pdf,png,svg}`, built by `docs/figures/build_architecture_figure.py` (D46), and it opens README §3.
+- **Design Test (Option A):** done for both projects. Project 1: `docs/figures/sciviz_architecture.{pdf,png,svg}` (D46), README §3. Project 2: `docs/figures/sciviz_reproduce.{pdf,png,svg}` (D60), README §9. Both are built by scripts in `docs/figures/` that share `figure_kit.py`.
 - **Project 2** (reproduce Wu, Wang & Evans 2019; plan `docs/PLAN_P2.md`, D47–D59; README §9):
   - **Done:**
     - the pilot;
@@ -20,7 +20,6 @@ _Last updated: 2026-11-24. Project 1 complete and published. Project 2: report r
   - **Spend:** LLM $11.53 of $30 (pilot $0.48; stages 1–3 $1.25, $1.68, $8.12); OpenAlex $3.00.
   - **Still to do:**
     - the narrated demo video (≤ 5 min);
-    - the Design Test figure for Project 2;
     - push, after the user's OK. Local commits only so far.
   - **Workspace notes:** `workspaces/reproduce/r-full-8k/history/turnN/` holds each earlier turn's constraints, lead report, API usage and released report; turn 1 also has the rebuilt stage-1 job folders (D53), and `file_log.jsonl` was rebuilt from the checkpoints. Turns 3 and 6 were stopped by me (no lead report); turn 5's lead report was moved there by hand after the turns overlapped (D59).
 
