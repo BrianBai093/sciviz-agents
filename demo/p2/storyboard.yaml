@@ -1,0 +1,25 @@
+# Narrated demo video for Project 2 (built by demo/build_video.py; slide paths are relative to demo/).
+# Everything shown comes from the exported run in reproductions/wu2019 (demo/p2/build_assets.py); no live LLM calls.
+steps:
+  - say: "This is the second project: the same multi-agent harness, used to reproduce a published study. The study is Wu, Wang and Evans, Nature 2019, which found that small teams tend to disrupt science, while large teams develop existing ideas. The agents get the research question, a short brief of the paper in our own words, a snapshot of Columbia University's publications in OpenAlex, and the live OpenAlex API."
+    do: [{slide: p2/slides/title.html}]
+  - say: "In report mode, a Lead agent turns the brief into a plan of claims to test, and delegates. The Data agent designs, pilots and checks the data collection. The Analyst computes the measures and draws the figures, and the Writer writes the report. Every result is saved with the code that produced it."
+    do: [{slide: p2/slides/design.html}, {js: "spot('agents')"}]
+  - say: "Two gates, enforced in code, send work back until it passes. An independent critic reviews every figure. The report is checked against all the evidence, and then by a second reader who sees only the report and flags anything hard to follow."
+    do: [{js: "spot('gates')"}]
+  - say: "The output is a report and a reproduction package. Between turns, I read the report and set the next turn's constraints. No prompt or line of code names this study."
+    do: [{js: "spot('outputs')"}]
+  - say: "Here is the recorded run, sped up. After a pilot on one hundred works, the agents sampled eight thousand works across team sizes and collected their citation data with about thirty thousand API requests, run as background jobs. I then asked for two corrections, and later for a rewrite in plain language."
+    do: [{slide: "p2/slides/trace.html?dur=19"}]
+  - say: "The result is a twenty-two-page report. It opens with the answer, and with which of the study's findings held in this data."
+    do: [{slide: "p2/slides/report.html?p=1&box=0.08,0.06,0.92,0.52&label=Page 1 · Summary"}]
+  - say: "The method is explained in plain words, with a worked example of the disruption score."
+    do: [{slide: "p2/slides/report.html?p=2&box=0.08,0.27,0.92,0.45&label=Page 2 · How the score works"}]
+  - say: "The central finding reproduced in direction. For teams of one to ten authors, each doubling of team size lowered the disruption rank by about three and a half percentile points, while citations rose."
+    do: [{slide: "p2/slides/report.html?p=3&box=0.08,0.07,0.92,0.62&label=Page 3 · Figure 1"}]
+  - say: "Every finding gets a verdict. One reproduced fully, and seven in part. For example, we did not find the steeper decline among the most-cited papers that the study reported. Patents, software and Nobel prizes are outside this data, and the report says so."
+    do: [{slide: "p2/slides/report.html?p=13&box=0.08,0.07,0.92,0.66&label=Page 13 · The verdicts"}]
+  - say: "Next to the report is a reproduction package with every intermediate result, the code behind it, and the frozen API responses. One command reruns the whole analysis offline and compares every result with the original. Apart from records of timings, retries and live usage, every result matches, and all fifteen figures are identical, pixel for pixel."
+    do: [{slide: "p2/slides/replay.html?dur=13"}]
+  - say: "The project used about eleven and a half dollars of model calls and three dollars of API credit. Its limits, and every design decision, are documented in the repository. Thank you for watching."
+    do: [{slide: p2/slides/close.html}]

@@ -18,9 +18,8 @@ _Last updated: 2026-11-24. Project 1 complete and published. Project 2: report r
   - **Headline:** the disruption rank falls with team size (solo 62.5 → 10 authors 47.6 → 51–100 authors 36.2; −3.48 per doubling, CI −4.27 to −2.70) while citations rise. The steeper decline among highly cited work is not found. Statuses in the report: C2 reproduced; C1 and C3–C8 partly (C3: only the least-cited half shows a clear decline); C9 not testable beyond recorded funding acknowledgments.
   - **Report:** 22 pages (13 main text with 5 figures, 5 appendix, then the harness's reproduction section, run record and evidence index). Report gate: reviewer pass (support, coverage, honesty 5/5); the reader rated readability 4/5 and left 4 wording points open (`trace/status.json`).
   - **Spend:** LLM $11.53 of $30 (pilot $0.48; stages 1–3 $1.25, $1.68, $8.12); OpenAlex $3.00.
-  - **Still to do:**
-    - the narrated demo video (≤ 5 min);
-    - push, after the user's OK. Local commits only so far.
+  - **Demo video:** `demo/video/sciviz_p2_demo.mp4` (2:50), built from `demo/p2/` (D61).
+  - **Still to do:** push, after the user's OK.
   - **Workspace notes:** `workspaces/reproduce/r-full-8k/history/turnN/` holds each earlier turn's constraints, lead report, API usage and released report; turn 1 also has the rebuilt stage-1 job folders (D53), and `file_log.jsonl` was rebuilt from the checkpoints. Turns 3 and 6 were stopped by me (no lead report); turn 5's lead report was moved there by hand after the turns overlapped (D59).
 
 ## How to run
@@ -32,6 +31,7 @@ uv run sciviz serve --port 8000                                    # live mode (
 uv run pytest -q                                                   # unit tests (no LLM calls)
 uv run python evals/run_eval.py --mode multi                       # evaluation (live)
 uv run python demo/build_video.py demo/storyboard.yaml             # rebuild the narrated video from recordings
+uv run python demo/build_video.py demo/p2/storyboard.yaml --out demo/video/sciviz_p2_demo.mp4   # Project 2 video
 # Project 2: replay the exported run offline (no keys), or rerun it (see reproductions/wu2019/REPRODUCE.md)
 uv run python reproductions/wu2019/scripts/run_all.py
 uv run sciviz export-run --session r-full-8k --out reproductions/wu2019     # re-export from the workspace
@@ -40,7 +40,7 @@ uv run sciviz export-run --session r-full-8k --out reproductions/wu2019     # re
 ## Key results
 - **Evaluation** (`evals/results/summary.md`): multi-agent 4/4 (335 s average, $1.23); single agent 4/4 (165 s average, $0.61). All views passed the gate on the first round.
 - **Demo session** `recordings/demo-network-2`: force-directed network → edge bundling → highlight (10 s) → parameter change (15 s) → code edit (232 s).
-- **Video:** `demo/video/sciviz_demo.mp4` (3:28).
+- **Video:** `demo/video/sciviz_demo.mp4` (3:28); Project 2: `demo/video/sciviz_p2_demo.mp4` (2:50).
 - **Spend:** ledger $6.90 of $50, plus about $1–2 untracked (D41).
 
 ## Known issues

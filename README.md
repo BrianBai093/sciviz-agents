@@ -16,7 +16,7 @@ harness, in a backend-only report mode, reproduces a published science-of-scienc
 
 ![The web app: chat, two linked views, trace](docs/reviews/m2/linked_selection.png)
 
-**Demo video:** [`demo/video/sciviz_demo.mp4`](demo/video/sciviz_demo.mp4). About 5 minutes with narration. It replays recorded sessions.
+**Demo videos:** Project 1: [`demo/video/sciviz_demo.mp4`](demo/video/sciviz_demo.mp4) (3:28, narrated; it replays recorded sessions). Project 2: [`demo/video/sciviz_p2_demo.mp4`](demo/video/sciviz_p2_demo.mp4) (2:50, narrated; [§9](#project2)).
 
 ---
 
@@ -295,6 +295,8 @@ technology" (*Nature* 566, 378–382, 2019) on the Columbia snapshot. The input 
 plus every intermediate artifact, the agents' code, the frozen API responses and an offline replay:
 [`reproductions/wu2019/`](reproductions/wu2019/), starting with [report.pdf](reproductions/wu2019/report.pdf) and
 [REPRODUCE.md](reproductions/wu2019/REPRODUCE.md).
+
+**Demo video:** [`demo/video/sciviz_p2_demo.mp4`](demo/video/sciviz_p2_demo.mp4) (2:50, narrated): the task, the design, the recorded run played back from its event log, the report, and the offline replay. Everything in it comes from the exported package; rebuild it with `uv run python demo/p2/build_assets.py --replay-log <replay output> && uv run python demo/build_video.py demo/p2/storyboard.yaml --out demo/video/sciviz_p2_demo.mp4`.
 
 ![sciviz report mode: the question, paper brief and data; the report-mode harness with its figure and report gates; the report and the reproduction package with its offline replay; and the user's loop over turns](docs/figures/sciviz_reproduce.png)
 

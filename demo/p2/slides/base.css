@@ -1,0 +1,4 @@
+html,body{margin:0;height:100%;font-family:Inter,system-ui,-apple-system,sans-serif;background:#fafaf9;color:#1c1917}
+.k{font:600 15px/1 Inter,system-ui;letter-spacing:.14em;color:#2a78d6;text-transform:uppercase}
+.head{position:absolute;left:40px;top:26px;font:700 24px/1.2 Inter,system-ui;color:#1c1917}
+.head .k{display:block;margin-bottom:8px}

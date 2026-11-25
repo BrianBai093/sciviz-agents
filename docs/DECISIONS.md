@@ -441,3 +441,7 @@ Each record states the context, the options considered, the decision, and why. R
 - **Alternatives considered with the user:** an evidence chain (one claim traced from data to report sentence) and a timeline of the run's stages.
 - **Status:** Accepted.
 
+## D61. Project 2 demo video: slides and the recorded run, not the web app
+- **Decision:** the web app cannot open report-mode sessions (Project 2 is backend-only), so the video is built from HTML slides recorded by the Project 1 video builder (`demo/build_video.py`, same voice and captions). The user chose the short storyboard (about 3 minutes): task → design figure with spotlights → the recorded run played back from its event log, sped up, with running counters → four report pages (summary, worked example, main figure, verdict table) → the package and the offline replay → cost and limits. All data on screen come from the exported package (`demo/p2/build_assets.py`). The builder gained slide query strings, a `js` action, and re-applies a caption after an action loads a new page (captions had disappeared on such steps).
+- **Status:** Accepted.
+

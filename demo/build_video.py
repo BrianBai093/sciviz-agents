@@ -66,7 +66,14 @@ class Director:
             self.drawer(drawer)
 
     def slide(self, path: str) -> None:
-        self.page.goto((HERE / path).resolve().as_uri())
+        """Show a local HTML page (relative to demo/); a query string after "?" is passed to the page."""
+        file, _, query = path.partition("?")
+        self.page.goto((HERE / file).resolve().as_uri() + (f"?{query}" if query else ""))
+        self.page.wait_for_load_state("load")
+
+    def js(self, code: str) -> None:
+        """Run JavaScript in the current page (for example, to start or move a slide's animation)."""
+        self.page.evaluate(code)
 
     def drawer(self, name: str) -> None:
         self.page.get_by_role("button", name=name.capitalize(), exact=True).click()
@@ -190,6 +197,8 @@ def run(storyboard: Path, out: Path, base: str, size: tuple[int, int]) -> None:
             if step.get("say") and step.get("say_after_do"):
                 d.caption(step.get("caption", step["say"]))
                 placed.append((time.time() - t0, clip))
+            elif step.get("say"):  # an action that loaded a new page removed the caption: show it again
+                d.caption(step.get("caption", step["say"]))
             elapsed = time.time() - t0 - (placed[-1][0] if step.get("say") else start)
             page.wait_for_timeout(int(max(0.0, dur + step.get("pad", 0.4) - elapsed) * 1000))
             print(f"{start:6.1f}s  {step.get('say', '')[:70]}", flush=True)

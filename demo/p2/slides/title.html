@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><style>
+.wrap{height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 140px}
+h1{font-size:72px;line-height:1.05;margin:18px 0 22px;letter-spacing:-.02em}
+p{font-size:25px;color:#44403c;max-width:1250px;line-height:1.45;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px;max-width:1300px}
+.box{background:#fff;border:1px solid #e7e5e0;border-radius:12px;padding:18px 22px;font-size:20px;line-height:1.5;color:#44403c}
+.box b{display:block;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:#78716c;margin-bottom:6px}
+.meta{margin-top:30px;font-size:17px;color:#78716c}
+</style></head><body><div class="wrap">
+<div class="k">WHALES Lab coding test · Project 2</div>
+<h1>sciviz: reproducing a study</h1>
+<p>An LLM agent team reproduces Wu, Wang &amp; Evans (2019), “Large teams develop and small teams disrupt science and technology”, <i>Nature</i> 566, 378–382.</p>
+<div class="grid">
+<div class="box"><b>Input</b>The research question · a paper brief (our summary of the study) · an OpenAlex snapshot of Columbia University's works, 2021–2024 · the live OpenAlex API</div>
+<div class="box"><b>Output</b>A PDF report with the analysis and figures · scripts, intermediate data and reproduction instructions</div>
+</div>
+<div class="meta">Agents: GPT-6.2 Sol · Harness: LangChain Deep Agents on LangGraph · This video shows the recorded run (sped up, no live API calls).</div>
+</div></body></html>

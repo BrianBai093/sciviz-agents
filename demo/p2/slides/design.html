@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><style>
+#fig{position:absolute;left:40px;top:92px;width:1520px}
+#fig img{width:1520px;display:block}
+#spot{position:absolute;border:3px solid #2a78d6;border-radius:12px;box-shadow:0 0 0 4000px rgba(250,250,249,.72);
+  transition:all .7s ease;opacity:0}
+</style></head><body>
+<div class="head"><span class="k">How it works</span>The report mode of the harness</div>
+<div id="fig"><img src="../../../docs/figures/sciviz_reproduce.svg"><div id="spot"></div></div>
+<script>
+// regions in the figure's drawing units (1000 x 480)
+const R = {input:[8,36,154,334], agents:[174,70,284,252], gates:[489,70,196,254], outputs:[698,2,294,368],
+           harness:[168,36,524,334], all:null};
+function spot(name){ const s=document.getElementById('spot'), r=R[name], k=1520/1000;
+  if(!r){ s.style.opacity=0; return; }
+  Object.assign(s.style,{left:(r[0]*k-6)+'px',top:(r[1]*k-6)+'px',width:(r[2]*k+12)+'px',height:(r[3]*k+12)+'px',opacity:1}); }
+const q=new URLSearchParams(location.search); if(q.get('spot')) setTimeout(()=>spot(q.get('spot')),400);
+</script></body></html>

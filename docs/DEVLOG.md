@@ -434,3 +434,12 @@ Append-only. Each entry records what was done, what was chosen (with a link to [
 - Checked against the code: every label in the figure names something the harness or the prompts do (the gates' steps, the agents' tools, the package contents, the services). A first draft said the brief was "the only study input"; the user's run constraints can name the study too, so that label was dropped.
 - README §9 opens with the figure (Figure 2) and its caption.
 
+## 2026-11-25: Project 2 demo video
+
+- Agreed with the user: the short storyboard (about 3 minutes) and an animated playback of the recorded run.
+- `demo/p2/build_assets.py` condenses the exported event log into 994 terminal lines with running counters (stage, agent time, API requests, LLM spend, figure and report reviews), and the replay output into per-cell lines. Failed cells are labelled: 11 also failed in the original run (the agent corrected them), and 2 fail offline by design (REPRODUCE.md), so a plain red "failed" would have misled.
+- Slides in `demo/p2/slides/`: title, design figure with spotlights, run playback, report pages (thumbnail with a highlight and a legible zoom), package and replay, cost and limits.
+- `demo/video/sciviz_p2_demo.mp4`: 2:50, 1600 × 900, narration peaks at −3.6 dB. The first build lost the captions on steps that open a new slide; the builder now re-applies them.
+- Checked: frames sampled from every scene; the narrated numbers match the report and the replay (3.48 points per doubling, one finding reproduced and seven in part, 101 of 112 results identical, 15 of 15 figures pixel-identical, $11.53 LLM and $3.00 API).
+- Also corrected the README's length for the Project 1 video (3:28, not "about 5 minutes").
+

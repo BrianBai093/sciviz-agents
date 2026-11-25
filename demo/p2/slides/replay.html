@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><style>
+#pkg{position:absolute;left:40px;top:92px;width:640px}
+.f{background:#fff;border:1px solid #e7e5e0;border-radius:10px;padding:10px 16px;margin-bottom:9px;font-size:18px;color:#44403c;line-height:1.35}
+.f code{font:600 16px Menlo,monospace;color:#1c1917;display:block;margin-bottom:2px}
+#term{position:absolute;left:710px;top:92px;width:850px;height:430px;background:#16181d;border-radius:12px;overflow:hidden;
+  padding:12px 16px;box-sizing:border-box;font:14px/1.5 Menlo,monospace;color:#c9ccd3}
+#term .cmd{color:#fff}#term .ok{color:#6fcf87}#term .dim{color:#e0b25a}
+#res{position:absolute;left:710px;top:540px;width:850px;opacity:0;transition:opacity .8s}
+#res div{background:#eaf4ec;border:1px solid #2e8b43;color:#23683a;border-radius:10px;padding:10px 16px;margin-bottom:9px;font-size:20px}
+</style><script src="replay_data.js"></script></head><body>
+<div class="head"><span class="k">Reproduction package</span>Everything needed to check the report</div>
+<div id="pkg">
+ <div class="f"><code>report.pdf · figures/</code>the report and its figures</div>
+ <div class="f"><code>data/artifacts/&lt;id&gt;/</code>every intermediate result, with the code that made it and its inputs</div>
+ <div class="f"><code>data/api_responses.sqlite.xz</code>the frozen OpenAlex responses the run used</div>
+ <div class="f"><code>scripts/</code>every code step the agents ran, in order, and <b>run_all.py</b></div>
+ <div class="f"><code>trace/</code>inputs, plan, decisions, reviews and the event log</div>
+ <div class="f"><code>REPRODUCE.md</code>how to replay offline or rerun the agents</div>
+</div>
+<div id="term"><div class="cmd">$ uv run python reproductions/wu2019/scripts/run_all.py</div></div>
+<div id="res"><div>✓ 81 code steps rerun offline, no API keys</div><div>✓ 101 of 112 results identical; the rest record timings, retries or live usage</div><div>✓ 15 of 15 figures identical, pixel for pixel</div></div>
+<script>
+const L=REPLAY.lines;
+const term=document.getElementById('term'), q=new URLSearchParams(location.search), dur=(+q.get('dur')||12)*1000;
+let i=0,t0=null;
+function add(l){ const d=document.createElement('div'); d.textContent=l; d.className=l.endsWith(': ok')?'ok':(l.includes('fail')?'dim':'');
+  term.appendChild(d); while(term.children.length>17) term.removeChild(term.children[1]); }
+function tick(ts){ if(t0===null) t0=ts; const n=Math.min(L.length,Math.floor((ts-t0)/dur*L.length)+1);
+  while(i<n) add(L[i++]); if(i<L.length) requestAnimationFrame(tick); else document.getElementById('res').style.opacity=1; }
+setTimeout(()=>requestAnimationFrame(tick),500);
+</script></body></html>

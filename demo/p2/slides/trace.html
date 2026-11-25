@@ -1,0 +1,40 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><style>
+#term{position:absolute;left:40px;top:92px;width:1080px;height:690px;background:#16181d;border-radius:12px;overflow:hidden;
+  padding:14px 18px;box-sizing:border-box;font:13.5px/1.5 Menlo,'SF Mono',monospace;color:#c9ccd3}
+#term div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.turn{color:#fff;font-weight:700;background:#2b2f38;margin:4px 0;padding:1px 6px;border-radius:4px}
+.lead{color:#b79cf0}.data{color:#5cc3d6}.analyst{color:#6fcf87}.writer{color:#f0b54d}.job{color:#8fb6ff}
+.pass{color:#6fcf87;font-weight:600}.fail{color:#ff7b6b}.dim{color:#7d828c}
+#side{position:absolute;left:1144px;top:92px;width:416px}
+.c{background:#fff;border:1px solid #e7e5e0;border-radius:12px;padding:12px 18px;margin-bottom:12px}
+.c b{display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#78716c;margin-bottom:4px}
+.c span{font-size:30px;font-weight:700;color:#1c1917}
+.c small{font-size:16px;color:#78716c;margin-left:6px}
+#stage span{font-size:21px}
+</style><script src="trace_data.js"></script></head><body>
+<div class="head"><span class="k">The recorded run</span>Six turns, replayed from the event log (sped up)</div>
+<div id="term"></div>
+<div id="side">
+ <div class="c" id="stage"><b>Turn</b><span id="v-stage">pilot</span></div>
+ <div class="c"><b>Agent time</b><span id="v-min">0</span><small>min</small></div>
+ <div class="c"><b>OpenAlex API requests</b><span id="v-req">0</span></div>
+ <div class="c"><b>LLM spend</b><span id="v-usd">$0.00</span></div>
+ <div class="c"><b>Figure reviews</b><span id="v-figs">0</span><small id="v-figs-ok">0 passed</small></div>
+ <div class="c"><b>Report reviews</b><span id="v-rep">0</span></div>
+</div>
+<script>
+const rows=TRACE.rows, term=document.getElementById('term'), q=new URLSearchParams(location.search);
+const dur=(+q.get('dur')||20)*1000; let i=0, t0=null;
+function show(r){ const d=document.createElement('div'); d.className=r.cls; d.textContent=r.line; term.appendChild(d);
+  while(term.children.length>40) term.removeChild(term.firstChild);
+  document.getElementById('v-stage').textContent=r.stage;
+  if(r.min!==undefined){ document.getElementById('v-min').textContent=Math.round(r.min);
+    document.getElementById('v-req').textContent=r.req.toLocaleString('en-US');
+    document.getElementById('v-usd').textContent='$'+r.usd.toFixed(2);
+    document.getElementById('v-figs').textContent=r.figs;
+    document.getElementById('v-figs-ok').textContent=r.figs_ok+' passed';
+    document.getElementById('v-rep').textContent=r.reports; } }
+function tick(ts){ if(t0===null) t0=ts; const n=Math.min(rows.length, Math.floor((ts-t0)/dur*rows.length)+1);
+  while(i<n) show(rows[i++]); if(i<rows.length) requestAnimationFrame(tick); }
+requestAnimationFrame(tick);
+</script></body></html>
